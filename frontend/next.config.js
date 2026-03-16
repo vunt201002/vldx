@@ -1,6 +1,33 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+
+  experimental: {
+    // Turbopack-specific config
+    turbo: {
+      rules: {
+        // Handle SVG as React components
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+      resolveAlias: {
+        // Mirror jsconfig.json path aliases
+        '@/components': './components',
+        '@/styles':     './styles',
+        '@/lib':        './lib',
+        '@/hooks':      './hooks',
+        '@/utils':      './utils',
+      },
+      resolveExtensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css'],
+    },
+
+    // Tree-shake large packages automatically
+    optimizePackageImports: ['react', 'react-dom'],
+  },
+
+  // Proxy /api/* → Express backend (kept from before)
   async rewrites() {
     return [
       {
@@ -8,6 +35,11 @@ const nextConfig = {
         destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/:path*`,
       },
     ];
+  },
+
+  // Faster image handling
+  images: {
+    formats: ['image/avif', 'image/webp'],
   },
 };
 
