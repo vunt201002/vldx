@@ -24,7 +24,8 @@ const nextConfig = {
     },
 
     // Tree-shake large packages automatically
-    optimizePackageImports: ['react', 'react-dom'],
+    // Note: Do NOT include 'react' or 'react-dom' here — it breaks hooks during SSR
+    optimizePackageImports: [],
   },
 
   // Proxy /api/* → Express backend (kept from before)

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -15,7 +15,11 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
+    "autoprefixer": "^10.4.27",
     "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.4"
+    "eslint-config-next": "^14.2.4",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^3.4.19"
   }
 }
