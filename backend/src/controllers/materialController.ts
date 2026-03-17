@@ -1,7 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
+import { createHash } from 'crypto';
 import mongoose from 'mongoose';
 import { Material } from '../models/Material';
 import { AppError } from '../middleware/errorHandler';
+
+function makeEtag(data: unknown): string {
+  return `"${createHash('md5').update(JSON.stringify(data)).digest('hex')}"`;
+}
+
+function sendWithEtag(req: Request, res: Response, data: unknown): void {
+  const etag = makeEtag(data);
+  if (req.headers['if-none-match'] === etag) {
+    res.status(304).end();
+    return;
+  }
+  res.set('ETag', etag).json(data);
+}
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -20,7 +34,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
       Material.countDocuments(filter),
     ]);
 
-    res.json({
+    sendWithEtag(req, res, {
       success: true,
       data,
       total,
@@ -46,7 +60,7 @@ export const getById = async (req: Request, res: Response, next: NextFunction) =
       throw error;
     }
 
-    res.json({ success: true, data: material });
+    sendWithEtag(req, res, { success: true, data: material });
   } catch (err) {
     next(err);
   }
