@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { get } from '../lib/api';
+import { useFetch } from '@/hooks/useFetch';
 
 const CATEGORY_LABELS = {
   'xi-mang': 'Xi Mang',
@@ -20,22 +20,9 @@ function formatPrice(price) {
   }).format(price);
 }
 
-export async function getStaticProps() {
-  try {
-    const res = await get('/materials?limit=20');
-    return {
-      props: { materials: res.data || [] },
-      revalidate: 60,
-    };
-  } catch {
-    return {
-      props: { materials: [] },
-      revalidate: 30,
-    };
-  }
-}
-
-export default function Home({ materials }) {
+export default function Home() {
+  const { data, loading, error } = useFetch('/materials?limit=20');
+  const materials = data?.data || [];
   return (
     <>
       <Head>
@@ -54,7 +41,15 @@ export default function Home({ materials }) {
 
         {/* Materials Grid */}
         <main className="max-w-7xl mx-auto px-4 py-8">
-          {materials.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-20">
+              <p className="text-gray-400 text-lg">Dang tai...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-20">
+              <p className="text-red-500 text-lg">Loi: {error}</p>
+            </div>
+          ) : materials.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-gray-500 text-lg">Chua co san pham nao.</p>
               <p className="text-gray-400 text-sm mt-2">
