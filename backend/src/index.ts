@@ -3,6 +3,7 @@ import cors from 'cors';
 import { config } from './config/env';
 import { connectDB } from './config/database';
 import { errorHandler } from './middleware/errorHandler';
+import { rateLimiter } from './middleware/rateLimiter';
 import routes from './routes/index';
 
 const app = express();
@@ -11,6 +12,9 @@ const app = express();
 app.use(cors({ origin: config.frontendUrl, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Rate limiting
+app.use('/api', rateLimiter);
 
 // Routes
 app.use('/api', routes);
