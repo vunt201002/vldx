@@ -2,6 +2,7 @@ import { Router } from 'express';
 import materialRoutes from './materialRoutes';
 import blockRoutes from './blockRoutes';
 import pageRoutes from './pageRoutes';
+import themeRoutes from './themeRoutes';
 
 const router = Router();
 
@@ -12,5 +13,6 @@ router.get('/health', (_req, res) => {
 router.use('/materials', materialRoutes);
 router.use('/blocks', blockRoutes);
 router.use('/pages', pageRoutes);
+router.use('/theme', themeRoutes);
 
 export default router;

@@ -21,7 +21,9 @@
       "Bash(node -e \"const c = require\\(''./config/pages/landing.json''\\); console.log\\(typeof c, Object.keys\\(c\\)\\);\")",
       "Bash(npx kill-port:*)",
       "Bash(rm -rf .next)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx vite:*)"
     ]
   }
 }
