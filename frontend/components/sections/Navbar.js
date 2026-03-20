@@ -1,15 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-const collections = [
-  { name: 'gạch lát', href: '#collections' },
-  { name: 'đá granite', href: '#collections' },
-  { name: 'terrazzo', href: '#collections' },
-  { name: 'gạch block', href: '#collections' },
-  { name: 'đá ốp lát', href: '#collections' },
-];
-
-export default function Navbar() {
+export default function Navbar({ settings, blocks }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -18,6 +10,8 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const navLinks = blocks.filter((b) => b.type === 'nav-link');
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -28,30 +22,30 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/landing" className="font-display text-2xl lg:text-3xl tracking-tight">
             <span className={`transition-colors duration-500 ${scrolled ? 'text-charcoal' : 'text-white'}`}>
-              bê tông <span className="text-sandstone italic">việt</span>
+              {settings.brandName} <span className="text-sandstone italic">{settings.brandAccent}</span>
             </span>
           </Link>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-8">
-            {collections.map((item) => (
+            {navLinks.map((link) => (
               <a
-                key={item.name}
-                href={item.href}
+                key={link.settings.label}
+                href={link.settings.href}
                 className={`font-body text-sm tracking-widest lowercase transition-colors duration-300 hover:text-sandstone ${
                   scrolled ? 'text-warm-600' : 'text-white/80'
                 }`}
               >
-                {item.name}
+                {link.settings.label}
               </a>
             ))}
             <a
-              href="#contact"
+              href={settings.ctaHref}
               className={`font-body text-sm tracking-widest lowercase border-b transition-all duration-300 hover:text-sandstone hover:border-sandstone pb-0.5 ${
                 scrolled ? 'text-warm-600 border-warm-400' : 'text-white/80 border-white/40'
               }`}
             >
-              liên hệ
+              {settings.ctaLabel}
             </a>
           </div>
 
@@ -77,22 +71,22 @@ export default function Navbar() {
         menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
       }`}>
         <div className="bg-cream/98 backdrop-blur-xl border-t border-sand px-6 py-6 space-y-4">
-          {collections.map((item) => (
+          {navLinks.map((link) => (
             <a
-              key={item.name}
-              href={item.href}
+              key={link.settings.label}
+              href={link.settings.href}
               onClick={() => setMenuOpen(false)}
               className="block font-body text-base tracking-widest lowercase text-warm-700 hover:text-sandstone transition-colors"
             >
-              {item.name}
+              {link.settings.label}
             </a>
           ))}
           <a
-            href="#contact"
+            href={settings.ctaHref}
             onClick={() => setMenuOpen(false)}
             className="block font-body text-base tracking-widest lowercase text-sandstone"
           >
-            liên hệ
+            {settings.ctaLabel}
           </a>
         </div>
       </div>

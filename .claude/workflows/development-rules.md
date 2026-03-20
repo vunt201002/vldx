@@ -21,6 +21,7 @@
 
 - Turbopack is currently **disabled** (`next dev` without `--turbo`) due to PostCSS/Tailwind compatibility issues
 - Ports: Frontend `:3000`, Backend `:5000`, Admin `:5173`
+- After major refactors (moving/deleting/renaming components), run `rm -rf .next` before `npm run dev` to clear stale cache that causes 500 errors
 
 ## Path Aliases
 
@@ -33,6 +34,7 @@ All three apps use path aliases for imports:
 | Frontend | `@/lib` | `./lib` |
 | Frontend | `@/hooks` | `./hooks` |
 | Frontend | `@/utils` | `./utils` |
+| Frontend | `@/config` | `./config` |
 | Admin | `@/` | `./src/` |
 
 ## API Proxy

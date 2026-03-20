@@ -1,57 +1,45 @@
 import useReveal from '@/hooks/useReveal';
+import { icons } from './icons';
 
-export default function Contact() {
+export default function Contact({ id, settings, blocks }) {
   const sectionRef = useReveal();
 
+  const contactInfos = blocks.filter((b) => b.type === 'contact-info');
+  const socialLinks = blocks.filter((b) => b.type === 'social-link');
+
   return (
-    <section id="contact" className="relative bg-charcoal text-white overflow-hidden grain-overlay" ref={sectionRef}>
+    <section id={id} className="relative bg-charcoal text-white overflow-hidden grain-overlay" ref={sectionRef}>
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-36">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Left */}
           <div className="reveal">
-            <span className="font-body text-xs tracking-[0.3em] uppercase text-sandstone">liên hệ</span>
+            <span className="font-body text-xs tracking-[0.3em] uppercase text-sandstone">{settings.overline}</span>
             <h2 className="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl leading-[1.1]">
-              bắt đầu dự án
+              {settings.title}
               <br />
-              <span className="italic text-sandstone">của bạn</span>
+              <span className="italic text-sandstone">{settings.titleAccent}</span>
             </h2>
             <p className="mt-8 font-body text-warm-400 leading-relaxed max-w-md">
-              liên hệ ngay để được tư vấn miễn phí về vật liệu phù hợp cho công trình.
-              đội ngũ chuyên gia sẵn sàng hỗ trợ bạn từ thiết kế đến thi công.
+              {settings.description}
             </p>
 
             <div className="mt-12 space-y-6">
-              <div className="flex items-start gap-4">
-                <svg className="w-5 h-5 text-sandstone mt-0.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                  <path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                </svg>
-                <div>
-                  <div className="font-body text-xs tracking-[0.2em] uppercase text-warm-500 mb-1">hotline</div>
-                  <div className="font-display text-xl text-white">1900 xxxx xx</div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <svg className="w-5 h-5 text-sandstone mt-0.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                  <path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                </svg>
-                <div>
-                  <div className="font-body text-xs tracking-[0.2em] uppercase text-warm-500 mb-1">email</div>
-                  <div className="font-display text-xl text-white">info@betongviet.vn</div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <svg className="w-5 h-5 text-sandstone mt-0.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                  <path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                </svg>
-                <div>
-                  <div className="font-body text-xs tracking-[0.2em] uppercase text-warm-500 mb-1">showroom</div>
-                  <div className="font-display text-xl text-white">TP. Hồ Chí Minh</div>
-                  <div className="font-body text-sm text-warm-400 mt-1">Thứ 2 – Thứ 7: 8:00 – 17:30</div>
-                </div>
-              </div>
+              {contactInfos.map((block) => {
+                const info = block.settings;
+                const Icon = icons[info.iconName];
+                return (
+                  <div key={info.label} className="flex items-start gap-4">
+                    {Icon && <Icon className="w-5 h-5 text-sandstone mt-0.5 shrink-0" />}
+                    <div>
+                      <div className="font-body text-xs tracking-[0.2em] uppercase text-warm-500 mb-1">{info.label}</div>
+                      <div className="font-display text-xl text-white">{info.value}</div>
+                      {info.detail && (
+                        <div className="font-body text-sm text-warm-400 mt-1">{info.detail}</div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -112,7 +100,7 @@ export default function Contact() {
                 type="submit"
                 className="w-full bg-sandstone text-charcoal font-body text-sm tracking-widest uppercase py-4 hover:bg-white transition-colors duration-300 mt-4"
               >
-                gửi yêu cầu tư vấn
+                {settings.formSubmitLabel}
               </button>
             </form>
           </div>
@@ -123,15 +111,15 @@ export default function Contact() {
       <div className="border-t border-warm-800">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="font-display text-xl">
-            bê tông <span className="italic text-sandstone">việt</span>
+            {settings.footerBrand.replace(settings.footerBrandAccent, '').trim()} <span className="italic text-sandstone">{settings.footerBrandAccent}</span>
           </div>
           <div className="font-body text-xs text-warm-600 tracking-wider">
-            &copy; 2026 bê tông việt. thiết kế tại việt nam.
+            {settings.footerCopyright}
           </div>
           <div className="flex items-center gap-6">
-            {['facebook', 'instagram', 'zalo'].map((social) => (
-              <a key={social} href="#" className="font-body text-xs tracking-widest uppercase text-warm-500 hover:text-sandstone transition-colors">
-                {social}
+            {socialLinks.map((block) => (
+              <a key={block.settings.label} href={block.settings.href} className="font-body text-xs tracking-widest uppercase text-warm-500 hover:text-sandstone transition-colors">
+                {block.settings.label}
               </a>
             ))}
           </div>

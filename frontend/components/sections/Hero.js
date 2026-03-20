@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 
-export default function Hero() {
+export default function Hero({ settings }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     setLoaded(true);
   }, []);
+
+  const headlineParts = settings.headline.split('\n');
 
   return (
     <section className="relative h-screen min-h-[700px] overflow-hidden grain-overlay">
@@ -33,7 +35,7 @@ export default function Hero() {
             }`}
           >
             <span className="font-body text-xs tracking-[0.3em] uppercase text-sandstone">
-              vật liệu xây dựng cao cấp
+              {settings.overline}
             </span>
           </div>
 
@@ -43,11 +45,20 @@ export default function Hero() {
               loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            bê tông
-            <br />
-            <span className="italic text-sandstone">&amp; đá lát</span>
-            <br />
-            kiến trúc
+            {headlineParts.map((part, i) => {
+              const isAccent = part.startsWith('&');
+              const text = isAccent ? part.slice(2) : part;
+              return (
+                <span key={i}>
+                  {i > 0 && <br />}
+                  {isAccent ? (
+                    <span className="italic text-sandstone">&amp; {text}</span>
+                  ) : (
+                    text
+                  )}
+                </span>
+              );
+            })}
           </h1>
 
           {/* Subtitle */}
@@ -56,8 +67,7 @@ export default function Hero() {
               loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
           >
-            gạch lát sân vườn, đá granite, terrazzo, gạch block
-            &mdash; sản xuất thủ công tại việt nam với nguyên liệu tự nhiên hảo hạng.
+            {settings.subtitle}
           </p>
 
           {/* CTA Buttons */}
@@ -67,19 +77,19 @@ export default function Hero() {
             }`}
           >
             <a
-              href="#collections"
+              href={settings.primaryCtaHref}
               className="group inline-flex items-center gap-3 bg-sandstone text-charcoal font-body text-sm tracking-widest uppercase px-8 py-4 hover:bg-white transition-colors duration-300"
             >
-              khám phá
+              {settings.primaryCtaLabel}
               <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </a>
             <a
-              href="#contact"
+              href={settings.secondaryCtaHref}
               className="inline-flex items-center gap-3 border border-white/30 text-white font-body text-sm tracking-widest uppercase px-8 py-4 hover:bg-white/10 transition-colors duration-300"
             >
-              liên hệ
+              {settings.secondaryCtaLabel}
             </a>
           </div>
         </div>
@@ -90,7 +100,7 @@ export default function Hero() {
             loaded ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <span className="font-body text-[10px] tracking-[0.3em] uppercase text-warm-400">cuộn xuống</span>
+          <span className="font-body text-[10px] tracking-[0.3em] uppercase text-warm-400">{settings.scrollIndicatorText}</span>
           <div className="w-px h-10 bg-gradient-to-b from-sandstone to-transparent" />
         </div>
       </div>

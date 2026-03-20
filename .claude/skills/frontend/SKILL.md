@@ -8,14 +8,22 @@ The public-facing storefront is a Next.js 14 app using the **Pages Router** (not
 
 ```
 frontend/
-  pages/          # File-based routing (index.js, clone.js, _app.js)
-  components/     # Reusable React components, organized by feature
-  hooks/          # Custom React hooks
-  lib/            # API helpers and utilities
-  utils/          # Pure utility functions
-  styles/         # Global CSS (globals.css with Tailwind directives)
-  public/         # Static assets
-  next.config.js  # Turbopack aliases, image config, API rewrites
+  pages/              # File-based routing (index.js, landing.js, _app.js)
+  components/
+    sections/         # JSON-driven section components (Shopify-like pattern)
+      SectionRenderer.js
+      registry.js
+      icons.js
+      Navbar.js, Hero.js, Collections.js, About.js, Featured.js, Gallery.js, Contact.js
+    clone/            # Web clone section components
+  config/
+    pages/            # Page JSON configs (landing.json)
+  hooks/              # Custom React hooks (useReveal.js)
+  lib/                # API helpers and utilities
+  utils/              # Pure utility functions
+  styles/             # Global CSS (globals.css with Tailwind directives)
+  public/             # Static assets
+  next.config.js      # Turbopack aliases, image config, API rewrites
 ```
 
 ## Styling Stack
@@ -69,6 +77,37 @@ export default function ClonePage() {
 ### Interactive effects
 - Parallax: lightweight scroll-based implementation using `useRef` + `useEffect` + passive scroll/resize listeners
 - Avoid heavy parallax libraries; calculate offset from viewport position directly
+
+## JSON-Driven Section/Block System (Landing Page)
+
+The landing page uses a Shopify-like config-driven architecture:
+
+```
+config/pages/landing.json → SectionRenderer → registry → Section Components
+```
+
+### Config structure (`config/pages/<page>.json`)
+- **`page`**: metadata (title, description, bodyClass)
+- **`order`**: flat array of section keys — controls render order
+- **`sections`**: map of section configs, each with `type`, `settings` (scalars), `blocks` (repeatable children)
+
+### Key files
+- `components/sections/SectionRenderer.js` — iterates `order`, resolves components from registry
+- `components/sections/registry.js` — maps type strings to React components
+- `components/sections/icons.js` — SVG icon registry (JSON references icons by string name)
+- `components/sections/*.js` — section components accepting `{ id, settings, blocks }` props
+
+### Adding a new section
+1. Create the component in `components/sections/NewSection.js` accepting `{ id, settings, blocks }`
+2. Register it in `registry.js`
+3. Add its config to `landing.json` under `sections` and add its key to `order`
+
+### Adding new page content
+Edit `config/pages/landing.json` — change text in `settings`, add/remove items in `blocks`, reorder entries in `order`.
+
+## Custom Hooks
+
+- **`useReveal`** (`hooks/useReveal.js`): IntersectionObserver-based scroll reveal. Returns a ref; attach to section root. Adds `.revealed` class when element enters viewport. Used with `.reveal`, `.reveal-left`, `.reveal-right`, `.stagger-children` CSS classes defined in `globals.css`.
 
 ## Key Conventions
 

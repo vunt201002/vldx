@@ -1,0 +1,237 @@
+{
+  "page": {
+    "title": "Bê Tông Việt — Vật Liệu Xây Dựng Cao Cấp",
+    "description": "Gạch lát sân vườn, đá granite, terrazzo, gạch block — sản xuất thủ công tại Việt Nam với nguyên liệu tự nhiên hảo hạng.",
+    "bodyClass": "font-body bg-cream text-charcoal"
+  },
+  "order": ["navbar", "hero", "collections", "about", "featured", "gallery", "contact"],
+  "sections": {
+    "navbar": {
+      "type": "navbar",
+      "settings": {
+        "brandName": "bê tông",
+        "brandAccent": "việt",
+        "ctaLabel": "liên hệ",
+        "ctaHref": "#contact"
+      },
+      "blocks": [
+        { "type": "nav-link", "settings": { "label": "gạch lát", "href": "#collections" } },
+        { "type": "nav-link", "settings": { "label": "đá granite", "href": "#collections" } },
+        { "type": "nav-link", "settings": { "label": "terrazzo", "href": "#collections" } },
+        { "type": "nav-link", "settings": { "label": "gạch block", "href": "#collections" } },
+        { "type": "nav-link", "settings": { "label": "đá ốp lát", "href": "#collections" } }
+      ]
+    },
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "overline": "vật liệu xây dựng cao cấp",
+        "headline": "bê tông\n& đá lát\nkiến trúc",
+        "subtitle": "gạch lát sân vườn, đá granite, terrazzo, gạch block — sản xuất thủ công tại việt nam với nguyên liệu tự nhiên hảo hạng.",
+        "primaryCtaLabel": "khám phá",
+        "primaryCtaHref": "#collections",
+        "secondaryCtaLabel": "liên hệ",
+        "secondaryCtaHref": "#contact",
+        "scrollIndicatorText": "cuộn xuống"
+      },
+      "blocks": []
+    },
+    "collections": {
+      "type": "collections",
+      "settings": {
+        "overline": "bộ sưu tập",
+        "title": "sản phẩm",
+        "titleAccent": "nổi bật",
+        "description": "mỗi dòng sản phẩm được sản xuất thủ công, kiểm soát chất lượng nghiêm ngặt từ nguyên liệu đến thành phẩm.",
+        "cardLinkLabel": "xem chi tiết"
+      },
+      "blocks": [
+        {
+          "type": "product-card",
+          "settings": {
+            "name": "Gạch Lát Sân Vườn",
+            "slug": "gach-lat",
+            "desc": "Bề mặt chống trơn, chịu lực cao, phù hợp lối đi và sân vườn ngoài trời.",
+            "specs": "400×400mm  ·  50mm dày",
+            "color": "from-amber-800/80 to-amber-900/90"
+          }
+        },
+        {
+          "type": "product-card",
+          "settings": {
+            "name": "Đá Granite",
+            "slug": "da-granite",
+            "desc": "Đá tự nhiên gia công chính xác, bề mặt mài nhám hoặc đánh bóng theo yêu cầu.",
+            "specs": "600×300mm  ·  20mm dày",
+            "color": "from-stone-600/80 to-stone-800/90"
+          }
+        },
+        {
+          "type": "product-card",
+          "settings": {
+            "name": "Terrazzo",
+            "slug": "terrazzo",
+            "desc": "Phối trộn đá marble, granite và xi măng — mỗi viên gạch là một tác phẩm nghệ thuật.",
+            "specs": "400×400mm  ·  30mm dày",
+            "color": "from-rose-800/70 to-stone-800/90"
+          }
+        },
+        {
+          "type": "product-card",
+          "settings": {
+            "name": "Gạch Block",
+            "slug": "gach-block",
+            "desc": "Gạch thông gió trang trí, tạo điểm nhấn kiến trúc cho tường rào và mặt tiền.",
+            "specs": "190×190mm  ·  90mm dày",
+            "color": "from-slate-600/80 to-slate-800/90"
+          }
+        },
+        {
+          "type": "product-card",
+          "settings": {
+            "name": "Đá Ốp Lát",
+            "slug": "da-op-lat",
+            "desc": "Đá ốp tường và lát nền, vân tự nhiên, phù hợp không gian nội thất cao cấp.",
+            "specs": "600×600mm  ·  15mm dày",
+            "color": "from-warm-500/80 to-warm-800/90"
+          }
+        },
+        {
+          "type": "product-card",
+          "settings": {
+            "name": "Bậc Thang & Coping",
+            "slug": "bac-thang",
+            "desc": "Bậc cầu thang và viền hồ bơi, bo cạnh tròn an toàn, chống trơn trượt.",
+            "specs": "1000×350mm  ·  40mm dày",
+            "color": "from-cyan-800/70 to-slate-800/90"
+          }
+        }
+      ]
+    },
+    "about": {
+      "type": "about",
+      "settings": {
+        "overline": "câu chuyện",
+        "title": "nguyên liệu",
+        "titleAccent": "tạo nên khác biệt",
+        "paragraphs": [
+          "chúng tôi tin rằng mỗi viên gạch, mỗi tấm đá đều kể một câu chuyện riêng. từ những mỏ đá tự nhiên đến xưởng sản xuất thủ công, mỗi sản phẩm đều mang trong mình dấu ấn của đất, nước và bàn tay nghệ nhân việt nam.",
+          "với quy trình sản xuất thân thiện môi trường và tiêu chuẩn chất lượng quốc tế, sản phẩm của chúng tôi không chỉ đẹp mà còn bền vững theo thời gian — từ sân vườn đến nội thất, từ hồ bơi đến mặt tiền công trình."
+        ],
+        "linkText": "tìm hiểu thêm",
+        "linkHref": "#contact",
+        "visualLabel": "showroom",
+        "visualText": "xưởng sản xuất tại miền nam"
+      },
+      "blocks": [
+        { "type": "stat", "settings": { "value": "15+", "label": "năm kinh nghiệm" } },
+        { "type": "stat", "settings": { "value": "500+", "label": "dự án hoàn thành" } },
+        { "type": "stat", "settings": { "value": "50+", "label": "mẫu sản phẩm" } },
+        { "type": "stat", "settings": { "value": "100%", "label": "nguyên liệu tự nhiên" } }
+      ]
+    },
+    "featured": {
+      "type": "featured",
+      "settings": {
+        "overline": "tại sao chọn chúng tôi",
+        "title": "chất lượng",
+        "titleAccent": "không thỏa hiệp"
+      },
+      "blocks": [
+        {
+          "type": "feature-card",
+          "settings": {
+            "iconName": "handcraft",
+            "title": "Sản Xuất Thủ Công",
+            "desc": "Mỗi sản phẩm được tạo ra bằng tay bởi đội ngũ nghệ nhân giàu kinh nghiệm, đảm bảo chất lượng từng chi tiết."
+          }
+        },
+        {
+          "type": "feature-card",
+          "settings": {
+            "iconName": "natural",
+            "title": "Nguyên Liệu Tự Nhiên",
+            "desc": "Đá, cát, xi măng cao cấp — 100% nguyên liệu tự nhiên, không pha tạp, thân thiện với môi trường."
+          }
+        },
+        {
+          "type": "feature-card",
+          "settings": {
+            "iconName": "sizes",
+            "title": "Đa Dạng Kích Thước",
+            "desc": "Sản xuất theo kích thước tiêu chuẩn hoặc cắt theo yêu cầu riêng của từng công trình."
+          }
+        },
+        {
+          "type": "feature-card",
+          "settings": {
+            "iconName": "warranty",
+            "title": "Bảo Hành Dài Hạn",
+            "desc": "Cam kết bảo hành sản phẩm lên đến 10 năm, đồng hành cùng mọi công trình của bạn."
+          }
+        }
+      ]
+    },
+    "gallery": {
+      "type": "gallery",
+      "settings": {
+        "overline": "dự án",
+        "title": "cảm hứng",
+        "titleAccent": "thiết kế",
+        "viewAllLabel": "xem tất cả",
+        "viewAllHref": "/materials"
+      },
+      "blocks": [
+        { "type": "gallery-item", "settings": { "label": "sân vườn biệt thự", "tag": "gạch lát", "gradient": "from-amber-700 to-stone-700", "aspect": "row-span-2" } },
+        { "type": "gallery-item", "settings": { "label": "bếp terrazzo", "tag": "terrazzo", "gradient": "from-stone-500 to-stone-700", "aspect": "" } },
+        { "type": "gallery-item", "settings": { "label": "hồ bơi resort", "tag": "coping", "gradient": "from-rose-700 to-stone-800", "aspect": "" } },
+        { "type": "gallery-item", "settings": { "label": "tường rào breeze block", "tag": "gạch block", "gradient": "from-slate-500 to-slate-700", "aspect": "" } },
+        { "type": "gallery-item", "settings": { "label": "nội thất cao cấp", "tag": "đá ốp", "gradient": "from-warm-500 to-warm-700", "aspect": "row-span-2" } },
+        { "type": "gallery-item", "settings": { "label": "lối đi công viên", "tag": "đá granite", "gradient": "from-cyan-700 to-slate-700", "aspect": "" } }
+      ]
+    },
+    "contact": {
+      "type": "contact",
+      "settings": {
+        "overline": "liên hệ",
+        "title": "bắt đầu dự án",
+        "titleAccent": "của bạn",
+        "description": "liên hệ ngay để được tư vấn miễn phí về vật liệu phù hợp cho công trình. đội ngũ chuyên gia sẵn sàng hỗ trợ bạn từ thiết kế đến thi công.",
+        "formSubmitLabel": "gửi yêu cầu tư vấn",
+        "footerBrand": "bê tông việt",
+        "footerBrandAccent": "việt",
+        "footerCopyright": "© 2026 bê tông việt. thiết kế tại việt nam."
+      },
+      "blocks": [
+        {
+          "type": "contact-info",
+          "settings": {
+            "iconName": "phone",
+            "label": "hotline",
+            "value": "1900 xxxx xx"
+          }
+        },
+        {
+          "type": "contact-info",
+          "settings": {
+            "iconName": "email",
+            "label": "email",
+            "value": "info@betongviet.vn"
+          }
+        },
+        {
+          "type": "contact-info",
+          "settings": {
+            "iconName": "location",
+            "label": "showroom",
+            "value": "TP. Hồ Chí Minh",
+            "detail": "Thứ 2 – Thứ 7: 8:00 – 17:30"
+          }
+        },
+        { "type": "social-link", "settings": { "label": "facebook", "href": "#" } },
+        { "type": "social-link", "settings": { "label": "instagram", "href": "#" } },
+        { "type": "social-link", "settings": { "label": "zalo", "href": "#" } }
+      ]
+    }
+  }
+}
