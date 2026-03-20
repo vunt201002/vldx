@@ -12,4 +12,7 @@ export const config = {
   adminUrl: process.env.ADMIN_URL || 'http://localhost:5173',
   frontendConfigDir: process.env.FRONTEND_CONFIG_DIR ||
     path.resolve(__dirname, '../../../frontend/config/pages'),
+  cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME || '',
+  cloudinaryApiKey: process.env.CLOUDINARY_API_KEY || '',
+  cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET || '',
 };
