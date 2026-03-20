@@ -8,11 +8,11 @@ const viewports = [
   { key: 'mobile', icon: '📲', label: 'Mobile' },
 ]
 
-export default function ThemePreview({ activeBlockType, previewKey }) {
+export default function ThemePreview({ slug, activeBlockType, previewKey }) {
   const [viewport, setViewport] = useState('desktop')
   const iframeRef = useRef(null)
 
-  const previewUrl = `${STOREFRONT_URL}/landing`
+  const previewUrl = `${STOREFRONT_URL}/${slug}`
 
   const handleRefresh = useCallback(() => {
     if (iframeRef.current) {
@@ -20,7 +20,6 @@ export default function ThemePreview({ activeBlockType, previewKey }) {
     }
   }, [])
 
-  // Build the iframe src with optional hash to scroll to section
   const iframeSrc = activeBlockType
     ? `${previewUrl}#${activeBlockType}`
     : previewUrl

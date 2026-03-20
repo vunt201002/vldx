@@ -1,0 +1,185 @@
+{
+  "page": {
+    "title": "Sản Phẩm — Bê Tông Việt",
+    "description": "Khám phá toàn bộ dòng sản phẩm vật liệu xây dựng cao cấp.",
+    "bodyClass": "font-body bg-cream text-charcoal"
+  },
+  "order": [
+    "navbar",
+    "hero",
+    "collections",
+    "contact"
+  ],
+  "sections": {
+    "navbar": {
+      "type": "navbar",
+      "settings": {
+        "brandName": "bê tông gioi thie",
+        "brandAccent": "việt",
+        "ctaLabel": "liên hệ",
+        "ctaHref": "/landing#contact"
+      },
+      "blocks": [
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "trang chủ",
+            "href": "/landing"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "sản phẩm",
+            "href": "/products"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "giới thiệu",
+            "href": "/about"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "dự án",
+            "href": "/projects"
+          }
+        }
+      ]
+    },
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "overline": "bộ sưu tập đầy đủ",
+        "headline": "tất cả\nsản phẩm",
+        "subtitle": "khám phá toàn bộ dòng sản phẩm vật liệu xây dựng cao cấp — gạch lát, đá granite, terrazzo, gạch block và nhiều hơn nữa.",
+        "scrollIndicatorText": "",
+        "primaryCtaLabel": "liên hệ báo giá",
+        "primaryCtaHref": "/landing#contact",
+        "secondaryCtaLabel": "",
+        "secondaryCtaHref": ""
+      },
+      "blocks": []
+    },
+    "collections": {
+      "type": "collections",
+      "settings": {
+        "overline": "",
+        "title": "danh mục",
+        "titleAccent": "sản phẩm",
+        "description": "",
+        "cardLinkLabel": "xem chi tiết"
+      },
+      "blocks": [
+        {
+          "type": "product-card",
+          "settings": {
+            "name": "Gạch Lát Sân Vườn",
+            "slug": "gach-lat",
+            "desc": "Bề mặt chống trơn, chịu lực cao, phù hợp lối đi và sân vườn ngoài trời.",
+            "specs": "400×400mm  ·  50mm dày",
+            "color": "from-amber-800/80 to-amber-900/90"
+          }
+        },
+        {
+          "type": "product-card",
+          "settings": {
+            "name": "Đá Granite",
+            "slug": "da-granite",
+            "desc": "Đá tự nhiên gia công chính xác, bề mặt mài nhám hoặc đánh bóng theo yêu cầu.",
+            "specs": "600×300mm  ·  20mm dày",
+            "color": "from-stone-600/80 to-stone-800/90"
+          }
+        },
+        {
+          "type": "product-card",
+          "settings": {
+            "name": "Terrazzo",
+            "slug": "terrazzo",
+            "desc": "Phối trộn đá marble, granite và xi măng — mỗi viên gạch là một tác phẩm nghệ thuật.",
+            "specs": "400×400mm  ·  30mm dày",
+            "color": "from-rose-800/70 to-stone-800/90"
+          }
+        },
+        {
+          "type": "product-card",
+          "settings": {
+            "name": "Gạch Block",
+            "slug": "gach-block",
+            "desc": "Gạch thông gió trang trí, tạo điểm nhấn kiến trúc cho tường rào và mặt tiền.",
+            "specs": "190×190mm  ·  90mm dày",
+            "color": "from-slate-600/80 to-slate-800/90"
+          }
+        },
+        {
+          "type": "product-card",
+          "settings": {
+            "name": "Đá Ốp Lát",
+            "slug": "da-op-lat",
+            "desc": "Đá ốp tường và lát nền, vân tự nhiên, phù hợp không gian nội thất cao cấp.",
+            "specs": "600×600mm  ·  15mm dày",
+            "color": "from-warm-500/80 to-warm-800/90"
+          }
+        },
+        {
+          "type": "product-card",
+          "settings": {
+            "name": "Bậc Thang & Coping",
+            "slug": "bac-thang",
+            "desc": "Bậc cầu thang và viền hồ bơi, bo cạnh tròn an toàn, chống trơn trượt.",
+            "specs": "1000×350mm  ·  40mm dày",
+            "color": "from-cyan-800/70 to-slate-800/90"
+          }
+        }
+      ]
+    },
+    "contact": {
+      "type": "contact",
+      "settings": {
+        "overline": "liên hệ",
+        "title": "báo giá",
+        "titleAccent": "ngay",
+        "description": "liên hệ để nhận báo giá chi tiết cho từng dòng sản phẩm.",
+        "formSubmitLabel": "gửi yêu cầu",
+        "footerBrand": "bê tông việt",
+        "footerBrandAccent": "việt",
+        "footerCopyright": "© 2026 bê tông việt. thiết kế tại việt nam."
+      },
+      "blocks": [
+        {
+          "type": "contact-info",
+          "settings": {
+            "iconName": "phone",
+            "label": "hotline",
+            "value": "1900 xxxx xx"
+          }
+        },
+        {
+          "type": "contact-info",
+          "settings": {
+            "iconName": "email",
+            "label": "email",
+            "value": "info@betongviet.vn"
+          }
+        },
+        {
+          "type": "social-link",
+          "settings": {
+            "label": "facebook",
+            "href": "#"
+          }
+        },
+        {
+          "type": "social-link",
+          "settings": {
+            "label": "zalo",
+            "href": "#"
+          }
+        }
+      ]
+    }
+  }
+}

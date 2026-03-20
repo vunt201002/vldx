@@ -15,6 +15,7 @@ export default function App() {
         <Route path="products" element={<Products />} />
         <Route path="products/:id" element={<ProductDetail />} />
         <Route path="theme-editor" element={<ThemeEditor />} />
+        <Route path="theme-editor/:slug" element={<ThemeEditor />} />
       </Route>
     </Routes>
   )

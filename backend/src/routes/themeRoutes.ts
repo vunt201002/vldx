@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import {
-  getLandingTheme,
-  saveLandingTheme,
+  listPages,
+  createPage,
+  deletePage,
+  getPageTheme,
+  savePageTheme,
   getFieldDefs,
   addBlock,
   deleteBlock,
@@ -12,12 +15,17 @@ const router = Router();
 // Field definitions for the editor
 router.get('/field-defs', getFieldDefs);
 
-// Landing page theme
-router.get('/landing', getLandingTheme);
-router.put('/landing', saveLandingTheme);
+// Page management
+router.get('/pages', listPages);
+router.post('/pages', createPage);
+router.delete('/pages/:slug', deletePage);
 
-// Block management
-router.post('/landing/blocks', addBlock);
-router.delete('/landing/blocks/:blockId', deleteBlock);
+// Page theme (load / save)
+router.get('/pages/:slug', getPageTheme);
+router.put('/pages/:slug', savePageTheme);
+
+// Block management within a page
+router.post('/pages/:slug/blocks', addBlock);
+router.delete('/pages/:slug/blocks/:blockId', deleteBlock);
 
 export default router;

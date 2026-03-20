@@ -13,11 +13,37 @@ export default function ThemeEditorSidebar({
   onDeleteBlock,
   onAddBlock,
   onUpdatePage,
+  pages,
+  currentSlug,
+  onPageSwitch,
 }) {
   return (
     <div className="te-sidebar">
+      {/* Page selector */}
+      {pages && pages.length > 1 && (
+        <div className="te-page-selector">
+          <select
+            value={currentSlug || ''}
+            onChange={(e) => onPageSwitch(e.target.value)}
+          >
+            {pages.map((p) => (
+              <option key={p.slug} value={p.slug}>
+                {p.title}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
       <div className="te-sidebar-header">
-        <h3>Sections</h3>
+        <div>
+          <h3>Sections</h3>
+          {currentSlug && (
+            <span style={{ fontSize: '0.6875rem', color: 'var(--color-text-muted)', fontFamily: 'monospace' }}>
+              /{currentSlug}
+            </span>
+          )}
+        </div>
         <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
           {blocks.length} blocks
         </span>
