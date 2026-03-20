@@ -2,28 +2,131 @@ import { Request, Response } from 'express';
 import Page from '../models/Page';
 import Block from '../models/Block';
 import blockFieldDefs from '../config/blockFieldDefs';
-import { generateLandingJson, writeLandingJson, sectionToBlockData } from '../utils/generateLandingJson';
+import { generatePageJson, writePageJson, deletePageJson } from '../utils/generatePageJson';
 
 /**
- * GET /api/theme/landing
- * Load the landing page with all blocks populated and ordered.
+ * GET /api/theme/pages
+ * List all pages (slug, title, isPublished, block count).
  */
-export const getLandingTheme = async (_req: Request, res: Response): Promise<void> => {
+export const listPages = async (_req: Request, res: Response): Promise<void> => {
   try {
-    const page = await Page.findOne({ slug: 'landing' }).populate('blocks.block').lean();
+    const pages = await Page.find()
+      .select('slug title description isPublished blocks')
+      .sort({ slug: 1 })
+      .lean();
 
-    if (!page) {
-      res.status(404).json({ success: false, message: 'Landing page not found' });
+    res.json({
+      success: true,
+      data: pages.map((p: any) => ({
+        slug: p.slug,
+        title: p.title,
+        description: p.description,
+        isPublished: p.isPublished,
+        blockCount: p.blocks?.length || 0,
+      })),
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * POST /api/theme/pages
+ * Create a new page.
+ */
+export const createPage = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { slug, title, description, bodyClass } = req.body;
+
+    if (!slug || !title) {
+      res.status(400).json({ success: false, message: 'slug and title are required' });
       return;
     }
 
-    // Sort blocks by order
+    const existing = await Page.findOne({ slug });
+    if (existing) {
+      res.status(409).json({ success: false, message: `Page "${slug}" already exists` });
+      return;
+    }
+
+    const page = await Page.create({
+      slug,
+      title,
+      description: description || '',
+      bodyClass: bodyClass || '',
+      blocks: [],
+      isPublished: false,
+    });
+
+    // Write empty JSON file
+    const json = generatePageJson(page as any);
+    writePageJson(slug, json);
+
+    res.status(201).json({
+      success: true,
+      data: {
+        slug: page.slug,
+        title: page.title,
+        description: page.description,
+        isPublished: page.isPublished,
+        blockCount: 0,
+      },
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * DELETE /api/theme/pages/:slug
+ * Delete a page and all its blocks.
+ */
+export const deletePage = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { slug } = req.params;
+
+    const page = await Page.findOne({ slug });
+    if (!page) {
+      res.status(404).json({ success: false, message: 'Page not found' });
+      return;
+    }
+
+    // Delete all blocks belonging to this page
+    const blockIds = page.blocks.map((b: any) => b.block);
+    if (blockIds.length > 0) {
+      await Block.deleteMany({ _id: { $in: blockIds } });
+    }
+
+    await Page.deleteOne({ slug });
+    deletePageJson(slug);
+
+    res.json({ success: true, message: `Page "${slug}" deleted` });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * GET /api/theme/pages/:slug
+ * Load a page with all blocks populated and ordered.
+ */
+export const getPageTheme = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { slug } = req.params;
+    const page = await Page.findOne({ slug }).populate('blocks.block').lean();
+
+    if (!page) {
+      res.status(404).json({ success: false, message: `Page "${slug}" not found` });
+      return;
+    }
+
     const sortedBlocks = [...page.blocks].sort((a: any, b: any) => a.order - b.order);
 
     res.json({
       success: true,
       data: {
         page: {
+          slug: page.slug,
           title: page.title,
           description: page.description,
           bodyClass: page.bodyClass,
@@ -45,11 +148,12 @@ export const getLandingTheme = async (_req: Request, res: Response): Promise<voi
 };
 
 /**
- * PUT /api/theme/landing
- * Full-state save: update page meta, update all blocks, regenerate landing.json.
+ * PUT /api/theme/pages/:slug
+ * Full-state save: update page meta, update all blocks, regenerate {slug}.json.
  */
-export const saveLandingTheme = async (req: Request, res: Response): Promise<void> => {
+export const savePageTheme = async (req: Request, res: Response): Promise<void> => {
   try {
+    const { slug } = req.params;
     const { page: pageMeta, blocks } = req.body;
 
     if (!pageMeta || !blocks) {
@@ -57,18 +161,16 @@ export const saveLandingTheme = async (req: Request, res: Response): Promise<voi
       return;
     }
 
-    const page = await Page.findOne({ slug: 'landing' });
+    const page = await Page.findOne({ slug });
     if (!page) {
-      res.status(404).json({ success: false, message: 'Landing page not found' });
+      res.status(404).json({ success: false, message: `Page "${slug}" not found` });
       return;
     }
 
-    // Update page metadata
     page.title = pageMeta.title;
     page.description = pageMeta.description || '';
     page.bodyClass = pageMeta.bodyClass || '';
 
-    // Update each block document
     const updatedPageBlocks: { block: any; order: number }[] = [];
 
     for (let i = 0; i < blocks.length; i++) {
@@ -88,18 +190,17 @@ export const saveLandingTheme = async (req: Request, res: Response): Promise<voi
       updatedPageBlocks.push({ block: blockDoc._id, order: i });
     }
 
-    // Update page block order
     page.blocks = updatedPageBlocks as any;
     await page.save();
 
-    // Regenerate landing.json
-    const freshPage = await Page.findOne({ slug: 'landing' }).populate('blocks.block').lean();
+    // Regenerate {slug}.json
+    const freshPage = await Page.findOne({ slug }).populate('blocks.block').lean();
     if (freshPage) {
-      const json = generateLandingJson(freshPage as any);
-      writeLandingJson(json);
+      const json = generatePageJson(freshPage as any);
+      writePageJson(slug, json);
     }
 
-    res.json({ success: true, message: 'Theme saved and landing.json regenerated' });
+    res.json({ success: true, message: `Theme saved and ${slug}.json regenerated` });
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -107,7 +208,6 @@ export const saveLandingTheme = async (req: Request, res: Response): Promise<voi
 
 /**
  * GET /api/theme/field-defs
- * Return block field definitions for the editor UI.
  */
 export const getFieldDefs = async (_req: Request, res: Response): Promise<void> => {
   try {
@@ -118,11 +218,12 @@ export const getFieldDefs = async (_req: Request, res: Response): Promise<void> 
 };
 
 /**
- * POST /api/theme/landing/blocks
- * Add a new block to the landing page.
+ * POST /api/theme/pages/:slug/blocks
+ * Add a new block to a page.
  */
 export const addBlock = async (req: Request, res: Response): Promise<void> => {
   try {
+    const { slug } = req.params;
     const { type, name, position } = req.body;
 
     if (!type) {
@@ -130,17 +231,15 @@ export const addBlock = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const page = await Page.findOne({ slug: 'landing' });
+    const page = await Page.findOne({ slug });
     if (!page) {
-      res.status(404).json({ success: false, message: 'Landing page not found' });
+      res.status(404).json({ success: false, message: `Page "${slug}" not found` });
       return;
     }
 
-    // Find the field def for this type to get a default label
     const typeDef = blockFieldDefs.find(d => d.type === type);
     const blockName = name || typeDef?.label || type;
 
-    // Create a new block with empty data
     const block = await Block.create({
       type,
       name: blockName,
@@ -148,10 +247,8 @@ export const addBlock = async (req: Request, res: Response): Promise<void> => {
       settings: {},
     });
 
-    // Determine insertion position
     const pos = position !== undefined ? position : page.blocks.length;
 
-    // Re-index: shift everything >= pos by 1
     const blocks = page.blocks.map((b: any) => ({
       block: b.block,
       order: b.order >= pos ? b.order + 1 : b.order,
@@ -179,23 +276,21 @@ export const addBlock = async (req: Request, res: Response): Promise<void> => {
 };
 
 /**
- * DELETE /api/theme/landing/blocks/:blockId
- * Remove a block from the landing page and delete the block document.
+ * DELETE /api/theme/pages/:slug/blocks/:blockId
+ * Remove a block from a page and delete the block document.
  */
 export const deleteBlock = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { blockId } = req.params;
+    const { slug, blockId } = req.params;
 
-    const page = await Page.findOne({ slug: 'landing' });
+    const page = await Page.findOne({ slug });
     if (!page) {
-      res.status(404).json({ success: false, message: 'Landing page not found' });
+      res.status(404).json({ success: false, message: `Page "${slug}" not found` });
       return;
     }
 
-    // Remove block reference from page
     page.blocks = page.blocks.filter((b: any) => b.block.toString() !== blockId) as any;
 
-    // Re-index orders
     const sorted = [...page.blocks].sort((a: any, b: any) => a.order - b.order);
     page.blocks = sorted.map((b: any, i: number) => ({
       block: b.block,
@@ -203,15 +298,13 @@ export const deleteBlock = async (req: Request, res: Response): Promise<void> =>
     })) as any;
 
     await page.save();
-
-    // Delete the block document
     await Block.findByIdAndDelete(blockId);
 
-    // Regenerate landing.json
-    const freshPage = await Page.findOne({ slug: 'landing' }).populate('blocks.block').lean();
+    // Regenerate {slug}.json
+    const freshPage = await Page.findOne({ slug }).populate('blocks.block').lean();
     if (freshPage) {
-      const json = generateLandingJson(freshPage as any);
-      writeLandingJson(json);
+      const json = generatePageJson(freshPage as any);
+      writePageJson(slug, json);
     }
 
     res.json({ success: true, message: 'Block removed' });

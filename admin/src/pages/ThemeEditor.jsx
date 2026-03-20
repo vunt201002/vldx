@@ -1,11 +1,11 @@
 import React, { useReducer, useEffect, useCallback, useRef } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import { get, put, post, del } from '@/lib/api'
 import ThemeEditorSidebar from '@/components/theme-editor/ThemeEditorSidebar'
 import ThemePreview from '@/components/theme-editor/ThemePreview'
 import BlockEditorPanel from '@/components/theme-editor/BlockEditorPanel'
 import '@/styles/theme-editor.css'
 
-// --- Reducer ---
 const initialState = {
   page: { title: '', description: '', bodyClass: '' },
   blocks: [],
@@ -16,7 +16,7 @@ const initialState = {
   loading: true,
   error: null,
   toast: null,
-  previewKey: 0, // bump to force iframe reload after save
+  previewKey: 0,
 }
 
 function reducer(state, action) {
@@ -84,15 +84,18 @@ function reducer(state, action) {
 }
 
 export default function ThemeEditor() {
+  const { slug } = useParams()
+  const navigate = useNavigate()
   const [state, dispatch] = useReducer(reducer, initialState)
   const toastTimer = useRef(null)
 
-  // Load data on mount
   useEffect(() => {
+    if (!slug) return
+    dispatch({ type: 'LOAD_ERROR', error: null })
     async function load() {
       try {
         const [themeRes, defsRes] = await Promise.all([
-          get('/theme/landing'),
+          get(`/theme/pages/${slug}`),
           get('/theme/field-defs'),
         ])
         dispatch({
@@ -106,9 +109,8 @@ export default function ThemeEditor() {
       }
     }
     load()
-  }, [])
+  }, [slug])
 
-  // Auto-clear toast
   useEffect(() => {
     if (state.toast) {
       clearTimeout(toastTimer.current)
@@ -117,7 +119,6 @@ export default function ThemeEditor() {
     return () => clearTimeout(toastTimer.current)
   }, [state.toast])
 
-  // Unsaved changes warning
   useEffect(() => {
     const handler = (e) => {
       if (state.dirty) {
@@ -132,7 +133,7 @@ export default function ThemeEditor() {
   const handleSave = useCallback(async () => {
     dispatch({ type: 'SAVING' })
     try {
-      await put('/theme/landing', {
+      await put(`/theme/pages/${slug}`, {
         page: state.page,
         blocks: state.blocks,
       })
@@ -140,26 +141,26 @@ export default function ThemeEditor() {
     } catch (err) {
       dispatch({ type: 'SAVE_ERROR', error: err.message })
     }
-  }, [state.page, state.blocks])
+  }, [slug, state.page, state.blocks])
 
   const handleAddBlock = useCallback(async (type) => {
     try {
-      const res = await post('/theme/landing/blocks', { type })
+      const res = await post(`/theme/pages/${slug}/blocks`, { type })
       dispatch({ type: 'ADD_BLOCK', block: res.data })
     } catch (err) {
       dispatch({ type: 'SAVE_ERROR', error: err.message })
     }
-  }, [])
+  }, [slug])
 
   const handleDeleteBlock = useCallback(async (id) => {
     if (!window.confirm('Remove this section?')) return
     try {
-      await del(`/theme/landing/blocks/${id}`)
+      await del(`/theme/pages/${slug}/blocks/${id}`)
       dispatch({ type: 'DELETE_BLOCK', id })
     } catch (err) {
       dispatch({ type: 'SAVE_ERROR', error: err.message })
     }
-  }, [])
+  }, [slug])
 
   const activeBlock = state.blocks.find((b) => b._id === state.activeBlockId)
 
@@ -183,7 +184,6 @@ export default function ThemeEditor() {
 
   return (
     <div className="theme-editor">
-      {/* Left — Section List */}
       <ThemeEditorSidebar
         page={state.page}
         blocks={state.blocks}
@@ -194,15 +194,16 @@ export default function ThemeEditor() {
         onDeleteBlock={handleDeleteBlock}
         onAddBlock={handleAddBlock}
         onUpdatePage={(page) => dispatch({ type: 'UPDATE_PAGE', page })}
+        slug={slug}
+        onBack={() => navigate('/theme-editor')}
       />
 
-      {/* Center — Live Preview */}
       <ThemePreview
+        slug={slug}
         activeBlockType={activeBlock?.type}
         previewKey={state.previewKey}
       />
 
-      {/* Right — Settings Panel */}
       <BlockEditorPanel
         block={activeBlock}
         fieldDefs={state.fieldDefs}
@@ -212,7 +213,6 @@ export default function ThemeEditor() {
         onSave={handleSave}
       />
 
-      {/* Toast */}
       {state.toast && (
         <div className={`te-toast ${state.toast.type}`}>
           {state.toast.message}

@@ -10,6 +10,6 @@ export const config = {
   jwtSecret: process.env.JWT_SECRET || 'fallback_secret',
   frontendUrl: process.env.FRONTEND_URL || 'http://localhost:3000',
   adminUrl: process.env.ADMIN_URL || 'http://localhost:5173',
-  frontendConfigPath: process.env.FRONTEND_CONFIG_PATH ||
-    path.resolve(__dirname, '../../../frontend/config/pages/landing.json'),
+  frontendConfigDir: process.env.FRONTEND_CONFIG_DIR ||
+    path.resolve(__dirname, '../../../frontend/config/pages'),
 };

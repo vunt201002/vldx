@@ -24,7 +24,7 @@ services:
       MONGODB_URI: mongodb://mongodb:27017/vlxd
       FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
       ADMIN_URL: ${ADMIN_URL:-http://localhost:8080}
-      FRONTEND_CONFIG_PATH: /data/config/pages/landing.json
+      FRONTEND_CONFIG_DIR: /data/config/pages
     volumes:
       - shared-config:/data/config/pages
     expose:
