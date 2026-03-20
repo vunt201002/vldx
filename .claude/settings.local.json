@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "WebFetch(domain:www.concrete-collaborative.com)",
+      "Bash(find:*)",
+      "Bash(cd:*)",
+      "Bash(python:*)",
+      "Bash(node -e \"console.log\\(require\\(''D:/Project/j/vlxd/frontend/node_modules/react/package.json''\\).version\\)\")",
+      "Bash(node -e \"console.log\\(require\\(''D:/Project/j/vlxd/node_modules/react/package.json''\\).version\\)\")",
+      "Bash(ls:*)",
+      "Bash(grep -E \"\\\\.\\(js|jsx|json\\)$\")"
+    ]
+  }
+}
