@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
@@ -8,4 +9,7 @@ export const config = {
   mongodbUri: process.env.MONGODB_URI || 'mongodb://localhost:27017/vlxd',
   jwtSecret: process.env.JWT_SECRET || 'fallback_secret',
   frontendUrl: process.env.FRONTEND_URL || 'http://localhost:3000',
+  adminUrl: process.env.ADMIN_URL || 'http://localhost:5173',
+  frontendConfigPath: process.env.FRONTEND_CONFIG_PATH ||
+    path.resolve(__dirname, '../../../frontend/config/pages/landing.json'),
 };

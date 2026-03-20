@@ -5,6 +5,7 @@ import '@/styles/layout.css'
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: '📊' },
   { to: '/products', label: 'Products', icon: '📦' },
+  { to: '/theme-editor', label: 'Theme Editor', icon: '🎨' },
 ]
 
 export default function AdminLayout() {
@@ -13,6 +14,7 @@ export default function AdminLayout() {
   const getPageTitle = () => {
     if (location.pathname.startsWith('/dashboard')) return 'Dashboard'
     if (location.pathname.startsWith('/products')) return 'Products'
+    if (location.pathname.startsWith('/theme-editor')) return 'Theme Editor'
     return 'Admin Panel'
   }
 

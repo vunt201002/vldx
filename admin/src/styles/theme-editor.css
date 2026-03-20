@@ -1,0 +1,621 @@
+/* Theme Editor — 3-panel Shopify-like Layout */
+.theme-editor {
+  display: flex;
+  height: calc(100vh - 57px); /* subtract topbar height */
+  margin: -1.5rem; /* negate page-content padding */
+  overflow: hidden;
+}
+
+/* ─── Left Sidebar (sections list) ─── */
+.te-sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.te-sidebar-header {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.te-sidebar-header h3 {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+.te-sidebar-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.25rem 0;
+}
+
+/* ─── Center Preview ─── */
+.te-preview {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #e5e7eb;
+  min-width: 0;
+}
+
+.te-preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  gap: 0.75rem;
+}
+
+.te-preview-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.te-preview-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.te-viewport-btns {
+  display: flex;
+  background: var(--color-bg);
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.te-viewport-btn {
+  padding: 0.3125rem 0.625rem;
+  border: none;
+  background: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.te-viewport-btn.active {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  box-shadow: var(--shadow);
+}
+
+.te-viewport-btn:hover:not(.active) {
+  color: var(--color-text);
+}
+
+.te-preview-frame-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1rem;
+  overflow: auto;
+}
+
+.te-preview-iframe {
+  border: none;
+  background: white;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.te-preview-iframe.desktop {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+.te-preview-iframe.tablet {
+  width: 768px;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.te-preview-iframe.mobile {
+  width: 375px;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.te-preview-url {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── Right Panel (settings editor) ─── */
+.te-settings-panel {
+  width: 380px;
+  min-width: 380px;
+  background: var(--color-surface);
+  border-left: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.te-settings-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.te-settings-topbar-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.te-settings-topbar-title .te-type-badge {
+  font-weight: 400;
+}
+
+.te-editor-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.te-editor-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.te-editor-header {
+  margin-bottom: 1.25rem;
+}
+
+.te-editor-header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.te-editor-header .te-type-badge {
+  display: inline-block;
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+}
+
+/* ─── Block List ─── */
+.te-block-list {
+  list-style: none;
+}
+
+.te-block-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: background-color 0.15s, border-color 0.15s;
+  user-select: none;
+}
+
+.te-block-item:hover {
+  background-color: var(--color-bg);
+}
+
+.te-block-item.active {
+  background-color: rgba(37, 99, 235, 0.08);
+  border-left-color: var(--color-primary);
+}
+
+.te-block-item-drag {
+  cursor: grab;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  padding: 0.125rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.te-block-item-drag:active {
+  cursor: grabbing;
+}
+
+.te-block-item-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.te-block-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.te-block-item-name {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.te-block-item-type {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+}
+
+.te-block-item-delete {
+  opacity: 0;
+  transition: opacity 0.15s;
+  background: none;
+  border: none;
+  color: var(--color-danger);
+  font-size: 0.8125rem;
+  padding: 0.125rem 0.25rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.te-block-item:hover .te-block-item-delete {
+  opacity: 1;
+}
+
+.te-block-item-delete:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Dragging state */
+.te-block-item.dragging {
+  opacity: 0.5;
+  background-color: var(--color-bg);
+}
+
+.te-block-item-overlay {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius);
+}
+
+/* ─── Add Block ─── */
+.te-add-block-wrapper {
+  padding: 0.625rem 1rem;
+  border-top: 1px solid var(--color-border);
+  position: relative;
+}
+
+.te-add-block-btn {
+  width: 100%;
+  padding: 0.4375rem;
+  background: var(--color-bg);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.te-add-block-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.te-add-menu {
+  position: absolute;
+  bottom: 100%;
+  left: 1rem;
+  right: 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 0.375rem;
+  margin-bottom: 0.25rem;
+  z-index: 10;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.te-add-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4375rem 0.625rem;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.te-add-menu-item:hover {
+  background-color: var(--color-bg);
+}
+
+/* ─── Form Fields ─── */
+.te-field {
+  margin-bottom: 0.875rem;
+}
+
+.te-field label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+
+.te-field label .required {
+  color: var(--color-danger);
+  margin-left: 0.125rem;
+}
+
+.te-field input[type="text"],
+.te-field input[type="url"],
+.te-field input[type="number"],
+.te-field textarea,
+.te-field select {
+  width: 100%;
+  padding: 0.4375rem 0.625rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: border-color 0.15s;
+}
+
+.te-field input:focus,
+.te-field textarea:focus,
+.te-field select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+  background: white;
+}
+
+.te-field textarea {
+  min-height: 64px;
+  resize: vertical;
+}
+
+/* Boolean Field */
+.te-boolean-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.te-boolean-field input[type="checkbox"] {
+  width: 0.875rem;
+  height: 0.875rem;
+  accent-color: var(--color-primary);
+}
+
+.te-boolean-field span {
+  font-size: 0.8125rem;
+  color: var(--color-text);
+}
+
+/* Array Field */
+.te-array-field {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.75rem;
+}
+
+.te-array-field-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.te-array-field-header h4 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.te-array-field-add {
+  font-size: 0.6875rem;
+  padding: 0.1875rem 0.5rem;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.te-array-field-add:hover {
+  background: var(--color-primary-hover);
+}
+
+.te-array-item {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.625rem;
+  margin-bottom: 0.375rem;
+}
+
+.te-array-item:last-child {
+  margin-bottom: 0;
+}
+
+.te-array-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.375rem;
+}
+
+.te-array-item-header span {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.te-array-item-remove {
+  font-size: 0.6875rem;
+  padding: 0.0625rem 0.375rem;
+  background: none;
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.te-array-item-remove:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* ─── Page Settings ─── */
+.te-page-settings {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.te-page-settings-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 0;
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.te-page-settings-toggle span:last-child {
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+.te-page-settings-body {
+  padding-top: 0.625rem;
+}
+
+/* ─── Save / Toolbar ─── */
+.te-save-btn {
+  padding: 0.375rem 0.875rem;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.te-save-btn:hover {
+  background: var(--color-primary-hover);
+}
+
+.te-save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.te-dirty-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--color-warning);
+  border-radius: 50%;
+}
+
+.te-refresh-btn {
+  padding: 0.3125rem 0.5rem;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.te-refresh-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-muted);
+}
+
+/* ─── Toast ─── */
+.te-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: white;
+  z-index: 1000;
+  animation: te-toast-in 0.2s ease;
+}
+
+.te-toast.success { background: var(--color-success); }
+.te-toast.error { background: var(--color-danger); }
+
+@keyframes te-toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(0.5rem); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ─── Section divider in editor ─── */
+.te-section-divider {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  padding: 0.625rem 0 0.375rem;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 0.75rem;
+}

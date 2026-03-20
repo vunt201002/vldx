@@ -9,7 +9,10 @@ import routes from './routes/index';
 const app = express();
 
 // Middleware
-app.use(cors({ origin: config.frontendUrl, credentials: true }));
+app.use(cors({
+  origin: [config.frontendUrl, config.adminUrl],
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
