@@ -1,0 +1,218 @@
+{
+  "page": {
+    "title": "Giới Thiệu — Bê Tông Việt",
+    "description": "Câu chuyện 15 năm kiên trì với chất lượng vật liệu xây dựng.",
+    "bodyClass": "font-body bg-cream text-charcoal"
+  },
+  "order": [
+    "navbar",
+    "hero",
+    "about",
+    "featured",
+    "contact"
+  ],
+  "sections": {
+    "navbar": {
+      "type": "navbar",
+      "settings": {
+        "brandName": "bê tông",
+        "brandAccent": "việt",
+        "ctaLabel": "liên hệ",
+        "ctaHref": "/landing#contact"
+      },
+      "blocks": [
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "trang chủ",
+            "href": "/landing"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "sản phẩm",
+            "href": "/products"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "giới thiệu",
+            "href": "/about"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "dự án",
+            "href": "/projects"
+          }
+        }
+      ]
+    },
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "overline": "về chúng tôi",
+        "headline": "câu chuyện\nbê tông việt",
+        "subtitle": "từ xưởng sản xuất nhỏ tại miền nam đến thương hiệu vật liệu xây dựng cao cấp — hành trình 15 năm kiên trì với chất lượng.",
+        "scrollIndicatorText": "",
+        "primaryCtaLabel": "xem sản phẩm",
+        "primaryCtaHref": "/products",
+        "secondaryCtaLabel": "",
+        "secondaryCtaHref": ""
+      },
+      "blocks": []
+    },
+    "about": {
+      "type": "about",
+      "settings": {
+        "overline": "câu chuyện",
+        "title": "nguyên liệu",
+        "titleAccent": "tạo nên khác biệt",
+        "linkText": "liên hệ ngay",
+        "linkHref": "/landing#contact",
+        "visualLabel": "showroom",
+        "visualText": "xưởng sản xuất tại miền nam",
+        "paragraphs": [
+          "chúng tôi tin rằng mỗi viên gạch, mỗi tấm đá đều kể một câu chuyện riêng. từ những mỏ đá tự nhiên đến xưởng sản xuất thủ công, mỗi sản phẩm đều mang trong mình dấu ấn của đất, nước và bàn tay nghệ nhân việt nam.",
+          "với quy trình sản xuất thân thiện môi trường và tiêu chuẩn chất lượng quốc tế, sản phẩm của chúng tôi không chỉ đẹp mà còn bền vững theo thời gian — từ sân vườn đến nội thất, từ hồ bơi đến mặt tiền công trình."
+        ]
+      },
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "value": "15+",
+            "label": "năm kinh nghiệm"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "500+",
+            "label": "dự án hoàn thành"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "50+",
+            "label": "mẫu sản phẩm"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "100%",
+            "label": "nguyên liệu tự nhiên"
+          }
+        }
+      ]
+    },
+    "featured": {
+      "type": "featured",
+      "settings": {
+        "overline": "giá trị cốt lõi",
+        "title": "tại sao",
+        "titleAccent": "chọn chúng tôi"
+      },
+      "blocks": [
+        {
+          "type": "feature-card",
+          "settings": {
+            "iconName": "handcraft",
+            "title": "Sản Xuất Thủ Công",
+            "desc": "Mỗi sản phẩm được tạo ra bằng tay bởi đội ngũ nghệ nhân giàu kinh nghiệm."
+          }
+        },
+        {
+          "type": "feature-card",
+          "settings": {
+            "iconName": "natural",
+            "title": "Nguyên Liệu Tự Nhiên",
+            "desc": "100% nguyên liệu tự nhiên, không pha tạp, thân thiện với môi trường."
+          }
+        },
+        {
+          "type": "feature-card",
+          "settings": {
+            "iconName": "sizes",
+            "title": "Đa Dạng Kích Thước",
+            "desc": "Sản xuất theo kích thước tiêu chuẩn hoặc cắt theo yêu cầu riêng."
+          }
+        },
+        {
+          "type": "feature-card",
+          "settings": {
+            "iconName": "warranty",
+            "title": "Bảo Hành Dài Hạn",
+            "desc": "Cam kết bảo hành sản phẩm lên đến 10 năm."
+          }
+        }
+      ]
+    },
+    "contact": {
+      "type": "contact",
+      "settings": {
+        "overline": "liên hệ",
+        "title": "bắt đầu dự án",
+        "titleAccent": "của bạn",
+        "description": "liên hệ ngay để được tư vấn miễn phí.",
+        "formSubmitLabel": "gửi yêu cầu tư vấn",
+        "footerBrand": "bê tông việt",
+        "footerBrandAccent": "việt",
+        "footerCopyright": "© 2026 bê tông việt. thiết kế tại việt nam."
+      },
+      "blocks": [
+        {
+          "type": "contact-info",
+          "settings": {
+            "iconName": "phone",
+            "label": "hotline",
+            "value": "1900 xxxx xx"
+          }
+        },
+        {
+          "type": "contact-info",
+          "settings": {
+            "iconName": "email",
+            "label": "email",
+            "value": "info@betongviet.vn"
+          }
+        },
+        {
+          "type": "contact-info",
+          "settings": {
+            "iconName": "location",
+            "label": "showroom",
+            "value": "TP. Hồ Chí Minh",
+            "detail": "Thứ 2 – Thứ 7: 8:00 – 17:30"
+          }
+        },
+        {
+          "type": "social-link",
+          "settings": {
+            "label": "facebook",
+            "href": "#"
+          }
+        },
+        {
+          "type": "social-link",
+          "settings": {
+            "label": "instagram",
+            "href": "#"
+          }
+        },
+        {
+          "type": "social-link",
+          "settings": {
+            "label": "zalo",
+            "href": "#"
+          }
+        }
+      ]
+    }
+  }
+}

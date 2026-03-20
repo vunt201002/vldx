@@ -4,7 +4,6 @@ import AdminLayout from '@/layout/AdminLayout'
 import Dashboard from '@/pages/Dashboard'
 import Products from '@/pages/Products'
 import ProductDetail from '@/pages/ProductDetail'
-import PageList from '@/pages/PageList'
 import ThemeEditor from '@/pages/ThemeEditor'
 
 export default function App() {
@@ -15,7 +14,7 @@ export default function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="products" element={<Products />} />
         <Route path="products/:id" element={<ProductDetail />} />
-        <Route path="theme-editor" element={<PageList />} />
+        <Route path="theme-editor" element={<ThemeEditor />} />
         <Route path="theme-editor/:slug" element={<ThemeEditor />} />
       </Route>
     </Routes>

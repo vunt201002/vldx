@@ -4,7 +4,15 @@
     "description": "Gạch lát sân vườn, đá granite, terrazzo, gạch block — sản xuất thủ công tại Việt Nam với nguyên liệu tự nhiên hảo hạng.",
     "bodyClass": "font-body bg-cream text-charcoal"
   },
-  "order": ["navbar", "hero", "collections", "about", "featured", "gallery", "contact"],
+  "order": [
+    "navbar",
+    "hero",
+    "collections",
+    "about",
+    "featured",
+    "gallery",
+    "contact"
+  ],
   "sections": {
     "navbar": {
       "type": "navbar",
@@ -15,11 +23,34 @@
         "ctaHref": "#contact"
       },
       "blocks": [
-        { "type": "nav-link", "settings": { "label": "gạch lát", "href": "#collections" } },
-        { "type": "nav-link", "settings": { "label": "đá granite", "href": "#collections" } },
-        { "type": "nav-link", "settings": { "label": "terrazzo", "href": "#collections" } },
-        { "type": "nav-link", "settings": { "label": "gạch block", "href": "#collections" } },
-        { "type": "nav-link", "settings": { "label": "đá ốp lát", "href": "#collections" } }
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "sản phẩm",
+            "href": "/products"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "giới thiệu",
+            "href": "/about"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "dự án",
+            "href": "/projects"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "liên hệ",
+            "href": "#contact"
+          }
+        }
       ]
     },
     "hero": {
@@ -28,11 +59,11 @@
         "overline": "vật liệu xây dựng cao cấp",
         "headline": "bê tông\n& đá lát\nkiến trúc",
         "subtitle": "gạch lát sân vườn, đá granite, terrazzo, gạch block — sản xuất thủ công tại việt nam với nguyên liệu tự nhiên hảo hạng.",
+        "scrollIndicatorText": "cuộn xuống",
         "primaryCtaLabel": "khám phá",
-        "primaryCtaHref": "#collections",
+        "primaryCtaHref": "/products",
         "secondaryCtaLabel": "liên hệ",
-        "secondaryCtaHref": "#contact",
-        "scrollIndicatorText": "cuộn xuống"
+        "secondaryCtaHref": "#contact"
       },
       "blocks": []
     },
@@ -114,20 +145,44 @@
         "overline": "câu chuyện",
         "title": "nguyên liệu",
         "titleAccent": "tạo nên khác biệt",
-        "paragraphs": [
-          "chúng tôi tin rằng mỗi viên gạch, mỗi tấm đá đều kể một câu chuyện riêng. từ những mỏ đá tự nhiên đến xưởng sản xuất thủ công, mỗi sản phẩm đều mang trong mình dấu ấn của đất, nước và bàn tay nghệ nhân việt nam.",
-          "với quy trình sản xuất thân thiện môi trường và tiêu chuẩn chất lượng quốc tế, sản phẩm của chúng tôi không chỉ đẹp mà còn bền vững theo thời gian — từ sân vườn đến nội thất, từ hồ bơi đến mặt tiền công trình."
-        ],
         "linkText": "tìm hiểu thêm",
         "linkHref": "#contact",
         "visualLabel": "showroom",
-        "visualText": "xưởng sản xuất tại miền nam"
+        "visualText": "xưởng sản xuất tại miền nam",
+        "paragraphs": [
+          "chúng tôi tin rằng mỗi viên gạch, mỗi tấm đá đều kể một câu chuyện riêng. từ những mỏ đá tự nhiên đến xưởng sản xuất thủ công, mỗi sản phẩm đều mang trong mình dấu ấn của đất, nước và bàn tay nghệ nhân việt nam.",
+          "với quy trình sản xuất thân thiện môi trường và tiêu chuẩn chất lượng quốc tế, sản phẩm của chúng tôi không chỉ đẹp mà còn bền vững theo thời gian — từ sân vườn đến nội thất, từ hồ bơi đến mặt tiền công trình."
+        ]
       },
       "blocks": [
-        { "type": "stat", "settings": { "value": "15+", "label": "năm kinh nghiệm" } },
-        { "type": "stat", "settings": { "value": "500+", "label": "dự án hoàn thành" } },
-        { "type": "stat", "settings": { "value": "50+", "label": "mẫu sản phẩm" } },
-        { "type": "stat", "settings": { "value": "100%", "label": "nguyên liệu tự nhiên" } }
+        {
+          "type": "stat",
+          "settings": {
+            "value": "15+",
+            "label": "năm kinh nghiệm"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "500+",
+            "label": "dự án hoàn thành"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "50+",
+            "label": "mẫu sản phẩm"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "100%",
+            "label": "nguyên liệu tự nhiên"
+          }
+        }
       ]
     },
     "featured": {
@@ -179,15 +234,63 @@
         "title": "cảm hứng",
         "titleAccent": "thiết kế",
         "viewAllLabel": "xem tất cả",
-        "viewAllHref": "/materials"
+        "viewAllHref": "/projects"
       },
       "blocks": [
-        { "type": "gallery-item", "settings": { "label": "sân vườn biệt thự", "tag": "gạch lát", "gradient": "from-amber-700 to-stone-700", "aspect": "row-span-2" } },
-        { "type": "gallery-item", "settings": { "label": "bếp terrazzo", "tag": "terrazzo", "gradient": "from-stone-500 to-stone-700", "aspect": "" } },
-        { "type": "gallery-item", "settings": { "label": "hồ bơi resort", "tag": "coping", "gradient": "from-rose-700 to-stone-800", "aspect": "" } },
-        { "type": "gallery-item", "settings": { "label": "tường rào breeze block", "tag": "gạch block", "gradient": "from-slate-500 to-slate-700", "aspect": "" } },
-        { "type": "gallery-item", "settings": { "label": "nội thất cao cấp", "tag": "đá ốp", "gradient": "from-warm-500 to-warm-700", "aspect": "row-span-2" } },
-        { "type": "gallery-item", "settings": { "label": "lối đi công viên", "tag": "đá granite", "gradient": "from-cyan-700 to-slate-700", "aspect": "" } }
+        {
+          "type": "gallery-item",
+          "settings": {
+            "label": "sân vườn biệt thự",
+            "tag": "gạch lát",
+            "gradient": "from-amber-700 to-stone-700",
+            "aspect": "row-span-2"
+          }
+        },
+        {
+          "type": "gallery-item",
+          "settings": {
+            "label": "bếp terrazzo",
+            "tag": "terrazzo",
+            "gradient": "from-stone-500 to-stone-700",
+            "aspect": ""
+          }
+        },
+        {
+          "type": "gallery-item",
+          "settings": {
+            "label": "hồ bơi resort",
+            "tag": "coping",
+            "gradient": "from-rose-700 to-stone-800",
+            "aspect": ""
+          }
+        },
+        {
+          "type": "gallery-item",
+          "settings": {
+            "label": "tường rào breeze block",
+            "tag": "gạch block",
+            "gradient": "from-slate-500 to-slate-700",
+            "aspect": ""
+          }
+        },
+        {
+          "type": "gallery-item",
+          "settings": {
+            "label": "nội thất cao cấp",
+            "tag": "đá ốp",
+            "gradient": "from-warm-500 to-warm-700",
+            "aspect": "row-span-2"
+          }
+        },
+        {
+          "type": "gallery-item",
+          "settings": {
+            "label": "lối đi công viên",
+            "tag": "đá granite",
+            "gradient": "from-cyan-700 to-slate-700",
+            "aspect": ""
+          }
+        }
       ]
     },
     "contact": {
@@ -228,9 +331,27 @@
             "detail": "Thứ 2 – Thứ 7: 8:00 – 17:30"
           }
         },
-        { "type": "social-link", "settings": { "label": "facebook", "href": "#" } },
-        { "type": "social-link", "settings": { "label": "instagram", "href": "#" } },
-        { "type": "social-link", "settings": { "label": "zalo", "href": "#" } }
+        {
+          "type": "social-link",
+          "settings": {
+            "label": "facebook",
+            "href": "#"
+          }
+        },
+        {
+          "type": "social-link",
+          "settings": {
+            "label": "instagram",
+            "href": "#"
+          }
+        },
+        {
+          "type": "social-link",
+          "settings": {
+            "label": "zalo",
+            "href": "#"
+          }
+        }
       ]
     }
   }

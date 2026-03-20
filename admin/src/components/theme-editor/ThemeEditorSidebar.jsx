@@ -13,33 +13,36 @@ export default function ThemeEditorSidebar({
   onDeleteBlock,
   onAddBlock,
   onUpdatePage,
-  slug,
-  onBack,
+  pages,
+  currentSlug,
+  onPageSwitch,
 }) {
   return (
     <div className="te-sidebar">
+      {/* Page selector */}
+      {pages && pages.length > 1 && (
+        <div className="te-page-selector">
+          <select
+            value={currentSlug || ''}
+            onChange={(e) => onPageSwitch(e.target.value)}
+          >
+            {pages.map((p) => (
+              <option key={p.slug} value={p.slug}>
+                {p.title}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
       <div className="te-sidebar-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          {onBack && (
-            <button
-              onClick={onBack}
-              style={{
-                background: 'none', border: 'none', cursor: 'pointer',
-                fontSize: '1rem', color: 'var(--color-text-muted)', padding: '0.125rem',
-              }}
-              title="Back to pages"
-            >
-              ←
-            </button>
+        <div>
+          <h3>Sections</h3>
+          {currentSlug && (
+            <span style={{ fontSize: '0.6875rem', color: 'var(--color-text-muted)', fontFamily: 'monospace' }}>
+              /{currentSlug}
+            </span>
           )}
-          <div>
-            <h3>Sections</h3>
-            {slug && (
-              <span style={{ fontSize: '0.6875rem', color: 'var(--color-text-muted)', fontFamily: 'monospace' }}>
-                /{slug}
-              </span>
-            )}
-          </div>
         </div>
         <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
           {blocks.length} blocks

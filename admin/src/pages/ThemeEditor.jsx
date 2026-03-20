@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useCallback, useRef } from 'react'
+import React, { useReducer, useEffect, useCallback, useRef, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { get, put, post, del } from '@/lib/api'
 import ThemeEditorSidebar from '@/components/theme-editor/ThemeEditorSidebar'
@@ -21,6 +21,8 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
+    case 'LOADING':
+      return { ...initialState, loading: true }
     case 'LOADED':
       return {
         ...state,
@@ -87,11 +89,25 @@ export default function ThemeEditor() {
   const { slug } = useParams()
   const navigate = useNavigate()
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [pages, setPages] = useState([])
   const toastTimer = useRef(null)
 
+  // Load page list
+  useEffect(() => {
+    get('/theme/pages').then((res) => setPages(res.data)).catch(() => {})
+  }, [])
+
+  // Redirect to first page if no slug
+  useEffect(() => {
+    if (!slug && pages.length > 0) {
+      navigate(`/theme-editor/${pages[0].slug}`, { replace: true })
+    }
+  }, [slug, pages, navigate])
+
+  // Load page data when slug changes
   useEffect(() => {
     if (!slug) return
-    dispatch({ type: 'LOAD_ERROR', error: null })
+    dispatch({ type: 'LOADING' })
     async function load() {
       try {
         const [themeRes, defsRes] = await Promise.all([
@@ -130,6 +146,11 @@ export default function ThemeEditor() {
     return () => window.removeEventListener('beforeunload', handler)
   }, [state.dirty])
 
+  const handlePageSwitch = useCallback((newSlug) => {
+    if (state.dirty && !window.confirm('You have unsaved changes. Switch page anyway?')) return
+    navigate(`/theme-editor/${newSlug}`)
+  }, [state.dirty, navigate])
+
   const handleSave = useCallback(async () => {
     dispatch({ type: 'SAVING' })
     try {
@@ -164,6 +185,16 @@ export default function ThemeEditor() {
 
   const activeBlock = state.blocks.find((b) => b._id === state.activeBlockId)
 
+  if (!slug) {
+    return (
+      <div className="theme-editor">
+        <div className="te-editor-empty" style={{ flex: 1 }}>
+          {pages.length === 0 ? 'No pages found. Seed your database first.' : 'Redirecting...'}
+        </div>
+      </div>
+    )
+  }
+
   if (state.loading) {
     return (
       <div className="theme-editor">
@@ -194,8 +225,9 @@ export default function ThemeEditor() {
         onDeleteBlock={handleDeleteBlock}
         onAddBlock={handleAddBlock}
         onUpdatePage={(page) => dispatch({ type: 'UPDATE_PAGE', page })}
-        slug={slug}
-        onBack={() => navigate('/theme-editor')}
+        pages={pages}
+        currentSlug={slug}
+        onPageSwitch={handlePageSwitch}
       />
 
       <ThemePreview
