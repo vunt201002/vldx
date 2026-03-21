@@ -32,7 +32,8 @@ export const listPages = async (_req: Request, res: Response): Promise<void> => 
 
 /**
  * POST /api/theme/pages
- * Create a new page.
+ * Create a new page by cloning blocks from the landing template.
+ * The navbar block's links are updated to include all existing pages + the new one.
  */
 export const createPage = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -43,24 +44,71 @@ export const createPage = async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
+    if (!/^[a-z0-9-]+$/.test(slug)) {
+      res.status(400).json({ success: false, message: 'slug must be lowercase letters, numbers, and hyphens only' });
+      return;
+    }
+
     const existing = await Page.findOne({ slug });
     if (existing) {
       res.status(409).json({ success: false, message: `Page "${slug}" already exists` });
       return;
     }
 
+    // Find the landing page to use as template
+    const template = await Page.findOne({ slug: 'landing' }).populate('blocks.block').lean();
+
+    let pageBlocks: { block: any; order: number }[] = [];
+
+    if (template && template.blocks.length > 0) {
+      // Clone each block from the template
+      const sorted = [...template.blocks].sort((a: any, b: any) => a.order - b.order);
+
+      // Build nav links: list all existing pages + the new one
+      const allPages = await Page.find().select('slug title').lean();
+      const navLinks = [
+        { label: 'trang chủ', href: '/landing' },
+        ...allPages
+          .filter((p: any) => p.slug !== 'landing')
+          .map((p: any) => ({ label: p.title.split('—')[0].trim().toLowerCase(), href: `/${p.slug}` })),
+        { label: title.split('—')[0].trim().toLowerCase(), href: `/${slug}` },
+      ];
+
+      for (let i = 0; i < sorted.length; i++) {
+        const srcBlock = (sorted[i] as any).block;
+        const clonedData = JSON.parse(JSON.stringify(srcBlock.data || {}));
+
+        // Update navbar links to include all pages
+        if (srcBlock.type === 'navbar' && clonedData.links) {
+          clonedData.links = navLinks;
+        }
+
+        const newBlock = await Block.create({
+          type: srcBlock.type,
+          name: srcBlock.name,
+          data: clonedData,
+          settings: srcBlock.settings ? JSON.parse(JSON.stringify(srcBlock.settings)) : {},
+        });
+
+        pageBlocks.push({ block: newBlock._id, order: i });
+      }
+    }
+
     const page = await Page.create({
       slug,
       title,
       description: description || '',
-      bodyClass: bodyClass || '',
-      blocks: [],
+      bodyClass: bodyClass || template?.bodyClass || '',
+      blocks: pageBlocks,
       isPublished: false,
     });
 
-    // Write empty JSON file
-    const json = generatePageJson(page as any);
-    writePageJson(slug, json);
+    // Generate JSON file
+    const populated = await Page.findById(page._id).populate('blocks.block').lean();
+    if (populated) {
+      const json = generatePageJson(populated as any);
+      writePageJson(slug, json);
+    }
 
     res.status(201).json({
       success: true,
@@ -69,7 +117,7 @@ export const createPage = async (req: Request, res: Response): Promise<void> => 
         title: page.title,
         description: page.description,
         isPublished: page.isPublished,
-        blockCount: 0,
+        blockCount: pageBlocks.length,
       },
     });
   } catch (err: any) {
