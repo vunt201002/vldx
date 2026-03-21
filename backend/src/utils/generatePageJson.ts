@@ -16,6 +16,8 @@ interface PageData {
   title: string;
   description: string;
   bodyClass: string;
+  displayFont: string;
+  bodyFont: string;
   blocks: { block: PopulatedBlock; order: number }[];
 }
 
@@ -100,6 +102,8 @@ export function generatePageJson(page: PageData): object {
       title: page.title,
       description: page.description || '',
       bodyClass: page.bodyClass || '',
+      displayFont: page.displayFont || '',
+      bodyFont: page.bodyFont || '',
     },
     order,
     sections,

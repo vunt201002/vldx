@@ -178,6 +178,8 @@ export const getPageTheme = async (req: Request, res: Response): Promise<void> =
           title: page.title,
           description: page.description,
           bodyClass: page.bodyClass,
+          displayFont: page.displayFont || '',
+          bodyFont: page.bodyFont || '',
           isPublished: page.isPublished,
         },
         blocks: sortedBlocks.map((pb: any) => ({
@@ -218,6 +220,8 @@ export const savePageTheme = async (req: Request, res: Response): Promise<void> 
     page.title = pageMeta.title;
     page.description = pageMeta.description || '';
     page.bodyClass = pageMeta.bodyClass || '';
+    page.displayFont = pageMeta.displayFont || '';
+    page.bodyFont = pageMeta.bodyFont || '';
 
     const updatedPageBlocks: { block: any; order: number }[] = [];
 
