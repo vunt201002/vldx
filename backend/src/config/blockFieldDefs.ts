@@ -156,6 +156,32 @@ const blockFieldDefs: BlockTypeDef[] = [
     ],
   },
   {
+    type: 'color-picker',
+    label: 'Color Picker',
+    icon: '🎨',
+    fields: [
+      { key: 'overline', label: 'Overline', type: 'text' },
+      { key: 'title', label: 'Title', type: 'text' },
+      { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'columns', label: 'Columns', type: 'select', options: [
+        { label: '2', value: '2' },
+        { label: '3', value: '3' },
+        { label: '4', value: '4' },
+      ]},
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#ffffff' },
+      {
+        key: 'colors',
+        label: 'Colors',
+        type: 'array',
+        fields: [
+          { key: 'name', label: 'Name', type: 'text', required: true },
+          { key: 'hex', label: 'Color (hex)', type: 'text', placeholder: '#D4C8B8' },
+          { key: 'image', label: 'Texture Image', type: 'image' as any, uploadFolder: 'products' },
+        ],
+      },
+    ],
+  },
+  {
     type: 'material-showcase',
     label: 'Material Showcase',
     icon: '🪨',

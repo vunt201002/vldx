@@ -58,6 +58,12 @@ const blockJsonMappings: Record<string, BlockJsonMapping> = {
       { dataKey: 'stats', blockType: 'stat' },
     ],
   },
+  'color-picker': {
+    settingsFields: ['overline', 'title', 'description', 'columns', 'bgColor'],
+    arrayBlocks: [
+      { dataKey: 'colors', blockType: 'color-swatch' },
+    ],
+  },
   'material-showcase': {
     settingsFields: ['overline', 'title', 'titleAccent', 'description', 'previewPosition', 'previewAspect', 'thumbnailColumns', 'showSpecs', 'bgColor'],
     arrayBlocks: [
