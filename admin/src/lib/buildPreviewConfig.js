@@ -15,6 +15,12 @@ const blockJsonMappings = {
     settingsFields: ['imageUrl', 'imageAlt', 'imageMaxHeight'],
     arrayBlocks: [],
   },
+  'content-image': {
+    settingsFields: ['imageUrl', 'imageAlt', 'title', 'description', 'direction', 'mobileOrder', 'imageWidth', 'maxWidth', 'titleSize', 'descSize', 'titleColor', 'descColor', 'bgColor', 'sectionPadding'],
+    arrayBlocks: [
+      { dataKey: 'buttons', blockType: 'content-button' },
+    ],
+  },
   collections: {
     settingsFields: ['overline', 'title', 'titleAccent', 'description', 'cardLinkLabel'],
     arrayBlocks: [{ dataKey: 'products', blockType: 'product-card' }],
