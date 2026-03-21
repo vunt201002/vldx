@@ -30,6 +30,12 @@ const blockJsonMappings = {
     settingsArrayFields: ['paragraphs'],
     arrayBlocks: [{ dataKey: 'stats', blockType: 'stat' }],
   },
+  'material-showcase': {
+    settingsFields: ['overline', 'title', 'titleAccent', 'description', 'previewPosition', 'previewAspect', 'thumbnailColumns', 'showSpecs', 'bgColor'],
+    arrayBlocks: [
+      { dataKey: 'variants', blockType: 'variant-item' },
+    ],
+  },
   footer: {
     settingsFields: ['logoUrl', 'logoMaxWidth', 'brandName', 'copyright', 'bgColor', 'textColor', 'fontSize'],
     arrayBlocks: [

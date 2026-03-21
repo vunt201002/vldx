@@ -7,6 +7,7 @@ import Gallery from './Gallery';
 import Contact from './Contact';
 import ContentImage from './ContentImage';
 import Footer from './Footer';
+import MaterialShowcase from './MaterialShowcase';
 
 export const registry = {
   navbar: Navbar,
@@ -18,4 +19,5 @@ export const registry = {
   contact: Contact,
   'content-image': ContentImage,
   footer: Footer,
+  'material-showcase': MaterialShowcase,
 };

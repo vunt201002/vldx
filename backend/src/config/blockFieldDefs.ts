@@ -154,6 +154,46 @@ const blockFieldDefs: BlockTypeDef[] = [
     ],
   },
   {
+    type: 'material-showcase',
+    label: 'Material Showcase',
+    icon: '🪨',
+    fields: [
+      { key: 'overline', label: 'Overline', type: 'text' },
+      { key: 'title', label: 'Title', type: 'text', required: true },
+      { key: 'titleAccent', label: 'Title Accent', type: 'text' },
+      { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'previewPosition', label: 'Preview Position', type: 'select', options: [
+        { label: 'Left', value: 'left' },
+        { label: 'Right', value: 'right' },
+      ]},
+      { key: 'previewAspect', label: 'Preview Aspect Ratio', type: 'select', options: [
+        { label: '4:3 (Landscape)', value: '4/3' },
+        { label: '1:1 (Square)', value: '1/1' },
+        { label: '3:4 (Portrait)', value: '3/4' },
+      ]},
+      { key: 'thumbnailColumns', label: 'Thumbnails per Row', type: 'select', options: [
+        { label: '3', value: '3' },
+        { label: '4', value: '4' },
+        { label: '5', value: '5' },
+        { label: '6', value: '6' },
+      ]},
+      { key: 'showSpecs', label: 'Show Specs', type: 'boolean' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#F5F0EB' },
+      {
+        key: 'variants',
+        label: 'Material Variants',
+        type: 'array',
+        fields: [
+          { key: 'name', label: 'Name', type: 'text', required: true },
+          { key: 'image', label: 'Image', type: 'image' as any, uploadFolder: 'products' },
+          { key: 'description', label: 'Description', type: 'textarea' },
+          { key: 'specs', label: 'Specifications', type: 'text', placeholder: '400x1200mm | 30mm dày' },
+          { key: 'tag', label: 'Badge', type: 'text', placeholder: 'bán chạy' },
+        ],
+      },
+    ],
+  },
+  {
     type: 'footer',
     label: 'Footer',
     icon: '🦶',
