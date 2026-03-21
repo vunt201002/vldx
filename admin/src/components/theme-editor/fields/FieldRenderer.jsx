@@ -5,6 +5,7 @@ import NumberField from './NumberField'
 import BooleanField from './BooleanField'
 import SelectField from './SelectField'
 import ArrayField from './ArrayField'
+import ImageField from './ImageField'
 
 const fieldComponents = {
   text: TextField,
@@ -14,6 +15,7 @@ const fieldComponents = {
   boolean: BooleanField,
   select: SelectField,
   array: ArrayField,
+  image: ImageField,
 }
 
 export default function FieldRenderer({ field, value, onChange }) {

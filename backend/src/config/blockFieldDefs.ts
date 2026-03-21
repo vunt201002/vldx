@@ -9,11 +9,12 @@
 export interface FieldDef {
   key: string;
   label: string;
-  type: 'text' | 'textarea' | 'number' | 'boolean' | 'select' | 'url' | 'array';
+  type: 'text' | 'textarea' | 'number' | 'boolean' | 'select' | 'url' | 'array' | 'image';
   required?: boolean;
   placeholder?: string;
   options?: { label: string; value: string }[];
   fields?: FieldDef[]; // for array type
+  uploadFolder?: string; // for image type
 }
 
 export interface BlockTypeDef {
@@ -35,7 +36,7 @@ const blockFieldDefs: BlockTypeDef[] = [
       ]},
       { key: 'brandName', label: 'Brand Name', type: 'text' },
       { key: 'brandAccent', label: 'Brand Subtitle', type: 'text' },
-      { key: 'logoUrl', label: 'Logo Image URL', type: 'url', placeholder: 'Upload via /api/upload then paste URL' },
+      { key: 'logoUrl', label: 'Logo Image', type: 'image', uploadFolder: 'pages' },
       { key: 'logoMaxWidth', label: 'Logo Max Width (px)', type: 'number', placeholder: '160' },
       { key: 'navBgColor', label: 'Nav Background Color', type: 'text', placeholder: '#E8E0D6' },
       { key: 'menuFontSize', label: 'Menu Font Size', type: 'text', placeholder: '0.8rem' },
@@ -59,7 +60,7 @@ const blockFieldDefs: BlockTypeDef[] = [
     label: 'Hero Image',
     icon: '🖼️',
     fields: [
-      { key: 'imageUrl', label: 'Image URL', type: 'url', required: true, placeholder: 'Upload via /api/upload then paste URL' },
+      { key: 'imageUrl', label: 'Hero Image', type: 'image', required: true, uploadFolder: 'pages' },
       { key: 'imageAlt', label: 'Alt Text', type: 'text', placeholder: 'Describe the image' },
       { key: 'imageMaxHeight', label: 'Max Height', type: 'text', placeholder: '600px' },
     ],
