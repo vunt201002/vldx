@@ -56,17 +56,12 @@ const blockFieldDefs: BlockTypeDef[] = [
   },
   {
     type: 'hero',
-    label: 'Hero Banner',
-    icon: '🏔️',
+    label: 'Hero Image',
+    icon: '🖼️',
     fields: [
-      { key: 'overline', label: 'Overline', type: 'text' },
-      { key: 'headline', label: 'Headline', type: 'textarea', required: true },
-      { key: 'subtitle', label: 'Subtitle', type: 'textarea' },
-      { key: 'primaryCta.label', label: 'Primary CTA Label', type: 'text' },
-      { key: 'primaryCta.href', label: 'Primary CTA Link', type: 'url' },
-      { key: 'secondaryCta.label', label: 'Secondary CTA Label', type: 'text' },
-      { key: 'secondaryCta.href', label: 'Secondary CTA Link', type: 'url' },
-      { key: 'scrollIndicatorText', label: 'Scroll Indicator Text', type: 'text' },
+      { key: 'imageUrl', label: 'Image URL', type: 'url', required: true, placeholder: 'Upload via /api/upload then paste URL' },
+      { key: 'imageAlt', label: 'Alt Text', type: 'text', placeholder: 'Describe the image' },
+      { key: 'imageMaxHeight', label: 'Max Height', type: 'text', placeholder: '600px' },
     ],
   },
   {

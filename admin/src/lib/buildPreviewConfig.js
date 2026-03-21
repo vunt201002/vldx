@@ -12,12 +12,8 @@ const blockJsonMappings = {
     arrayBlocks: [{ dataKey: 'links', blockType: 'nav-link' }],
   },
   hero: {
-    settingsFields: ['overline', 'headline', 'subtitle', 'scrollIndicatorText'],
+    settingsFields: ['imageUrl', 'imageAlt', 'imageMaxHeight'],
     arrayBlocks: [],
-    flattenFields: [
-      { dataKey: 'primaryCta', prefix: 'primaryCta', subKeys: ['label', 'href'] },
-      { dataKey: 'secondaryCta', prefix: 'secondaryCta', subKeys: ['label', 'href'] },
-    ],
   },
   collections: {
     settingsFields: ['overline', 'title', 'titleAccent', 'description', 'cardLinkLabel'],
