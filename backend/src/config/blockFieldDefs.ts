@@ -29,8 +29,17 @@ const blockFieldDefs: BlockTypeDef[] = [
     label: 'Navigation Bar',
     icon: '🧭',
     fields: [
-      { key: 'brandName', label: 'Brand Name', type: 'text', required: true },
-      { key: 'brandAccent', label: 'Brand Accent', type: 'text' },
+      { key: 'brandMode', label: 'Brand Display', type: 'select', options: [
+        { label: 'Text', value: 'text' },
+        { label: 'Logo Image', value: 'logo' },
+      ]},
+      { key: 'brandName', label: 'Brand Name', type: 'text' },
+      { key: 'brandAccent', label: 'Brand Subtitle', type: 'text' },
+      { key: 'logoUrl', label: 'Logo Image URL', type: 'url', placeholder: 'Upload via /api/upload then paste URL' },
+      { key: 'logoMaxWidth', label: 'Logo Max Width (px)', type: 'number', placeholder: '160' },
+      { key: 'menuFontSize', label: 'Menu Font Size', type: 'text', placeholder: '0.8rem' },
+      { key: 'menuColor', label: 'Menu Text Color', type: 'text', placeholder: '#6B5D4E' },
+      { key: 'menuHoverColor', label: 'Menu Hover Color', type: 'text', placeholder: '#2E2720' },
       { key: 'ctaLabel', label: 'CTA Label', type: 'text' },
       { key: 'ctaHref', label: 'CTA Link', type: 'url' },
       {
