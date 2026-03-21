@@ -52,7 +52,7 @@ const blockJsonMappings: Record<string, BlockJsonMapping> = {
     ],
   },
   about: {
-    settingsFields: ['overline', 'title', 'titleAccent', 'linkText', 'linkHref', 'visualLabel', 'visualText'],
+    settingsFields: ['overline', 'title', 'titleAccent', 'linkText', 'linkHref', 'visualImage', 'visualLabel', 'visualText'],
     settingsArrayFields: ['paragraphs'],
     arrayBlocks: [
       { dataKey: 'stats', blockType: 'stat' },

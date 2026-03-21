@@ -120,6 +120,7 @@ const blockFieldDefs: BlockTypeDef[] = [
         fields: [
           { key: 'name', label: 'Name', type: 'text', required: true },
           { key: 'slug', label: 'Slug', type: 'text', required: true },
+          { key: 'image', label: 'Image', type: 'image' as any, uploadFolder: 'products' },
           { key: 'desc', label: 'Description', type: 'textarea' },
           { key: 'specs', label: 'Specs', type: 'text' },
           { key: 'color', label: 'Gradient Color', type: 'text' },
@@ -140,6 +141,7 @@ const blockFieldDefs: BlockTypeDef[] = [
       ]},
       { key: 'linkText', label: 'Link Text', type: 'text' },
       { key: 'linkHref', label: 'Link URL', type: 'url' },
+      { key: 'visualImage', label: 'Showroom Image', type: 'image' as any, uploadFolder: 'pages' },
       { key: 'visualLabel', label: 'Visual Label', type: 'text' },
       { key: 'visualText', label: 'Visual Text', type: 'text' },
       {
