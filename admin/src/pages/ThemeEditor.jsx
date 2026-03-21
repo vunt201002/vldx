@@ -283,6 +283,8 @@ export default function ThemeEditor() {
         slug={slug}
         activeBlockType={activeBlock?.type}
         previewKey={state.previewKey}
+        page={state.page}
+        blocks={state.blocks}
       />
 
       <BlockEditorPanel

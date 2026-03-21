@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import fs from 'fs';
 import path from 'path';
 import Head from 'next/head';
@@ -17,7 +18,26 @@ function buildGoogleFontsUrl(displayFont, bodyFont) {
   return `https://fonts.googleapis.com/css2?${families.join('&')}&display=swap`;
 }
 
-export default function DynamicPage({ config }) {
+export default function DynamicPage({ config: initialConfig }) {
+  const [config, setConfig] = useState(initialConfig);
+
+  // Listen for live preview updates from the theme editor
+  useEffect(() => {
+    const handleMessage = (e) => {
+      if (e.data?.type === 'theme-preview-update' && e.data.config) {
+        setConfig(e.data.config);
+      }
+    };
+    window.addEventListener('message', handleMessage);
+
+    // Tell the parent we're ready to receive preview data
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'theme-preview-ready' }, '*');
+    }
+
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
   if (!config) return null;
 
   const displayFont = config.page.displayFont || 'Cormorant';

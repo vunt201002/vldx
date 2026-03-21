@@ -1,4 +1,5 @@
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
+import buildPreviewConfig from '@/lib/buildPreviewConfig'
 
 const STOREFRONT_URL = import.meta.env.VITE_STOREFRONT_URL || 'http://localhost:3000'
 
@@ -8,21 +9,59 @@ const viewports = [
   { key: 'mobile', icon: '📲', label: 'Mobile' },
 ]
 
-export default function ThemePreview({ slug, activeBlockType, previewKey }) {
+export default function ThemePreview({ slug, activeBlockType, previewKey, page, blocks }) {
   const [viewport, setViewport] = useState('desktop')
   const iframeRef = useRef(null)
+  const iframeReady = useRef(false)
 
   const previewUrl = `${STOREFRONT_URL}/${slug}`
-
-  const handleRefresh = useCallback(() => {
-    if (iframeRef.current) {
-      iframeRef.current.src = iframeRef.current.src
-    }
-  }, [])
 
   const iframeSrc = activeBlockType
     ? `${previewUrl}#${activeBlockType}`
     : previewUrl
+
+  // Send live preview data to iframe
+  const sendPreviewData = useCallback(() => {
+    if (!iframeRef.current || !iframeReady.current || !page || !blocks) return
+    const config = buildPreviewConfig(page, blocks)
+    iframeRef.current.contentWindow.postMessage(
+      { type: 'theme-preview-update', config },
+      STOREFRONT_URL
+    )
+  }, [page, blocks])
+
+  // Listen for iframe ready signal
+  useEffect(() => {
+    const handleMessage = (e) => {
+      if (e.origin !== STOREFRONT_URL) return
+      if (e.data?.type === 'theme-preview-ready') {
+        iframeReady.current = true
+        sendPreviewData()
+      }
+    }
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [sendPreviewData])
+
+  // Send preview data whenever page or blocks change
+  useEffect(() => {
+    sendPreviewData()
+  }, [sendPreviewData])
+
+  const handleRefresh = useCallback(() => {
+    if (iframeRef.current) {
+      iframeReady.current = false
+      iframeRef.current.src = iframeRef.current.src
+    }
+  }, [])
+
+  const handleIframeLoad = useCallback(() => {
+    // Give iframe a moment to set up listener, then send
+    setTimeout(() => {
+      iframeReady.current = true
+      sendPreviewData()
+    }, 500)
+  }, [sendPreviewData])
 
   return (
     <div className="te-preview">
@@ -60,6 +99,7 @@ export default function ThemePreview({ slug, activeBlockType, previewKey }) {
           src={iframeSrc}
           className={`te-preview-iframe ${viewport}`}
           title="Storefront Preview"
+          onLoad={handleIframeLoad}
         />
       </div>
     </div>

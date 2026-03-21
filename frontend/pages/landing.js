@@ -1,6 +1,7 @@
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import SectionRenderer from '@/components/sections/SectionRenderer';
-import config from '@/config/pages/landing.json';
+import initialConfig from '@/config/pages/landing.json';
 
 function buildGoogleFontsUrl(displayFont, bodyFont) {
   const defaults = { display: 'Cormorant', body: 'Outfit' };
@@ -17,6 +18,24 @@ function buildGoogleFontsUrl(displayFont, bodyFont) {
 }
 
 export default function LandingPage() {
+  const [config, setConfig] = useState(initialConfig);
+
+  // Listen for live preview updates from the theme editor
+  useEffect(() => {
+    const handleMessage = (e) => {
+      if (e.data?.type === 'theme-preview-update' && e.data.config) {
+        setConfig(e.data.config);
+      }
+    };
+    window.addEventListener('message', handleMessage);
+
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'theme-preview-ready' }, '*');
+    }
+
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
   const displayFont = config.page.displayFont || 'Cormorant';
   const bodyFont = config.page.bodyFont || 'Outfit';
   const fontsUrl = buildGoogleFontsUrl(config.page.displayFont, config.page.bodyFont);
