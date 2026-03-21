@@ -5,6 +5,11 @@ import About from './About';
 import Featured from './Featured';
 import Gallery from './Gallery';
 import Contact from './Contact';
+import ContentImage from './ContentImage';
+import Footer from './Footer';
+import MaterialShowcase from './MaterialShowcase';
+import ColorPicker from './ColorPicker';
+import ServiceProcess from './ServiceProcess';
 
 export const registry = {
   navbar: Navbar,
@@ -14,4 +19,9 @@ export const registry = {
   featured: Featured,
   gallery: Gallery,
   contact: Contact,
+  'content-image': ContentImage,
+  footer: Footer,
+  'material-showcase': MaterialShowcase,
+  'color-picker': ColorPicker,
+  'service-process': ServiceProcess,
 };

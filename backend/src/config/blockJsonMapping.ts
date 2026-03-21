@@ -30,17 +30,19 @@ export interface BlockJsonMapping {
 
 const blockJsonMappings: Record<string, BlockJsonMapping> = {
   navbar: {
-    settingsFields: ['brandName', 'brandAccent', 'ctaLabel', 'ctaHref'],
+    settingsFields: ['brandMode', 'brandName', 'brandAccent', 'logoUrl', 'logoMaxWidth', 'navBgColor', 'menuFontSize', 'menuColor', 'menuHoverColor', 'ctaLabel', 'ctaHref'],
     arrayBlocks: [
       { dataKey: 'links', blockType: 'nav-link' },
     ],
   },
   hero: {
-    settingsFields: ['overline', 'headline', 'subtitle', 'scrollIndicatorText'],
+    settingsFields: ['imageUrl', 'imageAlt', 'imageMaxHeight'],
     arrayBlocks: [],
-    flattenFields: [
-      { dataKey: 'primaryCta', prefix: 'primaryCta', subKeys: ['label', 'href'] },
-      { dataKey: 'secondaryCta', prefix: 'secondaryCta', subKeys: ['label', 'href'] },
+  },
+  'content-image': {
+    settingsFields: ['imageUrl', 'imageAlt', 'title', 'description', 'direction', 'mobileOrder', 'imageWidth', 'maxWidth', 'titleSize', 'descSize', 'titleColor', 'descColor', 'bgColor', 'sectionPadding'],
+    arrayBlocks: [
+      { dataKey: 'buttons', blockType: 'content-button' },
     ],
   },
   collections: {
@@ -50,10 +52,29 @@ const blockJsonMappings: Record<string, BlockJsonMapping> = {
     ],
   },
   about: {
-    settingsFields: ['overline', 'title', 'titleAccent', 'linkText', 'linkHref', 'visualLabel', 'visualText'],
+    settingsFields: ['overline', 'title', 'titleAccent', 'linkText', 'linkHref', 'visualImage', 'visualLabel', 'visualText'],
     settingsArrayFields: ['paragraphs'],
     arrayBlocks: [
       { dataKey: 'stats', blockType: 'stat' },
+    ],
+  },
+  'color-picker': {
+    settingsFields: ['overline', 'title', 'description', 'columns', 'bgColor'],
+    arrayBlocks: [
+      { dataKey: 'colors', blockType: 'color-swatch' },
+    ],
+  },
+  'material-showcase': {
+    settingsFields: ['overline', 'title', 'titleAccent', 'description', 'previewPosition', 'previewAspect', 'thumbnailColumns', 'showSpecs', 'bgColor'],
+    arrayBlocks: [
+      { dataKey: 'variants', blockType: 'variant-item' },
+    ],
+  },
+  footer: {
+    settingsFields: ['logoUrl', 'logoMaxWidth', 'brandName', 'copyright', 'bgColor', 'textColor', 'fontSize'],
+    arrayBlocks: [
+      { dataKey: 'infoLines', blockType: 'footer-line' },
+      { dataKey: 'socialLinks', blockType: 'footer-social' },
     ],
   },
   featured: {
@@ -73,6 +94,12 @@ const blockJsonMappings: Record<string, BlockJsonMapping> = {
     arrayBlocks: [
       { dataKey: 'contactInfos', blockType: 'contact-info' },
       { dataKey: 'socialLinks', blockType: 'social-link' },
+    ],
+  },
+  'service-process': {
+    settingsFields: ['overline', 'title', 'titleAccent', 'description', 'imageUrl', 'imageAlt', 'ctaLabel', 'ctaHref', 'bgColor'],
+    arrayBlocks: [
+      { dataKey: 'steps', blockType: 'process-step' },
     ],
   },
 };

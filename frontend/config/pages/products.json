@@ -2,7 +2,9 @@
   "page": {
     "title": "Sản Phẩm — Bê Tông Việt",
     "description": "Khám phá toàn bộ dòng sản phẩm vật liệu xây dựng cao cấp.",
-    "bodyClass": "font-body bg-cream text-charcoal"
+    "bodyClass": "font-body bg-cream text-charcoal",
+    "displayFont": "",
+    "bodyFont": ""
   },
   "order": [
     "navbar",
@@ -52,16 +54,7 @@
     },
     "hero": {
       "type": "hero",
-      "settings": {
-        "overline": "bộ sưu tập đầy đủ",
-        "headline": "tất cả\nsản phẩm",
-        "subtitle": "khám phá toàn bộ dòng sản phẩm vật liệu xây dựng cao cấp — gạch lát, đá granite, terrazzo, gạch block và nhiều hơn nữa.",
-        "scrollIndicatorText": "",
-        "primaryCtaLabel": "liên hệ báo giá",
-        "primaryCtaHref": "/landing#contact",
-        "secondaryCtaLabel": "",
-        "secondaryCtaHref": ""
-      },
+      "settings": {},
       "blocks": []
     },
     "collections": {

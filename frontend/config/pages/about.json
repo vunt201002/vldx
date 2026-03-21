@@ -2,7 +2,9 @@
   "page": {
     "title": "Giới Thiệu — Bê Tông Việt",
     "description": "Câu chuyện 15 năm kiên trì với chất lượng vật liệu xây dựng.",
-    "bodyClass": "font-body bg-cream text-charcoal"
+    "bodyClass": "font-body bg-cream text-charcoal",
+    "displayFont": "",
+    "bodyFont": ""
   },
   "order": [
     "navbar",
@@ -53,16 +55,7 @@
     },
     "hero": {
       "type": "hero",
-      "settings": {
-        "overline": "về chúng tôi",
-        "headline": "câu chuyện\nbê tông việt",
-        "subtitle": "từ xưởng sản xuất nhỏ tại miền nam đến thương hiệu vật liệu xây dựng cao cấp — hành trình 15 năm kiên trì với chất lượng.",
-        "scrollIndicatorText": "",
-        "primaryCtaLabel": "xem sản phẩm",
-        "primaryCtaHref": "/products",
-        "secondaryCtaLabel": "",
-        "secondaryCtaHref": ""
-      },
+      "settings": {},
       "blocks": []
     },
     "about": {

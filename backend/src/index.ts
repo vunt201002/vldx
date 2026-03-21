@@ -5,6 +5,7 @@ import { connectDB } from './config/database';
 import { errorHandler } from './middleware/errorHandler';
 import { rateLimiter } from './middleware/rateLimiter';
 import routes from './routes/index';
+import { startPageJsonSync } from './utils/syncPageJsons';
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(errorHandler);
 // Start server
 const start = async (): Promise<void> => {
   await connectDB();
+  startPageJsonSync();
   app.listen(config.port, () => {
     console.info(`Server running on port ${config.port} [${config.nodeEnv}]`);
   });

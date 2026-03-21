@@ -164,6 +164,25 @@ export default function ThemeEditor() {
     }
   }, [slug, state.page, state.blocks])
 
+  const handleDiscard = useCallback(async () => {
+    if (!window.confirm('Discard all unsaved changes?')) return
+    dispatch({ type: 'LOADING' })
+    try {
+      const [themeRes, defsRes] = await Promise.all([
+        get(`/theme/pages/${slug}`),
+        get('/theme/field-defs'),
+      ])
+      dispatch({
+        type: 'LOADED',
+        page: themeRes.data.page,
+        blocks: themeRes.data.blocks,
+        fieldDefs: defsRes.data,
+      })
+    } catch (err) {
+      dispatch({ type: 'LOAD_ERROR', error: err.message })
+    }
+  }, [slug])
+
   const handleAddBlock = useCallback(async (type) => {
     try {
       const res = await post(`/theme/pages/${slug}/blocks`, { type })
@@ -264,6 +283,8 @@ export default function ThemeEditor() {
         slug={slug}
         activeBlockType={activeBlock?.type}
         previewKey={state.previewKey}
+        page={state.page}
+        blocks={state.blocks}
       />
 
       <BlockEditorPanel
@@ -273,6 +294,7 @@ export default function ThemeEditor() {
         dirty={state.dirty}
         saving={state.saving}
         onSave={handleSave}
+        onDiscard={handleDiscard}
       />
 
       {state.toast && (

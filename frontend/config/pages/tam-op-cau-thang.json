@@ -1,0 +1,315 @@
+{
+  "page": {
+    "title": "Tấm ốp cầu thang",
+    "description": "",
+    "bodyClass": "font-body bg-cream text-charcoal",
+    "displayFont": "",
+    "bodyFont": ""
+  },
+  "order": [
+    "navbar",
+    "hero",
+    "material-showcase",
+    "color-picker",
+    "service-process",
+    "footer"
+  ],
+  "sections": {
+    "navbar": {
+      "type": "navbar",
+      "settings": {
+        "brandMode": "logo",
+        "brandName": "bê tông",
+        "brandAccent": "việt",
+        "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/7e5836f6-d36a-4433-b2ea-89324e5191e4/black+cc+word+logo-02.png?format=500w",
+        "navBgColor": "#f7e2ce",
+        "menuFontSize": "20px",
+        "menuColor": "#1d1d1d",
+        "menuHoverColor": "#1d1d1d",
+        "ctaLabel": "",
+        "ctaHref": ""
+      },
+      "blocks": [
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "trang chủ",
+            "href": "/landing"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "Tấm ốp cầu thang",
+            "href": "/tam-op-cau-thang"
+          }
+        }
+      ]
+    },
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1585263030555-FT7UYHVSVB4889E9PK56/venturastairs.jpg",
+        "imageMaxHeight": "500px"
+      },
+      "blocks": []
+    },
+    "material-showcase": {
+      "type": "material-showcase",
+      "settings": {
+        "overline": "tấm ốp cầu thang",
+        "title": "chọn",
+        "titleAccent": "bề mặt hoàn thiện",
+        "description": "Khám phá các tùy chọn màu sắc và hoa văn cho tấm ốp cầu thang. Mỗi mẫu được sản xuất thủ công với nguyên liệu tự nhiên cao cấp.",
+        "previewPosition": "left",
+        "previewAspect": "4/3",
+        "thumbnailColumns": "4",
+        "showSpecs": true,
+        "bgColor": "#F5F0EB"
+      },
+      "blocks": [
+        {
+          "type": "variant-item",
+          "settings": {
+            "name": "Terrazzo Xám Tro",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
+            "description": "Bề mặt terrazzo với sỏi đá marble trắng trên nền xi măng xám. Phù hợp không gian hiện đại, tối giản.",
+            "specs": "400×1200mm  |  30mm dày  |  Chống trơn R10",
+            "tag": "bán chạy"
+          }
+        },
+        {
+          "type": "variant-item",
+          "settings": {
+            "name": "Đá Granite Đen",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584995197950-UYLNPKVCU97K7XBL8GHF/Broken-Terrazo.png",
+            "description": "Granite tự nhiên đen tuyền, đánh bóng bề mặt. Sang trọng và bền bỉ theo thời gian.",
+            "specs": "400×1200mm  |  20mm dày  |  Chống trơn R9",
+            "tag": ""
+          }
+        },
+        {
+          "type": "variant-item",
+          "settings": {
+            "name": "Terrazzo Hồng Pastel",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1743025520859-CDDVYDM76QGKBGKKLP26/HomeButtonCounter.jpg",
+            "description": "Terrazzo tông hồng nhẹ nhàng với đá marble và sỏi tự nhiên. Tạo điểm nhấn ấm áp cho cầu thang.",
+            "specs": "400×1200mm  |  30mm dày  |  Chống trơn R10",
+            "tag": "mới"
+          }
+        }
+      ]
+    },
+    "color-picker": {
+      "type": "color-picker",
+      "settings": {
+        "overline": "bảng màu",
+        "title": "Chọn Tông Màu Phù Hợp",
+        "description": "Đa dạng tông màu từ trung tính đến đậm, phù hợp mọi phong cách kiến trúc.",
+        "columns": "3",
+        "bgColor": "#ffffff"
+      },
+      "blocks": [
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Alabaster",
+            "hex": "#F2EDE3",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Ivory",
+            "hex": "#E8DFD0",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Pearl",
+            "hex": "#D4C8B8",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Quietude",
+            "hex": "#C4B8A5",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Acier",
+            "hex": "#A89F91",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Fossil",
+            "hex": "#8B8178",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Mocha",
+            "hex": "#6B5D4E",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Ebony",
+            "hex": "#3D352C",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Millennial Pink",
+            "hex": "#D4A9A1",
+            "image": ""
+          }
+        }
+      ]
+    },
+    "service-process": {
+      "type": "service-process",
+      "settings": {
+        "overline": "dịch vụ",
+        "title": "thi công",
+        "titleAccent": "trực tiếp",
+        "description": "Không phải công trình nào cũng phù hợp với sản phẩm có sẵn. Với dịch vụ thi công trực tiếp, đội ngũ của chúng tôi sẽ đến tận công trình để khảo sát, đo đạc và sản xuất tấm ốp theo đúng kích thước yêu cầu — đảm bảo vừa vặn hoàn hảo cho mọi cầu thang.",
+        "imageUrl": "",
+        "imageAlt": "Thi công tấm ốp cầu thang trực tiếp tại công trình",
+        "ctaLabel": "Liên hệ tư vấn",
+        "ctaHref": "/landing#contact",
+        "bgColor": "#F5F0EB"
+      },
+      "blocks": [
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "01",
+            "title": "Khảo sát",
+            "description": "Đội ngũ đến tận công trình để đánh giá hiện trạng cầu thang, tư vấn vật liệu và phong cách phù hợp.",
+            "image": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80"
+          }
+        },
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "02",
+            "title": "Đo đạc",
+            "description": "Đo đạc chi tiết từng bậc thang, góc cạnh và kích thước chính xác để đảm bảo sản phẩm vừa khít.",
+            "image": "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=600&q=80"
+          }
+        },
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "03",
+            "title": "Sản xuất",
+            "description": "Sản xuất tấm ốp theo đúng kích thước đo được, với chất liệu và màu sắc khách hàng đã chọn.",
+            "image": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80"
+          }
+        },
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "04",
+            "title": "Lắp đặt",
+            "description": "Thi công lắp đặt tại công trình bởi thợ lành nghề, đảm bảo chất lượng và thẩm mỹ hoàn thiện.",
+            "image": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80"
+          }
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1586821290470-46L6I4UQZEFD8HUGMOT0/bottomlogo.png",
+        "bgColor": "#f7e2ce"
+      },
+      "blocks": [
+        {
+          "type": "footer-line",
+          "settings": {
+            "text": "1.855.268.0800"
+          }
+        },
+        {
+          "type": "footer-line",
+          "settings": {
+            "text": "sales@concrete-collaborative.com"
+          }
+        },
+        {
+          "type": "footer-line",
+          "settings": {
+            "text": "concrete-collaborative.com"
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "facebook",
+            "icon": "facebook",
+            "href": "https://www.facebook.com/"
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "",
+            "icon": "instagram",
+            "href": "https://www.instagram.com/"
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "",
+            "icon": "email",
+            "href": "https://workspace.google.com/intl/vi/gmail/"
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "",
+            "icon": "linkedin",
+            "href": ""
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "",
+            "icon": "tiktok",
+            "href": ""
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "",
+            "icon": "zalo",
+            "href": ""
+          }
+        }
+      ]
+    }
+  }
+}

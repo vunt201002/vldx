@@ -16,6 +16,8 @@ interface PageData {
   title: string;
   description: string;
   bodyClass: string;
+  displayFont: string;
+  bodyFont: string;
   blocks: { block: PopulatedBlock; order: number }[];
 }
 
@@ -27,33 +29,34 @@ function capitalize(str: string): string {
  * Transform a single DB block into a page JSON section entry.
  */
 function blockToSection(block: PopulatedBlock): { id: string; section: any } {
+  const data = block.data || {};
   const mapping = blockJsonMappings[block.type];
   if (!mapping) {
     return {
       id: block.type,
-      section: { type: block.type, settings: { ...block.data }, blocks: [] },
+      section: { type: block.type, settings: { ...data }, blocks: [] },
     };
   }
 
   const settings: Record<string, any> = {};
 
   for (const key of mapping.settingsFields) {
-    if (block.data[key] !== undefined) {
-      settings[key] = block.data[key];
+    if (data[key] !== undefined) {
+      settings[key] = data[key];
     }
   }
 
   if (mapping.settingsArrayFields) {
     for (const key of mapping.settingsArrayFields) {
-      if (block.data[key] !== undefined) {
-        settings[key] = block.data[key];
+      if (data[key] !== undefined) {
+        settings[key] = data[key];
       }
     }
   }
 
   if (mapping.flattenFields) {
     for (const { dataKey, prefix, subKeys } of mapping.flattenFields) {
-      const nested = block.data[dataKey];
+      const nested = data[dataKey];
       if (nested && typeof nested === 'object') {
         for (const sub of subKeys) {
           if (nested[sub] !== undefined) {
@@ -66,7 +69,7 @@ function blockToSection(block: PopulatedBlock): { id: string; section: any } {
 
   const blocks: any[] = [];
   for (const { dataKey, blockType } of mapping.arrayBlocks) {
-    const arr = block.data[dataKey];
+    const arr = data[dataKey];
     if (Array.isArray(arr)) {
       for (const item of arr) {
         blocks.push({ type: blockType, settings: { ...item } });
@@ -100,6 +103,8 @@ export function generatePageJson(page: PageData): object {
       title: page.title,
       description: page.description || '',
       bodyClass: page.bodyClass || '',
+      displayFont: page.displayFont || '',
+      bodyFont: page.bodyFont || '',
     },
     order,
     sections,

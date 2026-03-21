@@ -10,6 +10,8 @@ export interface IPage extends Document {
   title: string;
   description: string;
   bodyClass: string;
+  displayFont: string;
+  bodyFont: string;
   blocks: IPageBlock[];
   isPublished: boolean;
   createdAt: Date;
@@ -50,6 +52,14 @@ const pageSchema = new Schema<IPage>(
       default: '',
     },
     bodyClass: {
+      type: String,
+      default: '',
+    },
+    displayFont: {
+      type: String,
+      default: '',
+    },
+    bodyFont: {
       type: String,
       default: '',
     },

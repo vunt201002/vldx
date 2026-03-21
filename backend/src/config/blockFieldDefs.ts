@@ -9,11 +9,12 @@
 export interface FieldDef {
   key: string;
   label: string;
-  type: 'text' | 'textarea' | 'number' | 'boolean' | 'select' | 'url' | 'array';
+  type: 'text' | 'textarea' | 'number' | 'boolean' | 'select' | 'url' | 'array' | 'image';
   required?: boolean;
   placeholder?: string;
   options?: { label: string; value: string }[];
   fields?: FieldDef[]; // for array type
+  uploadFolder?: string; // for image type
 }
 
 export interface BlockTypeDef {
@@ -29,8 +30,18 @@ const blockFieldDefs: BlockTypeDef[] = [
     label: 'Navigation Bar',
     icon: '🧭',
     fields: [
-      { key: 'brandName', label: 'Brand Name', type: 'text', required: true },
-      { key: 'brandAccent', label: 'Brand Accent', type: 'text' },
+      { key: 'brandMode', label: 'Brand Display', type: 'select', options: [
+        { label: 'Text', value: 'text' },
+        { label: 'Logo Image', value: 'logo' },
+      ]},
+      { key: 'brandName', label: 'Brand Name', type: 'text' },
+      { key: 'brandAccent', label: 'Brand Subtitle', type: 'text' },
+      { key: 'logoUrl', label: 'Logo Image', type: 'image', uploadFolder: 'pages' },
+      { key: 'logoMaxWidth', label: 'Logo Max Width (px)', type: 'number', placeholder: '160' },
+      { key: 'navBgColor', label: 'Nav Background Color', type: 'text', placeholder: '#E8E0D6' },
+      { key: 'menuFontSize', label: 'Menu Font Size', type: 'text', placeholder: '0.8rem' },
+      { key: 'menuColor', label: 'Menu Text Color', type: 'text', placeholder: '#6B5D4E' },
+      { key: 'menuHoverColor', label: 'Menu Hover Color', type: 'text', placeholder: '#2E2720' },
       { key: 'ctaLabel', label: 'CTA Label', type: 'text' },
       { key: 'ctaHref', label: 'CTA Link', type: 'url' },
       {
@@ -46,17 +57,50 @@ const blockFieldDefs: BlockTypeDef[] = [
   },
   {
     type: 'hero',
-    label: 'Hero Banner',
-    icon: '🏔️',
+    label: 'Hero Image',
+    icon: '🖼️',
     fields: [
-      { key: 'overline', label: 'Overline', type: 'text' },
-      { key: 'headline', label: 'Headline', type: 'textarea', required: true },
-      { key: 'subtitle', label: 'Subtitle', type: 'textarea' },
-      { key: 'primaryCta.label', label: 'Primary CTA Label', type: 'text' },
-      { key: 'primaryCta.href', label: 'Primary CTA Link', type: 'url' },
-      { key: 'secondaryCta.label', label: 'Secondary CTA Label', type: 'text' },
-      { key: 'secondaryCta.href', label: 'Secondary CTA Link', type: 'url' },
-      { key: 'scrollIndicatorText', label: 'Scroll Indicator Text', type: 'text' },
+      { key: 'imageUrl', label: 'Hero Image', type: 'image', required: true, uploadFolder: 'pages' },
+      { key: 'imageAlt', label: 'Alt Text', type: 'text', placeholder: 'Describe the image' },
+      { key: 'imageMaxHeight', label: 'Max Height', type: 'text', placeholder: '600px' },
+    ],
+  },
+  {
+    type: 'content-image',
+    label: 'Content + Image',
+    icon: '🖼️',
+    fields: [
+      { key: 'imageUrl', label: 'Image', type: 'image' as any, uploadFolder: 'pages' },
+      { key: 'imageAlt', label: 'Image Alt Text', type: 'text' },
+      { key: 'title', label: 'Title', type: 'text' },
+      { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'direction', label: 'Layout Direction', type: 'select', options: [
+        { label: 'Image Left / Text Right', value: 'image-left' },
+        { label: 'Image Right / Text Left', value: 'image-right' },
+      ]},
+      { key: 'mobileOrder', label: 'Mobile Order', type: 'select', options: [
+        { label: 'Image First', value: 'image-first' },
+        { label: 'Content First', value: 'content-first' },
+      ]},
+      { key: 'imageWidth', label: 'Image Width (%)', type: 'text', placeholder: '50' },
+      { key: 'maxWidth', label: 'Max Width', type: 'text', placeholder: '1400px' },
+      { key: 'titleSize', label: 'Title Font Size', type: 'text', placeholder: '2rem' },
+      { key: 'descSize', label: 'Description Font Size', type: 'text', placeholder: '1rem' },
+      { key: 'titleColor', label: 'Title Color', type: 'text', placeholder: '#1A1714' },
+      { key: 'descColor', label: 'Description Color', type: 'text', placeholder: '#4A3F34' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#ffffff' },
+      { key: 'sectionPadding', label: 'Section Padding', type: 'text', placeholder: '4rem 0' },
+      {
+        key: 'buttons',
+        label: 'Buttons',
+        type: 'array',
+        fields: [
+          { key: 'label', label: 'Label', type: 'text', required: true },
+          { key: 'href', label: 'Link', type: 'url', required: true },
+          { key: 'color', label: 'Text Color', type: 'text', placeholder: '#1A1714' },
+          { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: 'transparent' },
+        ],
+      },
     ],
   },
   {
@@ -76,6 +120,7 @@ const blockFieldDefs: BlockTypeDef[] = [
         fields: [
           { key: 'name', label: 'Name', type: 'text', required: true },
           { key: 'slug', label: 'Slug', type: 'text', required: true },
+          { key: 'image', label: 'Image', type: 'image' as any, uploadFolder: 'products' },
           { key: 'desc', label: 'Description', type: 'textarea' },
           { key: 'specs', label: 'Specs', type: 'text' },
           { key: 'color', label: 'Gradient Color', type: 'text' },
@@ -96,6 +141,7 @@ const blockFieldDefs: BlockTypeDef[] = [
       ]},
       { key: 'linkText', label: 'Link Text', type: 'text' },
       { key: 'linkHref', label: 'Link URL', type: 'url' },
+      { key: 'visualImage', label: 'Showroom Image', type: 'image' as any, uploadFolder: 'pages' },
       { key: 'visualLabel', label: 'Visual Label', type: 'text' },
       { key: 'visualText', label: 'Visual Text', type: 'text' },
       {
@@ -105,6 +151,112 @@ const blockFieldDefs: BlockTypeDef[] = [
         fields: [
           { key: 'value', label: 'Value', type: 'text', required: true },
           { key: 'label', label: 'Label', type: 'text', required: true },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'color-picker',
+    label: 'Color Picker',
+    icon: '🎨',
+    fields: [
+      { key: 'overline', label: 'Overline', type: 'text' },
+      { key: 'title', label: 'Title', type: 'text' },
+      { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'columns', label: 'Columns', type: 'select', options: [
+        { label: '2', value: '2' },
+        { label: '3', value: '3' },
+        { label: '4', value: '4' },
+      ]},
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#ffffff' },
+      {
+        key: 'colors',
+        label: 'Colors',
+        type: 'array',
+        fields: [
+          { key: 'name', label: 'Name', type: 'text', required: true },
+          { key: 'hex', label: 'Color (hex)', type: 'text', placeholder: '#D4C8B8' },
+          { key: 'image', label: 'Texture Image', type: 'image' as any, uploadFolder: 'products' },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'material-showcase',
+    label: 'Material Showcase',
+    icon: '🪨',
+    fields: [
+      { key: 'overline', label: 'Overline', type: 'text' },
+      { key: 'title', label: 'Title', type: 'text', required: true },
+      { key: 'titleAccent', label: 'Title Accent', type: 'text' },
+      { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'previewPosition', label: 'Preview Position', type: 'select', options: [
+        { label: 'Left', value: 'left' },
+        { label: 'Right', value: 'right' },
+      ]},
+      { key: 'previewAspect', label: 'Preview Aspect Ratio', type: 'select', options: [
+        { label: '4:3 (Landscape)', value: '4/3' },
+        { label: '1:1 (Square)', value: '1/1' },
+        { label: '3:4 (Portrait)', value: '3/4' },
+      ]},
+      { key: 'thumbnailColumns', label: 'Thumbnails per Row', type: 'select', options: [
+        { label: '3', value: '3' },
+        { label: '4', value: '4' },
+        { label: '5', value: '5' },
+        { label: '6', value: '6' },
+      ]},
+      { key: 'showSpecs', label: 'Show Specs', type: 'boolean' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#F5F0EB' },
+      {
+        key: 'variants',
+        label: 'Material Variants',
+        type: 'array',
+        fields: [
+          { key: 'name', label: 'Name', type: 'text', required: true },
+          { key: 'image', label: 'Image', type: 'image' as any, uploadFolder: 'products' },
+          { key: 'description', label: 'Description', type: 'textarea' },
+          { key: 'specs', label: 'Specifications', type: 'text', placeholder: '400x1200mm | 30mm dày' },
+          { key: 'tag', label: 'Badge', type: 'text', placeholder: 'bán chạy' },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'footer',
+    label: 'Footer',
+    icon: '🦶',
+    fields: [
+      { key: 'logoUrl', label: 'Logo Image', type: 'image' as any, uploadFolder: 'pages' },
+      { key: 'logoMaxWidth', label: 'Logo Max Width (px)', type: 'number', placeholder: '180' },
+      { key: 'brandName', label: 'Brand Name (alt text)', type: 'text' },
+      { key: 'copyright', label: 'Copyright Text', type: 'text' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#E8E0D6' },
+      { key: 'textColor', label: 'Text Color', type: 'text', placeholder: '#1A1714' },
+      { key: 'fontSize', label: 'Info Font Size', type: 'text', placeholder: '0.9rem' },
+      {
+        key: 'infoLines',
+        label: 'Info Lines',
+        type: 'array',
+        fields: [
+          { key: 'text', label: 'Text', type: 'text', required: true },
+        ],
+      },
+      {
+        key: 'socialLinks',
+        label: 'Social Links',
+        type: 'array',
+        fields: [
+          { key: 'label', label: 'Label', type: 'text', required: true },
+          { key: 'icon', label: 'Icon', type: 'select', options: [
+            { label: 'Email', value: 'email' },
+            { label: 'Instagram', value: 'instagram' },
+            { label: 'Facebook', value: 'facebook' },
+            { label: 'LinkedIn', value: 'linkedin' },
+            { label: 'Pinterest', value: 'pinterest' },
+            { label: 'TikTok', value: 'tiktok' },
+            { label: 'Zalo', value: 'zalo' },
+          ]},
+          { key: 'href', label: 'URL', type: 'url', required: true },
         ],
       },
     ],
@@ -195,6 +347,33 @@ const blockFieldDefs: BlockTypeDef[] = [
         fields: [
           { key: 'label', label: 'Label', type: 'text', required: true },
           { key: 'href', label: 'URL', type: 'url', required: true },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'service-process',
+    label: 'Service Process',
+    icon: '🔧',
+    fields: [
+      { key: 'overline', label: 'Overline', type: 'text' },
+      { key: 'title', label: 'Title', type: 'text', required: true },
+      { key: 'titleAccent', label: 'Title Accent', type: 'text' },
+      { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'imageUrl', label: 'Feature Image', type: 'image' as any, uploadFolder: 'pages' },
+      { key: 'imageAlt', label: 'Image Alt Text', type: 'text' },
+      { key: 'ctaLabel', label: 'CTA Button Label', type: 'text' },
+      { key: 'ctaHref', label: 'CTA Button Link', type: 'url' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#F5F0EB' },
+      {
+        key: 'steps',
+        label: 'Process Steps',
+        type: 'array',
+        fields: [
+          { key: 'image', label: 'Step Image/GIF', type: 'image' as any, uploadFolder: 'pages' },
+          { key: 'stepNumber', label: 'Step Number', type: 'text', placeholder: '01' },
+          { key: 'title', label: 'Title', type: 'text', required: true },
+          { key: 'description', label: 'Description', type: 'textarea' },
         ],
       },
     ],

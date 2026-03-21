@@ -26,8 +26,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        display: ['"Cormorant"', 'serif'],
-        body: ['"Outfit"', 'sans-serif'],
+        display: ['var(--font-display)', 'serif'],
+        body: ['var(--font-body)', 'sans-serif'],
       },
       animation: {
         'fade-up': 'fadeUp 0.8s ease-out forwards',

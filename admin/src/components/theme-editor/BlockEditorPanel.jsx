@@ -30,7 +30,7 @@ function setNestedValue(obj, keyPath, value) {
   }
 }
 
-export default function BlockEditorPanel({ block, fieldDefs, onUpdateBlock, dirty, saving, onSave }) {
+export default function BlockEditorPanel({ block, fieldDefs, onUpdateBlock, dirty, saving, onSave, onDiscard }) {
   if (!block) {
     return (
       <div className="te-settings-panel">
@@ -66,6 +66,15 @@ export default function BlockEditorPanel({ block, fieldDefs, onUpdateBlock, dirt
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           {dirty && <span className="te-dirty-dot" title="Unsaved changes" />}
+          {dirty && (
+            <button
+              className="te-discard-btn"
+              onClick={onDiscard}
+              disabled={saving}
+            >
+              Discard
+            </button>
+          )}
           <button
             className="te-save-btn"
             onClick={onSave}

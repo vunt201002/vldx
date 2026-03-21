@@ -1,7 +1,7 @@
 {
   "page": {
-    "title": "Bê Tông Việt — Vật Liệu Xây Dựng Cao Cấp",
-    "description": "Gạch lát sân vườn, đá granite, terrazzo, gạch block — sản xuất thủ công tại Việt Nam với nguyên liệu tự nhiên hảo hạng.",
+    "title": "Our service",
+    "description": "",
     "bodyClass": "font-body bg-cream text-charcoal",
     "displayFont": "",
     "bodyFont": ""
@@ -9,70 +9,56 @@
   "order": [
     "navbar",
     "hero",
-    "content-image",
     "collections",
     "about",
     "featured",
-    "footer"
+    "gallery",
+    "contact"
   ],
   "sections": {
     "navbar": {
       "type": "navbar",
       "settings": {
-        "brandMode": "logo",
         "brandName": "bê tông",
         "brandAccent": "việt",
-        "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/7e5836f6-d36a-4433-b2ea-89324e5191e4/black+cc+word+logo-02.png?format=500w",
-        "navBgColor": "#f7e2ce",
-        "menuFontSize": "20px",
-        "menuColor": "#1d1d1d",
-        "menuHoverColor": "#1d1d1d",
-        "ctaLabel": "",
-        "ctaHref": ""
+        "ctaLabel": "liên hệ",
+        "ctaHref": "#contact"
       },
       "blocks": [
         {
           "type": "nav-link",
           "settings": {
-            "label": "Trang chủ",
+            "label": "trang chủ",
             "href": "/landing"
           }
         },
         {
           "type": "nav-link",
           "settings": {
-            "label": "Tấm ốp cầu thang",
-            "href": "/tam-op-cau-thang"
+            "label": "sản phẩm",
+            "href": "/products"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "giới thiệu",
+            "href": "/about"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "our service",
+            "href": "/service"
           }
         }
       ]
     },
     "hero": {
       "type": "hero",
-      "settings": {
-        "imageUrl": "https://res.cloudinary.com/dsjbprdeh/image/upload/v1774104066/vlxd/pages/q23cod31nqxi7ly2fi6y.png"
-      },
+      "settings": {},
       "blocks": []
-    },
-    "content-image": {
-      "type": "content-image",
-      "settings": {
-        "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
-        "title": "modern concrete + terrazzo architectural finishes.",
-        "description": "pair our products together to flow seamlessly from inside to out. explore our next generation concrete and terrazzo surfaces like floor & wall tiles, exterior pavers & pool copings, countertops & vanities, stair-treads, patterned encaustic cement tiles, breeze-blocks, tabletops & basins. in a range of modern colors, unique natural stone aggregates and tactile textures. we have every surface covered!",
-        "direction": "image-left"
-      },
-      "blocks": [
-        {
-          "type": "content-button",
-          "settings": {
-            "label": "Shop",
-            "href": "",
-            "color": "",
-            "bgColor": ""
-          }
-        }
-      ]
     },
     "collections": {
       "type": "collections",
@@ -91,8 +77,7 @@
             "slug": "gach-lat",
             "desc": "Bề mặt chống trơn, chịu lực cao, phù hợp lối đi và sân vườn ngoài trời.",
             "specs": "400×400mm  ·  50mm dày",
-            "color": "from-amber-800/80 to-amber-900/90",
-            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1768243985842-BGCPNOLXQ3WHGXCK4N6Y/image-asset.jpeg"
+            "color": "from-amber-800/80 to-amber-900/90"
           }
         },
         {
@@ -102,8 +87,7 @@
             "slug": "da-granite",
             "desc": "Đá tự nhiên gia công chính xác, bề mặt mài nhám hoặc đánh bóng theo yêu cầu.",
             "specs": "600×300mm  ·  20mm dày",
-            "color": "from-stone-600/80 to-stone-800/90",
-            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1768058800206-THI2COEH13KVMOX4CKZ7/image-asset.jpeg"
+            "color": "from-stone-600/80 to-stone-800/90"
           }
         },
         {
@@ -113,8 +97,7 @@
             "slug": "terrazzo",
             "desc": "Phối trộn đá marble, granite và xi măng — mỗi viên gạch là một tác phẩm nghệ thuật.",
             "specs": "400×400mm  ·  30mm dày",
-            "color": "from-rose-800/70 to-stone-800/90",
-            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1767908173531-RLO0PKUD5FRE4N7K56M5/image-asset.jpeg"
+            "color": "from-rose-800/70 to-stone-800/90"
           }
         },
         {
@@ -124,8 +107,7 @@
             "slug": "gach-block",
             "desc": "Gạch thông gió trang trí, tạo điểm nhấn kiến trúc cho tường rào và mặt tiền.",
             "specs": "190×190mm  ·  90mm dày",
-            "color": "from-slate-600/80 to-slate-800/90",
-            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1767804833767-VUM9ZY5BQ7Q4GK9ZH391/image-asset.jpeg"
+            "color": "from-slate-600/80 to-slate-800/90"
           }
         },
         {
@@ -135,8 +117,7 @@
             "slug": "da-op-lat",
             "desc": "Đá ốp tường và lát nền, vân tự nhiên, phù hợp không gian nội thất cao cấp.",
             "specs": "600×600mm  ·  15mm dày",
-            "color": "from-warm-500/80 to-warm-800/90",
-            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1767723233738-FAXUDL7PPF37R5AILWKG/image-asset.jpeg"
+            "color": "from-warm-500/80 to-warm-800/90"
           }
         },
         {
@@ -146,8 +127,7 @@
             "slug": "bac-thang",
             "desc": "Bậc cầu thang và viền hồ bơi, bo cạnh tròn an toàn, chống trơn trượt.",
             "specs": "1000×350mm  ·  40mm dày",
-            "color": "from-cyan-800/70 to-slate-800/90",
-            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/4cc2a380-4c1f-4608-a94d-e26250fe255a/shopinstockpinkleft.png"
+            "color": "from-cyan-800/70 to-slate-800/90"
           }
         }
       ]
@@ -160,7 +140,6 @@
         "titleAccent": "tạo nên khác biệt",
         "linkText": "tìm hiểu thêm",
         "linkHref": "#contact",
-        "visualImage": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/62fe8751-d366-4437-8617-404be7cacc5e/24_SpecGuide_VeniceNew_02.png",
         "visualLabel": "showroom",
         "visualText": "xưởng sản xuất tại miền nam",
         "paragraphs": [
@@ -241,77 +220,129 @@
         }
       ]
     },
-    "footer": {
-      "type": "footer",
+    "gallery": {
+      "type": "gallery",
       "settings": {
-        "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1586821290470-46L6I4UQZEFD8HUGMOT0/bottomlogo.png",
-        "bgColor": "#f7e2ce"
+        "overline": "dự án",
+        "title": "cảm hứng",
+        "titleAccent": "thiết kế",
+        "viewAllLabel": "xem tất cả",
+        "viewAllHref": "/projects"
       },
       "blocks": [
         {
-          "type": "footer-line",
+          "type": "gallery-item",
           "settings": {
-            "text": "1.855.268.0800"
+            "label": "sân vườn biệt thự",
+            "tag": "gạch lát",
+            "gradient": "from-amber-700 to-stone-700",
+            "aspect": "row-span-2"
           }
         },
         {
-          "type": "footer-line",
+          "type": "gallery-item",
           "settings": {
-            "text": "sales@concrete-collaborative.com"
+            "label": "bếp terrazzo",
+            "tag": "terrazzo",
+            "gradient": "from-stone-500 to-stone-700",
+            "aspect": ""
           }
         },
         {
-          "type": "footer-line",
+          "type": "gallery-item",
           "settings": {
-            "text": "concrete-collaborative.com"
+            "label": "hồ bơi resort",
+            "tag": "coping",
+            "gradient": "from-rose-700 to-stone-800",
+            "aspect": ""
           }
         },
         {
-          "type": "footer-social",
+          "type": "gallery-item",
+          "settings": {
+            "label": "tường rào breeze block",
+            "tag": "gạch block",
+            "gradient": "from-slate-500 to-slate-700",
+            "aspect": ""
+          }
+        },
+        {
+          "type": "gallery-item",
+          "settings": {
+            "label": "nội thất cao cấp",
+            "tag": "đá ốp",
+            "gradient": "from-warm-500 to-warm-700",
+            "aspect": "row-span-2"
+          }
+        },
+        {
+          "type": "gallery-item",
+          "settings": {
+            "label": "lối đi công viên",
+            "tag": "đá granite",
+            "gradient": "from-cyan-700 to-slate-700",
+            "aspect": ""
+          }
+        }
+      ]
+    },
+    "contact": {
+      "type": "contact",
+      "settings": {
+        "overline": "liên hệ",
+        "title": "bắt đầu dự án",
+        "titleAccent": "của bạn",
+        "description": "liên hệ ngay để được tư vấn miễn phí về vật liệu phù hợp cho công trình. đội ngũ chuyên gia sẵn sàng hỗ trợ bạn từ thiết kế đến thi công.",
+        "formSubmitLabel": "gửi yêu cầu tư vấn",
+        "footerBrand": "bê tông việt",
+        "footerBrandAccent": "việt",
+        "footerCopyright": "© 2026 bê tông việt. thiết kế tại việt nam."
+      },
+      "blocks": [
+        {
+          "type": "contact-info",
+          "settings": {
+            "iconName": "phone",
+            "label": "hotline",
+            "value": "1900 xxxx xx"
+          }
+        },
+        {
+          "type": "contact-info",
+          "settings": {
+            "iconName": "email",
+            "label": "email",
+            "value": "info@betongviet.vn"
+          }
+        },
+        {
+          "type": "contact-info",
+          "settings": {
+            "iconName": "location",
+            "label": "showroom",
+            "value": "TP. Hồ Chí Minh",
+            "detail": "Thứ 2 – Thứ 7: 8:00 – 17:30"
+          }
+        },
+        {
+          "type": "social-link",
           "settings": {
             "label": "facebook",
-            "icon": "facebook",
-            "href": "https://www.facebook.com/"
+            "href": "#"
           }
         },
         {
-          "type": "footer-social",
+          "type": "social-link",
           "settings": {
-            "label": "",
-            "icon": "instagram",
-            "href": "https://www.instagram.com/"
+            "label": "instagram",
+            "href": "#"
           }
         },
         {
-          "type": "footer-social",
+          "type": "social-link",
           "settings": {
-            "label": "",
-            "icon": "email",
-            "href": "https://workspace.google.com/intl/vi/gmail/"
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "linkedin",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "tiktok",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "zalo",
-            "href": ""
+            "label": "zalo",
+            "href": "#"
           }
         }
       ]
