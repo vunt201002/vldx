@@ -154,6 +154,46 @@ const blockFieldDefs: BlockTypeDef[] = [
     ],
   },
   {
+    type: 'footer',
+    label: 'Footer',
+    icon: '🦶',
+    fields: [
+      { key: 'logoUrl', label: 'Logo Image', type: 'image' as any, uploadFolder: 'pages' },
+      { key: 'logoMaxWidth', label: 'Logo Max Width (px)', type: 'number', placeholder: '180' },
+      { key: 'brandName', label: 'Brand Name (alt text)', type: 'text' },
+      { key: 'copyright', label: 'Copyright Text', type: 'text' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#E8E0D6' },
+      { key: 'textColor', label: 'Text Color', type: 'text', placeholder: '#1A1714' },
+      { key: 'fontSize', label: 'Info Font Size', type: 'text', placeholder: '0.9rem' },
+      {
+        key: 'infoLines',
+        label: 'Info Lines',
+        type: 'array',
+        fields: [
+          { key: 'text', label: 'Text', type: 'text', required: true },
+        ],
+      },
+      {
+        key: 'socialLinks',
+        label: 'Social Links',
+        type: 'array',
+        fields: [
+          { key: 'label', label: 'Label', type: 'text', required: true },
+          { key: 'icon', label: 'Icon', type: 'select', options: [
+            { label: 'Email', value: 'email' },
+            { label: 'Instagram', value: 'instagram' },
+            { label: 'Facebook', value: 'facebook' },
+            { label: 'LinkedIn', value: 'linkedin' },
+            { label: 'Pinterest', value: 'pinterest' },
+            { label: 'TikTok', value: 'tiktok' },
+            { label: 'Zalo', value: 'zalo' },
+          ]},
+          { key: 'href', label: 'URL', type: 'url', required: true },
+        ],
+      },
+    ],
+  },
+  {
     type: 'featured',
     label: 'Why Choose Us',
     icon: '⭐',

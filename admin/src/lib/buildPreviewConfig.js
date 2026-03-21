@@ -30,6 +30,13 @@ const blockJsonMappings = {
     settingsArrayFields: ['paragraphs'],
     arrayBlocks: [{ dataKey: 'stats', blockType: 'stat' }],
   },
+  footer: {
+    settingsFields: ['logoUrl', 'logoMaxWidth', 'brandName', 'copyright', 'bgColor', 'textColor', 'fontSize'],
+    arrayBlocks: [
+      { dataKey: 'infoLines', blockType: 'footer-line' },
+      { dataKey: 'socialLinks', blockType: 'footer-social' },
+    ],
+  },
   featured: {
     settingsFields: ['overline', 'title', 'titleAccent'],
     arrayBlocks: [{ dataKey: 'features', blockType: 'feature-card' }],

@@ -6,6 +6,7 @@ import Featured from './Featured';
 import Gallery from './Gallery';
 import Contact from './Contact';
 import ContentImage from './ContentImage';
+import Footer from './Footer';
 
 export const registry = {
   navbar: Navbar,
@@ -16,4 +17,5 @@ export const registry = {
   gallery: Gallery,
   contact: Contact,
   'content-image': ContentImage,
+  footer: Footer,
 };

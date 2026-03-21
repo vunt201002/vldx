@@ -58,6 +58,13 @@ const blockJsonMappings: Record<string, BlockJsonMapping> = {
       { dataKey: 'stats', blockType: 'stat' },
     ],
   },
+  footer: {
+    settingsFields: ['logoUrl', 'logoMaxWidth', 'brandName', 'copyright', 'bgColor', 'textColor', 'fontSize'],
+    arrayBlocks: [
+      { dataKey: 'infoLines', blockType: 'footer-line' },
+      { dataKey: 'socialLinks', blockType: 'footer-social' },
+    ],
+  },
   featured: {
     settingsFields: ['overline', 'title', 'titleAccent'],
     arrayBlocks: [
