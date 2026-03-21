@@ -30,7 +30,7 @@ export interface BlockJsonMapping {
 
 const blockJsonMappings: Record<string, BlockJsonMapping> = {
   navbar: {
-    settingsFields: ['brandMode', 'brandName', 'brandAccent', 'logoUrl', 'logoMaxWidth', 'menuFontSize', 'menuColor', 'menuHoverColor', 'ctaLabel', 'ctaHref'],
+    settingsFields: ['brandMode', 'brandName', 'brandAccent', 'logoUrl', 'logoMaxWidth', 'navBgColor', 'menuFontSize', 'menuColor', 'menuHoverColor', 'ctaLabel', 'ctaHref'],
     arrayBlocks: [
       { dataKey: 'links', blockType: 'nav-link' },
     ],

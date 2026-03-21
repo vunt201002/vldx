@@ -37,6 +37,7 @@ const blockFieldDefs: BlockTypeDef[] = [
       { key: 'brandAccent', label: 'Brand Subtitle', type: 'text' },
       { key: 'logoUrl', label: 'Logo Image URL', type: 'url', placeholder: 'Upload via /api/upload then paste URL' },
       { key: 'logoMaxWidth', label: 'Logo Max Width (px)', type: 'number', placeholder: '160' },
+      { key: 'navBgColor', label: 'Nav Background Color', type: 'text', placeholder: '#E8E0D6' },
       { key: 'menuFontSize', label: 'Menu Font Size', type: 'text', placeholder: '0.8rem' },
       { key: 'menuColor', label: 'Menu Text Color', type: 'text', placeholder: '#6B5D4E' },
       { key: 'menuHoverColor', label: 'Menu Hover Color', type: 'text', placeholder: '#2E2720' },

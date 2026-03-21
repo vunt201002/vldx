@@ -7,6 +7,7 @@ export default function Navbar({ settings, blocks }) {
   const navLinks = blocks.filter((b) => b.type === 'nav-link');
   const isLogo = settings.brandMode === 'logo' && settings.logoUrl;
   const logoMaxW = settings.logoMaxWidth ? `${settings.logoMaxWidth}px` : '160px';
+  const navBg = settings.navBgColor || undefined;
   const fontSize = settings.menuFontSize || '0.8rem';
   const color = settings.menuColor || undefined;
   const hoverColor = settings.menuHoverColor || undefined;
@@ -17,7 +18,7 @@ export default function Navbar({ settings, blocks }) {
   };
 
   return (
-    <nav className="relative z-50 bg-sand border-b border-warm-300/50">
+    <nav className="relative z-50 border-b border-warm-300/50" style={navBg ? { backgroundColor: navBg } : undefined}>
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
         <div className="flex items-start gap-10 py-5 lg:py-6">
           {/* Brand: text or logo */}
@@ -85,7 +86,7 @@ export default function Navbar({ settings, blocks }) {
       <div className={`lg:hidden overflow-hidden transition-all duration-400 ease-in-out ${
         menuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
       }`}>
-        <div className="bg-sand border-t border-warm-300/50 px-6 py-5 space-y-3">
+        <div className="border-t border-warm-300/50 px-6 py-5 space-y-3" style={navBg ? { backgroundColor: navBg } : undefined}>
           {navLinks.map((link) => (
             <a
               key={link.settings.label}
