@@ -183,6 +183,34 @@ export default function ThemeEditor() {
     }
   }, [slug])
 
+  const handleCreatePage = useCallback(async (newSlug, newTitle) => {
+    try {
+      const res = await post('/theme/pages', { slug: newSlug, title: newTitle })
+      if (res.success) {
+        // Refresh page list and navigate to the new page
+        const listRes = await get('/theme/pages')
+        setPages(listRes.data)
+        navigate(`/theme-editor/${newSlug}`)
+      }
+    } catch (err) {
+      dispatch({ type: 'SAVE_ERROR', error: err.message })
+    }
+  }, [navigate])
+
+  const handleDeletePage = useCallback(async (pageSlug) => {
+    if (!window.confirm(`Delete page "/${pageSlug}"? This removes all its blocks.`)) return
+    try {
+      await del(`/theme/pages/${pageSlug}`)
+      const listRes = await get('/theme/pages')
+      setPages(listRes.data)
+      if (listRes.data.length > 0) {
+        navigate(`/theme-editor/${listRes.data[0].slug}`)
+      }
+    } catch (err) {
+      dispatch({ type: 'SAVE_ERROR', error: err.message })
+    }
+  }, [navigate])
+
   const activeBlock = state.blocks.find((b) => b._id === state.activeBlockId)
 
   if (!slug) {
@@ -228,6 +256,8 @@ export default function ThemeEditor() {
         pages={pages}
         currentSlug={slug}
         onPageSwitch={handlePageSwitch}
+        onCreatePage={handleCreatePage}
+        onDeletePage={handleDeletePage}
       />
 
       <ThemePreview
