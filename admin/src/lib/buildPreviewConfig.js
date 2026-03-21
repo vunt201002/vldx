@@ -64,6 +64,12 @@ const blockJsonMappings = {
       { dataKey: 'socialLinks', blockType: 'social-link' },
     ],
   },
+  'service-process': {
+    settingsFields: ['overline', 'title', 'titleAccent', 'description', 'imageUrl', 'imageAlt', 'ctaLabel', 'ctaHref', 'bgColor'],
+    arrayBlocks: [
+      { dataKey: 'steps', blockType: 'process-step' },
+    ],
+  },
 }
 
 function capitalize(str) {

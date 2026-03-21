@@ -11,6 +11,7 @@
     "hero",
     "material-showcase",
     "color-picker",
+    "service-process",
     "footer"
   ],
   "sections": {
@@ -179,6 +180,58 @@
             "name": "Millennial Pink",
             "hex": "#D4A9A1",
             "image": ""
+          }
+        }
+      ]
+    },
+    "service-process": {
+      "type": "service-process",
+      "settings": {
+        "overline": "dịch vụ",
+        "title": "thi công",
+        "titleAccent": "trực tiếp",
+        "description": "Không phải công trình nào cũng phù hợp với sản phẩm có sẵn. Với dịch vụ thi công trực tiếp, đội ngũ của chúng tôi sẽ đến tận công trình để khảo sát, đo đạc và sản xuất tấm ốp theo đúng kích thước yêu cầu — đảm bảo vừa vặn hoàn hảo cho mọi cầu thang.",
+        "imageUrl": "",
+        "imageAlt": "Thi công tấm ốp cầu thang trực tiếp tại công trình",
+        "ctaLabel": "Liên hệ tư vấn",
+        "ctaHref": "/landing#contact",
+        "bgColor": "#F5F0EB"
+      },
+      "blocks": [
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "01",
+            "title": "Khảo sát",
+            "description": "Đội ngũ đến tận công trình để đánh giá hiện trạng cầu thang, tư vấn vật liệu và phong cách phù hợp.",
+            "image": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80"
+          }
+        },
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "02",
+            "title": "Đo đạc",
+            "description": "Đo đạc chi tiết từng bậc thang, góc cạnh và kích thước chính xác để đảm bảo sản phẩm vừa khít.",
+            "image": "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=600&q=80"
+          }
+        },
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "03",
+            "title": "Sản xuất",
+            "description": "Sản xuất tấm ốp theo đúng kích thước đo được, với chất liệu và màu sắc khách hàng đã chọn.",
+            "image": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80"
+          }
+        },
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "04",
+            "title": "Lắp đặt",
+            "description": "Thi công lắp đặt tại công trình bởi thợ lành nghề, đảm bảo chất lượng và thẩm mỹ hoàn thiện.",
+            "image": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80"
           }
         }
       ]

@@ -9,6 +9,7 @@ import ContentImage from './ContentImage';
 import Footer from './Footer';
 import MaterialShowcase from './MaterialShowcase';
 import ColorPicker from './ColorPicker';
+import ServiceProcess from './ServiceProcess';
 
 export const registry = {
   navbar: Navbar,
@@ -22,4 +23,5 @@ export const registry = {
   footer: Footer,
   'material-showcase': MaterialShowcase,
   'color-picker': ColorPicker,
+  'service-process': ServiceProcess,
 };

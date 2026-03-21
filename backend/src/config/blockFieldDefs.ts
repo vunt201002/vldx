@@ -351,6 +351,33 @@ const blockFieldDefs: BlockTypeDef[] = [
       },
     ],
   },
+  {
+    type: 'service-process',
+    label: 'Service Process',
+    icon: '🔧',
+    fields: [
+      { key: 'overline', label: 'Overline', type: 'text' },
+      { key: 'title', label: 'Title', type: 'text', required: true },
+      { key: 'titleAccent', label: 'Title Accent', type: 'text' },
+      { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'imageUrl', label: 'Feature Image', type: 'image' as any, uploadFolder: 'pages' },
+      { key: 'imageAlt', label: 'Image Alt Text', type: 'text' },
+      { key: 'ctaLabel', label: 'CTA Button Label', type: 'text' },
+      { key: 'ctaHref', label: 'CTA Button Link', type: 'url' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#F5F0EB' },
+      {
+        key: 'steps',
+        label: 'Process Steps',
+        type: 'array',
+        fields: [
+          { key: 'image', label: 'Step Image/GIF', type: 'image' as any, uploadFolder: 'pages' },
+          { key: 'stepNumber', label: 'Step Number', type: 'text', placeholder: '01' },
+          { key: 'title', label: 'Title', type: 'text', required: true },
+          { key: 'description', label: 'Description', type: 'textarea' },
+        ],
+      },
+    ],
+  },
 ];
 
 export default blockFieldDefs;
