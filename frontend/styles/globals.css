@@ -12,6 +12,24 @@ body {
   font-family: 'Outfit', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Full-width breakout for hero images */
+.hero-full-width {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50dvw;
+  margin-right: -50dvw;
+  width: 100dvw;
+  line-height: 0;
+}
+
+.hero-full-width img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Scroll-triggered reveal animations */
@@ -95,6 +113,7 @@ body {
 /* Smooth scroll */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 /* Custom scrollbar */
