@@ -328,6 +328,67 @@ export const addBlock = async (req: Request, res: Response): Promise<void> => {
 };
 
 /**
+ * POST /api/theme/pages/:slug/blocks/clone
+ * Clone a block from another page (copies type, name, data, settings).
+ */
+export const cloneBlock = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { slug } = req.params;
+    const { sourceBlockId, position } = req.body;
+
+    if (!sourceBlockId) {
+      res.status(400).json({ success: false, message: 'sourceBlockId is required' });
+      return;
+    }
+
+    const page = await Page.findOne({ slug });
+    if (!page) {
+      res.status(404).json({ success: false, message: `Page "${slug}" not found` });
+      return;
+    }
+
+    const sourceBlock = await Block.findById(sourceBlockId).lean();
+    if (!sourceBlock) {
+      res.status(404).json({ success: false, message: 'Source block not found' });
+      return;
+    }
+
+    const newBlock = await Block.create({
+      type: sourceBlock.type,
+      name: sourceBlock.name,
+      data: sourceBlock.data || {},
+      settings: sourceBlock.settings || {},
+    });
+
+    const pos = position !== undefined ? position : page.blocks.length;
+
+    const blocks = page.blocks.map((b: any) => ({
+      block: b.block,
+      order: b.order >= pos ? b.order + 1 : b.order,
+    }));
+    blocks.push({ block: newBlock._id as any, order: pos });
+    blocks.sort((a: any, b: any) => a.order - b.order);
+
+    page.blocks = blocks as any;
+    await page.save();
+
+    res.json({
+      success: true,
+      data: {
+        _id: newBlock._id,
+        type: newBlock.type,
+        name: newBlock.name,
+        data: newBlock.data,
+        settings: newBlock.settings,
+        order: pos,
+      },
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
  * DELETE /api/theme/pages/:slug/blocks/:blockId
  * Remove a block from a page and delete the block document.
  */

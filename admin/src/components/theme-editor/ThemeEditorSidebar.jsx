@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import BlockList from './BlockList'
 import AddBlockMenu from './AddBlockMenu'
+import CopyBlockModal from './CopyBlockModal'
 import PageSettingsPanel from './PageSettingsPanel'
 
 export default function ThemeEditorSidebar({
@@ -12,6 +13,7 @@ export default function ThemeEditorSidebar({
   onReorder,
   onDeleteBlock,
   onAddBlock,
+  onCloneBlock,
   onUpdatePage,
   pages,
   currentSlug,
@@ -20,6 +22,7 @@ export default function ThemeEditorSidebar({
   onDeletePage,
 }) {
   const [showCreate, setShowCreate] = useState(false)
+  const [showCopyModal, setShowCopyModal] = useState(false)
   const [newSlug, setNewSlug] = useState('')
   const [newTitle, setNewTitle] = useState('')
   const [creating, setCreating] = useState(false)
@@ -121,7 +124,22 @@ export default function ThemeEditorSidebar({
           onDelete={onDeleteBlock}
         />
       </div>
-      <AddBlockMenu fieldDefs={fieldDefs} onAdd={onAddBlock} />
+      <div className="te-add-actions">
+        <AddBlockMenu fieldDefs={fieldDefs} onAdd={onAddBlock} />
+        <button className="te-copy-block-btn" onClick={() => setShowCopyModal(true)} title="Copy block from another page">
+          Copy from page
+        </button>
+      </div>
+
+      {showCopyModal && (
+        <CopyBlockModal
+          pages={pages}
+          currentSlug={currentSlug}
+          fieldDefs={fieldDefs}
+          onClone={onCloneBlock}
+          onClose={() => setShowCopyModal(false)}
+        />
+      )}
     </div>
   )
 }

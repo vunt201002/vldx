@@ -192,6 +192,15 @@ export default function ThemeEditor() {
     }
   }, [slug])
 
+  const handleCloneBlock = useCallback(async (sourceBlockId) => {
+    try {
+      const res = await post(`/theme/pages/${slug}/blocks/clone`, { sourceBlockId })
+      dispatch({ type: 'ADD_BLOCK', block: res.data })
+    } catch (err) {
+      dispatch({ type: 'SAVE_ERROR', error: err.message })
+    }
+  }, [slug])
+
   const handleDeleteBlock = useCallback(async (id) => {
     if (!window.confirm('Remove this section?')) return
     try {
@@ -271,6 +280,7 @@ export default function ThemeEditor() {
         onReorder={(from, to) => dispatch({ type: 'REORDER', from, to })}
         onDeleteBlock={handleDeleteBlock}
         onAddBlock={handleAddBlock}
+        onCloneBlock={handleCloneBlock}
         onUpdatePage={(page) => dispatch({ type: 'UPDATE_PAGE', page })}
         pages={pages}
         currentSlug={slug}
