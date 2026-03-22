@@ -7,6 +7,7 @@ import {
   savePageTheme,
   getFieldDefs,
   addBlock,
+  cloneBlock,
   deleteBlock,
 } from '../controllers/themeController';
 
@@ -25,6 +26,7 @@ router.get('/pages/:slug', getPageTheme);
 router.put('/pages/:slug', savePageTheme);
 
 // Block management within a page
+router.post('/pages/:slug/blocks/clone', cloneBlock);
 router.post('/pages/:slug/blocks', addBlock);
 router.delete('/pages/:slug/blocks/:blockId', deleteBlock);
 

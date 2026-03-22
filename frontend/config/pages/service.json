@@ -9,20 +9,20 @@
   "order": [
     "navbar",
     "hero",
-    "collections",
-    "about",
-    "featured",
-    "gallery",
-    "contact"
+    "service-process",
+    "footer"
   ],
   "sections": {
     "navbar": {
       "type": "navbar",
       "settings": {
+        "brandMode": "logo",
         "brandName": "bê tông",
         "brandAccent": "việt",
-        "ctaLabel": "liên hệ",
-        "ctaHref": "#contact"
+        "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/7e5836f6-d36a-4433-b2ea-89324e5191e4/black+cc+word+logo-02.png?format=500w",
+        "menuFontSize": "20px",
+        "ctaLabel": "",
+        "ctaHref": ""
       },
       "blocks": [
         {
@@ -35,21 +35,14 @@
         {
           "type": "nav-link",
           "settings": {
-            "label": "sản phẩm",
-            "href": "/products"
+            "label": "Tấm ốp cầu thang",
+            "href": "/tam-op-cau-thang"
           }
         },
         {
           "type": "nav-link",
           "settings": {
-            "label": "giới thiệu",
-            "href": "/about"
-          }
-        },
-        {
-          "type": "nav-link",
-          "settings": {
-            "label": "our service",
+            "label": "Thi công trực tiếp",
             "href": "/service"
           }
         }
@@ -57,292 +50,143 @@
     },
     "hero": {
       "type": "hero",
-      "settings": {},
+      "settings": {
+        "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1749659975747-Y4705OPRR2BJEP01EYI8/sun+soul+style+interiors+_+javakai_kauai_hi-res_18.jpg",
+        "imageMaxHeight": "500px"
+      },
       "blocks": []
     },
-    "collections": {
-      "type": "collections",
+    "service-process": {
+      "type": "service-process",
       "settings": {
-        "overline": "bộ sưu tập",
-        "title": "sản phẩm",
-        "titleAccent": "nổi bật",
-        "description": "mỗi dòng sản phẩm được sản xuất thủ công, kiểm soát chất lượng nghiêm ngặt từ nguyên liệu đến thành phẩm.",
-        "cardLinkLabel": "xem chi tiết"
+        "overline": "dịch vụ",
+        "title": "thi công",
+        "titleAccent": "trực tiếp",
+        "description": "Không phải công trình nào cũng phù hợp với sản phẩm có sẵn. Với dịch vụ thi công trực tiếp, đội ngũ của chúng tôi sẽ đến tận công trình để khảo sát, đo đạc và sản xuất tấm ốp theo đúng kích thước yêu cầu — đảm bảo vừa vặn hoàn hảo cho mọi cầu thang.",
+        "imageUrl": "",
+        "imageAlt": "Thi công tấm ốp cầu thang trực tiếp tại công trình",
+        "ctaLabel": "Liên hệ tư vấn",
+        "ctaHref": "/landing#contact",
+        "bgColor": "#F5F0EB"
       },
       "blocks": [
         {
-          "type": "product-card",
+          "type": "process-step",
           "settings": {
-            "name": "Gạch Lát Sân Vườn",
-            "slug": "gach-lat",
-            "desc": "Bề mặt chống trơn, chịu lực cao, phù hợp lối đi và sân vườn ngoài trời.",
-            "specs": "400×400mm  ·  50mm dày",
-            "color": "from-amber-800/80 to-amber-900/90"
+            "stepNumber": "01",
+            "title": "Khảo sát",
+            "description": "Đội ngũ đến tận công trình để đánh giá hiện trạng cầu thang, tư vấn vật liệu và phong cách phù hợp.",
+            "image": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80"
           }
         },
         {
-          "type": "product-card",
+          "type": "process-step",
           "settings": {
-            "name": "Đá Granite",
-            "slug": "da-granite",
-            "desc": "Đá tự nhiên gia công chính xác, bề mặt mài nhám hoặc đánh bóng theo yêu cầu.",
-            "specs": "600×300mm  ·  20mm dày",
-            "color": "from-stone-600/80 to-stone-800/90"
+            "stepNumber": "02",
+            "title": "Đo đạc",
+            "description": "Đo đạc chi tiết từng bậc thang, góc cạnh và kích thước chính xác để đảm bảo sản phẩm vừa khít.",
+            "image": "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=600&q=80"
           }
         },
         {
-          "type": "product-card",
+          "type": "process-step",
           "settings": {
-            "name": "Terrazzo",
-            "slug": "terrazzo",
-            "desc": "Phối trộn đá marble, granite và xi măng — mỗi viên gạch là một tác phẩm nghệ thuật.",
-            "specs": "400×400mm  ·  30mm dày",
-            "color": "from-rose-800/70 to-stone-800/90"
+            "stepNumber": "03",
+            "title": "Sản xuất",
+            "description": "Sản xuất tấm ốp theo đúng kích thước đo được, với chất liệu và màu sắc khách hàng đã chọn.",
+            "image": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80"
           }
         },
         {
-          "type": "product-card",
+          "type": "process-step",
           "settings": {
-            "name": "Gạch Block",
-            "slug": "gach-block",
-            "desc": "Gạch thông gió trang trí, tạo điểm nhấn kiến trúc cho tường rào và mặt tiền.",
-            "specs": "190×190mm  ·  90mm dày",
-            "color": "from-slate-600/80 to-slate-800/90"
-          }
-        },
-        {
-          "type": "product-card",
-          "settings": {
-            "name": "Đá Ốp Lát",
-            "slug": "da-op-lat",
-            "desc": "Đá ốp tường và lát nền, vân tự nhiên, phù hợp không gian nội thất cao cấp.",
-            "specs": "600×600mm  ·  15mm dày",
-            "color": "from-warm-500/80 to-warm-800/90"
-          }
-        },
-        {
-          "type": "product-card",
-          "settings": {
-            "name": "Bậc Thang & Coping",
-            "slug": "bac-thang",
-            "desc": "Bậc cầu thang và viền hồ bơi, bo cạnh tròn an toàn, chống trơn trượt.",
-            "specs": "1000×350mm  ·  40mm dày",
-            "color": "from-cyan-800/70 to-slate-800/90"
+            "stepNumber": "04",
+            "title": "Lắp đặt",
+            "description": "Thi công lắp đặt tại công trình bởi thợ lành nghề, đảm bảo chất lượng và thẩm mỹ hoàn thiện.",
+            "image": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80"
           }
         }
       ]
     },
-    "about": {
-      "type": "about",
+    "footer": {
+      "type": "footer",
       "settings": {
-        "overline": "câu chuyện",
-        "title": "nguyên liệu",
-        "titleAccent": "tạo nên khác biệt",
-        "linkText": "tìm hiểu thêm",
-        "linkHref": "#contact",
-        "visualLabel": "showroom",
-        "visualText": "xưởng sản xuất tại miền nam",
-        "paragraphs": [
-          "chúng tôi tin rằng mỗi viên gạch, mỗi tấm đá đều kể một câu chuyện riêng. từ những mỏ đá tự nhiên đến xưởng sản xuất thủ công, mỗi sản phẩm đều mang trong mình dấu ấn của đất, nước và bàn tay nghệ nhân việt nam.",
-          "với quy trình sản xuất thân thiện môi trường và tiêu chuẩn chất lượng quốc tế, sản phẩm của chúng tôi không chỉ đẹp mà còn bền vững theo thời gian — từ sân vườn đến nội thất, từ hồ bơi đến mặt tiền công trình."
-        ]
+        "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1586821290470-46L6I4UQZEFD8HUGMOT0/bottomlogo.png",
+        "bgColor": "#f7e2ce"
       },
       "blocks": [
         {
-          "type": "stat",
+          "type": "footer-line",
           "settings": {
-            "value": "15+",
-            "label": "năm kinh nghiệm"
+            "text": "1.855.268.0800"
           }
         },
         {
-          "type": "stat",
+          "type": "footer-line",
           "settings": {
-            "value": "500+",
-            "label": "dự án hoàn thành"
+            "text": "sales@concrete-collaborative.com"
           }
         },
         {
-          "type": "stat",
+          "type": "footer-line",
           "settings": {
-            "value": "50+",
-            "label": "mẫu sản phẩm"
+            "text": "concrete-collaborative.com"
           }
         },
         {
-          "type": "stat",
+          "type": "footer-social",
           "settings": {
-            "value": "100%",
-            "label": "nguyên liệu tự nhiên"
-          }
-        }
-      ]
-    },
-    "featured": {
-      "type": "featured",
-      "settings": {
-        "overline": "tại sao chọn chúng tôi",
-        "title": "chất lượng",
-        "titleAccent": "không thỏa hiệp"
-      },
-      "blocks": [
-        {
-          "type": "feature-card",
-          "settings": {
-            "iconName": "handcraft",
-            "title": "Sản Xuất Thủ Công",
-            "desc": "Mỗi sản phẩm được tạo ra bằng tay bởi đội ngũ nghệ nhân giàu kinh nghiệm, đảm bảo chất lượng từng chi tiết."
+            "label": "",
+            "icon": "facebook",
+            "href": ""
           }
         },
         {
-          "type": "feature-card",
+          "type": "footer-social",
           "settings": {
-            "iconName": "natural",
-            "title": "Nguyên Liệu Tự Nhiên",
-            "desc": "Đá, cát, xi măng cao cấp — 100% nguyên liệu tự nhiên, không pha tạp, thân thiện với môi trường."
+            "label": "",
+            "icon": "instagram",
+            "href": ""
           }
         },
         {
-          "type": "feature-card",
+          "type": "footer-social",
           "settings": {
-            "iconName": "sizes",
-            "title": "Đa Dạng Kích Thước",
-            "desc": "Sản xuất theo kích thước tiêu chuẩn hoặc cắt theo yêu cầu riêng của từng công trình."
+            "label": "",
+            "icon": "email",
+            "href": ""
           }
         },
         {
-          "type": "feature-card",
+          "type": "footer-social",
           "settings": {
-            "iconName": "warranty",
-            "title": "Bảo Hành Dài Hạn",
-            "desc": "Cam kết bảo hành sản phẩm lên đến 10 năm, đồng hành cùng mọi công trình của bạn."
-          }
-        }
-      ]
-    },
-    "gallery": {
-      "type": "gallery",
-      "settings": {
-        "overline": "dự án",
-        "title": "cảm hứng",
-        "titleAccent": "thiết kế",
-        "viewAllLabel": "xem tất cả",
-        "viewAllHref": "/projects"
-      },
-      "blocks": [
-        {
-          "type": "gallery-item",
-          "settings": {
-            "label": "sân vườn biệt thự",
-            "tag": "gạch lát",
-            "gradient": "from-amber-700 to-stone-700",
-            "aspect": "row-span-2"
+            "label": "",
+            "icon": "linkedin",
+            "href": ""
           }
         },
         {
-          "type": "gallery-item",
+          "type": "footer-social",
           "settings": {
-            "label": "bếp terrazzo",
-            "tag": "terrazzo",
-            "gradient": "from-stone-500 to-stone-700",
-            "aspect": ""
+            "label": "",
+            "icon": "pinterest",
+            "href": ""
           }
         },
         {
-          "type": "gallery-item",
+          "type": "footer-social",
           "settings": {
-            "label": "hồ bơi resort",
-            "tag": "coping",
-            "gradient": "from-rose-700 to-stone-800",
-            "aspect": ""
+            "label": "",
+            "icon": "tiktok",
+            "href": ""
           }
         },
         {
-          "type": "gallery-item",
+          "type": "footer-social",
           "settings": {
-            "label": "tường rào breeze block",
-            "tag": "gạch block",
-            "gradient": "from-slate-500 to-slate-700",
-            "aspect": ""
-          }
-        },
-        {
-          "type": "gallery-item",
-          "settings": {
-            "label": "nội thất cao cấp",
-            "tag": "đá ốp",
-            "gradient": "from-warm-500 to-warm-700",
-            "aspect": "row-span-2"
-          }
-        },
-        {
-          "type": "gallery-item",
-          "settings": {
-            "label": "lối đi công viên",
-            "tag": "đá granite",
-            "gradient": "from-cyan-700 to-slate-700",
-            "aspect": ""
-          }
-        }
-      ]
-    },
-    "contact": {
-      "type": "contact",
-      "settings": {
-        "overline": "liên hệ",
-        "title": "bắt đầu dự án",
-        "titleAccent": "của bạn",
-        "description": "liên hệ ngay để được tư vấn miễn phí về vật liệu phù hợp cho công trình. đội ngũ chuyên gia sẵn sàng hỗ trợ bạn từ thiết kế đến thi công.",
-        "formSubmitLabel": "gửi yêu cầu tư vấn",
-        "footerBrand": "bê tông việt",
-        "footerBrandAccent": "việt",
-        "footerCopyright": "© 2026 bê tông việt. thiết kế tại việt nam."
-      },
-      "blocks": [
-        {
-          "type": "contact-info",
-          "settings": {
-            "iconName": "phone",
-            "label": "hotline",
-            "value": "1900 xxxx xx"
-          }
-        },
-        {
-          "type": "contact-info",
-          "settings": {
-            "iconName": "email",
-            "label": "email",
-            "value": "info@betongviet.vn"
-          }
-        },
-        {
-          "type": "contact-info",
-          "settings": {
-            "iconName": "location",
-            "label": "showroom",
-            "value": "TP. Hồ Chí Minh",
-            "detail": "Thứ 2 – Thứ 7: 8:00 – 17:30"
-          }
-        },
-        {
-          "type": "social-link",
-          "settings": {
-            "label": "facebook",
-            "href": "#"
-          }
-        },
-        {
-          "type": "social-link",
-          "settings": {
-            "label": "instagram",
-            "href": "#"
-          }
-        },
-        {
-          "type": "social-link",
-          "settings": {
-            "label": "zalo",
-            "href": "#"
+            "label": "",
+            "icon": "zalo",
+            "href": ""
           }
         }
       ]
