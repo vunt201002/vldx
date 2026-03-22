@@ -30,7 +30,7 @@ app.use(errorHandler);
 const start = async (): Promise<void> => {
   await connectDB();
   startPageJsonSync();
-  app.listen(config.port, () => {
+  app.listen(config.port, '0.0.0.0', () => {
     console.info(`Server running on port ${config.port} [${config.nodeEnv}]`);
   });
 };
