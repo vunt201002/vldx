@@ -45,6 +45,7 @@ A middleware at the end of the middleware chain catches all errors and returns c
 
 ## Current API Endpoints
 
+### Materials
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | `/api/health` | Health check |
@@ -54,6 +55,24 @@ A middleware at the end of the middleware chain catches all errors and returns c
 | PUT | `/api/materials/:id` | Update material |
 | DELETE | `/api/materials/:id` | Delete material |
 
+### Theme Editor (`/api/theme/`)
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/theme/field-defs` | Return block field definitions for the admin editor |
+| GET | `/api/theme/pages` | List all pages (slug, title, block count) |
+| POST | `/api/theme/pages` | Create page — clones blocks from `landing` template, auto-updates navbar links |
+| DELETE | `/api/theme/pages/:slug` | Delete page + its JSON file |
+| GET | `/api/theme/pages/:slug` | Load page + blocks for editor |
+| PUT | `/api/theme/pages/:slug` | Save page + blocks → regenerates `{slug}.json` |
+| POST | `/api/theme/pages/:slug/blocks` | Add new empty block to page |
+| DELETE | `/api/theme/pages/:slug/blocks/:blockId` | Delete block |
+| POST | `/api/theme/pages/:slug/blocks/clone` | Clone a block from another page (`{ sourceBlockId }`) |
+
+### Image Upload
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/api/upload/image` | Upload image to Cloudinary; `?uploadFolder=pages\|products` |
+
 ## Environment Variables
 
 ```
@@ -62,6 +81,10 @@ PORT=5000
 MONGODB_URI=mongodb://localhost:27017/vlxd
 JWT_SECRET=your_jwt_secret_here
 FRONTEND_URL=http://localhost:3000
+CLOUDINARY_CLOUD_NAME=...
+CLOUDINARY_API_KEY=...
+CLOUDINARY_API_SECRET=...
+FRONTEND_CONFIG_DIR=../frontend/config/pages
 ```
 
 ## Build & Run
@@ -69,6 +92,41 @@ FRONTEND_URL=http://localhost:3000
 - **Dev**: `ts-node-dev` with hot reload (no compilation step)
 - **Build**: `tsc` compiles to `dist/`
 - **Production**: `node dist/index.js`
+
+## Theme Editor Architecture
+
+The backend owns the full lifecycle of page content for the theme editor:
+
+```
+DB (Page + Block models)
+  → generatePageJson()     # transforms DB data → {slug}.json format
+  → writePageJson()        # writes to frontend/config/pages/{slug}.json
+  → sectionToBlockData()   # reverse: JSON payload → DB block.data format
+```
+
+### Config files
+- `config/blockFieldDefs.ts` — field schema per block type; served to admin via `GET /api/theme/field-defs`
+- `config/blockJsonMapping.ts` — controls how `block.data` ↔ `section.settings + blocks[]`
+
+### Mapping structure (blockJsonMapping)
+```typescript
+{
+  settingsFields: string[];         // scalar keys → section.settings
+  arrayBlocks: { dataKey, blockType }[];  // arrays → section.blocks[]
+  settingsArrayFields?: string[];   // arrays that stay in settings (not converted to blocks)
+  flattenFields?: { dataKey, prefix, subKeys }[]; // nested objects flattened to prefixed keys
+}
+```
+
+### Page JSON Sync (syncPageJsons.ts)
+- Runs once on startup + scheduled daily at 3:30 AM via `node-cron`
+- Regenerates all `{slug}.json` files from MongoDB to keep them in sync
+- MongoDB is the source of truth; JSON files are derived artifacts
+
+### Adding a new block type
+1. Add field schema to `config/blockFieldDefs.ts`
+2. Add mapping entry to `config/blockJsonMapping.ts`
+3. Add the section component to frontend registry (see Frontend Skill)
 
 ## Dependencies
 
@@ -78,6 +136,9 @@ FRONTEND_URL=http://localhost:3000
 | mongoose | MongoDB ORM |
 | cors | Cross-origin resource sharing |
 | dotenv | Environment variable loading |
+| cloudinary | Image upload (Cloudinary SDK) |
+| multer | Multipart form parsing for image uploads |
+| node-cron | Scheduled daily JSON sync |
 
 ## Model Patterns
 

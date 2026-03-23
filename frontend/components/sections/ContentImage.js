@@ -1,4 +1,11 @@
 export default function ContentImage({ settings, blocks }) {
+  const buttons = (blocks || []).filter((b) => b.type === 'content-button');
+
+  // Nothing to render — skip entirely to avoid blank whitespace on the page
+  if (!settings.title && !settings.description && !settings.imageUrl && buttons.length === 0) {
+    return null;
+  }
+
   const reverse = settings.direction === 'image-right';
   const imageWidth = settings.imageWidth || '50';
   const textWidth = 100 - parseInt(imageWidth);
@@ -10,8 +17,6 @@ export default function ContentImage({ settings, blocks }) {
   const maxWidth = settings.maxWidth || '1400px';
   const padding = settings.sectionPadding || '4rem 0';
   const mobileContentFirst = settings.mobileOrder === 'content-first';
-
-  const buttons = (blocks || []).filter((b) => b.type === 'content-button');
 
   // On mobile: image-first = image on top, content-first = content on top
   // We use CSS order to control this without duplicating elements
