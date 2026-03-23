@@ -33,7 +33,7 @@ function blockToSection(block: PopulatedBlock): { id: string; section: any } {
   const mapping = blockJsonMappings[block.type];
   if (!mapping) {
     return {
-      id: block.type,
+      id: block._id,
       section: { type: block.type, settings: { ...data }, blocks: [] },
     };
   }
@@ -78,7 +78,7 @@ function blockToSection(block: PopulatedBlock): { id: string; section: any } {
   }
 
   return {
-    id: block.type,
+    id: block._id,
     section: { type: block.type, settings, blocks },
   };
 }
