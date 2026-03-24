@@ -79,7 +79,7 @@ function capitalize(str) {
 function blockToSection(block) {
   const mapping = blockJsonMappings[block.type]
   if (!mapping) {
-    return { id: block.type, section: { type: block.type, settings: { ...(block.data || {}) }, blocks: [] } }
+    return { id: block._id, section: { type: block.type, settings: { ...(block.data || {}) }, blocks: [] } }
   }
 
   const settings = {}
@@ -118,7 +118,7 @@ function blockToSection(block) {
     }
   }
 
-  return { id: block.type, section: { type: block.type, settings, blocks } }
+  return { id: block._id, section: { type: block.type, settings, blocks } }
 }
 
 export default function buildPreviewConfig(page, editorBlocks) {
