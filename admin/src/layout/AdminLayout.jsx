@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import '@/styles/layout.css'
+import { LayoutContext } from '@/context/LayoutContext'
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: '📊' },
@@ -10,6 +11,7 @@ const navItems = [
 
 export default function AdminLayout() {
   const location = useLocation()
+  const [collapsed, setCollapsed] = useState(false)
 
   const getPageTitle = () => {
     if (location.pathname.startsWith('/dashboard')) return 'Dashboard'
@@ -19,13 +21,23 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="admin-layout">
-      <aside className="sidebar">
+    <div
+      className="admin-layout"
+      style={{ '--sidebar-width': collapsed ? '60px' : '240px' }}
+    >
+      <aside className={`sidebar${collapsed ? ' collapsed' : ''}`}>
         <div className="sidebar-logo">
-          VLXD <span>Admin</span>
+          {collapsed ? <span>V</span> : <>VLXD <span>Admin</span></>}
         </div>
+        <button
+          className="sidebar-toggle"
+          onClick={() => setCollapsed((c) => !c)}
+          title={collapsed ? 'Expand menu' : 'Collapse menu'}
+        >
+          {collapsed ? '›' : '‹'}
+        </button>
         <nav className="sidebar-nav">
-          <div className="nav-section-title">Main Menu</div>
+          {!collapsed && <div className="nav-section-title">Main Menu</div>}
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -33,7 +45,8 @@ export default function AdminLayout() {
               className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
             >
               <span className="nav-link-icon">{item.icon}</span>
-              {item.label}
+              <span className="nav-link-label">{item.label}</span>
+              <span className="nav-link-tooltip">{item.label}</span>
             </NavLink>
           ))}
         </nav>
@@ -47,7 +60,9 @@ export default function AdminLayout() {
           </span>
         </header>
         <main className="page-content">
-          <Outlet />
+          <LayoutContext.Provider value={{ collapsed, setCollapsed }}>
+            <Outlet />
+          </LayoutContext.Provider>
         </main>
       </div>
     </div>

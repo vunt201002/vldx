@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react'
+import React, { useRef, useCallback, useEffect } from 'react'
 import buildPreviewConfig from '@/lib/buildPreviewConfig'
 
 const STOREFRONT_URL = import.meta.env.VITE_STOREFRONT_URL || 'http://localhost:3000'
@@ -9,8 +9,7 @@ const viewports = [
   { key: 'mobile', icon: '📲', label: 'Mobile' },
 ]
 
-export default function ThemePreview({ slug, activeBlockType, previewKey, page, blocks }) {
-  const [viewport, setViewport] = useState('desktop')
+export default function ThemePreview({ slug, activeBlockType, previewKey, page, blocks, viewport, onViewportChange }) {
   const iframeRef = useRef(null)
   const iframeReady = useRef(false)
 
@@ -82,7 +81,7 @@ export default function ThemePreview({ slug, activeBlockType, previewKey, page, 
               <button
                 key={vp.key}
                 className={`te-viewport-btn${viewport === vp.key ? ' active' : ''}`}
-                onClick={() => setViewport(vp.key)}
+                onClick={() => onViewportChange(vp.key)}
                 title={vp.label}
               >
                 {vp.icon}

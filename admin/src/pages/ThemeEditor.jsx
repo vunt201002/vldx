@@ -4,6 +4,7 @@ import { get, put, post, del } from '@/lib/api'
 import ThemeEditorSidebar from '@/components/theme-editor/ThemeEditorSidebar'
 import ThemePreview from '@/components/theme-editor/ThemePreview'
 import BlockEditorPanel from '@/components/theme-editor/BlockEditorPanel'
+import { useLayout } from '@/context/LayoutContext'
 import '@/styles/theme-editor.css'
 
 const initialState = {
@@ -90,7 +91,16 @@ export default function ThemeEditor() {
   const navigate = useNavigate()
   const [state, dispatch] = useReducer(reducer, initialState)
   const [pages, setPages] = useState([])
+  const [viewport, setViewport] = useState('desktop')
   const toastTimer = useRef(null)
+  const layout = useLayout()
+
+  const handleViewportChange = useCallback((vp) => {
+    setViewport(vp)
+    if (layout) {
+      layout.setCollapsed(vp === 'desktop')
+    }
+  }, [layout])
 
   // Load page list
   useEffect(() => {
@@ -295,6 +305,8 @@ export default function ThemeEditor() {
         previewKey={state.previewKey}
         page={state.page}
         blocks={state.blocks}
+        viewport={viewport}
+        onViewportChange={handleViewportChange}
       />
 
       <BlockEditorPanel
