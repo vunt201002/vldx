@@ -9,7 +9,9 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "seed": "ts-node-dev --transpile-only src/scripts/seed.ts",
-    "seed:blocks": "ts-node-dev --transpile-only src/scripts/seedBlocks.ts"
+    "seed:blocks": "ts-node-dev --transpile-only src/scripts/seedBlocks.ts",
+    "seed:product-pages": "ts-node-dev --transpile-only src/scripts/seedProductPages.ts",
+    "seed:update-navbars": "ts-node-dev --transpile-only src/scripts/seedUpdateNavbars.ts"
   },
   "dependencies": {
     "cloudinary": "^2.9.0",
