@@ -5,7 +5,7 @@ import Head from 'next/head';
 import SectionRenderer from '@/components/sections/SectionRenderer';
 
 function buildGoogleFontsUrl(displayFont, bodyFont) {
-  const defaults = { display: 'Cormorant', body: 'Outfit' };
+  const defaults = { display: 'Cormorant', body: 'Cormorant' };
   const display = displayFont || defaults.display;
   const body = bodyFont || defaults.body;
 
@@ -41,13 +41,10 @@ export default function DynamicPage({ config: initialConfig }) {
   if (!config) return null;
 
   const displayFont = config.page.displayFont || 'Cormorant';
-  const bodyFont = config.page.bodyFont || 'Outfit';
+  const bodyFont = config.page.bodyFont || 'Cormorant';
   const fontsUrl = buildGoogleFontsUrl(config.page.displayFont, config.page.bodyFont);
 
-  const fontVars = {
-    '--font-display': `"${displayFont}", serif`,
-    '--font-body': `"${bodyFont}", sans-serif`,
-  };
+  const fontVarsStyle = `:root { --font-display: "${displayFont}", serif; --font-body: "${bodyFont}", sans-serif; }`;
 
   return (
     <>
@@ -58,9 +55,10 @@ export default function DynamicPage({ config: initialConfig }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href={fontsUrl} rel="stylesheet" />
+        <style>{fontVarsStyle}</style>
       </Head>
 
-      <div className={config.page.bodyClass} style={fontVars}>
+      <div className={config.page.bodyClass}>
         <SectionRenderer config={config} />
       </div>
     </>
