@@ -3,6 +3,7 @@ import Page from '../models/Page';
 import Block from '../models/Block';
 import blockFieldDefs from '../config/blockFieldDefs';
 import { generatePageJson, writePageJson, deletePageJson } from '../utils/generatePageJson';
+import { regenerateAllPageJsons } from '../utils/syncPageJsons';
 
 /**
  * GET /api/theme/pages
@@ -423,5 +424,26 @@ export const deleteBlock = async (req: Request, res: Response): Promise<void> =>
     res.json({ success: true, message: 'Block removed' });
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * POST /api/theme/sync
+ * Manually trigger regeneration of all page JSON files from MongoDB.
+ */
+export const syncAllPageJsons = async (_req: Request, res: Response): Promise<void> => {
+  try {
+    await regenerateAllPageJsons();
+    res.json({
+      success: true,
+      message: 'All page JSONs regenerated successfully',
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err: any) {
+    console.error('Manual sync failed:', err);
+    res.status(500).json({
+      success: false,
+      message: err instanceof Error ? err.message : 'Unknown error',
+    });
   }
 };

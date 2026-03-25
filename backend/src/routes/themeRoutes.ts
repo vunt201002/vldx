@@ -9,6 +9,7 @@ import {
   addBlock,
   cloneBlock,
   deleteBlock,
+  syncAllPageJsons,
 } from '../controllers/themeController';
 
 const router = Router();
@@ -29,5 +30,8 @@ router.put('/pages/:slug', savePageTheme);
 router.post('/pages/:slug/blocks/clone', cloneBlock);
 router.post('/pages/:slug/blocks', addBlock);
 router.delete('/pages/:slug/blocks/:blockId', deleteBlock);
+
+// Manual sync
+router.post('/sync', syncAllPageJsons);
 
 export default router;
