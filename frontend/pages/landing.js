@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import SectionRenderer from '@/components/sections/SectionRenderer';
-import initialConfig from '@/config/pages/landing.json';
 
 function buildGoogleFontsUrl(displayFont, bodyFont) {
   const defaults = { display: 'Cormorant', body: 'Cormorant' };
@@ -17,7 +16,7 @@ function buildGoogleFontsUrl(displayFont, bodyFont) {
   return `https://fonts.googleapis.com/css2?${families.join('&')}&display=swap`;
 }
 
-export default function LandingPage() {
+export default function LandingPage({ config: initialConfig }) {
   const [config, setConfig] = useState(initialConfig);
 
   // Listen for live preview updates from the theme editor
@@ -59,4 +58,17 @@ export default function LandingPage() {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api';
+
+  try {
+    const res = await fetch(`${apiBase}/pages/landing`);
+    if (!res.ok) return { notFound: true };
+    const json = await res.json();
+    return { props: { config: json.data } };
+  } catch {
+    return { notFound: true };
+  }
 }

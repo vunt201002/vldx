@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import fs from 'fs';
-import path from 'path';
 import Head from 'next/head';
 import SectionRenderer from '@/components/sections/SectionRenderer';
 
@@ -67,15 +65,14 @@ export default function DynamicPage({ config: initialConfig }) {
 
 export async function getServerSideProps({ params }) {
   const { slug } = params;
-  const configDir = path.join(process.cwd(), 'config', 'pages');
-  const filePath = path.join(configDir, `${slug}.json`);
+  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api';
 
-  if (!fs.existsSync(filePath)) {
+  try {
+    const res = await fetch(`${apiBase}/pages/${slug}`);
+    if (!res.ok) return { notFound: true };
+    const json = await res.json();
+    return { props: { config: json.data } };
+  } catch {
     return { notFound: true };
   }
-
-  const raw = fs.readFileSync(filePath, 'utf-8');
-  const config = JSON.parse(raw);
-
-  return { props: { config } };
 }
