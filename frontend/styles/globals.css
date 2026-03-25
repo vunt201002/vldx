@@ -9,7 +9,7 @@
 }
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body, 'Cormorant'), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;

@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import SectionRenderer from '@/components/sections/SectionRenderer';
-import initialConfig from '@/config/pages/landing.json';
 
 function buildGoogleFontsUrl(displayFont, bodyFont) {
-  const defaults = { display: 'Cormorant', body: 'Outfit' };
+  const defaults = { display: 'Cormorant', body: 'Cormorant' };
   const display = displayFont || defaults.display;
   const body = bodyFont || defaults.body;
 
@@ -17,7 +16,7 @@ function buildGoogleFontsUrl(displayFont, bodyFont) {
   return `https://fonts.googleapis.com/css2?${families.join('&')}&display=swap`;
 }
 
-export default function LandingPage() {
+export default function LandingPage({ config: initialConfig }) {
   const [config, setConfig] = useState(initialConfig);
 
   // Listen for live preview updates from the theme editor
@@ -37,13 +36,10 @@ export default function LandingPage() {
   }, []);
 
   const displayFont = config.page.displayFont || 'Cormorant';
-  const bodyFont = config.page.bodyFont || 'Outfit';
+  const bodyFont = config.page.bodyFont || 'Cormorant';
   const fontsUrl = buildGoogleFontsUrl(config.page.displayFont, config.page.bodyFont);
 
-  const fontVars = {
-    '--font-display': `"${displayFont}", serif`,
-    '--font-body': `"${bodyFont}", sans-serif`,
-  };
+  const fontVarsStyle = `:root { --font-display: "${displayFont}", serif; --font-body: "${bodyFont}", sans-serif; }`;
 
   return (
     <>
@@ -54,11 +50,25 @@ export default function LandingPage() {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href={fontsUrl} rel="stylesheet" />
+        <style>{fontVarsStyle}</style>
       </Head>
 
-      <div className={config.page.bodyClass} style={fontVars}>
+      <div className={config.page.bodyClass}>
         <SectionRenderer config={config} />
       </div>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api';
+
+  try {
+    const res = await fetch(`${apiBase}/pages/landing`);
+    if (!res.ok) return { notFound: true };
+    const json = await res.json();
+    return { props: { config: json.data } };
+  } catch {
+    return { notFound: true };
+  }
 }
