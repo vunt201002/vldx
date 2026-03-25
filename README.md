@@ -40,7 +40,7 @@ Copy environment files and fill in values:
 
 ```bash
 cp backend/.env.example backend/.env
-cp frontend/.env.example frontend/.env.local
+cp frontend/.env.example frontend/..env.local
 ```
 
 ## Running Locally

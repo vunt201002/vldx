@@ -7,13 +7,14 @@
     "bodyFont": ""
   },
   "order": [
-    "navbar",
-    "hero",
-    "service-process",
-    "footer"
+    "69be5516315aac49a5e9be3c",
+    "69be5516315aac49a5e9be3e",
+    "69bf002327a98df2aa68722a",
+    "69befec927a98df2aa6871d6",
+    "69c179d5fca5ee72f439029e"
   ],
   "sections": {
-    "navbar": {
+    "69be5516315aac49a5e9be3c": {
       "type": "navbar",
       "settings": {
         "brandMode": "logo",
@@ -35,20 +36,41 @@
         {
           "type": "nav-link",
           "settings": {
-            "label": "Tấm ốp cầu thang",
+            "label": "tấm ốp cầu thang",
             "href": "/tam-op-cau-thang"
           }
         },
         {
           "type": "nav-link",
           "settings": {
-            "label": "Thi công trực tiếp",
+            "label": "gạch ốp lát",
+            "href": "/gach-op-lat"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "ghế đá công viên",
+            "href": "/ghe-da-cong-vien"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "bàn",
+            "href": "/ban"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "thi công",
             "href": "/service"
           }
         }
       ]
     },
-    "hero": {
+    "69be5516315aac49a5e9be3e": {
       "type": "hero",
       "settings": {
         "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1749659975747-Y4705OPRR2BJEP01EYI8/sun+soul+style+interiors+_+javakai_kauai_hi-res_18.jpg",
@@ -56,7 +78,7 @@
       },
       "blocks": []
     },
-    "service-process": {
+    "69bf002327a98df2aa68722a": {
       "type": "service-process",
       "settings": {
         "overline": "dịch vụ",
@@ -108,7 +130,7 @@
         }
       ]
     },
-    "footer": {
+    "69befec927a98df2aa6871d6": {
       "type": "footer",
       "settings": {
         "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1586821290470-46L6I4UQZEFD8HUGMOT0/bottomlogo.png",
@@ -187,6 +209,26 @@
             "label": "",
             "icon": "zalo",
             "href": ""
+          }
+        }
+      ]
+    },
+    "69c179d5fca5ee72f439029e": {
+      "type": "content-image",
+      "settings": {
+        "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
+        "title": "modern concrete + terrazzo architectural finishes.",
+        "description": "pair our products together to flow seamlessly from inside to out. explore our next generation concrete and terrazzo surfaces like floor & wall tiles, exterior pavers & pool copings, countertops & vanities, stair-treads, patterned encaustic cement tiles, breeze-blocks, tabletops & basins. in a range of modern colors, unique natural stone aggregates and tactile textures. we have every surface covered!",
+        "direction": "image-left"
+      },
+      "blocks": [
+        {
+          "type": "content-button",
+          "settings": {
+            "label": "Shop",
+            "href": "",
+            "color": "",
+            "bgColor": ""
           }
         }
       ]

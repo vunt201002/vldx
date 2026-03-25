@@ -7,16 +7,18 @@
     "bodyFont": ""
   },
   "order": [
-    "navbar",
-    "hero",
-    "content-image",
-    "collections",
-    "about",
-    "featured",
-    "footer"
+    "69bd91301f232664e2da4ac9",
+    "69beccff5bf5413deacb7ec3",
+    "69c17a1efca5ee72f43902b9",
+    "69bd91301f232664e2da4acb",
+    "69bd91301f232664e2da4acc",
+    "69bd91301f232664e2da4acd",
+    "69bee1ff4a56bd1d08c6b54b",
+    "69c2be77d3ab7c7507689720",
+    "69c34b916867bae1a5443a31"
   ],
   "sections": {
-    "navbar": {
+    "69bd91301f232664e2da4ac9": {
       "type": "navbar",
       "settings": {
         "brandMode": "logo",
@@ -34,33 +36,55 @@
         {
           "type": "nav-link",
           "settings": {
-            "label": "Trang chủ",
+            "label": "trang chủ",
             "href": "/landing"
           }
         },
         {
           "type": "nav-link",
           "settings": {
-            "label": "Tấm ốp cầu thang",
+            "label": "tấm ốp cầu thang",
             "href": "/tam-op-cau-thang"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "gạch ốp lát",
+            "href": "/gach-op-lat"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "ghế đá công viên",
+            "href": "/ghe-da-cong-vien"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "bàn",
+            "href": "/ban"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "thi công",
+            "href": "/service"
           }
         }
       ]
     },
-    "hero": {
-      "type": "hero",
-      "settings": {
-        "imageUrl": "https://res.cloudinary.com/dsjbprdeh/image/upload/v1774104066/vlxd/pages/q23cod31nqxi7ly2fi6y.png"
-      },
-      "blocks": []
-    },
-    "content-image": {
+    "69beccff5bf5413deacb7ec3": {
       "type": "content-image",
       "settings": {
         "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
-        "title": "modern concrete + terrazzo architectural finishes.",
-        "description": "pair our products together to flow seamlessly from inside to out. explore our next generation concrete and terrazzo surfaces like floor & wall tiles, exterior pavers & pool copings, countertops & vanities, stair-treads, patterned encaustic cement tiles, breeze-blocks, tabletops & basins. in a range of modern colors, unique natural stone aggregates and tactile textures. we have every surface covered!",
-        "direction": "image-left"
+        "title": "",
+        "description": "pair our products together to flow seamlessly from inside to out. explore our next generation concrete",
+        "direction": "image-left",
+        "mobileOrder": "image-first"
       },
       "blocks": [
         {
@@ -74,7 +98,27 @@
         }
       ]
     },
-    "collections": {
+    "69c17a1efca5ee72f43902b9": {
+      "type": "content-image",
+      "settings": {
+        "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
+        "title": "modern concrete + terrazzo architectural finishes.",
+        "description": "pair our products together to flow seamlessly from inside to out. explore our next generation concrete and terrazzo surfaces like floor & wall tiles, exterior pavers & pool copings, countertops & vanities, stair-treads, patterned encaustic cement tiles, breeze-blocks, tabletops & basins. in a range of modern colors, unique natural stone aggregates and tactile textures. we have every surface covered!",
+        "direction": "image-right"
+      },
+      "blocks": [
+        {
+          "type": "content-button",
+          "settings": {
+            "label": "Shop",
+            "href": "",
+            "color": "",
+            "bgColor": ""
+          }
+        }
+      ]
+    },
+    "69bd91301f232664e2da4acb": {
       "type": "collections",
       "settings": {
         "overline": "bộ sưu tập",
@@ -152,7 +196,7 @@
         }
       ]
     },
-    "about": {
+    "69bd91301f232664e2da4acc": {
       "type": "about",
       "settings": {
         "overline": "câu chuyện",
@@ -199,7 +243,7 @@
         }
       ]
     },
-    "featured": {
+    "69bd91301f232664e2da4acd": {
       "type": "featured",
       "settings": {
         "overline": "tại sao chọn chúng tôi",
@@ -241,7 +285,7 @@
         }
       ]
     },
-    "footer": {
+    "69bee1ff4a56bd1d08c6b54b": {
       "type": "footer",
       "settings": {
         "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1586821290470-46L6I4UQZEFD8HUGMOT0/bottomlogo.png",
@@ -315,6 +359,16 @@
           }
         }
       ]
+    },
+    "69c2be77d3ab7c7507689720": {
+      "type": "hero",
+      "settings": {},
+      "blocks": []
+    },
+    "69c34b916867bae1a5443a31": {
+      "type": "why-choose-us-v2",
+      "settings": {},
+      "blocks": []
     }
   }
 }

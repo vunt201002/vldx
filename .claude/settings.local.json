@@ -25,7 +25,17 @@
       "Bash(npx tsc:*)",
       "Bash(npx vite:*)",
       "Bash(node -e \"const f=require\\(''''/d/Project/j/vlxd/frontend/config/pages/landing.json''''\\); const nav=Object.values\\(f.sections\\).find\\(s=>s.type===''''navbar''''\\); console.log\\(JSON.stringify\\(nav.blocks,null,2\\)\\)\")",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(pgrep:*)",
+      "Bash(mv:*)",
+      "Bash(lsof:*)",
+      "Bash(kill:*)",
+      "Bash(cat:*)",
+      "Bash(git remote:*)",
+      "WebSearch",
+      "SlashCommand(/plan:*)",
+      "Bash(sudo chown:*)",
+      "Bash(npm cache clean:*)"
     ]
   }
 }
