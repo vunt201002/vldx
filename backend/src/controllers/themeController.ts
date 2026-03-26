@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import Page from '../models/Page';
 import Block from '../models/Block';
+import Theme from '../models/Theme';
 import blockFieldDefs from '../config/blockFieldDefs';
-import { generatePageJson, writePageJson, deletePageJson } from '../utils/generatePageJson';
+import { generatePageJson, writePageJson, deletePageJson, writePageJsonWithTheme } from '../utils/generatePageJson';
 
 /**
  * GET /api/theme/pages
@@ -421,6 +422,469 @@ export const deleteBlock = async (req: Request, res: Response): Promise<void> =>
     }
 
     res.json({ success: true, message: 'Block removed' });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * GET /api/theme
+ * Get the active theme with populated header and footer blocks.
+ */
+export const getActiveTheme = async (_req: Request, res: Response): Promise<void> => {
+  try {
+    const theme = await Theme.findOne({ isActive: true })
+      .populate('header.blocks.block')
+      .populate('footer.blocks.block')
+      .lean();
+
+    if (!theme) {
+      res.status(404).json({ success: false, message: 'No active theme found' });
+      return;
+    }
+
+    // Sort blocks by order
+    const sortedHeaderBlocks = [...theme.header.blocks].sort((a: any, b: any) => a.order - b.order);
+    const sortedFooterBlocks = [...theme.footer.blocks].sort((a: any, b: any) => a.order - b.order);
+
+    res.json({
+      success: true,
+      data: {
+        _id: theme._id,
+        name: theme.name,
+        isActive: theme.isActive,
+        header: {
+          blocks: sortedHeaderBlocks.map((b: any) => ({
+            _id: b.block._id,
+            type: b.block.type,
+            name: b.block.name,
+            data: b.block.data,
+            settings: b.block.settings,
+            order: b.order,
+          })),
+        },
+        footer: {
+          blocks: sortedFooterBlocks.map((b: any) => ({
+            _id: b.block._id,
+            type: b.block.type,
+            name: b.block.name,
+            data: b.block.data,
+            settings: b.block.settings,
+            order: b.order,
+          })),
+        },
+      },
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * PUT /api/theme/header
+ * Update header blocks in the active theme.
+ */
+export const updateThemeHeader = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { blocks } = req.body;
+
+    if (!blocks || !Array.isArray(blocks)) {
+      res.status(400).json({ success: false, message: 'Blocks array is required' });
+      return;
+    }
+
+    const theme = await Theme.findOne({ isActive: true });
+    if (!theme) {
+      res.status(404).json({ success: false, message: 'No active theme found' });
+      return;
+    }
+
+    // Update each block
+    for (let i = 0; i < blocks.length; i++) {
+      const b = blocks[i];
+      const blockDoc = await Block.findById(b._id);
+      if (!blockDoc) continue;
+
+      blockDoc.name = b.name;
+      blockDoc.data = b.data;
+      if (b.settings !== undefined) {
+        blockDoc.settings = b.settings;
+      }
+      blockDoc.markModified('data');
+      blockDoc.markModified('settings');
+      await blockDoc.save();
+    }
+
+    // Update block order
+    theme.header.blocks = blocks.map((b: any, i: number) => ({
+      block: b._id,
+      order: i,
+    }));
+
+    await theme.save();
+
+    // Regenerate all page JSONs since header changed
+    const allPages = await Page.find().populate('blocks.block').lean();
+    for (const page of allPages) {
+      await writePageJsonWithTheme(page.slug, page as any);
+    }
+
+    res.json({ success: true, message: 'Theme header updated and all page JSONs regenerated' });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * PUT /api/theme/footer
+ * Update footer blocks in the active theme.
+ */
+export const updateThemeFooter = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { blocks } = req.body;
+
+    if (!blocks || !Array.isArray(blocks)) {
+      res.status(400).json({ success: false, message: 'Blocks array is required' });
+      return;
+    }
+
+    const theme = await Theme.findOne({ isActive: true });
+    if (!theme) {
+      res.status(404).json({ success: false, message: 'No active theme found' });
+      return;
+    }
+
+    // Update each block
+    for (let i = 0; i < blocks.length; i++) {
+      const b = blocks[i];
+      const blockDoc = await Block.findById(b._id);
+      if (!blockDoc) continue;
+
+      blockDoc.name = b.name;
+      blockDoc.data = b.data;
+      if (b.settings !== undefined) {
+        blockDoc.settings = b.settings;
+      }
+      blockDoc.markModified('data');
+      blockDoc.markModified('settings');
+      await blockDoc.save();
+    }
+
+    // Update block order
+    theme.footer.blocks = blocks.map((b: any, i: number) => ({
+      block: b._id,
+      order: i,
+    }));
+
+    await theme.save();
+
+    // Regenerate all page JSONs since footer changed
+    const allPages = await Page.find().populate('blocks.block').lean();
+    for (const page of allPages) {
+      await writePageJsonWithTheme(page.slug, page as any);
+    }
+
+    res.json({ success: true, message: 'Theme footer updated and all page JSONs regenerated' });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * POST /api/theme/header/blocks
+ * Add a new block to theme header.
+ */
+export const addHeaderBlock = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { type, name, position } = req.body;
+
+    if (!type) {
+      res.status(400).json({ success: false, message: 'Block type is required' });
+      return;
+    }
+
+    const theme = await Theme.findOne({ isActive: true });
+    if (!theme) {
+      res.status(404).json({ success: false, message: 'No active theme found' });
+      return;
+    }
+
+    const typeDef = blockFieldDefs.find(d => d.type === type);
+    const blockName = name || typeDef?.label || type;
+
+    const block = await Block.create({
+      type,
+      name: blockName,
+      data: {},
+      settings: {},
+      placement: 'header',
+    });
+
+    const pos = position !== undefined ? position : theme.header.blocks.length;
+
+    const blocks = theme.header.blocks.map((b: any) => ({
+      block: b.block,
+      order: b.order >= pos ? b.order + 1 : b.order,
+    }));
+    blocks.push({ block: block._id as any, order: pos });
+    blocks.sort((a: any, b: any) => a.order - b.order);
+
+    theme.header.blocks = blocks as any;
+    await theme.save();
+
+    res.json({
+      success: true,
+      data: {
+        _id: block._id,
+        type: block.type,
+        name: block.name,
+        data: block.data,
+        settings: block.settings,
+        order: pos,
+      },
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * POST /api/theme/footer/blocks
+ * Add a new block to theme footer.
+ */
+export const addFooterBlock = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { type, name, position } = req.body;
+
+    if (!type) {
+      res.status(400).json({ success: false, message: 'Block type is required' });
+      return;
+    }
+
+    const theme = await Theme.findOne({ isActive: true });
+    if (!theme) {
+      res.status(404).json({ success: false, message: 'No active theme found' });
+      return;
+    }
+
+    const typeDef = blockFieldDefs.find(d => d.type === type);
+    const blockName = name || typeDef?.label || type;
+
+    const block = await Block.create({
+      type,
+      name: blockName,
+      data: {},
+      settings: {},
+      placement: 'footer',
+    });
+
+    const pos = position !== undefined ? position : theme.footer.blocks.length;
+
+    const blocks = theme.footer.blocks.map((b: any) => ({
+      block: b.block,
+      order: b.order >= pos ? b.order + 1 : b.order,
+    }));
+    blocks.push({ block: block._id as any, order: pos });
+    blocks.sort((a: any, b: any) => a.order - b.order);
+
+    theme.footer.blocks = blocks as any;
+    await theme.save();
+
+    res.json({
+      success: true,
+      data: {
+        _id: block._id,
+        type: block.type,
+        name: block.name,
+        data: block.data,
+        settings: block.settings,
+        order: pos,
+      },
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * DELETE /api/theme/header/blocks/:blockId
+ * Remove a block from theme header.
+ */
+export const deleteHeaderBlock = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { blockId } = req.params;
+
+    const theme = await Theme.findOne({ isActive: true });
+    if (!theme) {
+      res.status(404).json({ success: false, message: 'No active theme found' });
+      return;
+    }
+
+    theme.header.blocks = theme.header.blocks.filter((b: any) => b.block.toString() !== blockId);
+
+    const sorted = [...theme.header.blocks].sort((a: any, b: any) => a.order - b.order);
+    theme.header.blocks = sorted.map((b: any, i: number) => ({
+      block: b.block,
+      order: i,
+    }));
+
+    await theme.save();
+    await Block.findByIdAndDelete(blockId);
+
+    // Regenerate all page JSONs
+    const allPages = await Page.find().populate('blocks.block').lean();
+    for (const page of allPages) {
+      await writePageJsonWithTheme(page.slug, page as any);
+    }
+
+    res.json({ success: true, message: 'Header block removed' });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * DELETE /api/theme/footer/blocks/:blockId
+ * Remove a block from theme footer.
+ */
+export const deleteFooterBlock = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { blockId } = req.params;
+
+    const theme = await Theme.findOne({ isActive: true });
+    if (!theme) {
+      res.status(404).json({ success: false, message: 'No active theme found' });
+      return;
+    }
+
+    theme.footer.blocks = theme.footer.blocks.filter((b: any) => b.block.toString() !== blockId);
+
+    const sorted = [...theme.footer.blocks].sort((a: any, b: any) => a.order - b.order);
+    theme.footer.blocks = sorted.map((b: any, i: number) => ({
+      block: b.block,
+      order: i,
+    }));
+
+    await theme.save();
+    await Block.findByIdAndDelete(blockId);
+
+    // Regenerate all page JSONs
+    const allPages = await Page.find().populate('blocks.block').lean();
+    for (const page of allPages) {
+      await writePageJsonWithTheme(page.slug, page as any);
+    }
+
+    res.json({ success: true, message: 'Footer block removed' });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * POST /api/theme/header/blocks/clone
+ * Clone a block into the header section.
+ */
+export const cloneHeaderBlock = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { sourceBlockId } = req.body;
+
+    if (!sourceBlockId) {
+      res.status(400).json({ success: false, message: 'sourceBlockId is required' });
+      return;
+    }
+
+    const theme = await Theme.findOne({ isActive: true });
+    if (!theme) {
+      res.status(404).json({ success: false, message: 'No active theme found' });
+      return;
+    }
+
+    const sourceBlock = await Block.findById(sourceBlockId).lean();
+    if (!sourceBlock) {
+      res.status(404).json({ success: false, message: 'Source block not found' });
+      return;
+    }
+
+    const newBlock = await Block.create({
+      type: sourceBlock.type,
+      name: sourceBlock.name,
+      data: sourceBlock.data || {},
+      settings: sourceBlock.settings || {},
+      placement: 'header',
+      isTemplate: false,
+    });
+
+    theme.header.blocks.push({
+      block: newBlock._id as any,
+      order: theme.header.blocks.length,
+    });
+
+    await theme.save();
+
+    // Regenerate all page JSONs
+    const allPages = await Page.find().populate('blocks.block').lean();
+    for (const page of allPages) {
+      await writePageJsonWithTheme(page.slug, page as any);
+    }
+
+    const populated = await Block.findById(newBlock._id).lean();
+
+    res.json({ success: true, data: populated });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * POST /api/theme/footer/blocks/clone
+ * Clone a block into the footer section.
+ */
+export const cloneFooterBlock = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { sourceBlockId } = req.body;
+
+    if (!sourceBlockId) {
+      res.status(400).json({ success: false, message: 'sourceBlockId is required' });
+      return;
+    }
+
+    const theme = await Theme.findOne({ isActive: true });
+    if (!theme) {
+      res.status(404).json({ success: false, message: 'No active theme found' });
+      return;
+    }
+
+    const sourceBlock = await Block.findById(sourceBlockId).lean();
+    if (!sourceBlock) {
+      res.status(404).json({ success: false, message: 'Source block not found' });
+      return;
+    }
+
+    const newBlock = await Block.create({
+      type: sourceBlock.type,
+      name: sourceBlock.name,
+      data: sourceBlock.data || {},
+      settings: sourceBlock.settings || {},
+      placement: 'footer',
+      isTemplate: false,
+    });
+
+    theme.footer.blocks.push({
+      block: newBlock._id as any,
+      order: theme.footer.blocks.length,
+    });
+
+    await theme.save();
+
+    // Regenerate all page JSONs
+    const allPages = await Page.find().populate('blocks.block').lean();
+    for (const page of allPages) {
+      await writePageJsonWithTheme(page.slug, page as any);
+    }
+
+    const populated = await Block.findById(newBlock._id).lean();
+
+    res.json({ success: true, data: populated });
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message });
   }

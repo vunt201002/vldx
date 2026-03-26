@@ -1,0 +1,208 @@
+{
+  "page": {
+    "title": "Ghế Đá Công Viên — Bê Tông Việt",
+    "description": "Ghế đá công viên đúc bê tông nguyên khối, bền vững và thẩm mỹ cho không gian ngoại thất.",
+    "bodyClass": "font-body bg-cream text-charcoal",
+    "displayFont": "",
+    "bodyFont": ""
+  },
+  "order": [
+    "69c2b27ceececadddd7bafba",
+    "69c2b27ceececadddd7bafbb",
+    "69c2b27ceececadddd7bafbc",
+    "69c2b27ceececadddd7bafbd"
+  ],
+  "sections": {
+    "69c2b27ceececadddd7bafba": {
+      "type": "hero",
+      "settings": {
+        "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1585263030555-FT7UYHVSVB4889E9PK56/venturastairs.jpg",
+        "imageAlt": "Ghế đá công viên bê tông",
+        "imageMaxHeight": "500px"
+      },
+      "blocks": []
+    },
+    "69c2b27ceececadddd7bafbb": {
+      "type": "material-showcase",
+      "settings": {
+        "overline": "ghế đá công viên",
+        "title": "chọn",
+        "titleAccent": "kiểu dáng & màu sắc",
+        "description": "Bộ sưu tập ghế đá công viên đúc bê tông nguyên khối — bền vững, chịu thời tiết và mang vẻ đẹp mộc mạc tự nhiên.",
+        "previewPosition": "left",
+        "previewAspect": "4/3",
+        "thumbnailColumns": "4",
+        "showSpecs": true,
+        "bgColor": "#F5F0EB"
+      },
+      "blocks": [
+        {
+          "type": "variant-item",
+          "settings": {
+            "name": "Ghế Terrazzo Xám Nhẹ",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
+            "description": "Ghế đúc bê tông terrazzo tông xám sáng, mặt ngồi mài nhẵn. Thích hợp cho công viên, sân trường và khu đô thị.",
+            "specs": "1200×450×450mm  |  Tải trọng 300kg  |  Chịu UV",
+            "tag": "phổ biến"
+          }
+        },
+        {
+          "type": "variant-item",
+          "settings": {
+            "name": "Ghế Bê Tông Đen Khoáng",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584995197950-UYLNPKVCU97K7XBL8GHF/Broken-Terrazo.png",
+            "description": "Ghế bê tông màu đen khoáng với kết cấu thô tự nhiên. Tạo điểm nhấn mạnh mẽ cho không gian ngoại thất hiện đại.",
+            "specs": "1200×450×450mm  |  Tải trọng 300kg  |  Chịu UV",
+            "tag": ""
+          }
+        },
+        {
+          "type": "variant-item",
+          "settings": {
+            "name": "Ghế Terrazzo Hồng Đất",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1743025520859-CDDVYDM76QGKBGKKLP26/HomeButtonCounter.jpg",
+            "description": "Ghế terrazzo tông hồng đất ấm áp, mặt ngồi mài mịn. Tô điểm sắc thái nhẹ nhàng cho khu vườn và sân thư giãn.",
+            "specs": "1000×420×430mm  |  Tải trọng 250kg  |  Chịu UV",
+            "tag": "mới"
+          }
+        }
+      ]
+    },
+    "69c2b27ceececadddd7bafbc": {
+      "type": "color-picker",
+      "settings": {
+        "overline": "bảng màu",
+        "title": "Tông Màu Bê Tông Tự Nhiên",
+        "description": "Mỗi màu sắc được pha trộn từ sắc tố khoáng tự nhiên, bền màu dưới nắng mưa và không phai theo thời gian.",
+        "columns": "3",
+        "bgColor": "#ffffff"
+      },
+      "blocks": [
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Natural Cream",
+            "hex": "#F0EBE0",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Sand",
+            "hex": "#E2D8C8",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Warm Stone",
+            "hex": "#C8BCA8",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Slate Grey",
+            "hex": "#A8A098",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Charcoal",
+            "hex": "#787068",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Dark Ash",
+            "hex": "#585050",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Terracotta",
+            "hex": "#C87858",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Moss",
+            "hex": "#788068",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Midnight",
+            "hex": "#303030",
+            "image": ""
+          }
+        }
+      ]
+    },
+    "69c2b27ceececadddd7bafbd": {
+      "type": "service-process",
+      "settings": {
+        "overline": "dịch vụ",
+        "title": "sản xuất",
+        "titleAccent": "theo yêu cầu",
+        "description": "Từ thiết kế đến lắp đặt hoàn chỉnh — chúng tôi sản xuất ghế đá theo kích thước, màu sắc và số lượng yêu cầu của từng dự án công viên, khu đô thị.",
+        "imageUrl": "",
+        "imageAlt": "Sản xuất ghế đá công viên bê tông",
+        "ctaLabel": "Liên hệ đặt hàng",
+        "ctaHref": "/landing#contact",
+        "bgColor": "#F5F0EB"
+      },
+      "blocks": [
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "01",
+            "title": "Tư vấn thiết kế",
+            "description": "Trao đổi về số lượng, kích thước, màu sắc và vị trí đặt ghế để đưa ra phương án phù hợp nhất.",
+            "image": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80"
+          }
+        },
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "02",
+            "title": "Đúc khuôn & pha màu",
+            "description": "Chuẩn bị khuôn đúc, pha trộn bê tông với sắc tố khoáng theo màu đã chọn, đổ khuôn và dưỡng hộ.",
+            "image": "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=600&q=80"
+          }
+        },
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "03",
+            "title": "Mài & hoàn thiện",
+            "description": "Tháo khuôn, mài bề mặt theo yêu cầu (thô / mịn / bóng), kiểm tra chất lượng từng sản phẩm.",
+            "image": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80"
+          }
+        },
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "04",
+            "title": "Vận chuyển & lắp đặt",
+            "description": "Vận chuyển và lắp đặt tại công trình, cố định an toàn, bàn giao và hướng dẫn bảo trì.",
+            "image": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80"
+          }
+        }
+      ]
+    }
+  }
+}

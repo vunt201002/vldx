@@ -7,48 +7,12 @@
     "bodyFont": ""
   },
   "order": [
-    "navbar",
-    "hero",
-    "service-process",
-    "footer"
+    "69be5516315aac49a5e9be3e",
+    "69bf002327a98df2aa68722a",
+    "69c179d5fca5ee72f439029e"
   ],
   "sections": {
-    "navbar": {
-      "type": "navbar",
-      "settings": {
-        "brandMode": "logo",
-        "brandName": "bê tông",
-        "brandAccent": "việt",
-        "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/7e5836f6-d36a-4433-b2ea-89324e5191e4/black+cc+word+logo-02.png?format=500w",
-        "menuFontSize": "20px",
-        "ctaLabel": "",
-        "ctaHref": ""
-      },
-      "blocks": [
-        {
-          "type": "nav-link",
-          "settings": {
-            "label": "trang chủ",
-            "href": "/landing"
-          }
-        },
-        {
-          "type": "nav-link",
-          "settings": {
-            "label": "Tấm ốp cầu thang",
-            "href": "/tam-op-cau-thang"
-          }
-        },
-        {
-          "type": "nav-link",
-          "settings": {
-            "label": "Thi công trực tiếp",
-            "href": "/service"
-          }
-        }
-      ]
-    },
-    "hero": {
+    "69be5516315aac49a5e9be3e": {
       "type": "hero",
       "settings": {
         "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1749659975747-Y4705OPRR2BJEP01EYI8/sun+soul+style+interiors+_+javakai_kauai_hi-res_18.jpg",
@@ -56,7 +20,7 @@
       },
       "blocks": []
     },
-    "service-process": {
+    "69bf002327a98df2aa68722a": {
       "type": "service-process",
       "settings": {
         "overline": "dịch vụ",
@@ -108,85 +72,22 @@
         }
       ]
     },
-    "footer": {
-      "type": "footer",
+    "69c179d5fca5ee72f439029e": {
+      "type": "content-image",
       "settings": {
-        "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1586821290470-46L6I4UQZEFD8HUGMOT0/bottomlogo.png",
-        "bgColor": "#f7e2ce"
+        "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
+        "title": "modern concrete + terrazzo architectural finishes.",
+        "description": "pair our products together to flow seamlessly from inside to out. explore our next generation concrete and terrazzo surfaces like floor & wall tiles, exterior pavers & pool copings, countertops & vanities, stair-treads, patterned encaustic cement tiles, breeze-blocks, tabletops & basins. in a range of modern colors, unique natural stone aggregates and tactile textures. we have every surface covered!",
+        "direction": "image-left"
       },
       "blocks": [
         {
-          "type": "footer-line",
+          "type": "content-button",
           "settings": {
-            "text": "1.855.268.0800"
-          }
-        },
-        {
-          "type": "footer-line",
-          "settings": {
-            "text": "sales@concrete-collaborative.com"
-          }
-        },
-        {
-          "type": "footer-line",
-          "settings": {
-            "text": "concrete-collaborative.com"
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "facebook",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "instagram",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "email",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "linkedin",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "pinterest",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "tiktok",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "zalo",
-            "href": ""
+            "label": "Shop",
+            "href": "",
+            "color": "",
+            "bgColor": ""
           }
         }
       ]

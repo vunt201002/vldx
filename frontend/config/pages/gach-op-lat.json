@@ -1,0 +1,218 @@
+{
+  "page": {
+    "title": "Gạch Ốp Lát — Bê Tông Việt",
+    "description": "Gạch ốp lát terrazzo và đá tự nhiên cao cấp, sản xuất thủ công tại Việt Nam.",
+    "bodyClass": "font-body bg-cream text-charcoal",
+    "displayFont": "",
+    "bodyFont": ""
+  },
+  "order": [
+    "69c2b27ceececadddd7bafad",
+    "69c2b27ceececadddd7bafae",
+    "69c2b27ceececadddd7bafaf",
+    "69c2b27ceececadddd7bafb0"
+  ],
+  "sections": {
+    "69c2b27ceececadddd7bafad": {
+      "type": "hero",
+      "settings": {
+        "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1585263030555-FT7UYHVSVB4889E9PK56/venturastairs.jpg",
+        "imageAlt": "Gạch ốp lát cao cấp",
+        "imageMaxHeight": "500px"
+      },
+      "blocks": []
+    },
+    "69c2b27ceececadddd7bafae": {
+      "type": "material-showcase",
+      "settings": {
+        "overline": "gạch ốp lát",
+        "title": "chọn",
+        "titleAccent": "bề mặt hoàn thiện",
+        "description": "Khám phá các tùy chọn màu sắc và kết cấu cho gạch ốp lát. Mỗi mẫu được sản xuất thủ công từ nguyên liệu tự nhiên cao cấp, phù hợp cho cả tường và sàn.",
+        "previewPosition": "left",
+        "previewAspect": "4/3",
+        "thumbnailColumns": "4",
+        "showSpecs": true,
+        "bgColor": "#F5F0EB"
+      },
+      "blocks": [
+        {
+          "type": "variant-item",
+          "settings": {
+            "name": "Terrazzo Trắng Xám",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
+            "description": "Terrazzo nền trắng với đá marble xám nhẹ. Tạo không gian tươi sáng, hiện đại cho phòng khách và phòng tắm.",
+            "specs": "600×600mm  |  12mm dày  |  Chống trơn R9",
+            "tag": "bán chạy"
+          }
+        },
+        {
+          "type": "variant-item",
+          "settings": {
+            "name": "Đá Mài Granite Xám",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584995197950-UYLNPKVCU97K7XBL8GHF/Broken-Terrazo.png",
+            "description": "Granite xám tự nhiên, bề mặt mài mịn. Bền bỉ và sang trọng, phù hợp sảnh, hành lang và không gian thương mại.",
+            "specs": "600×300mm  |  15mm dày  |  Chống trơn R10",
+            "tag": ""
+          }
+        },
+        {
+          "type": "variant-item",
+          "settings": {
+            "name": "Terrazzo Hồng San Hô",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1743025520859-CDDVYDM76QGKBGKKLP26/HomeButtonCounter.jpg",
+            "description": "Terrazzo tông hồng san hô với hạt đá marble nhỏ. Điểm nhấn nổi bật cho phòng ngủ và khu vực giải trí.",
+            "specs": "400×400mm  |  12mm dày  |  Chống trơn R9",
+            "tag": "mới"
+          }
+        },
+        {
+          "type": "variant-item",
+          "settings": {
+            "name": "Đá Đen Tuyền",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
+            "description": "Đá đen tự nhiên đánh bóng cao, tạo hiệu ứng phản chiếu sang trọng. Lý tưởng cho bếp, phòng tắm cao cấp.",
+            "specs": "600×600mm  |  15mm dày  |  Chống trơn R9",
+            "tag": ""
+          }
+        }
+      ]
+    },
+    "69c2b27ceececadddd7bafaf": {
+      "type": "color-picker",
+      "settings": {
+        "overline": "bảng màu",
+        "title": "Chọn Tông Màu Phù Hợp",
+        "description": "Đa dạng tông màu từ trung tính đến đậm, phù hợp mọi phong cách kiến trúc nội — ngoại thất.",
+        "columns": "3",
+        "bgColor": "#ffffff"
+      },
+      "blocks": [
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Snow White",
+            "hex": "#F8F5F0",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Alabaster",
+            "hex": "#F2EDE3",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Ivory",
+            "hex": "#E8DFD0",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Pearl",
+            "hex": "#D4C8B8",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Quietude",
+            "hex": "#C4B8A5",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Acier",
+            "hex": "#A89F91",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Fossil",
+            "hex": "#8B8178",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Mocha",
+            "hex": "#6B5D4E",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Ebony",
+            "hex": "#3D352C",
+            "image": ""
+          }
+        }
+      ]
+    },
+    "69c2b27ceececadddd7bafb0": {
+      "type": "service-process",
+      "settings": {
+        "overline": "dịch vụ",
+        "title": "thi công",
+        "titleAccent": "ốp lát",
+        "description": "Đội ngũ thợ lành nghề với hơn 10 năm kinh nghiệm, đảm bảo mỗi viên gạch được đặt chính xác, đường ron đều đẹp và bề mặt hoàn thiện hoàn hảo.",
+        "imageUrl": "",
+        "imageAlt": "Thi công ốp lát chuyên nghiệp",
+        "ctaLabel": "Liên hệ tư vấn",
+        "ctaHref": "/landing#contact",
+        "bgColor": "#F5F0EB"
+      },
+      "blocks": [
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "01",
+            "title": "Tư vấn & chọn mẫu",
+            "description": "Chuyên viên tư vấn đến tận nơi, đánh giá không gian và đề xuất mẫu gạch phù hợp phong cách và ngân sách.",
+            "image": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80"
+          }
+        },
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "02",
+            "title": "Đo đạc & lên phương án",
+            "description": "Đo đạc chính xác diện tích, lên sơ đồ bố cục gạch và tính toán số lượng vật liệu cần thiết.",
+            "image": "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=600&q=80"
+          }
+        },
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "03",
+            "title": "Chuẩn bị bề mặt",
+            "description": "Xử lý bề mặt nền, đảm bảo phẳng, sạch và đủ độ bám dính trước khi thi công.",
+            "image": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80"
+          }
+        },
+        {
+          "type": "process-step",
+          "settings": {
+            "stepNumber": "04",
+            "title": "Ốp lát & hoàn thiện",
+            "description": "Thi công ốp lát theo phương án đã thiết kế, chà ron và đánh bóng bề mặt đạt chuẩn thẩm mỹ cao nhất.",
+            "image": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80"
+          }
+        }
+      ]
+    }
+  }
+}

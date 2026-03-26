@@ -9,10 +9,14 @@ import '@/styles/theme-editor.css'
 
 const initialState = {
   page: { title: '', description: '', bodyClass: '' },
-  blocks: [],
+  headerBlocks: [],
+  bodyBlocks: [],
+  footerBlocks: [],
   fieldDefs: [],
   activeBlockId: null,
+  activeSection: 'body', // 'header', 'body', or 'footer'
   dirty: false,
+  dirtyGlobal: false, // Track if global sections (header/footer) are modified
   saving: false,
   loading: true,
   error: null,
@@ -28,44 +32,79 @@ function reducer(state, action) {
       return {
         ...state,
         page: action.page,
-        blocks: action.blocks,
+        headerBlocks: action.headerBlocks,
+        bodyBlocks: action.bodyBlocks,
+        footerBlocks: action.footerBlocks,
         fieldDefs: action.fieldDefs,
         loading: false,
         dirty: false,
-        activeBlockId: action.blocks[0]?._id || null,
+        dirtyGlobal: false,
+        activeBlockId: action.bodyBlocks[0]?._id || null,
+        activeSection: 'body',
       }
     case 'LOAD_ERROR':
       return { ...state, loading: false, error: action.error }
     case 'SELECT_BLOCK':
-      return { ...state, activeBlockId: action.id }
+      return { ...state, activeBlockId: action.id, activeSection: action.section }
     case 'UPDATE_PAGE':
       return { ...state, page: action.page, dirty: true }
     case 'UPDATE_BLOCK': {
-      const blocks = state.blocks.map((b) =>
+      const section = action.section || state.activeSection
+      const blockKey = section === 'header' ? 'headerBlocks' : section === 'footer' ? 'footerBlocks' : 'bodyBlocks'
+      const blocks = state[blockKey].map((b) =>
         b._id === action.id ? { ...b, ...action.updates } : b
       )
-      return { ...state, blocks, dirty: true }
-    }
-    case 'REORDER': {
-      const blocks = [...state.blocks]
-      const [moved] = blocks.splice(action.from, 1)
-      blocks.splice(action.to, 0, moved)
-      return { ...state, blocks, dirty: true }
-    }
-    case 'ADD_BLOCK':
+      const isGlobal = section === 'header' || section === 'footer'
       return {
         ...state,
-        blocks: [...state.blocks, action.block],
-        activeBlockId: action.block._id,
-        dirty: true,
+        [blockKey]: blocks,
+        dirty: !isGlobal || state.dirty,
+        dirtyGlobal: isGlobal || state.dirtyGlobal
       }
+    }
+    case 'REORDER': {
+      const section = action.section || state.activeSection
+      const blockKey = section === 'header' ? 'headerBlocks' : section === 'footer' ? 'footerBlocks' : 'bodyBlocks'
+      const blocks = [...state[blockKey]]
+      const [moved] = blocks.splice(action.from, 1)
+      blocks.splice(action.to, 0, moved)
+      const isGlobal = section === 'header' || section === 'footer'
+      return {
+        ...state,
+        [blockKey]: blocks,
+        dirty: !isGlobal || state.dirty,
+        dirtyGlobal: isGlobal || state.dirtyGlobal
+      }
+    }
+    case 'ADD_BLOCK': {
+      const section = action.section || state.activeSection
+      const blockKey = section === 'header' ? 'headerBlocks' : section === 'footer' ? 'footerBlocks' : 'bodyBlocks'
+      const isGlobal = section === 'header' || section === 'footer'
+      return {
+        ...state,
+        [blockKey]: [...state[blockKey], action.block],
+        activeBlockId: action.block._id,
+        activeSection: section,
+        dirty: !isGlobal || state.dirty,
+        dirtyGlobal: isGlobal || state.dirtyGlobal
+      }
+    }
     case 'DELETE_BLOCK': {
-      const blocks = state.blocks.filter((b) => b._id !== action.id)
+      const section = action.section || state.activeSection
+      const blockKey = section === 'header' ? 'headerBlocks' : section === 'footer' ? 'footerBlocks' : 'bodyBlocks'
+      const blocks = state[blockKey].filter((b) => b._id !== action.id)
       const activeBlockId =
         state.activeBlockId === action.id
           ? blocks[0]?._id || null
           : state.activeBlockId
-      return { ...state, blocks, activeBlockId, dirty: true }
+      const isGlobal = section === 'header' || section === 'footer'
+      return {
+        ...state,
+        [blockKey]: blocks,
+        activeBlockId,
+        dirty: !isGlobal || state.dirty,
+        dirtyGlobal: isGlobal || state.dirtyGlobal
+      }
     }
     case 'SAVING':
       return { ...state, saving: true }
@@ -74,6 +113,7 @@ function reducer(state, action) {
         ...state,
         saving: false,
         dirty: false,
+        dirtyGlobal: false,
         previewKey: state.previewKey + 1,
         toast: { type: 'success', message: 'Saved! Preview updated.' },
       }
@@ -120,14 +160,18 @@ export default function ThemeEditor() {
     dispatch({ type: 'LOADING' })
     async function load() {
       try {
-        const [themeRes, defsRes] = await Promise.all([
+        const [themeRes, defsRes, activeThemeRes] = await Promise.all([
           get(`/theme/pages/${slug}`),
           get('/theme/field-defs'),
+          get('/theme/active'),
         ])
+
         dispatch({
           type: 'LOADED',
           page: themeRes.data.page,
-          blocks: themeRes.data.blocks,
+          headerBlocks: activeThemeRes.data?.header?.blocks || [],
+          bodyBlocks: themeRes.data.blocks,
+          footerBlocks: activeThemeRes.data?.footer?.blocks || [],
           fieldDefs: defsRes.data,
         })
       } catch (err) {
@@ -147,45 +191,78 @@ export default function ThemeEditor() {
 
   useEffect(() => {
     const handler = (e) => {
-      if (state.dirty) {
+      if (state.dirty || state.dirtyGlobal) {
         e.preventDefault()
         e.returnValue = ''
       }
     }
     window.addEventListener('beforeunload', handler)
     return () => window.removeEventListener('beforeunload', handler)
-  }, [state.dirty])
+  }, [state.dirty, state.dirtyGlobal])
 
   const handlePageSwitch = useCallback((newSlug) => {
-    if (state.dirty && !window.confirm('You have unsaved changes. Switch page anyway?')) return
+    const hasUnsaved = state.dirty || state.dirtyGlobal
+    if (hasUnsaved && !window.confirm('You have unsaved changes. Switch page anyway?')) return
     navigate(`/theme-editor/${newSlug}`)
-  }, [state.dirty, navigate])
+  }, [state.dirty, state.dirtyGlobal, navigate])
 
   const handleSave = useCallback(async () => {
+    // Warn if saving global sections
+    if (state.dirtyGlobal) {
+      const confirmed = window.confirm(
+        '⚠️ You are about to save changes to global header/footer sections.\n\nThese changes will affect ALL pages on your site.\n\nContinue?'
+      )
+      if (!confirmed) return
+    }
+
     dispatch({ type: 'SAVING' })
     try {
-      await put(`/theme/pages/${slug}`, {
-        page: state.page,
-        blocks: state.blocks,
-      })
+      const promises = []
+
+      // Save page body if dirty
+      if (state.dirty) {
+        promises.push(
+          put(`/theme/pages/${slug}`, {
+            page: state.page,
+            blocks: state.bodyBlocks,
+          })
+        )
+      }
+
+      // Save global header if dirty
+      if (state.dirtyGlobal) {
+        promises.push(
+          put('/theme/header', {
+            blocks: state.headerBlocks,
+          }),
+          put('/theme/footer', {
+            blocks: state.footerBlocks,
+          })
+        )
+      }
+
+      await Promise.all(promises)
       dispatch({ type: 'SAVED' })
     } catch (err) {
       dispatch({ type: 'SAVE_ERROR', error: err.message })
     }
-  }, [slug, state.page, state.blocks])
+  }, [slug, state.page, state.bodyBlocks, state.headerBlocks, state.footerBlocks, state.dirty, state.dirtyGlobal])
 
   const handleDiscard = useCallback(async () => {
     if (!window.confirm('Discard all unsaved changes?')) return
     dispatch({ type: 'LOADING' })
     try {
-      const [themeRes, defsRes] = await Promise.all([
+      const [themeRes, defsRes, activeThemeRes] = await Promise.all([
         get(`/theme/pages/${slug}`),
         get('/theme/field-defs'),
+        get('/theme/active'),
       ])
       dispatch({
         type: 'LOADED',
         page: themeRes.data.page,
-        blocks: themeRes.data.blocks,
+        headerBlocks: activeThemeRes.data?.header?.blocks || [],
+        bodyBlocks: themeRes.data.blocks,
+        footerBlocks: activeThemeRes.data?.footer?.blocks || [],
         fieldDefs: defsRes.data,
       })
     } catch (err) {
@@ -193,29 +270,49 @@ export default function ThemeEditor() {
     }
   }, [slug])
 
-  const handleAddBlock = useCallback(async (type) => {
+  const handleAddBlock = useCallback(async (type, section = 'body') => {
     try {
-      const res = await post(`/theme/pages/${slug}/blocks`, { type })
-      dispatch({ type: 'ADD_BLOCK', block: res.data })
+      let res
+      if (section === 'header') {
+        res = await post('/theme/header/blocks', { type })
+      } else if (section === 'footer') {
+        res = await post('/theme/footer/blocks', { type })
+      } else {
+        res = await post(`/theme/pages/${slug}/blocks`, { type })
+      }
+      dispatch({ type: 'ADD_BLOCK', block: res.data, section })
     } catch (err) {
       dispatch({ type: 'SAVE_ERROR', error: err.message })
     }
   }, [slug])
 
-  const handleCloneBlock = useCallback(async (sourceBlockId) => {
+  const handleCloneBlock = useCallback(async (sourceBlockId, section = 'body') => {
     try {
-      const res = await post(`/theme/pages/${slug}/blocks/clone`, { sourceBlockId })
-      dispatch({ type: 'ADD_BLOCK', block: res.data })
+      let res
+      if (section === 'header') {
+        res = await post('/theme/header/blocks/clone', { sourceBlockId })
+      } else if (section === 'footer') {
+        res = await post('/theme/footer/blocks/clone', { sourceBlockId })
+      } else {
+        res = await post(`/theme/pages/${slug}/blocks/clone`, { sourceBlockId })
+      }
+      dispatch({ type: 'ADD_BLOCK', block: res.data, section })
     } catch (err) {
       dispatch({ type: 'SAVE_ERROR', error: err.message })
     }
   }, [slug])
 
-  const handleDeleteBlock = useCallback(async (id) => {
+  const handleDeleteBlock = useCallback(async (id, section = 'body') => {
     if (!window.confirm('Remove this section?')) return
     try {
-      await del(`/theme/pages/${slug}/blocks/${id}`)
-      dispatch({ type: 'DELETE_BLOCK', id })
+      if (section === 'header') {
+        await del(`/theme/header/blocks/${id}`)
+      } else if (section === 'footer') {
+        await del(`/theme/footer/blocks/${id}`)
+      } else {
+        await del(`/theme/pages/${slug}/blocks/${id}`)
+      }
+      dispatch({ type: 'DELETE_BLOCK', id, section })
     } catch (err) {
       dispatch({ type: 'SAVE_ERROR', error: err.message })
     }
@@ -249,7 +346,8 @@ export default function ThemeEditor() {
     }
   }, [navigate])
 
-  const activeBlock = state.blocks.find((b) => b._id === state.activeBlockId)
+  const allBlocks = [...state.headerBlocks, ...state.bodyBlocks, ...state.footerBlocks]
+  const activeBlock = allBlocks.find((b) => b._id === state.activeBlockId)
 
   if (!slug) {
     return (
@@ -283,11 +381,14 @@ export default function ThemeEditor() {
     <div className="theme-editor">
       <ThemeEditorSidebar
         page={state.page}
-        blocks={state.blocks}
+        headerBlocks={state.headerBlocks}
+        bodyBlocks={state.bodyBlocks}
+        footerBlocks={state.footerBlocks}
         fieldDefs={state.fieldDefs}
         activeBlockId={state.activeBlockId}
-        onSelectBlock={(id) => dispatch({ type: 'SELECT_BLOCK', id })}
-        onReorder={(from, to) => dispatch({ type: 'REORDER', from, to })}
+        activeSection={state.activeSection}
+        onSelectBlock={(id, section) => dispatch({ type: 'SELECT_BLOCK', id, section })}
+        onReorder={(from, to, section) => dispatch({ type: 'REORDER', from, to, section })}
         onDeleteBlock={handleDeleteBlock}
         onAddBlock={handleAddBlock}
         onCloneBlock={handleCloneBlock}
@@ -304,16 +405,19 @@ export default function ThemeEditor() {
         activeBlockType={activeBlock?.type}
         previewKey={state.previewKey}
         page={state.page}
-        blocks={state.blocks}
+        headerBlocks={state.headerBlocks}
+        bodyBlocks={state.bodyBlocks}
+        footerBlocks={state.footerBlocks}
         viewport={viewport}
         onViewportChange={handleViewportChange}
       />
 
       <BlockEditorPanel
         block={activeBlock}
+        section={state.activeSection}
         fieldDefs={state.fieldDefs}
-        onUpdateBlock={(id, updates) => dispatch({ type: 'UPDATE_BLOCK', id, updates })}
-        dirty={state.dirty}
+        onUpdateBlock={(id, updates) => dispatch({ type: 'UPDATE_BLOCK', id, updates, section: state.activeSection })}
+        dirty={state.dirty || state.dirtyGlobal}
         saving={state.saving}
         onSave={handleSave}
         onDiscard={handleDiscard}

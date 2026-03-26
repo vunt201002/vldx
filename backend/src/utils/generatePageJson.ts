@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { config } from '../config/env';
 import blockJsonMappings from '../config/blockJsonMapping';
+import Theme from '../models/Theme';
 
 interface PopulatedBlock {
   _id: string;
@@ -185,4 +186,67 @@ export function sectionToBlockData(type: string, sectionSettings: Record<string,
   }
 
   return data;
+}
+
+/**
+ * Generate page JSON with merged theme (header + body + footer).
+ * This is the new function that merges global theme sections with page body.
+ */
+export async function generatePageJsonWithTheme(page: PageData): Promise<object> {
+  // Get active theme
+  const theme = await Theme.findOne({ isActive: true })
+    .populate('header.blocks.block')
+    .populate('footer.blocks.block')
+    .lean();
+
+  const order: string[] = [];
+  const sections: Record<string, any> = {};
+
+  // Add header blocks from theme
+  if (theme && theme.header && theme.header.blocks) {
+    const sortedHeader = [...theme.header.blocks].sort((a: any, b: any) => a.order - b.order);
+    for (const { block } of sortedHeader) {
+      const { id, section } = blockToSection(block as any);
+      order.push(id);
+      sections[id] = section;
+    }
+  }
+
+  // Add body blocks from page
+  const sortedBody = [...page.blocks].sort((a, b) => a.order - b.order);
+  for (const { block } of sortedBody) {
+    const { id, section } = blockToSection(block);
+    order.push(id);
+    sections[id] = section;
+  }
+
+  // Add footer blocks from theme
+  if (theme && theme.footer && theme.footer.blocks) {
+    const sortedFooter = [...theme.footer.blocks].sort((a: any, b: any) => a.order - b.order);
+    for (const { block } of sortedFooter) {
+      const { id, section } = blockToSection(block as any);
+      order.push(id);
+      sections[id] = section;
+    }
+  }
+
+  return {
+    page: {
+      title: page.title,
+      description: page.description || '',
+      bodyClass: page.bodyClass || '',
+      displayFont: page.displayFont || '',
+      bodyFont: page.bodyFont || '',
+    },
+    order,
+    sections,
+  };
+}
+
+/**
+ * Write page JSON with theme merging.
+ */
+export async function writePageJsonWithTheme(slug: string, page: PageData): Promise<void> {
+  const json = await generatePageJsonWithTheme(page);
+  writePageJson(slug, json);
 }

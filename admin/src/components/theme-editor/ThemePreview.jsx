@@ -9,7 +9,7 @@ const viewports = [
   { key: 'mobile', icon: '📲', label: 'Mobile' },
 ]
 
-export default function ThemePreview({ slug, activeBlockType, previewKey, page, blocks, viewport, onViewportChange }) {
+export default function ThemePreview({ slug, activeBlockType, previewKey, page, headerBlocks = [], bodyBlocks = [], footerBlocks = [], viewport, onViewportChange }) {
   const iframeRef = useRef(null)
   const iframeReady = useRef(false)
 
@@ -21,13 +21,15 @@ export default function ThemePreview({ slug, activeBlockType, previewKey, page, 
 
   // Send live preview data to iframe
   const sendPreviewData = useCallback(() => {
-    if (!iframeRef.current || !iframeReady.current || !page || !blocks) return
-    const config = buildPreviewConfig(page, blocks)
+    if (!iframeRef.current || !iframeReady.current || !page) return
+    // Merge header, body, footer blocks for preview
+    const allBlocks = [...headerBlocks, ...bodyBlocks, ...footerBlocks]
+    const config = buildPreviewConfig(page, allBlocks)
     iframeRef.current.contentWindow.postMessage(
       { type: 'theme-preview-update', config },
       STOREFRONT_URL
     )
-  }, [page, blocks])
+  }, [page, headerBlocks, bodyBlocks, footerBlocks])
 
   // Listen for iframe ready signal
   useEffect(() => {

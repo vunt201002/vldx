@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 
-export default function AddBlockMenu({ fieldDefs, onAdd }) {
+export default function AddBlockMenu({ fieldDefs, onAdd, buttonLabel = '+ Add Section' }) {
   const [open, setOpen] = useState(false)
   const menuRef = useRef(null)
 
@@ -37,7 +37,7 @@ export default function AddBlockMenu({ fieldDefs, onAdd }) {
         </div>
       )}
       <button className="te-add-block-btn" onClick={() => setOpen(!open)}>
-        + Add Section
+        {buttonLabel}
       </button>
     </div>
   )

@@ -6,9 +6,12 @@ import PageSettingsPanel from './PageSettingsPanel'
 
 export default function ThemeEditorSidebar({
   page,
-  blocks,
+  headerBlocks = [],
+  bodyBlocks = [],
+  footerBlocks = [],
   fieldDefs,
   activeBlockId,
+  activeSection,
   onSelectBlock,
   onReorder,
   onDeleteBlock,
@@ -110,23 +113,115 @@ export default function ThemeEditorSidebar({
           )}
         </div>
         <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-          {blocks.length} blocks
+          {headerBlocks.length + bodyBlocks.length + footerBlocks.length} blocks
         </span>
       </div>
       <PageSettingsPanel page={page} onChange={onUpdatePage} />
       <div className="te-sidebar-body">
-        <BlockList
-          blocks={blocks}
-          fieldDefs={fieldDefs}
-          activeBlockId={activeBlockId}
-          onSelect={onSelectBlock}
-          onReorder={onReorder}
-          onDelete={onDeleteBlock}
-        />
+        {/* Header Section (Global) */}
+        <div style={{ marginBottom: '1rem' }}>
+          <div style={{
+            padding: '0.5rem 1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            backgroundColor: '#fef3c7',
+            borderLeft: '3px solid #f59e0b',
+          }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#92400e' }}>
+              🔒 HEADER (Global)
+            </span>
+            <span style={{ fontSize: '0.7rem', color: '#92400e' }}>
+              {headerBlocks.length}
+            </span>
+          </div>
+          <BlockList
+            blocks={headerBlocks}
+            fieldDefs={fieldDefs}
+            activeBlockId={activeBlockId}
+            onSelect={(id) => onSelectBlock(id, 'header')}
+            onReorder={(from, to) => onReorder(from, to, 'header')}
+            onDelete={(id) => onDeleteBlock(id, 'header')}
+          />
+          <div style={{ padding: '0.5rem 1rem' }}>
+            <AddBlockMenu
+              fieldDefs={fieldDefs}
+              onAdd={(type) => onAddBlock(type, 'header')}
+              buttonLabel="+ Add to Header"
+            />
+          </div>
+        </div>
+
+        {/* Body Section (Page-specific) */}
+        <div style={{ marginBottom: '1rem' }}>
+          <div style={{
+            padding: '0.5rem 1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            backgroundColor: '#dcfce7',
+            borderLeft: '3px solid #22c55e',
+          }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#166534' }}>
+              📄 BODY (This Page)
+            </span>
+            <span style={{ fontSize: '0.7rem', color: '#166534' }}>
+              {bodyBlocks.length}
+            </span>
+          </div>
+          <BlockList
+            blocks={bodyBlocks}
+            fieldDefs={fieldDefs}
+            activeBlockId={activeBlockId}
+            onSelect={(id) => onSelectBlock(id, 'body')}
+            onReorder={(from, to) => onReorder(from, to, 'body')}
+            onDelete={(id) => onDeleteBlock(id, 'body')}
+          />
+          <div style={{ padding: '0.5rem 1rem' }}>
+            <AddBlockMenu
+              fieldDefs={fieldDefs}
+              onAdd={(type) => onAddBlock(type, 'body')}
+              buttonLabel="+ Add to Body"
+            />
+          </div>
+        </div>
+
+        {/* Footer Section (Global) */}
+        <div>
+          <div style={{
+            padding: '0.5rem 1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            backgroundColor: '#fef3c7',
+            borderLeft: '3px solid #f59e0b',
+          }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#92400e' }}>
+              🔒 FOOTER (Global)
+            </span>
+            <span style={{ fontSize: '0.7rem', color: '#92400e' }}>
+              {footerBlocks.length}
+            </span>
+          </div>
+          <BlockList
+            blocks={footerBlocks}
+            fieldDefs={fieldDefs}
+            activeBlockId={activeBlockId}
+            onSelect={(id) => onSelectBlock(id, 'footer')}
+            onReorder={(from, to) => onReorder(from, to, 'footer')}
+            onDelete={(id) => onDeleteBlock(id, 'footer')}
+          />
+          <div style={{ padding: '0.5rem 1rem 1rem' }}>
+            <AddBlockMenu
+              fieldDefs={fieldDefs}
+              onAdd={(type) => onAddBlock(type, 'footer')}
+              buttonLabel="+ Add to Footer"
+            />
+          </div>
+        </div>
       </div>
-      <div className="te-add-actions">
-        <AddBlockMenu fieldDefs={fieldDefs} onAdd={onAddBlock} />
-        <button className="te-copy-block-btn" onClick={() => setShowCopyModal(true)} title="Copy block from another page">
+      <div style={{ padding: '0.75rem 1rem', borderTop: '1px solid var(--color-border)' }}>
+        <button className="te-copy-block-btn" onClick={() => setShowCopyModal(true)} title="Copy block from another page" style={{ width: '100%' }}>
           Copy from page
         </button>
       </div>
