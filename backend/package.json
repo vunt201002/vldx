@@ -11,7 +11,10 @@
     "seed": "ts-node-dev --transpile-only src/scripts/seed.ts",
     "seed:blocks": "ts-node-dev --transpile-only src/scripts/seedBlocks.ts",
     "seed:product-pages": "ts-node-dev --transpile-only src/scripts/seedProductPages.ts",
-    "seed:update-navbars": "ts-node-dev --transpile-only src/scripts/seedUpdateNavbars.ts"
+    "seed:update-navbars": "ts-node-dev --transpile-only src/scripts/seedUpdateNavbars.ts",
+    "migrate": "ts-node-dev --transpile-only src/migrations/run-migrations.ts",
+    "migrate:theme": "ts-node-dev --transpile-only src/migrations/001-create-default-theme.ts",
+    "migrate:products": "ts-node-dev --transpile-only src/migrations/002-migrate-products.ts"
   },
   "dependencies": {
     "cloudinary": "^2.9.0",

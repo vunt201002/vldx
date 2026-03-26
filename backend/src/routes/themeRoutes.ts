@@ -9,12 +9,28 @@ import {
   addBlock,
   cloneBlock,
   deleteBlock,
+  getActiveTheme,
+  updateThemeHeader,
+  updateThemeFooter,
+  addHeaderBlock,
+  addFooterBlock,
+  deleteHeaderBlock,
+  deleteFooterBlock,
 } from '../controllers/themeController';
 
 const router = Router();
 
 // Field definitions for the editor
 router.get('/field-defs', getFieldDefs);
+
+// Global theme management
+router.get('/', getActiveTheme);
+router.put('/header', updateThemeHeader);
+router.put('/footer', updateThemeFooter);
+router.post('/header/blocks', addHeaderBlock);
+router.post('/footer/blocks', addFooterBlock);
+router.delete('/header/blocks/:blockId', deleteHeaderBlock);
+router.delete('/footer/blocks/:blockId', deleteFooterBlock);
 
 // Page management
 router.get('/pages', listPages);

@@ -4,6 +4,8 @@ import blockRoutes from './blockRoutes';
 import pageRoutes from './pageRoutes';
 import themeRoutes from './themeRoutes';
 import uploadRoutes from './uploadRoutes';
+import menuRoutes from './menuRoutes';
+import productRoutes from './productRoutes';
 
 const router = Router();
 
@@ -16,5 +18,7 @@ router.use('/blocks', blockRoutes);
 router.use('/pages', pageRoutes);
 router.use('/theme', themeRoutes);
 router.use('/upload', uploadRoutes);
+router.use('/menus', menuRoutes);
+router.use('/products', productRoutes);
 
 export default router;

@@ -5,6 +5,8 @@ export interface IBlock extends Document {
   name: string;
   data: Record<string, any>;
   settings: Record<string, any>;
+  placement?: 'header' | 'body' | 'footer';
+  isTemplate?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -30,6 +32,17 @@ const blockSchema = new Schema<IBlock>(
     settings: {
       type: Schema.Types.Mixed,
       default: {},
+    },
+    placement: {
+      type: String,
+      enum: ['header', 'body', 'footer'],
+      default: 'body',
+      index: true,
+    },
+    isTemplate: {
+      type: Boolean,
+      default: false,
+      index: true,
     },
   },
   { timestamps: true }

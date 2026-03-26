@@ -13,6 +13,7 @@ export interface IPage extends Document {
   displayFont: string;
   bodyFont: string;
   blocks: IPageBlock[];
+  themeSection: 'body';
   isPublished: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -64,6 +65,11 @@ const pageSchema = new Schema<IPage>(
       default: '',
     },
     blocks: [pageBlockSchema],
+    themeSection: {
+      type: String,
+      enum: ['body'],
+      default: 'body',
+    },
     isPublished: {
       type: Boolean,
       default: false,
