@@ -3,14 +3,16 @@ import ThemeLayout from '@/components/layouts/ThemeLayout';
 import SectionRenderer from '@/components/sections/SectionRenderer';
 import { transformPageData } from '@/lib/transformPageConfig';
 
-export default function LandingPage({ globalTheme, pageConfig: initialPageConfig }) {
+export default function LandingPage({ globalTheme: initialGlobalTheme, pageConfig: initialPageConfig }) {
   const [pageConfig, setPageConfig] = useState(initialPageConfig);
+  const [globalTheme, setGlobalTheme] = useState(initialGlobalTheme);
 
   // Listen for live preview updates from the theme editor
   useEffect(() => {
     const handleMessage = (e) => {
-      if (e.data?.type === 'theme-preview-update' && e.data.config) {
-        setPageConfig(e.data.config);
+      if (e.data?.type === 'theme-preview-update') {
+        if (e.data.config) setPageConfig(e.data.config);
+        if (e.data.globalTheme) setGlobalTheme(e.data.globalTheme);
       }
     };
     window.addEventListener('message', handleMessage);
@@ -25,7 +27,7 @@ export default function LandingPage({ globalTheme, pageConfig: initialPageConfig
   if (!pageConfig) return null;
 
   return (
-    <ThemeLayout globalTheme={globalTheme} pageMetadata={pageConfig.page}>
+    <ThemeLayout globalTheme={globalTheme} pageMetadata={pageConfig?.page}>
       <SectionRenderer config={pageConfig} />
     </ThemeLayout>
   );

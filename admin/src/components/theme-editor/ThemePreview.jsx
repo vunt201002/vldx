@@ -22,11 +22,14 @@ export default function ThemePreview({ slug, activeBlockType, previewKey, page, 
   // Send live preview data to iframe
   const sendPreviewData = useCallback(() => {
     if (!iframeRef.current || !iframeReady.current || !page) return
-    // Merge header, body, footer blocks for preview
-    const allBlocks = [...headerBlocks, ...bodyBlocks, ...footerBlocks]
-    const config = buildPreviewConfig(page, allBlocks)
+    // Only body blocks go into pageConfig; header/footer go into globalTheme separately
+    const config = buildPreviewConfig(page, bodyBlocks)
+    const globalTheme = {
+      header: { blocks: headerBlocks },
+      footer: { blocks: footerBlocks },
+    }
     iframeRef.current.contentWindow.postMessage(
-      { type: 'theme-preview-update', config },
+      { type: 'theme-preview-update', config, globalTheme },
       STOREFRONT_URL
     )
   }, [page, headerBlocks, bodyBlocks, footerBlocks])

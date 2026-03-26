@@ -1,4 +1,16 @@
 /**
+ * Transform a block's nested data into the blocks array expected by section components.
+ * Navbar stores links in data.links and needs them as [{ type: 'nav-link', settings }].
+ */
+function getNestedBlocks(block) {
+  const data = block.data || block.settings || {};
+  if (block.type === 'navbar' && Array.isArray(data.links)) {
+    return data.links.map((item) => ({ type: 'nav-link', settings: item }));
+  }
+  return data.items || data.blocks || [];
+}
+
+/**
  * Transform backend page data (with blocks array) to frontend config format
  * @param {Object} pageData - Backend response { page, blocks }
  * @returns {Object} Frontend config { page, sections, order }
@@ -24,7 +36,7 @@ export function transformPageData(pageData) {
     sections[key] = {
       type: block.type,
       settings: block.data || {},
-      blocks: [] // Most blocks don't have nested blocks in this structure
+      blocks: getNestedBlocks(block)
     };
 
     order.push(key);
@@ -55,7 +67,7 @@ export function blocksToConfig(blocks) {
     sections[key] = {
       type: block.type,
       settings: block.data || block.settings || {},
-      blocks: block.data?.items || block.data?.blocks || []
+      blocks: getNestedBlocks(block)
     };
     order.push(key);
   });
