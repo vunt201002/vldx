@@ -25,7 +25,10 @@
       "Bash(npx tsc:*)",
       "Bash(npx vite:*)",
       "Bash(node -e \"const f=require\\(''''/d/Project/j/vlxd/frontend/config/pages/landing.json''''\\); const nav=Object.values\\(f.sections\\).find\\(s=>s.type===''''navbar''''\\); console.log\\(JSON.stringify\\(nav.blocks,null,2\\)\\)\")",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(grep -r \"font-display\\\\|font-body\\\\|font-family\\\\|fontFamily\\\\|Cormorant\\\\|Outfit\" D:/Project/j/vlxd/frontend --include=*.js --include=*.css -l)",
+      "Bash(grep -r \"content-image\\\\|ContentImage\\\\|imageUrl.*small\\\\|smallImage\\\\|topImage\" D:/Project/j/vlxd/frontend/config/pages/ --include=*.json -l)",
+      "Bash(git diff:*)"
     ]
   }
 }

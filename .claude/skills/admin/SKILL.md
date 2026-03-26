@@ -75,6 +75,24 @@ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pr
 - `image` type uses `ImageField.jsx` which calls `POST /api/upload/image?uploadFolder=<folder>`
 - `array` type renders a list of sub-items with add/remove controls, each sub-item rendered with `FieldRenderer`
 
+### Viewport state is owned by ThemeEditor, not ThemePreview
+`ThemePreview` receives `viewport` and `onViewportChange` as props. The state lives in `ThemeEditor.jsx`. When the viewport switches to non-desktop, `onViewportChange` also collapses the admin sidebar via `LayoutContext.setCollapsed`:
+
+```jsx
+// ThemeEditor.jsx
+const [viewport, setViewport] = useState('desktop');
+const layout = useLayout();
+
+const handleViewportChange = useCallback((vp) => {
+  setViewport(vp);
+  if (layout) layout.setCollapsed(vp === 'desktop');
+}, [layout]);
+
+<ThemePreview viewport={viewport} onViewportChange={handleViewportChange} ... />
+```
+
+Do NOT add local `viewport` state inside `ThemePreview`.
+
 ### Copy Block from Page (CopyBlockModal)
 - Opens a modal to pick a source page, then lists that page's blocks
 - Calls `POST /api/theme/pages/:slug/blocks/clone` with `{ sourceBlockId }`
@@ -83,6 +101,33 @@ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pr
 ### Discard Changes
 - Editor keeps an "unsaved changes" flag
 - Discard button reverts to last saved state from the server
+
+## Admin Layout Patterns
+
+### Collapsible sidebar
+`AdminLayout.jsx` manages a `collapsed` boolean with `useState`. The sidebar width is driven by a CSS variable:
+
+```jsx
+<div
+  className="admin-layout"
+  style={{ '--sidebar-width': collapsed ? '60px' : '240px' }}
+>
+  <aside className={`sidebar${collapsed ? ' collapsed' : ''}`}>
+    ...
+    <button onClick={() => setCollapsed(c => !c)}>
+      {collapsed ? '›' : '‹'}
+    </button>
+```
+
+CSS in `layout.css` reads `var(--sidebar-width)` for both the aside width and the main content margin. The collapsed state is exposed to child pages via `LayoutContext` (`admin/src/context/LayoutContext.jsx`):
+
+```jsx
+<LayoutContext.Provider value={{ collapsed, setCollapsed }}>
+  <Outlet />
+</LayoutContext.Provider>
+```
+
+Child pages read it with `useLayout()` from `@/context/LayoutContext`.
 
 ## Conventions
 

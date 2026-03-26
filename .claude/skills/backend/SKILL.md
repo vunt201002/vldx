@@ -164,6 +164,53 @@ Standard category slugs used in the Material model:
 Controllers follow: validate params → query with filters → paginate → return JSON.
 Pagination uses `limit` (default 20) and `page` (default 1) query params.
 
+### Block save: always assign data + settings
+When saving a block, always overwrite both fields with a nullish-coalescing fallback — never use a conditional guard:
+
+```typescript
+// CORRECT
+blockDoc.data = b.data ?? {};
+blockDoc.settings = b.settings ?? {};
+blockDoc.markModified('data');
+blockDoc.markModified('settings');
+
+// WRONG — skipping settings silently keeps stale data
+if (b.settings !== undefined) {
+  blockDoc.settings = b.settings;
+}
+```
+
+Always call `markModified()` on both after assignment so Mongoose detects the change.
+
+### Seed script pattern (`backend/src/scripts/`)
+Use this to insert or update pages + blocks without going through the theme editor UI.
+
+```typescript
+// 1. Define block data as plain arrays
+const pageBlocks = [
+  { type: 'navbar', name: 'Navigation', data: navbarData },
+  { type: 'hero',   name: 'Hero',       data: heroData   },
+];
+
+// 2. Connect, insert blocks, create page, generate JSON
+await mongoose.connect(config.mongodbUri);
+const createdBlocks = await Block.insertMany(pageBlocks);
+const page = await Page.create({
+  slug, title, description, bodyClass,
+  blocks: createdBlocks.map((b, i) => ({ block: b._id, order: i })),
+  isPublished: true,
+});
+const populated = await Page.findById(page._id).populate('blocks.block').lean();
+const json = generatePageJson(populated as any);
+writePageJson(slug, json);
+await mongoose.disconnect();
+```
+
+Key points:
+- Skip the page if it already exists (`Page.findOne({ slug })`) to make scripts idempotent
+- Always call `generatePageJson` + `writePageJson` at the end to keep the JSON file in sync
+- Shared blocks (navbar, footer) can be defined once and reused across multiple page definitions
+
 ## Conventions
 
 1. **TypeScript** — all backend code is typed
