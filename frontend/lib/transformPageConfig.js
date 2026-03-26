@@ -7,6 +7,9 @@ function getNestedBlocks(block) {
   if (block.type === 'navbar' && Array.isArray(data.links)) {
     return data.links.map((item) => ({ type: 'nav-link', settings: item }));
   }
+  if (block.type === 'content-image' && Array.isArray(data.buttons)) {
+    return data.buttons.map((item) => ({ type: 'content-button', settings: item }));
+  }
   return data.items || data.blocks || [];
 }
 

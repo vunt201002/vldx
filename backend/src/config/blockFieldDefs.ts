@@ -70,26 +70,35 @@ const blockFieldDefs: BlockTypeDef[] = [
     label: 'Content + Image',
     icon: '🖼️',
     fields: [
-      { key: 'imageUrl', label: 'Image', type: 'image' as any, uploadFolder: 'pages' },
-      { key: 'imageAlt', label: 'Image Alt Text', type: 'text' },
+      // Layout controls
+      { key: 'squarePosition', label: 'Square Image Side', type: 'select', options: [
+        { label: 'Left', value: 'left' },
+        { label: 'Right', value: 'right' },
+      ]},
+      { key: 'rectImageOrder', label: 'Rectangle Image Position', type: 'select', options: [
+        { label: 'Top (image above content)', value: 'top' },
+        { label: 'Bottom (image below content)', value: 'bottom' },
+      ]},
+      // Square image
+      { key: 'squareImageUrl', label: 'Square Image', type: 'image' as any, uploadFolder: 'pages' },
+      { key: 'squareImageAlt', label: 'Square Image Alt', type: 'text' },
+      // Rectangle image
+      { key: 'rectImageUrl', label: 'Rectangle Image', type: 'image' as any, uploadFolder: 'pages' },
+      { key: 'rectImageAlt', label: 'Rectangle Image Alt', type: 'text' },
+      // Content
+      { key: 'overline', label: 'Overline', type: 'text', placeholder: 'e.g. our story' },
       { key: 'title', label: 'Title', type: 'text' },
+      { key: 'titleAccent', label: 'Title Accent (italic)', type: 'text' },
       { key: 'description', label: 'Description', type: 'textarea' },
-      { key: 'direction', label: 'Layout Direction', type: 'select', options: [
-        { label: 'Image Left / Text Right', value: 'image-left' },
-        { label: 'Image Right / Text Left', value: 'image-right' },
-      ]},
-      { key: 'mobileOrder', label: 'Mobile Order', type: 'select', options: [
-        { label: 'Image First', value: 'image-first' },
-        { label: 'Content First', value: 'content-first' },
-      ]},
-      { key: 'imageWidth', label: 'Image Width (%)', type: 'text', placeholder: '50' },
-      { key: 'maxWidth', label: 'Max Width', type: 'text', placeholder: '1400px' },
+      // Style
+      { key: 'maxWidth', label: 'Max Width', type: 'text', placeholder: '1200px' },
       { key: 'titleSize', label: 'Title Font Size', type: 'text', placeholder: '2rem' },
       { key: 'descSize', label: 'Description Font Size', type: 'text', placeholder: '1rem' },
       { key: 'titleColor', label: 'Title Color', type: 'text', placeholder: '#1A1714' },
       { key: 'descColor', label: 'Description Color', type: 'text', placeholder: '#4A3F34' },
       { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#ffffff' },
-      { key: 'sectionPadding', label: 'Section Padding', type: 'text', placeholder: '4rem 0' },
+      { key: 'sectionPadding', label: 'Section Padding', type: 'text', placeholder: '5rem 0' },
+      // Buttons
       {
         key: 'buttons',
         label: 'Buttons',
@@ -98,7 +107,7 @@ const blockFieldDefs: BlockTypeDef[] = [
           { key: 'label', label: 'Label', type: 'text', required: true },
           { key: 'href', label: 'Link', type: 'url', required: true },
           { key: 'color', label: 'Text Color', type: 'text', placeholder: '#1A1714' },
-          { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: 'transparent' },
+          { key: 'borderColor', label: 'Border Color', type: 'text', placeholder: '#1A1714' },
         ],
       },
     ],
