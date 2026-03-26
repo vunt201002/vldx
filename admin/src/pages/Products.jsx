@@ -2,12 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { get } from '@/lib/api'
 
-const PLACEHOLDER_PRODUCTS = [
-  { _id: '1', name: 'Xi mang PCB30', price: 85000, category: 'Xi mang', description: 'Xi mang Portland PCB30' },
-  { _id: '2', name: 'Gach the 4x8', price: 1200, category: 'Gach', description: 'Gach the xay dung 4x8cm' },
-  { _id: '3', name: 'Cat vang', price: 250000, category: 'Vat lieu nen', description: 'Cat vang hat min' },
-]
-
 const styles = {
   header: {
     display: 'flex',
@@ -70,13 +64,6 @@ const styles = {
     cursor: 'pointer',
     transition: 'background-color 0.15s, color 0.15s',
   },
-  notice: {
-    padding: '0.75rem 1rem',
-    backgroundColor: '#fffbeb',
-    borderBottom: '1px solid #fde68a',
-    fontSize: '0.85rem',
-    color: '#92400e',
-  },
   errorBox: {
     padding: '1rem',
     backgroundColor: '#fef2f2',
@@ -93,23 +80,19 @@ export default function Products() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [usingPlaceholder, setUsingPlaceholder] = useState(false)
 
   useEffect(() => {
     get('/products')
-      .then((data) => {
-        setProducts(Array.isArray(data) ? data : data.products || [])
+      .then((response) => {
+        const data = response.data || []
+        setProducts(data)
         setLoading(false)
       })
-      .catch(() => {
-        setProducts(PLACEHOLDER_PRODUCTS)
-        setUsingPlaceholder(true)
+      .catch((err) => {
+        setError(err.message)
         setLoading(false)
       })
   }, [])
-
-  const formatPrice = (price) =>
-    new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price)
 
   if (loading) {
     return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>Loading products...</div>
@@ -132,28 +115,27 @@ export default function Products() {
       {error && <div style={styles.errorBox}>{error}</div>}
 
       <div style={styles.tableWrapper}>
-        {usingPlaceholder && (
-          <div style={styles.notice}>
-            Showing placeholder data — backend API is not connected.
-          </div>
-        )}
         <table style={styles.table}>
           <thead>
             <tr>
               <th style={styles.th}>Name</th>
-              <th style={styles.th}>Category</th>
-              <th style={styles.th}>Price</th>
-              <th style={styles.th}>Description</th>
+              <th style={styles.th}>Slug</th>
+              <th style={styles.th}>Variants</th>
+              <th style={styles.th}>Colors</th>
+              <th style={styles.th}>Status</th>
               <th style={styles.th}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {products.map((product, idx) => (
               <tr
-                key={product._id || product.id || idx}
+                key={product._id || idx}
                 style={{ backgroundColor: idx % 2 === 0 ? '#fff' : '#fafafa' }}
               >
                 <td style={{ ...styles.td, fontWeight: 600 }}>{product.name}</td>
+                <td style={{ ...styles.td, fontFamily: 'monospace', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                  {product.slug}
+                </td>
                 <td style={styles.td}>
                   <span style={{
                     padding: '0.2rem 0.6rem',
@@ -163,17 +145,37 @@ export default function Products() {
                     fontSize: '0.75rem',
                     fontWeight: 600,
                   }}>
-                    {product.category || 'N/A'}
+                    {product.variants?.length || 0}
                   </span>
                 </td>
-                <td style={styles.td}>{formatPrice(product.price)}</td>
-                <td style={{ ...styles.td, color: 'var(--color-text-muted)', maxWidth: '250px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {product.description || '—'}
+                <td style={styles.td}>
+                  <span style={{
+                    padding: '0.2rem 0.6rem',
+                    backgroundColor: '#fef3c7',
+                    color: '#92400e',
+                    borderRadius: '999px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                  }}>
+                    {product.colors?.length || 0}
+                  </span>
+                </td>
+                <td style={styles.td}>
+                  <span style={{
+                    padding: '0.2rem 0.6rem',
+                    backgroundColor: product.isPublished ? '#d1fae5' : '#fee2e2',
+                    color: product.isPublished ? '#065f46' : '#991b1b',
+                    borderRadius: '999px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                  }}>
+                    {product.isPublished ? 'Published' : 'Draft'}
+                  </span>
                 </td>
                 <td style={styles.td}>
                   <button
                     style={styles.editBtn}
-                    onClick={() => navigate(`/products/${product._id || product.id}`)}
+                    onClick={() => navigate(`/products/${product._id}`)}
                     onMouseEnter={(e) => {
                       e.target.style.backgroundColor = 'var(--color-primary)'
                       e.target.style.color = '#fff'
@@ -190,7 +192,7 @@ export default function Products() {
             ))}
             {products.length === 0 && (
               <tr>
-                <td colSpan={5} style={{ ...styles.td, textAlign: 'center', color: 'var(--color-text-muted)', padding: '2rem' }}>
+                <td colSpan={6} style={{ ...styles.td, textAlign: 'center', color: 'var(--color-text-muted)', padding: '2rem' }}>
                   No products found.
                 </td>
               </tr>
