@@ -14,6 +14,8 @@ import {
   updateThemeFooter,
   addHeaderBlock,
   addFooterBlock,
+  cloneHeaderBlock,
+  cloneFooterBlock,
   deleteHeaderBlock,
   deleteFooterBlock,
 } from '../controllers/themeController';
@@ -25,10 +27,13 @@ router.get('/field-defs', getFieldDefs);
 
 // Global theme management
 router.get('/', getActiveTheme);
+router.get('/active', getActiveTheme); // Alias for clarity
 router.put('/header', updateThemeHeader);
 router.put('/footer', updateThemeFooter);
 router.post('/header/blocks', addHeaderBlock);
+router.post('/header/blocks/clone', cloneHeaderBlock);
 router.post('/footer/blocks', addFooterBlock);
+router.post('/footer/blocks/clone', cloneFooterBlock);
 router.delete('/header/blocks/:blockId', deleteHeaderBlock);
 router.delete('/footer/blocks/:blockId', deleteFooterBlock);
 

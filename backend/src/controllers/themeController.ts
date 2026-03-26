@@ -779,3 +779,113 @@ export const deleteFooterBlock = async (req: Request, res: Response): Promise<vo
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+/**
+ * POST /api/theme/header/blocks/clone
+ * Clone a block into the header section.
+ */
+export const cloneHeaderBlock = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { sourceBlockId } = req.body;
+
+    if (!sourceBlockId) {
+      res.status(400).json({ success: false, message: 'sourceBlockId is required' });
+      return;
+    }
+
+    const theme = await Theme.findOne({ isActive: true });
+    if (!theme) {
+      res.status(404).json({ success: false, message: 'No active theme found' });
+      return;
+    }
+
+    const sourceBlock = await Block.findById(sourceBlockId).lean();
+    if (!sourceBlock) {
+      res.status(404).json({ success: false, message: 'Source block not found' });
+      return;
+    }
+
+    const newBlock = await Block.create({
+      type: sourceBlock.type,
+      name: sourceBlock.name,
+      data: sourceBlock.data || {},
+      settings: sourceBlock.settings || {},
+      placement: 'header',
+      isTemplate: false,
+    });
+
+    theme.header.blocks.push({
+      block: newBlock._id as any,
+      order: theme.header.blocks.length,
+    });
+
+    await theme.save();
+
+    // Regenerate all page JSONs
+    const allPages = await Page.find().populate('blocks.block').lean();
+    for (const page of allPages) {
+      await writePageJsonWithTheme(page.slug, page as any);
+    }
+
+    const populated = await Block.findById(newBlock._id).lean();
+
+    res.json({ success: true, data: populated });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+/**
+ * POST /api/theme/footer/blocks/clone
+ * Clone a block into the footer section.
+ */
+export const cloneFooterBlock = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { sourceBlockId } = req.body;
+
+    if (!sourceBlockId) {
+      res.status(400).json({ success: false, message: 'sourceBlockId is required' });
+      return;
+    }
+
+    const theme = await Theme.findOne({ isActive: true });
+    if (!theme) {
+      res.status(404).json({ success: false, message: 'No active theme found' });
+      return;
+    }
+
+    const sourceBlock = await Block.findById(sourceBlockId).lean();
+    if (!sourceBlock) {
+      res.status(404).json({ success: false, message: 'Source block not found' });
+      return;
+    }
+
+    const newBlock = await Block.create({
+      type: sourceBlock.type,
+      name: sourceBlock.name,
+      data: sourceBlock.data || {},
+      settings: sourceBlock.settings || {},
+      placement: 'footer',
+      isTemplate: false,
+    });
+
+    theme.footer.blocks.push({
+      block: newBlock._id as any,
+      order: theme.footer.blocks.length,
+    });
+
+    await theme.save();
+
+    // Regenerate all page JSONs
+    const allPages = await Page.find().populate('blocks.block').lean();
+    for (const page of allPages) {
+      await writePageJsonWithTheme(page.slug, page as any);
+    }
+
+    const populated = await Block.findById(newBlock._id).lean();
+
+    res.json({ success: true, data: populated });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};

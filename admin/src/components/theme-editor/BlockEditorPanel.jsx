@@ -30,7 +30,7 @@ function setNestedValue(obj, keyPath, value) {
   }
 }
 
-export default function BlockEditorPanel({ block, fieldDefs, onUpdateBlock, dirty, saving, onSave, onDiscard }) {
+export default function BlockEditorPanel({ block, section = 'body', fieldDefs, onUpdateBlock, dirty, saving, onSave, onDiscard }) {
   if (!block) {
     return (
       <div className="te-settings-panel">
@@ -46,6 +46,7 @@ export default function BlockEditorPanel({ block, fieldDefs, onUpdateBlock, dirt
 
   const typeDef = fieldDefs.find((d) => d.type === block.type)
   const fields = typeDef?.fields || []
+  const isGlobal = section === 'header' || section === 'footer'
 
   const handleFieldChange = (keyPath, value) => {
     const newData = setNestedValue(block.data || {}, keyPath, value)
@@ -63,6 +64,19 @@ export default function BlockEditorPanel({ block, fieldDefs, onUpdateBlock, dirt
           <span>{typeDef?.icon}</span>
           {block.name}
           <span className="te-type-badge">{block.type}</span>
+          {isGlobal && (
+            <span style={{
+              fontSize: '0.65rem',
+              backgroundColor: '#fef3c7',
+              color: '#92400e',
+              padding: '0.15rem 0.4rem',
+              borderRadius: '999px',
+              marginLeft: '0.5rem',
+              fontWeight: 600,
+            }}>
+              🔒 GLOBAL
+            </span>
+          )}
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           {dirty && <span className="te-dirty-dot" title="Unsaved changes" />}
@@ -84,6 +98,19 @@ export default function BlockEditorPanel({ block, fieldDefs, onUpdateBlock, dirt
           </button>
         </div>
       </div>
+
+      {isGlobal && (
+        <div style={{
+          padding: '0.75rem 1rem',
+          backgroundColor: '#fef3c7',
+          borderBottom: '1px solid #fde68a',
+          fontSize: '0.8125rem',
+          color: '#92400e',
+          lineHeight: '1.5',
+        }}>
+          <strong>⚠️ Global Section:</strong> Changes to this section will affect all pages on your site.
+        </div>
+      )}
 
       <div className="te-editor-panel">
         <div className="te-field">
