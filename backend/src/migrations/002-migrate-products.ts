@@ -10,6 +10,7 @@
 
 import mongoose from 'mongoose';
 import Page from '../models/Page';
+import Block from '../models/Block';
 import Product from '../models/Product';
 import { connectDB } from '../config/database';
 
@@ -105,6 +106,9 @@ async function migrate() {
 
     // Connect to database
     await connectDB();
+
+    // Ensure models are loaded
+    Block;
 
     // Define product page slugs to migrate
     const productPageSlugs = [
