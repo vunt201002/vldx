@@ -16,7 +16,7 @@ const blockJsonMappings = {
     arrayBlocks: [],
   },
   'content-image': {
-    settingsFields: ['imageUrl', 'imageAlt', 'title', 'description', 'direction', 'mobileOrder', 'imageWidth', 'maxWidth', 'titleSize', 'descSize', 'titleColor', 'descColor', 'bgColor', 'sectionPadding'],
+    settingsFields: ['squarePosition', 'rectImageOrder', 'squareImageUrl', 'squareImageAlt', 'rectImageUrl', 'rectImageAlt', 'overline', 'title', 'titleAccent', 'description', 'maxWidth', 'titleSize', 'descSize', 'titleColor', 'descColor', 'bgColor', 'sectionPadding'],
     arrayBlocks: [
       { dataKey: 'buttons', blockType: 'content-button' },
     ],

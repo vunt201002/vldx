@@ -187,8 +187,8 @@ export const getPageTheme = async (req: Request, res: Response): Promise<void> =
           _id: pb.block._id,
           type: pb.block.type,
           name: pb.block.name,
-          data: pb.block.data,
-          settings: pb.block.settings,
+          data: pb.block.data ?? {},
+          settings: pb.block.settings ?? {},
           order: pb.order,
         })),
       },
@@ -232,7 +232,7 @@ export const savePageTheme = async (req: Request, res: Response): Promise<void> 
       if (!blockDoc) continue;
 
       blockDoc.name = b.name;
-      blockDoc.data = b.data;
+      blockDoc.data = b.data ?? {};
       if (b.settings !== undefined) {
         blockDoc.settings = b.settings;
       }
@@ -458,8 +458,8 @@ export const getActiveTheme = async (_req: Request, res: Response): Promise<void
             _id: b.block._id,
             type: b.block.type,
             name: b.block.name,
-            data: b.block.data,
-            settings: b.block.settings,
+            data: b.block.data ?? {},
+            settings: b.block.settings ?? {},
             order: b.order,
           })),
         },
@@ -468,8 +468,8 @@ export const getActiveTheme = async (_req: Request, res: Response): Promise<void
             _id: b.block._id,
             type: b.block.type,
             name: b.block.name,
-            data: b.block.data,
-            settings: b.block.settings,
+            data: b.block.data ?? {},
+            settings: b.block.settings ?? {},
             order: b.order,
           })),
         },
@@ -506,7 +506,7 @@ export const updateThemeHeader = async (req: Request, res: Response): Promise<vo
       if (!blockDoc) continue;
 
       blockDoc.name = b.name;
-      blockDoc.data = b.data;
+      blockDoc.data = b.data ?? {};
       if (b.settings !== undefined) {
         blockDoc.settings = b.settings;
       }
@@ -561,7 +561,7 @@ export const updateThemeFooter = async (req: Request, res: Response): Promise<vo
       if (!blockDoc) continue;
 
       blockDoc.name = b.name;
-      blockDoc.data = b.data;
+      blockDoc.data = b.data ?? {};
       if (b.settings !== undefined) {
         blockDoc.settings = b.settings;
       }
