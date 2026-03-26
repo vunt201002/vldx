@@ -1,29 +1,16 @@
 import { useState, useEffect } from 'react';
-import Head from 'next/head';
+import ThemeLayout from '@/components/layouts/ThemeLayout';
 import SectionRenderer from '@/components/sections/SectionRenderer';
+import { transformPageData } from '@/lib/transformPageConfig';
 
-function buildGoogleFontsUrl(displayFont, bodyFont) {
-  const defaults = { display: 'Cormorant', body: 'Cormorant' };
-  const display = displayFont || defaults.display;
-  const body = bodyFont || defaults.body;
-
-  const families = [];
-  families.push(`family=${display.replace(/ /g, '+')}:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600`);
-  if (body !== display) {
-    families.push(`family=${body.replace(/ /g, '+')}:wght@300;400;500;600`);
-  }
-
-  return `https://fonts.googleapis.com/css2?${families.join('&')}&display=swap`;
-}
-
-export default function LandingPage({ config: initialConfig }) {
-  const [config, setConfig] = useState(initialConfig);
+export default function LandingPage({ globalTheme, pageConfig: initialPageConfig }) {
+  const [pageConfig, setPageConfig] = useState(initialPageConfig);
 
   // Listen for live preview updates from the theme editor
   useEffect(() => {
     const handleMessage = (e) => {
       if (e.data?.type === 'theme-preview-update' && e.data.config) {
-        setConfig(e.data.config);
+        setPageConfig(e.data.config);
       }
     };
     window.addEventListener('message', handleMessage);
@@ -35,40 +22,40 @@ export default function LandingPage({ config: initialConfig }) {
     return () => window.removeEventListener('message', handleMessage);
   }, []);
 
-  const displayFont = config.page.displayFont || 'Cormorant';
-  const bodyFont = config.page.bodyFont || 'Cormorant';
-  const fontsUrl = buildGoogleFontsUrl(config.page.displayFont, config.page.bodyFont);
-
-  const fontVarsStyle = `:root { --font-display: "${displayFont}", serif; --font-body: "${bodyFont}", sans-serif; }`;
+  if (!pageConfig) return null;
 
   return (
-    <>
-      <Head>
-        <title>{config.page.title}</title>
-        <meta name="description" content={config.page.description} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href={fontsUrl} rel="stylesheet" />
-        <style>{fontVarsStyle}</style>
-      </Head>
-
-      <div className={config.page.bodyClass}>
-        <SectionRenderer config={config} />
-      </div>
-    </>
+    <ThemeLayout globalTheme={globalTheme} pageMetadata={pageConfig.page}>
+      <SectionRenderer config={pageConfig} />
+    </ThemeLayout>
   );
 }
 
 export async function getServerSideProps() {
-  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api';
+  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5001/api';
 
   try {
-    const res = await fetch(`${apiBase}/pages/landing`);
-    if (!res.ok) return { notFound: true };
-    const json = await res.json();
-    return { props: { config: json.data } };
-  } catch {
+    const [themeRes, pageRes] = await Promise.all([
+      fetch(`${apiBase}/theme/active`),
+      fetch(`${apiBase}/theme/pages/landing`)
+    ]);
+
+    if (!pageRes.ok) return { notFound: true };
+
+    const themeData = await themeRes.json();
+    const pageData = await pageRes.json();
+
+    // Transform backend format to frontend config format
+    const pageConfig = transformPageData(pageData.data);
+
+    return {
+      props: {
+        globalTheme: themeData.data,
+        pageConfig
+      }
+    };
+  } catch (error) {
+    console.error('Error loading landing page:', error);
     return { notFound: true };
   }
 }
