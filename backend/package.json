@@ -15,6 +15,7 @@
     "seed:patch-missing": "ts-node-dev --transpile-only src/scripts/seedPatchMissingData.ts",
     "seed:footer-color": "ts-node-dev --transpile-only src/scripts/seedUpdateFooterColor.ts",
     "seed:why-choose-us": "ts-node-dev --transpile-only src/scripts/seedServiceWhyChooseUs.ts",
+    "migrate:navbar-to-menu": "ts-node-dev --transpile-only src/scripts/seedMigrateNavbarToMenu.ts",
     "migrate": "ts-node-dev --transpile-only src/migrations/run-migrations.ts",
     "migrate:theme": "ts-node-dev --transpile-only src/migrations/001-create-default-theme.ts",
     "migrate:products": "ts-node-dev --transpile-only src/migrations/002-migrate-products.ts"

@@ -8,8 +8,8 @@
 
 const blockJsonMappings = {
   navbar: {
-    settingsFields: ['brandMode', 'brandName', 'brandAccent', 'logoUrl', 'logoMaxWidth', 'navBgColor', 'menuFontSize', 'menuColor', 'menuHoverColor', 'ctaLabel', 'ctaHref'],
-    arrayBlocks: [{ dataKey: 'links', blockType: 'nav-link' }],
+    settingsFields: ['brandMode', 'brandName', 'brandAccent', 'logoUrl', 'logoMaxWidth', 'navBgColor', 'menuFontSize', 'menuColor', 'menuHoverColor', 'ctaLabel', 'ctaHref', 'menuHandle'],
+    arrayBlocks: [],
   },
   hero: {
     settingsFields: ['imageUrl', 'imageAlt', 'imageMaxHeight'],

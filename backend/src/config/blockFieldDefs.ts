@@ -9,7 +9,7 @@
 export interface FieldDef {
   key: string;
   label: string;
-  type: 'text' | 'textarea' | 'number' | 'boolean' | 'select' | 'url' | 'array' | 'image';
+  type: 'text' | 'textarea' | 'number' | 'boolean' | 'select' | 'url' | 'array' | 'image' | 'menu-select';
   required?: boolean;
   placeholder?: string;
   options?: { label: string; value: string }[];
@@ -44,15 +44,7 @@ const blockFieldDefs: BlockTypeDef[] = [
       { key: 'menuHoverColor', label: 'Menu Hover Color', type: 'text', placeholder: '#2E2720' },
       { key: 'ctaLabel', label: 'CTA Label', type: 'text' },
       { key: 'ctaHref', label: 'CTA Link', type: 'url' },
-      {
-        key: 'links',
-        label: 'Navigation Links',
-        type: 'array',
-        fields: [
-          { key: 'label', label: 'Label', type: 'text', required: true },
-          { key: 'href', label: 'URL', type: 'url', required: true },
-        ],
-      },
+      { key: 'menuHandle', label: 'Navigation Menu', type: 'menu-select' as any },
     ],
   },
   {

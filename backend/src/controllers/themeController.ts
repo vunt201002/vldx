@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Page from '../models/Page';
 import Block from '../models/Block';
 import Theme from '../models/Theme';
+import Menu from '../models/Menu';
 import blockFieldDefs from '../config/blockFieldDefs';
 import { generatePageJson, writePageJson, deletePageJson, writePageJsonWithTheme } from '../utils/generatePageJson';
 
@@ -449,6 +450,34 @@ export const getActiveTheme = async (_req: Request, res: Response): Promise<void
     const sortedHeaderBlocks = [...theme.header.blocks].sort((a: any, b: any) => a.order - b.order);
     const sortedFooterBlocks = [...theme.footer.blocks].sort((a: any, b: any) => a.order - b.order);
 
+    // Resolve menu items for navbar blocks that reference a menu by handle
+    const headerBlocksData = await Promise.all(
+      sortedHeaderBlocks.map(async (b: any) => {
+        const blockData: any = {
+          _id: b.block._id,
+          type: b.block.type,
+          name: b.block.name,
+          data: b.block.data ?? {},
+          settings: b.block.settings ?? {},
+          order: b.order,
+        };
+
+        // If it's a navbar with a menuHandle, resolve the menu items
+        if (b.block.type === 'navbar' && b.block.data?.menuHandle) {
+          const menu = await Menu.findOne({ handle: b.block.data.menuHandle }).lean();
+          if (menu) {
+            const sortedItems = [...(menu as any).items].sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+            blockData.menuItems = sortedItems.map((item: any) => ({
+              label: item.label,
+              url: item.url,
+            }));
+          }
+        }
+
+        return blockData;
+      })
+    );
+
     res.json({
       success: true,
       data: {
@@ -456,14 +485,7 @@ export const getActiveTheme = async (_req: Request, res: Response): Promise<void
         name: theme.name,
         isActive: theme.isActive,
         header: {
-          blocks: sortedHeaderBlocks.map((b: any) => ({
-            _id: b.block._id,
-            type: b.block.type,
-            name: b.block.name,
-            data: b.block.data ?? {},
-            settings: b.block.settings ?? {},
-            order: b.order,
-          })),
+          blocks: headerBlocksData,
         },
         footer: {
           blocks: sortedFooterBlocks.map((b: any) => ({

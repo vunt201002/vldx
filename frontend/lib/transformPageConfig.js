@@ -3,7 +3,6 @@
  * Mirrors backend blockJsonMapping.arrayBlocks so SSR pages render correctly.
  */
 const ARRAY_BLOCK_MAP = {
-  navbar:              [{ dataKey: 'links',       blockType: 'nav-link' }],
   'content-image':     [{ dataKey: 'buttons',     blockType: 'content-button' }],
   collections:         [{ dataKey: 'products',    blockType: 'product-card' }],
   about:               [{ dataKey: 'stats',       blockType: 'stat' }],
@@ -96,9 +95,14 @@ export function blocksToConfig(blocks) {
 
   blocks.forEach((block, index) => {
     const key = block._id || `block-${index}`;
+    const settings = block.data || block.settings || {};
+    // Merge resolved menuItems into settings for navbar blocks
+    if (block.menuItems) {
+      settings.menuItems = block.menuItems;
+    }
     sections[key] = {
       type: block.type,
-      settings: block.data || block.settings || {},
+      settings,
       blocks: getNestedBlocks(block)
     };
     order.push(key);

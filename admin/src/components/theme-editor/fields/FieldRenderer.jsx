@@ -6,6 +6,7 @@ import BooleanField from './BooleanField'
 import SelectField from './SelectField'
 import ArrayField from './ArrayField'
 import ImageField from './ImageField'
+import MenuSelectField from './MenuSelectField'
 
 const fieldComponents = {
   text: TextField,
@@ -16,6 +17,7 @@ const fieldComponents = {
   select: SelectField,
   array: ArrayField,
   image: ImageField,
+  'menu-select': MenuSelectField,
 }
 
 export default function FieldRenderer({ field, value, onChange }) {

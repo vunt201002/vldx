@@ -4,7 +4,14 @@ import Link from 'next/link';
 export default function Navbar({ settings, blocks }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navLinks = blocks.filter((b) => b.type === 'nav-link');
+  // Use resolved menuItems if available (from menuHandle), fall back to manual links
+  const menuItems = settings.menuItems || [];
+  const navLinks = menuItems.length > 0
+    ? menuItems.map((item) => ({
+        type: 'nav-link',
+        settings: { label: item.label, href: item.url },
+      }))
+    : blocks.filter((b) => b.type === 'nav-link');
   const isLogo = settings.brandMode === 'logo' && settings.logoUrl;
   const logoMaxW = settings.logoMaxWidth ? `${settings.logoMaxWidth}px` : '160px';
   const navBg = settings.navBgColor || undefined;
