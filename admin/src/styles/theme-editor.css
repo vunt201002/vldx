@@ -375,20 +375,32 @@
   color: var(--color-text-muted);
 }
 
-.te-block-item-delete {
+.te-block-item-action {
   opacity: 0;
   transition: opacity 0.15s;
   background: none;
   border: none;
-  color: var(--color-danger);
   font-size: 0.8125rem;
   padding: 0.125rem 0.25rem;
   border-radius: 4px;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
-.te-block-item:hover .te-block-item-delete {
+.te-block-item:hover .te-block-item-action {
   opacity: 1;
+}
+
+.te-block-item-duplicate {
+  color: var(--color-primary, #3b82f6);
+}
+
+.te-block-item-duplicate:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.te-block-item-delete {
+  color: var(--color-danger);
 }
 
 .te-block-item-delete:hover {

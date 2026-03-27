@@ -142,6 +142,7 @@ export default function ThemeEditorSidebar({
             onSelect={(id) => onSelectBlock(id, 'header')}
             onReorder={(from, to) => onReorder(from, to, 'header')}
             onDelete={(id) => onDeleteBlock(id, 'header')}
+            onDuplicate={(id) => onCloneBlock(id, 'header')}
           />
           <div style={{ padding: '0.5rem 1rem' }}>
             <AddBlockMenu
@@ -176,6 +177,7 @@ export default function ThemeEditorSidebar({
             onSelect={(id) => onSelectBlock(id, 'body')}
             onReorder={(from, to) => onReorder(from, to, 'body')}
             onDelete={(id) => onDeleteBlock(id, 'body')}
+            onDuplicate={(id) => onCloneBlock(id, 'body')}
           />
           <div style={{ padding: '0.5rem 1rem' }}>
             <AddBlockMenu
@@ -210,6 +212,7 @@ export default function ThemeEditorSidebar({
             onSelect={(id) => onSelectBlock(id, 'footer')}
             onReorder={(from, to) => onReorder(from, to, 'footer')}
             onDelete={(id) => onDeleteBlock(id, 'footer')}
+            onDuplicate={(id) => onCloneBlock(id, 'footer')}
           />
           <div style={{ padding: '0.5rem 1rem 1rem' }}>
             <AddBlockMenu

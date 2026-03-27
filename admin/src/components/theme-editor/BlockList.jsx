@@ -14,7 +14,7 @@ import {
 } from '@dnd-kit/sortable'
 import BlockListItem from './BlockListItem'
 
-export default function BlockList({ blocks, fieldDefs, activeBlockId, onSelect, onReorder, onDelete }) {
+export default function BlockList({ blocks, fieldDefs, activeBlockId, onSelect, onReorder, onDelete, onDuplicate }) {
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
@@ -48,6 +48,7 @@ export default function BlockList({ blocks, fieldDefs, activeBlockId, onSelect, 
               isActive={block._id === activeBlockId}
               onSelect={onSelect}
               onDelete={onDelete}
+              onDuplicate={onDuplicate}
             />
           ))}
         </ul>

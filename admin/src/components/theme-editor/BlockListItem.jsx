@@ -2,7 +2,7 @@ import React from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
-export default function BlockListItem({ block, typeDef, isActive, onSelect, onDelete }) {
+export default function BlockListItem({ block, typeDef, isActive, onSelect, onDelete, onDuplicate }) {
   const {
     attributes,
     listeners,
@@ -33,7 +33,17 @@ export default function BlockListItem({ block, typeDef, isActive, onSelect, onDe
         <div className="te-block-item-type">{block.type}</div>
       </div>
       <button
-        className="te-block-item-delete"
+        className="te-block-item-action te-block-item-duplicate"
+        onClick={(e) => {
+          e.stopPropagation()
+          onDuplicate(block._id)
+        }}
+        title="Duplicate block"
+      >
+        ⧉
+      </button>
+      <button
+        className="te-block-item-action te-block-item-delete"
         onClick={(e) => {
           e.stopPropagation()
           onDelete(block._id)
