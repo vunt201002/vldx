@@ -228,17 +228,19 @@ export const savePageTheme = async (req: Request, res: Response): Promise<void> 
 
     for (let i = 0; i < blocks.length; i++) {
       const b = blocks[i];
-      const blockDoc = await Block.findById(b._id);
-      if (!blockDoc) continue;
-
-      blockDoc.name = b.name;
-      blockDoc.data = b.data ?? {};
+      const updateFields: Record<string, any> = {
+        name: b.name,
+        data: b.data ?? {},
+      };
       if (b.settings !== undefined) {
-        blockDoc.settings = b.settings;
+        updateFields.settings = b.settings;
       }
-      blockDoc.markModified('data');
-      blockDoc.markModified('settings');
-      await blockDoc.save();
+      const blockDoc = await Block.findByIdAndUpdate(
+        b._id,
+        { $set: updateFields },
+        { new: true }
+      );
+      if (!blockDoc) continue;
 
       updatedPageBlocks.push({ block: blockDoc._id, order: i });
     }
@@ -502,17 +504,14 @@ export const updateThemeHeader = async (req: Request, res: Response): Promise<vo
     // Update each block
     for (let i = 0; i < blocks.length; i++) {
       const b = blocks[i];
-      const blockDoc = await Block.findById(b._id);
-      if (!blockDoc) continue;
-
-      blockDoc.name = b.name;
-      blockDoc.data = b.data ?? {};
+      const updateFields: Record<string, any> = {
+        name: b.name,
+        data: b.data ?? {},
+      };
       if (b.settings !== undefined) {
-        blockDoc.settings = b.settings;
+        updateFields.settings = b.settings;
       }
-      blockDoc.markModified('data');
-      blockDoc.markModified('settings');
-      await blockDoc.save();
+      await Block.findByIdAndUpdate(b._id, { $set: updateFields });
     }
 
     // Update block order
@@ -557,17 +556,14 @@ export const updateThemeFooter = async (req: Request, res: Response): Promise<vo
     // Update each block
     for (let i = 0; i < blocks.length; i++) {
       const b = blocks[i];
-      const blockDoc = await Block.findById(b._id);
-      if (!blockDoc) continue;
-
-      blockDoc.name = b.name;
-      blockDoc.data = b.data ?? {};
+      const updateFields: Record<string, any> = {
+        name: b.name,
+        data: b.data ?? {},
+      };
       if (b.settings !== undefined) {
-        blockDoc.settings = b.settings;
+        updateFields.settings = b.settings;
       }
-      blockDoc.markModified('data');
-      blockDoc.markModified('settings');
-      await blockDoc.save();
+      await Block.findByIdAndUpdate(b._id, { $set: updateFields });
     }
 
     // Update block order

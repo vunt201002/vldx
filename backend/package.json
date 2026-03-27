@@ -12,6 +12,8 @@
     "seed:blocks": "ts-node-dev --transpile-only src/scripts/seedBlocks.ts",
     "seed:product-pages": "ts-node-dev --transpile-only src/scripts/seedProductPages.ts",
     "seed:update-navbars": "ts-node-dev --transpile-only src/scripts/seedUpdateNavbars.ts",
+    "seed:patch-missing": "ts-node-dev --transpile-only src/scripts/seedPatchMissingData.ts",
+    "seed:footer-color": "ts-node-dev --transpile-only src/scripts/seedUpdateFooterColor.ts",
     "migrate": "ts-node-dev --transpile-only src/migrations/run-migrations.ts",
     "migrate:theme": "ts-node-dev --transpile-only src/migrations/001-create-default-theme.ts",
     "migrate:products": "ts-node-dev --transpile-only src/migrations/002-migrate-products.ts"
