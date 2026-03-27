@@ -1,21 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
 export default function Navbar({ settings, blocks }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const navRef = useRef(null);
-
-  useEffect(() => {
-    if (!navRef.current) return;
-    const update = () => {
-      document.documentElement.style.setProperty(
-        '--navbar-height', `${navRef.current.offsetHeight}px`
-      );
-    };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, []);
 
   const navLinks = blocks.filter((b) => b.type === 'nav-link');
   const isLogo = settings.brandMode === 'logo' && settings.logoUrl;
@@ -31,7 +18,7 @@ export default function Navbar({ settings, blocks }) {
   };
 
   return (
-    <nav ref={navRef} className="sticky top-0 z-50 border-b border-warm-300/50" style={navBg ? { backgroundColor: navBg } : undefined}>
+    <nav className="relative z-50 border-b border-warm-300/50" style={navBg ? { backgroundColor: navBg } : undefined}>
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
         <div className="flex items-start gap-10 py-5 lg:py-6">
           {/* Brand: text or logo */}
