@@ -234,6 +234,41 @@ if (isEmpty(block.data?.products)) {
 
 This makes patch scripts safe to re-run and reveals exactly which fields were already correct.
 
+#### Patching nested fields with dot-notation `$set`
+To update a single sub-field inside `data` without overwriting its siblings, use a dot-notation key in `$set`:
+
+```typescript
+// Patches only data.products — data.stats, data.title, etc. are untouched
+await Block.findByIdAndUpdate(id, { $set: { 'data.products': seedProducts } });
+
+// Compare: this would REPLACE the entire data object, wiping other fields
+await Block.findByIdAndUpdate(id, { $set: { data: { products: seedProducts } } }); // WRONG
+```
+
+Use this whenever you want to backfill or patch a specific nested array/field in isolation.
+
+#### Batch page regeneration in patch scripts
+When a patch script touches blocks across multiple pages, collect affected slugs first, then regenerate each page's JSON once at the end — avoids redundant regenerations if multiple blocks belong to the same page:
+
+```typescript
+const pagesToRegenerate = new Set<string>();
+
+for (const entry of blocksToCheck) {
+  // ... patch logic ...
+  pagesToRegenerate.add(entry.pageSlug);
+}
+
+// Regenerate each affected page exactly once
+for (const slug of pagesToRegenerate) {
+  const page = await Page.findOne({ slug }).populate('blocks.block').lean();
+  if (page) {
+    const json = generatePageJson(page as any);
+    writePageJson(slug, json);
+    console.log(`Regenerated ${slug}.json`);
+  }
+}
+```
+
 ## Conventions
 
 1. **TypeScript** — all backend code is typed
