@@ -62,3 +62,4 @@ All three apps use path aliases for imports:
 3. `admin/src/lib/buildPreviewConfig.js` — mirror the same mapping (for live preview)
 4. `frontend/components/sections/NewSection.js` — create the React component
 5. `frontend/components/sections/registry.js` — register the type string → component
+6. `frontend/lib/transformPageConfig.js` — add entry to `ARRAY_BLOCK_MAP` if the block has child arrays (e.g., `products`, `stats`, `steps`). **Without this step, SSR pages will render the section with empty `blocks: []`.**

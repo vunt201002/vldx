@@ -164,23 +164,28 @@ Standard category slugs used in the Material model:
 Controllers follow: validate params → query with filters → paginate → return JSON.
 Pagination uses `limit` (default 20) and `page` (default 1) query params.
 
-### Block save: always assign data + settings
-When saving a block, always overwrite both fields with a nullish-coalescing fallback — never use a conditional guard:
+### Block save: use `findByIdAndUpdate` + `$set` — never `.save()`
+When updating existing blocks in bulk (theme editor save), always use `findByIdAndUpdate` with `$set`. Do **not** use `findById` + `.save()`.
 
 ```typescript
-// CORRECT
-blockDoc.data = b.data ?? {};
-blockDoc.settings = b.settings ?? {};
-blockDoc.markModified('data');
-blockDoc.markModified('settings');
-
-// WRONG — skipping settings silently keeps stale data
+// CORRECT — bypasses Mongoose schema validators, works with empty data {}
+const updateFields: Record<string, any> = {
+  name: b.name,
+  data: b.data ?? {},
+};
 if (b.settings !== undefined) {
-  blockDoc.settings = b.settings;
+  updateFields.settings = b.settings;
 }
+await Block.findByIdAndUpdate(b._id, { $set: updateFields });
+
+// WRONG — Mongoose 8.x required validator on Mixed type rejects {} during .save()
+// Error: "Block validation failed: data: Path `data` is required"
+blockDoc.data = b.data ?? {};
+blockDoc.markModified('data');
+await blockDoc.save();
 ```
 
-Always call `markModified()` on both after assignment so Mongoose detects the change.
+**Why**: `Schema.Types.Mixed` with `required: true` in Mongoose 8.x fails validation during `.save()` when the field was previously `null` or missing in the document and is being set to `{}`. `findByIdAndUpdate` + `$set` writes directly to MongoDB and bypasses the validator entirely.
 
 ### Seed script pattern (`backend/src/scripts/`)
 Use this to insert or update pages + blocks without going through the theme editor UI.
@@ -210,6 +215,24 @@ Key points:
 - Skip the page if it already exists (`Page.findOne({ slug })`) to make scripts idempotent
 - Always call `generatePageJson` + `writePageJson` at the end to keep the JSON file in sync
 - Shared blocks (navbar, footer) can be defined once and reused across multiple page definitions
+
+#### Non-destructive patch scripts
+When backfilling missing data on existing documents (post-migration, post-merge), only write fields that are empty or missing — never overwrite valid data:
+
+```typescript
+// Non-destructive: only patch if the array is empty/missing
+const block = await Block.findById(id);
+const isEmpty = (v: any) => !v || (Array.isArray(v) && v.length === 0);
+
+if (isEmpty(block.data?.products)) {
+  await Block.findByIdAndUpdate(id, { $set: { 'data.products': seedProducts } });
+  console.log('Patched products');
+} else {
+  console.log(`products OK (${block.data.products.length} items) — skipped`);
+}
+```
+
+This makes patch scripts safe to re-run and reveals exactly which fields were already correct.
 
 ## Conventions
 
