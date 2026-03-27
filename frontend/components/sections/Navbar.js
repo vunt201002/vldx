@@ -31,7 +31,7 @@ export default function Navbar({ settings, blocks }) {
   };
 
   return (
-    <nav ref={navRef} className="relative z-50 border-b border-warm-300/50" style={navBg ? { backgroundColor: navBg } : undefined}>
+    <nav ref={navRef} className="sticky top-0 z-50 border-b border-warm-300/50" style={navBg ? { backgroundColor: navBg } : undefined}>
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
         <div className="flex items-start gap-10 py-5 lg:py-6">
           {/* Brand: text or logo */}

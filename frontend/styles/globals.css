@@ -32,10 +32,10 @@ body {
   display: block;
 }
 
-/* Fixed hero: image stays pinned while content scrolls over it */
+/* Fixed hero: image stays pinned below navbar while content scrolls over it */
 .hero-sticky {
   position: fixed;
-  top: 0;
+  top: var(--navbar-height, 0px);
   left: 0;
   width: 100%;
   margin-left: 0;
