@@ -51,6 +51,12 @@ export const createMenu = async (req: Request, res: Response, next: NextFunction
       return res.status(400).json({ success: false, message: 'Name is required' });
     }
 
+    // Auto-generate handle from name if not provided
+    const finalHandle = handle || name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
     // Sort items by order
     const sortedItems = items ? items.map((item: any, index: number) => ({
       ...item,
@@ -59,7 +65,7 @@ export const createMenu = async (req: Request, res: Response, next: NextFunction
 
     const menu = await Menu.create({
       name,
-      handle,
+      handle: finalHandle,
       items: sortedItems,
     });
 
