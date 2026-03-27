@@ -96,6 +96,12 @@ const blockJsonMappings: Record<string, BlockJsonMapping> = {
       { dataKey: 'socialLinks', blockType: 'social-link' },
     ],
   },
+  'why-choose-us': {
+    settingsFields: ['overline', 'title', 'bgColor', 'bgImage'],
+    arrayBlocks: [
+      { dataKey: 'steps', blockType: 'why-step' },
+    ],
+  },
   'service-process': {
     settingsFields: ['overline', 'title', 'titleAccent', 'description', 'imageUrl', 'imageAlt', 'ctaLabel', 'ctaHref', 'bgColor'],
     arrayBlocks: [
