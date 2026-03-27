@@ -1,15 +1,43 @@
 /**
+ * Data-driven mapping: block type → array fields that become nested blocks.
+ * Mirrors backend blockJsonMapping.arrayBlocks so SSR pages render correctly.
+ */
+const ARRAY_BLOCK_MAP = {
+  navbar:              [{ dataKey: 'links',       blockType: 'nav-link' }],
+  'content-image':     [{ dataKey: 'buttons',     blockType: 'content-button' }],
+  collections:         [{ dataKey: 'products',    blockType: 'product-card' }],
+  about:               [{ dataKey: 'stats',       blockType: 'stat' }],
+  'color-picker':      [{ dataKey: 'colors',      blockType: 'color-swatch' }],
+  'material-showcase': [{ dataKey: 'variants',    blockType: 'variant-item' }],
+  footer:              [{ dataKey: 'infoLines',   blockType: 'footer-line' },
+                        { dataKey: 'socialLinks', blockType: 'footer-social' }],
+  featured:            [{ dataKey: 'features',    blockType: 'feature-card' }],
+  gallery:             [{ dataKey: 'items',       blockType: 'gallery-item' }],
+  contact:             [{ dataKey: 'contactInfos', blockType: 'contact-info' },
+                        { dataKey: 'socialLinks',  blockType: 'social-link' }],
+  'service-process':   [{ dataKey: 'steps',       blockType: 'process-step' }],
+};
+
+/**
  * Transform a block's nested data into the blocks array expected by section components.
- * Navbar stores links in data.links and needs them as [{ type: 'nav-link', settings }].
  */
 function getNestedBlocks(block) {
   const data = block.data || block.settings || {};
-  if (block.type === 'navbar' && Array.isArray(data.links)) {
-    return data.links.map((item) => ({ type: 'nav-link', settings: item }));
+  const mappings = ARRAY_BLOCK_MAP[block.type];
+
+  if (mappings) {
+    const blocks = [];
+    for (const { dataKey, blockType } of mappings) {
+      const arr = data[dataKey];
+      if (Array.isArray(arr)) {
+        for (const item of arr) {
+          blocks.push({ type: blockType, settings: item });
+        }
+      }
+    }
+    return blocks;
   }
-  if (block.type === 'content-image' && Array.isArray(data.buttons)) {
-    return data.buttons.map((item) => ({ type: 'content-button', settings: item }));
-  }
+
   return data.items || data.blocks || [];
 }
 
