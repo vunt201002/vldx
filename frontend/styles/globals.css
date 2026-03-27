@@ -32,6 +32,24 @@ body {
   display: block;
 }
 
+/* Fixed hero: image stays pinned while content scrolls over it */
+.hero-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  z-index: 0;
+}
+
+/* Content overlay: slides up over the fixed hero */
+.hero-content-overlay {
+  position: relative;
+  z-index: 1;
+  background: #F5F0EB;
+}
+
 /* Scroll-triggered reveal animations */
 .reveal {
   opacity: 0;
