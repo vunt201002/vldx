@@ -361,6 +361,28 @@ const blockFieldDefs: BlockTypeDef[] = [
     ],
   },
   {
+    type: 'why-choose-us',
+    label: 'Why Choose Us V2',
+    icon: '🏆',
+    fields: [
+      { key: 'overline', label: 'Overline', type: 'text' },
+      { key: 'title', label: 'Title', type: 'text', required: true },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#ffffff' },
+      { key: 'bgImage', label: 'Background Image', type: 'image', uploadFolder: 'pages' },
+      {
+        key: 'steps',
+        label: 'Steps',
+        type: 'array',
+        fields: [
+          { key: 'icon', label: 'Icon Image', type: 'image', uploadFolder: 'pages' },
+          { key: 'iconBgColor', label: 'Icon Background Color', type: 'text', placeholder: '#FFD580' },
+          { key: 'title', label: 'Title', type: 'text', required: true },
+          { key: 'desc', label: 'Description', type: 'textarea' },
+        ],
+      },
+    ],
+  },
+  {
     type: 'service-process',
     label: 'Service Process',
     icon: '🔧',

@@ -10,6 +10,7 @@ import Footer from './Footer';
 import MaterialShowcase from './MaterialShowcase';
 import ColorPicker from './ColorPicker';
 import ServiceProcess from './ServiceProcess';
+import WhyChooseUs from './WhyChooseUs';
 
 export const registry = {
   navbar: Navbar,
@@ -24,4 +25,5 @@ export const registry = {
   'material-showcase': MaterialShowcase,
   'color-picker': ColorPicker,
   'service-process': ServiceProcess,
+  'why-choose-us': WhyChooseUs,
 };
