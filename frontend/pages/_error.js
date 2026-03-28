@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-function Error({ statusCode, globalTheme }) {
+function Error({ statusCode, globalTheme: _globalTheme }) {
   const errorMessages = {
     404: {
       title: 'Page Not Found',

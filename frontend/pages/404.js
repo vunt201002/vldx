@@ -37,7 +37,7 @@ export default function Custom404({ globalTheme }) {
             Page Not Found
           </h2>
           <p className="mb-8 text-lg text-gray-600">
-            Sorry, we couldn't find the page you're looking for. The page may have been moved or deleted.
+            Sorry, we could not find the page you are looking for. The page may have been moved or deleted.
           </p>
 
           {/* Action Buttons */}
