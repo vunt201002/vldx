@@ -43,7 +43,7 @@ services:
     depends_on:
       - backend
     environment:
-      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://backend:5000/api}
+      INTERNAL_API_URL: http://backend:5000/api
     volumes:
       - shared-config:/app/config/pages
     ports:

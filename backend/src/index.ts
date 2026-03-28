@@ -9,6 +9,9 @@ import { startPageJsonSync } from './utils/syncPageJsons';
 
 const app = express();
 
+// Trust proxy (needed behind Docker/nginx reverse proxy)
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());

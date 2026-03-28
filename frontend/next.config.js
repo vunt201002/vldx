@@ -29,12 +29,14 @@ const nextConfig = {
     optimizePackageImports: [],
   },
 
-  // Proxy /api/* → Express backend (kept from before)
+  // Proxy /api/* → Express backend
+  // BACKEND_URL is set at build time for Docker, defaults to localhost for local dev
   async rewrites() {
+    const backendUrl = process.env.BACKEND_URL || 'http://127.0.0.1:5000/api';
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000/api'}/:path*`,
+        destination: `${backendUrl}/:path*`,
       },
     ];
   },
