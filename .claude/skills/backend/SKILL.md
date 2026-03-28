@@ -142,6 +142,23 @@ DB (Page + Block models)
 
 ## Model Patterns
 
+### pre('save') hooks don't work with `required` + `Model.create()`
+If a field is `required: true` in the schema AND you have a `pre('save')` hook to auto-generate it, `Model.create()` will fail because validators run *before* the hook. **Always generate the value in the controller** before calling `create()`:
+
+```typescript
+// WRONG — pre('save') sets handle, but required validation fires first
+// Error: "Menu validation failed: handle: Path `handle` is required"
+menuSchema.pre('save', function(next) {
+  if (!this.handle) this.handle = slugify(this.name);
+  next();
+});
+await Menu.create({ name: 'Foo' }); // handle is undefined → fails validation
+
+// CORRECT — generate in controller before create
+const finalHandle = handle || slugify(name);
+await Menu.create({ name, handle: finalHandle });
+```
+
 ### Auto-slug generation
 The `Material` model auto-generates a `slug` from `name` on `pre('save')`. For Vietnamese product names, strip diacritics before slugifying:
 
@@ -267,6 +284,43 @@ for (const slug of pagesToRegenerate) {
     console.log(`Regenerated ${slug}.json`);
   }
 }
+```
+
+### Cross-collection data resolution in API responses
+When a block references another collection by handle/slug (e.g., navbar's `menuHandle` → Menu collection), resolve the reference in the API controller before sending to the frontend:
+
+```typescript
+// In getActiveTheme: resolve menuHandle → menu items
+if (b.block.type === 'navbar' && b.block.data?.menuHandle) {
+  const menu = await Menu.findOne({ handle: b.block.data.menuHandle }).lean();
+  if (menu) {
+    blockData.menuItems = menu.items.map(item => ({ label: item.label, url: item.url }));
+  }
+}
+```
+
+The frontend then merges extra fields into settings via `transformPageConfig.js` (`if (block.menuItems) settings.menuItems = block.menuItems`).
+
+### Migration scripts for data model changes
+When changing how blocks store data (e.g., replacing inline arrays with collection references), write an idempotent migration script:
+
+1. Check if target already exists (skip if so)
+2. Read old data from blocks
+3. Create new collection documents
+4. Update blocks with `$set` (new field) + `$unset` (old field)
+5. Regenerate all page JSONs
+
+```typescript
+// Idempotent: skip if already migrated
+const existing = await Menu.findOne({ handle: MENU_HANDLE });
+if (existing) { console.log('Already exists — skipping'); }
+else { /* create from old data */ }
+
+// Atomic update: set new field, remove old one
+await Block.updateMany(
+  { type: 'navbar' },
+  { $set: { 'data.menuHandle': MENU_HANDLE }, $unset: { 'data.links': '' } }
+);
 ```
 
 ## Conventions

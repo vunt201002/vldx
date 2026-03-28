@@ -104,7 +104,7 @@ config/pages/landing.json → SectionRenderer → registry → Section Component
 - `components/sections/*.js` — section components accepting `{ id, settings, blocks }` props
 
 ### Current registered section types (registry.js)
-`navbar`, `hero`, `collections`, `about`, `featured`, `gallery`, `contact`, `content-image`, `footer`, `material-showcase`, `color-picker`, `service-process`
+`navbar`, `hero`, `collections`, `about`, `featured`, `gallery`, `contact`, `content-image`, `footer`, `material-showcase`, `color-picker`, `service-process`, `why-choose-us`
 
 ### `transformPageConfig.js` — SSR child block transformation
 `frontend/lib/transformPageConfig.js` is the critical middleware between the raw API response and section components. It transforms `block.data.*` arrays into the `blocks: [{ type, settings }]` child arrays that section components consume.
@@ -113,7 +113,6 @@ The mapping is driven by `ARRAY_BLOCK_MAP` — a lookup table that mirrors `back
 
 ```javascript
 const ARRAY_BLOCK_MAP = {
-  navbar:             [{ dataKey: 'links',        blockType: 'nav-link' }],
   'content-image':    [{ dataKey: 'buttons',      blockType: 'content-button' }],
   collections:        [{ dataKey: 'products',     blockType: 'product-card' }],
   about:              [{ dataKey: 'stats',         blockType: 'stat' }],
@@ -124,6 +123,8 @@ const ARRAY_BLOCK_MAP = {
   // ... all block types with child arrays
 };
 ```
+
+Note: `navbar` was removed from ARRAY_BLOCK_MAP — it now uses `menuHandle` to reference a Menu collection instead of inline `links` array.
 
 **When adding a new block type with child items** (e.g., `steps`, `features`, `items`): add an entry to `ARRAY_BLOCK_MAP` in `transformPageConfig.js`, otherwise the SSR page will render the section with `blocks: []` and child items will be invisible.
 

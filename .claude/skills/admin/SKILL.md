@@ -71,9 +71,16 @@ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(pr
 - **Important**: when changing block mappings (adding new fields/arrayBlocks), update **both** `backend/src/config/blockJsonMapping.ts` AND `admin/src/lib/buildPreviewConfig.js`
 
 ### Field Types in FieldRenderer.jsx
-`text`, `textarea`, `number`, `boolean`, `select`, `url`, `array`, `image`
+`text`, `textarea`, `number`, `boolean`, `select`, `url`, `array`, `image`, `menu-select`
 - `image` type uses `ImageField.jsx` which calls `POST /api/upload/image?uploadFolder=<folder>`
 - `array` type renders a list of sub-items with add/remove controls, each sub-item rendered with `FieldRenderer`
+- `menu-select` type fetches data from `/api/menus` and renders a dropdown
+
+### Adding a custom field type
+1. Create `fields/MyField.jsx` — a component receiving `{ field, value, onChange }`
+2. Register in `fields/FieldRenderer.jsx`: add `'my-type': MyField` to `fieldComponents`
+3. Add the type to `blockFieldDefs.ts` type union (use `as any` if TypeScript complains)
+4. Use `key: 'myField', type: 'my-type'` in the block's field definitions
 
 ### Viewport state is owned by ThemeEditor, not ThemePreview
 `ThemePreview` receives `viewport` and `onViewportChange` as props. The state lives in `ThemeEditor.jsx`. When the viewport switches to non-desktop, `onViewportChange` also collapses the admin sidebar via `LayoutContext.setCollapsed`:
