@@ -1,7 +1,9 @@
 import dotenv from 'dotenv';
 import path from 'path';
 
-dotenv.config();
+// Load .env.local first (local dev), fall back to .env (Docker/prod sets env vars directly)
+dotenv.config({ path: '.env.local' });
+dotenv.config(); // won't overwrite vars already set by .env.local
 
 export const config = {
   nodeEnv: process.env.NODE_ENV || 'development',

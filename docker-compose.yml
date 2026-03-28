@@ -1,3 +1,7 @@
+# Local development with Docker
+# Uses .env.local for configuration
+# Usage: docker compose up --build
+
 services:
   mongodb:
     image: mongo:7
@@ -18,12 +22,12 @@ services:
     depends_on:
       mongodb:
         condition: service_healthy
+    env_file:
+      - .env.local
     environment:
       NODE_ENV: production
       PORT: 5000
-      MONGODB_URI: mongodb://mongodb:27017/vlxd
-      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
-      ADMIN_URL: ${ADMIN_URL:-http://localhost:8080}
+      MONGODB_URI: ${MONGODB_URI:-mongodb://mongodb:27017/vlxd}
       FRONTEND_CONFIG_DIR: /data/config/pages
     volumes:
       - shared-config:/data/config/pages
