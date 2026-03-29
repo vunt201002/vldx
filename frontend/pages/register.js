@@ -16,34 +16,12 @@ export default function RegisterPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [passwordStrength, setPasswordStrength] = useState('');
-
   // Redirect if already authenticated
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      router.push('/profile');
+      router.push('/account');
     }
   }, [isAuthenticated, isLoading, router]);
-
-  // Check password strength
-  useEffect(() => {
-    const { password } = formData;
-    if (!password) {
-      setPasswordStrength('');
-      return;
-    }
-
-    let strength = 0;
-    if (password.length >= 8) strength++;
-    if (/[A-Z]/.test(password)) strength++;
-    if (/[a-z]/.test(password)) strength++;
-    if (/[0-9]/.test(password)) strength++;
-    if (/[^A-Za-z0-9]/.test(password)) strength++;
-
-    if (strength < 2) setPasswordStrength('weak');
-    else if (strength < 4) setPasswordStrength('medium');
-    else setPasswordStrength('strong');
-  }, [formData.password]);
 
   const handleChange = (e) => {
     setFormData({
@@ -65,20 +43,8 @@ export default function RegisterPage() {
       setError('Email không hợp lệ');
       return false;
     }
-    if (formData.password.length < 8) {
-      setError('Mật khẩu phải có ít nhất 8 ký tự');
-      return false;
-    }
-    if (!/[A-Z]/.test(formData.password)) {
-      setError('Mật khẩu phải có ít nhất 1 chữ hoa');
-      return false;
-    }
-    if (!/[a-z]/.test(formData.password)) {
-      setError('Mật khẩu phải có ít nhất 1 chữ thường');
-      return false;
-    }
-    if (!/[0-9]/.test(formData.password)) {
-      setError('Mật khẩu phải có ít nhất 1 số');
+    if (!formData.password) {
+      setError('Vui lòng nhập mật khẩu');
       return false;
     }
     if (formData.password !== formData.confirmPassword) {
@@ -229,44 +195,6 @@ export default function RegisterPage() {
                 className="w-full px-4 py-3 border border-charcoal/20 rounded-md focus:outline-none focus:ring-2 focus:ring-charcoal/50 focus:border-transparent transition"
                 placeholder="••••••••"
               />
-              {/* Password Strength Indicator */}
-              {passwordStrength && (
-                <div className="mt-2">
-                  <div className="flex gap-1">
-                    <div
-                      className={`h-1 flex-1 rounded ${
-                        passwordStrength === 'weak'
-                          ? 'bg-red-500'
-                          : passwordStrength === 'medium'
-                          ? 'bg-yellow-500'
-                          : 'bg-green-500'
-                      }`}
-                    ></div>
-                    <div
-                      className={`h-1 flex-1 rounded ${
-                        passwordStrength === 'medium' || passwordStrength === 'strong'
-                          ? passwordStrength === 'medium'
-                            ? 'bg-yellow-500'
-                            : 'bg-green-500'
-                          : 'bg-gray-200'
-                      }`}
-                    ></div>
-                    <div
-                      className={`h-1 flex-1 rounded ${
-                        passwordStrength === 'strong' ? 'bg-green-500' : 'bg-gray-200'
-                      }`}
-                    ></div>
-                  </div>
-                  <p className="text-xs text-charcoal/60 mt-1">
-                    {passwordStrength === 'weak' && 'Yếu'}
-                    {passwordStrength === 'medium' && 'Trung bình'}
-                    {passwordStrength === 'strong' && 'Mạnh'}
-                  </p>
-                </div>
-              )}
-              <p className="text-xs text-charcoal/60 mt-2">
-                Tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường và số
-              </p>
             </div>
 
             {/* Confirm Password Field */}

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import cloudinary from '../config/cloudinary';
 
-const ALLOWED_FOLDERS = ['products', 'pages', 'gallery', 'general', 'blog'] as const;
+const ALLOWED_FOLDERS = ['products', 'pages', 'gallery', 'general', 'blog', 'customers'] as const;
 type Folder = (typeof ALLOWED_FOLDERS)[number];
 
 function isAllowedFolder(folder: string): folder is Folder {
