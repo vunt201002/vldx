@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import { config } from './config/env';
 import { connectDB } from './config/database';
 import { errorHandler } from './middleware/errorHandler';
@@ -12,10 +13,20 @@ const app = express();
 // Trust proxy (needed behind Docker/nginx reverse proxy)
 app.set('trust proxy', 1);
 
-// Middleware
-app.use(cors({ origin: true, credentials: true }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Security headers
+app.use(helmet());
+
+// CORS — restrict to known origins in production
+app.use(cors({
+  origin: config.nodeEnv === 'production'
+    ? [config.frontendUrl, config.adminUrl].filter(Boolean)
+    : true,
+  credentials: true,
+}));
+
+// Body parsing with size limits
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
 // Rate limiting
 app.use('/api', rateLimiter);

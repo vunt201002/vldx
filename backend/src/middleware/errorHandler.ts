@@ -11,9 +11,13 @@ export const errorHandler = (
   _next: NextFunction
 ): void => {
   const statusCode = err.statusCode || 500;
+  const isDev = process.env.NODE_ENV === 'development';
+
   res.status(statusCode).json({
     success: false,
-    message: err.message || 'Internal Server Error',
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
+    message: isDev || statusCode < 500
+      ? err.message || 'Internal Server Error'
+      : 'Internal Server Error',
+    ...(isDev && { stack: err.stack }),
   });
 };
