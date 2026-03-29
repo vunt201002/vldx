@@ -169,9 +169,43 @@ const fontVarsStyle = `:root { --font-display: "${displayFont}", serif; --font-b
 - Frontend `[slug].js` listens for this message and renders the config without saving
 - This mirrors the `buildPreviewConfig.js` logic on the client side
 
+## Authentication
+
+### AuthContext + useAuth
+
+`lib/AuthContext.js` provides centralized auth state. Consumed via `useAuth()` hook from `hooks/useAuth.js`.
+
+**Provided values**: `user`, `isAuthenticated`, `isLoading`, `login`, `loginWithGoogle`, `register`, `logout`, `refreshToken`
+
+**Token storage**: `localStorage` (`accessToken`, `refreshToken`). Auto-refresh on mount via `fetchUser()`.
+
+### Auth Pages
+
+| Page | Path | Description |
+|------|------|-------------|
+| `login.js` | `/login` | Email/password + Google Sign-In button |
+| `register.js` | `/register` | Registration form with password strength indicator |
+| `profile.js` | `/profile` | Customer profile (protected) |
+| `forgot-password.js` | `/forgot-password` | Request password reset |
+| `reset-password.js` | `/reset-password` | Reset password with token |
+| `verify-email.js` | `/verify-email` | Email verification (currently unused) |
+
+### Google Sign-In Integration
+
+Uses Google Identity Services (GSI) — no npm package required:
+1. Load `https://accounts.google.com/gsi/client` script via `useEffect`
+2. `google.accounts.id.initialize()` with `NEXT_PUBLIC_GOOGLE_CLIENT_ID` and callback
+3. `google.accounts.id.renderButton()` renders official Google button
+4. Callback receives `response.credential` (ID token) → calls `loginWithGoogle(idToken)`
+
+### ProtectedRoute Component
+
+`components/auth/ProtectedRoute.js` — wraps pages that require authentication. Redirects to `/login?redirect=...` if not authenticated.
+
 ## Custom Hooks
 
 - **`useReveal`** (`hooks/useReveal.js`): IntersectionObserver-based scroll reveal. Returns a ref; attach to section root. Adds `.revealed` class when element enters viewport. Used with `.reveal`, `.reveal-left`, `.reveal-right`, `.stagger-children` CSS classes defined in `globals.css`.
+- **`useAuth`** (`hooks/useAuth.js`): Accesses `AuthContext`. Must be used within `AuthProvider` (wrapped in `_app.js`).
 
 ## Key Conventions
 

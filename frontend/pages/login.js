@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, isAuthenticated, isLoading } = useAuth();
+  const { login, loginWithGoogle, isAuthenticated, isLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const googleButtonRef = useRef(null);
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -18,6 +19,57 @@ export default function LoginPage() {
       router.push(redirect);
     }
   }, [isAuthenticated, isLoading, router]);
+
+  // Load Google Identity Services and render button
+  useEffect(() => {
+    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+    if (!clientId || isLoading || isAuthenticated) return;
+
+    const initGoogle = () => {
+      window.google.accounts.id.initialize({
+        client_id: clientId,
+        callback: async (response) => {
+          setError('');
+          setLoading(true);
+          try {
+            await loginWithGoogle(response.credential);
+            const redirect = router.query.redirect || '/profile';
+            router.push(redirect);
+          } catch (err) {
+            setError(err.message || 'Đăng nhập Google thất bại');
+          } finally {
+            setLoading(false);
+          }
+        },
+      });
+
+      if (googleButtonRef.current) {
+        window.google.accounts.id.renderButton(googleButtonRef.current, {
+          theme: 'outline',
+          size: 'large',
+          width: googleButtonRef.current.offsetWidth || 400,
+          text: 'signin_with',
+          locale: 'vi',
+        });
+      }
+    };
+
+    if (window.google?.accounts?.id) {
+      initGoogle();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    script.onload = initGoogle;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, [isLoading, isAuthenticated]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -126,10 +178,8 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Google Login - Placeholder */}
-          <div className="text-center text-sm text-charcoal/50">
-            Đăng nhập Google sẽ có sẵn sớm
-          </div>
+          {/* Google Login */}
+          <div ref={googleButtonRef} className="w-full flex justify-center"></div>
 
           {/* Register Link */}
           <div className="mt-6 text-center text-sm">

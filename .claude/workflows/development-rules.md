@@ -42,6 +42,14 @@ All three apps use path aliases for imports:
 - Frontend: `/api/*` rewrites to `http://localhost:5000/api/*` via `next.config.js`
 - Admin: Vite proxy config forwards API requests to `:5000`
 
+## Authentication
+
+- Two auth systems coexist: **Admin** (`requireAuth` → `req.adminUser`) and **Customer** (`authenticate` → `req.user`)
+- Never use `req.user` for admin logic or `req.adminUser` for customer logic
+- Customer routes under `/api/auth/*`, admin routes under `/api/admin/auth/*`
+- Google OAuth: frontend sends ID token to backend for verification — no redirect flow
+- JWT tokens stored in `localStorage` on frontend (access + refresh)
+
 ## Environment Variables
 
 - Backend: access via centralized `config/env.ts` — never use `process.env` directly in routes

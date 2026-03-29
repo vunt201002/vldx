@@ -128,7 +128,7 @@ export default function RegisterPage() {
             </div>
             <h2 className="text-2xl font-light text-charcoal mb-2">Đăng ký thành công!</h2>
             <p className="text-charcoal/70 mb-6">
-              Vui lòng kiểm tra email của bạn để xác nhận tài khoản.
+              Tài khoản của bạn đã được tạo. Bạn có thể đăng nhập ngay bây giờ.
             </p>
             <Link
               href="/login"

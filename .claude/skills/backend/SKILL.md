@@ -323,6 +323,83 @@ await Block.updateMany(
 );
 ```
 
+## Authentication
+
+The backend has two parallel auth systems — **Admin** and **Customer** — with separate middleware, controllers, and route prefixes.
+
+### Dual Auth Middleware
+
+| Middleware | Domain | Attaches to | Payload type |
+|------------|--------|-------------|--------------|
+| `requireAuth` | Admin | `req.adminUser` | `{ id, email, role }` (from JWT) |
+| `authenticate` | Customer | `req.user` | Full `ICustomer` Mongoose document (DB lookup) |
+| `optionalAuth` | Customer | `req.user` (if token present) | Same as `authenticate`, but doesn't fail without token |
+
+**Never mix them** — admin routes use `requireAuth`, customer routes use `authenticate`. The two types use different JWT payloads and different request properties.
+
+Customer auth extends the Express `Request` type globally:
+```typescript
+declare global {
+  namespace Express {
+    interface Request { user?: ICustomer; }
+  }
+}
+```
+
+Admin auth uses a local `AuthRequest` interface with `adminUser` to avoid collision.
+
+### Auth Routes
+
+| Prefix | File | Domain |
+|--------|------|--------|
+| `/api/auth/*` | `routes/authRoutes.ts` | Customer (register, login, Google OAuth, password reset, profile) |
+| `/api/admin/auth/*` | `routes/adminAuthRoutes.ts` | Admin (login, get me) |
+| `/api/customers/*` | `routes/customerRoutes.ts` | Admin-managed customer CRUD |
+
+### Customer Auth Endpoints
+
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| POST | `/api/auth/register` | public + rate limit | Email/password registration |
+| POST | `/api/auth/login` | public + rate limit | Email/password login |
+| POST | `/api/auth/google` | public + rate limit | Google OAuth (receives `idToken`) |
+| POST | `/api/auth/refresh` | public | Refresh access token |
+| POST | `/api/auth/forgot-password` | public + strict rate limit | Request password reset email |
+| POST | `/api/auth/reset-password` | public | Reset password with token |
+| POST | `/api/auth/logout` | `authenticate` | Logout (invalidate refresh token) |
+| POST | `/api/auth/logout-all` | `authenticate` | Logout all sessions |
+| GET | `/api/auth/me` | `authenticate` | Get current customer profile |
+| PUT | `/api/auth/me` | `authenticate` | Update profile |
+| PUT | `/api/auth/change-password` | `authenticate` | Change password |
+
+### Google OAuth Flow
+
+Uses `google-auth-library` on the backend — no server-side redirect flow:
+1. Frontend loads Google Identity Services (GSI) script
+2. User clicks Google button → GSI returns `credential` (ID token)
+3. Frontend sends `{ idToken }` to `POST /api/auth/google`
+4. Backend verifies token via `OAuth2Client.verifyIdToken()`
+5. Creates or finds customer by Google ID / email, returns JWT tokens
+
+### JWT Token Structure
+
+- **Access token**: 15m expiry, contains `{ userId, email, type: 'access' }`
+- **Refresh token**: 7d expiry, contains `{ userId, type: 'refresh' }`, stored in Customer document
+- Token utilities in `utils/jwt.ts`: `generateAccessToken()`, `generateRefreshToken()`, `verifyAccessToken()`, `verifyRefreshToken()`
+
+### Rate Limiting
+
+`middleware/rateLimiter.ts` provides rate limiters for auth routes:
+- `authLimiter` — applied to login, register, Google OAuth
+- `passwordResetLimiter` — stricter limit on forgot-password
+
+### Customer Model (`models/Customer.ts`)
+
+- Password hashed with bcrypt on pre-save hook
+- Stores refresh tokens array (supports multiple sessions)
+- Google OAuth fields: `googleId`, `isEmailVerified` (auto-true for Google users)
+- Email verification currently disabled (check commented out in `authService.ts`)
+
 ## Conventions
 
 1. **TypeScript** — all backend code is typed
