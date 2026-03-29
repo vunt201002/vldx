@@ -7,6 +7,8 @@ import uploadRoutes from './uploadRoutes';
 import menuRoutes from './menuRoutes';
 import productRoutes from './productRoutes';
 import authRoutes from './authRoutes';
+import adminAuthRoutes from './adminAuthRoutes';
+import customerRoutes from './customerRoutes';
 
 const router = Router();
 
@@ -15,6 +17,8 @@ router.get('/health', (_req, res) => {
 });
 
 router.use('/auth', authRoutes);
+router.use('/admin/auth', adminAuthRoutes);
+router.use('/customers', customerRoutes);
 router.use('/materials', materialRoutes);
 router.use('/blocks', blockRoutes);
 router.use('/pages', pageRoutes);

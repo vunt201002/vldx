@@ -1,21 +1,21 @@
 {
   "page": {
-    "title": "Tấm ốp cầu thang",
-    "description": "",
+    "title": "Bàn Đá & Bê Tông — Bê Tông Việt",
+    "description": "Bàn đúc bê tông và mặt đá tự nhiên theo yêu cầu, phù hợp nội thất và ngoại thất.",
     "bodyClass": "font-body bg-cream text-charcoal",
     "displayFont": "",
     "bodyFont": ""
   },
   "order": [
-    "69beea492fcf0ebbe3aed0c8",
-    "69beea492fcf0ebbe3aed0ca",
-    "69bef14f3d5956346d657b6d",
-    "69bef6f195c5942261d2caf0",
-    "69befcd7500003ceac40a52d",
-    "69beea492fcf0ebbe3aed0d4"
+    "69c2b27deececadddd7bafc5",
+    "69c2b27deececadddd7bafc6",
+    "69c2b27deececadddd7bafc7",
+    "69c2b27deececadddd7bafc8",
+    "69c2b27deececadddd7bafc9",
+    "69c2b27deececadddd7bafca"
   ],
   "sections": {
-    "69beea492fcf0ebbe3aed0c8": {
+    "69c2b27deececadddd7bafc5": {
       "type": "navbar",
       "settings": {
         "brandMode": "logo",
@@ -74,21 +74,22 @@
         }
       ]
     },
-    "69beea492fcf0ebbe3aed0ca": {
+    "69c2b27deececadddd7bafc6": {
       "type": "hero",
       "settings": {
         "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1585263030555-FT7UYHVSVB4889E9PK56/venturastairs.jpg",
+        "imageAlt": "Bàn đá bê tông ngoài trời",
         "imageMaxHeight": "500px"
       },
       "blocks": []
     },
-    "69bef14f3d5956346d657b6d": {
+    "69c2b27deececadddd7bafc7": {
       "type": "material-showcase",
       "settings": {
-        "overline": "tấm ốp cầu thang",
+        "overline": "bàn đá & bê tông",
         "title": "chọn",
-        "titleAccent": "bề mặt hoàn thiện",
-        "description": "Khám phá các tùy chọn màu sắc và hoa văn cho tấm ốp cầu thang. Mỗi mẫu được sản xuất thủ công với nguyên liệu tự nhiên cao cấp.",
+        "titleAccent": "mặt bàn hoàn hảo",
+        "description": "Bộ sưu tập bàn đúc bê tông và mặt đá tự nhiên — từ bàn ăn ngoài trời đến bàn cà phê hiên nhà, mỗi chiếc đều là tác phẩm thủ công bền theo thời gian.",
         "previewPosition": "left",
         "previewAspect": "4/3",
         "thumbnailColumns": "4",
@@ -99,41 +100,51 @@
         {
           "type": "variant-item",
           "settings": {
-            "name": "Terrazzo Xám Tro",
-            "image": "https://granitonamthang.com/upload/1003964/20211222/91fab40695e3f0f966313230575c0e53z505.jpg",
-            "description": "Bề mặt terrazzo với sỏi đá marble trắng trên nền xi măng xám. Phù hợp không gian hiện đại, tối giản.",
-            "specs": "400×1200mm  |  30mm dày  |  Chống trơn R10",
+            "name": "Mặt Bàn Terrazzo Trắng",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
+            "description": "Mặt bàn terrazzo trắng với hạt marble nhỏ, mài bóng. Chân bê tông nguyên khối. Phù hợp bàn ăn ngoài trời và hiên cafe.",
+            "specs": "1200×700mm  |  Dày 40mm  |  Chân 720mm",
             "tag": "bán chạy"
           }
         },
         {
           "type": "variant-item",
           "settings": {
-            "name": "Đá Granite Đen",
-            "image": "https://granitonamthang.com/upload/1003964/20211222/e8707d32f4ff6ef3e820880d47a2e891z507.jpg",
-            "description": "Granite tự nhiên đen tuyền, đánh bóng bề mặt. Sang trọng và bền bỉ theo thời gian.",
-            "specs": "400×1200mm  |  20mm dày  |  Chống trơn R9",
+            "name": "Mặt Bàn Granite Đen",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584995197950-UYLNPKVCU97K7XBL8GHF/Broken-Terrazo.png",
+            "description": "Mặt bàn granite đen tự nhiên đánh bóng, chân bê tông xám. Sang trọng và chịu nhiệt tốt, lý tưởng cho bếp ngoài trời.",
+            "specs": "1000×600mm  |  Dày 30mm  |  Chân 750mm",
             "tag": ""
           }
         },
         {
           "type": "variant-item",
           "settings": {
-            "name": "Terrazzo Hồng Pastel",
-            "image": "https://granitonamthang.com/upload/1003964/20211222/6042518625df708ecd602aefc93db761z501.jpg",
-            "description": "Terrazzo tông hồng nhẹ nhàng với đá marble và sỏi tự nhiên. Tạo điểm nhấn ấm áp cho cầu thang.",
-            "specs": "400×1200mm  |  30mm dày  |  Chống trơn R10",
+            "name": "Bàn Cà Phê Terrazzo Tròn",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1743025520859-CDDVYDM76QGKBGKKLP26/HomeButtonCounter.jpg",
+            "description": "Bàn cà phê tròn mặt terrazzo hồng pastel, chân bê tông đúc nguyên khối. Điểm nhấn thẩm mỹ cho ban công và khu thư giãn.",
+            "specs": "Ø800mm  |  Dày 35mm  |  Cao 450mm",
             "tag": "mới"
+          }
+        },
+        {
+          "type": "variant-item",
+          "settings": {
+            "name": "Bàn Ngoài Trời Đá Xám",
+            "image": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
+            "description": "Bàn ăn ngoài trời mặt đá xám mài nhám chống trơn, chân gang đúc. Chịu mưa nắng, không cần bảo quản đặc biệt.",
+            "specs": "1400×800mm  |  Dày 50mm  |  Chân 720mm",
+            "tag": ""
           }
         }
       ]
     },
-    "69bef6f195c5942261d2caf0": {
+    "69c2b27deececadddd7bafc8": {
       "type": "color-picker",
       "settings": {
         "overline": "bảng màu",
-        "title": "Chọn Tông Màu Phù Hợp",
-        "description": "Đa dạng tông màu từ trung tính đến đậm, phù hợp mọi phong cách kiến trúc.",
+        "title": "Màu Sắc Mặt Bàn",
+        "description": "Tùy chỉnh màu nền và hạt đá của mặt bàn terrazzo theo đúng phong cách không gian của bạn.",
         "columns": "3",
         "bgColor": "#ffffff"
       },
@@ -141,87 +152,87 @@
         {
           "type": "color-swatch",
           "settings": {
-            "name": "Alabaster",
-            "hex": "#F2EDE3",
+            "name": "Pure White",
+            "hex": "#F5F2ED",
             "image": ""
           }
         },
         {
           "type": "color-swatch",
           "settings": {
-            "name": "Ivory",
-            "hex": "#E8DFD0",
+            "name": "Linen",
+            "hex": "#EDE5D8",
             "image": ""
           }
         },
         {
           "type": "color-swatch",
           "settings": {
-            "name": "Pearl",
-            "hex": "#D4C8B8",
+            "name": "Blush",
+            "hex": "#E8D0C5",
             "image": ""
           }
         },
         {
           "type": "color-swatch",
           "settings": {
-            "name": "Quietude",
-            "hex": "#C4B8A5",
+            "name": "Sage",
+            "hex": "#C8D0C0",
             "image": ""
           }
         },
         {
           "type": "color-swatch",
           "settings": {
-            "name": "Acier",
-            "hex": "#A89F91",
+            "name": "Clay",
+            "hex": "#C8A898",
             "image": ""
           }
         },
         {
           "type": "color-swatch",
           "settings": {
-            "name": "Fossil",
-            "hex": "#8B8178",
+            "name": "Stone",
+            "hex": "#A89888",
             "image": ""
           }
         },
         {
           "type": "color-swatch",
           "settings": {
-            "name": "Mocha",
-            "hex": "#6B5D4E",
+            "name": "Slate",
+            "hex": "#888880",
             "image": ""
           }
         },
         {
           "type": "color-swatch",
           "settings": {
-            "name": "Ebony",
-            "hex": "#3D352C",
+            "name": "Graphite",
+            "hex": "#585858",
             "image": ""
           }
         },
         {
           "type": "color-swatch",
           "settings": {
-            "name": "Millennial Pink",
-            "hex": "#D4A9A1",
+            "name": "Noir",
+            "hex": "#282828",
             "image": ""
           }
         }
       ]
     },
-    "69befcd7500003ceac40a52d": {
+    "69c2b27deececadddd7bafc9": {
       "type": "service-process",
       "settings": {
         "overline": "dịch vụ",
-        "title": "thi công",
-        "titleAccent": "trực tiếp",
-        "description": "Không phải công trình nào cũng phù hợp với sản phẩm có sẵn. Với dịch vụ thi công trực tiếp, đội ngũ của chúng tôi sẽ đến tận công trình để khảo sát, đo đạc và sản xuất tấm ốp theo đúng kích thước yêu cầu — đảm bảo vừa vặn hoàn hảo cho mọi cầu thang.",
+        "title": "đặt hàng",
+        "titleAccent": "theo kích thước",
+        "description": "Mỗi chiếc bàn được sản xuất theo đơn đặt hàng — bạn chọn kích thước, màu sắc, kiểu mặt bàn và kiểu chân, chúng tôi hoàn thiện và giao tận nơi.",
         "imageUrl": "",
-        "imageAlt": "Thi công tấm ốp cầu thang trực tiếp tại công trình",
-        "ctaLabel": "Liên hệ tư vấn",
+        "imageAlt": "Sản xuất bàn đá bê tông theo yêu cầu",
+        "ctaLabel": "Đặt hàng ngay",
         "ctaHref": "/landing#contact",
         "bgColor": "#F5F0EB"
       },
@@ -230,8 +241,8 @@
           "type": "process-step",
           "settings": {
             "stepNumber": "01",
-            "title": "Khảo sát",
-            "description": "Đội ngũ đến tận công trình để đánh giá hiện trạng cầu thang, tư vấn vật liệu và phong cách phù hợp.",
+            "title": "Chọn mẫu & kích thước",
+            "description": "Tham khảo catalog và trao đổi với tư vấn viên để chọn kiểu dáng, kích thước và màu sắc phù hợp không gian.",
             "image": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80"
           }
         },
@@ -239,8 +250,8 @@
           "type": "process-step",
           "settings": {
             "stepNumber": "02",
-            "title": "Đo đạc",
-            "description": "Đo đạc chi tiết từng bậc thang, góc cạnh và kích thước chính xác để đảm bảo sản phẩm vừa khít.",
+            "title": "Sản xuất mặt bàn",
+            "description": "Pha trộn bê tông / terrazzo theo công thức màu đã chọn, đổ khuôn, dưỡng hộ và mài bề mặt đạt độ bóng yêu cầu.",
             "image": "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=600&q=80"
           }
         },
@@ -248,8 +259,8 @@
           "type": "process-step",
           "settings": {
             "stepNumber": "03",
-            "title": "Sản xuất",
-            "description": "Sản xuất tấm ốp theo đúng kích thước đo được, với chất liệu và màu sắc khách hàng đã chọn.",
+            "title": "Lắp chân & kiểm tra",
+            "description": "Lắp ráp chân bàn, kiểm tra độ phẳng, cân bằng và hoàn thiện các góc cạnh an toàn.",
             "image": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80"
           }
         },
@@ -257,14 +268,14 @@
           "type": "process-step",
           "settings": {
             "stepNumber": "04",
-            "title": "Lắp đặt",
-            "description": "Thi công lắp đặt tại công trình bởi thợ lành nghề, đảm bảo chất lượng và thẩm mỹ hoàn thiện.",
+            "title": "Giao hàng tận nơi",
+            "description": "Đóng gói chắc chắn, vận chuyển cẩn thận và lắp đặt tại vị trí yêu cầu. Hướng dẫn vệ sinh và bảo quản.",
             "image": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80"
           }
         }
       ]
     },
-    "69beea492fcf0ebbe3aed0d4": {
+    "69c2b27deececadddd7bafca": {
       "type": "footer",
       "settings": {
         "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1586821290470-46L6I4UQZEFD8HUGMOT0/bottomlogo.png",
@@ -280,13 +291,13 @@
         {
           "type": "footer-line",
           "settings": {
-            "text": "sales@concrete-collaborative.com"
+            "text": "sales@betongviet.vn"
           }
         },
         {
           "type": "footer-line",
           "settings": {
-            "text": "concrete-collaborative.com"
+            "text": "betongviet.vn"
           }
         },
         {
@@ -310,22 +321,6 @@
           "settings": {
             "label": "",
             "icon": "email",
-            "href": "https://workspace.google.com/intl/vi/gmail/"
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "linkedin",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "tiktok",
             "href": ""
           }
         },

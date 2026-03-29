@@ -32,7 +32,17 @@
       "Bash(git fetch:*)",
       "Bash(git log:*)",
       "Bash(git tag:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(pgrep:*)",
+      "Bash(mv:*)",
+      "Bash(lsof:*)",
+      "Bash(kill:*)",
+      "Bash(cat:*)",
+      "Bash(git remote:*)",
+      "WebSearch",
+      "SlashCommand(/plan:*)",
+      "Bash(sudo chown:*)",
+      "Bash(npm cache clean:*)"
     ]
   }
 }

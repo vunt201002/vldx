@@ -7,11 +7,69 @@
     "bodyFont": ""
   },
   "order": [
+    "69be5516315aac49a5e9be3c",
     "69be5516315aac49a5e9be3e",
     "69bf002327a98df2aa68722a",
+    "69befec927a98df2aa6871d6",
     "69c179d5fca5ee72f439029e"
   ],
   "sections": {
+    "69be5516315aac49a5e9be3c": {
+      "type": "navbar",
+      "settings": {
+        "brandMode": "logo",
+        "brandName": "bê tông",
+        "brandAccent": "việt",
+        "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/7e5836f6-d36a-4433-b2ea-89324e5191e4/black+cc+word+logo-02.png?format=500w",
+        "menuFontSize": "20px",
+        "ctaLabel": "",
+        "ctaHref": ""
+      },
+      "blocks": [
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "trang chủ",
+            "href": "/landing"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "tấm ốp cầu thang",
+            "href": "/tam-op-cau-thang"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "gạch ốp lát",
+            "href": "/gach-op-lat"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "ghế đá công viên",
+            "href": "/ghe-da-cong-vien"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "bàn",
+            "href": "/ban"
+          }
+        },
+        {
+          "type": "nav-link",
+          "settings": {
+            "label": "thi công",
+            "href": "/service"
+          }
+        }
+      ]
+    },
     "69be5516315aac49a5e9be3e": {
       "type": "hero",
       "settings": {
@@ -68,6 +126,89 @@
             "title": "Lắp đặt",
             "description": "Thi công lắp đặt tại công trình bởi thợ lành nghề, đảm bảo chất lượng và thẩm mỹ hoàn thiện.",
             "image": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80"
+          }
+        }
+      ]
+    },
+    "69befec927a98df2aa6871d6": {
+      "type": "footer",
+      "settings": {
+        "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1586821290470-46L6I4UQZEFD8HUGMOT0/bottomlogo.png",
+        "bgColor": "#f7e2ce"
+      },
+      "blocks": [
+        {
+          "type": "footer-line",
+          "settings": {
+            "text": "1.855.268.0800"
+          }
+        },
+        {
+          "type": "footer-line",
+          "settings": {
+            "text": "sales@concrete-collaborative.com"
+          }
+        },
+        {
+          "type": "footer-line",
+          "settings": {
+            "text": "concrete-collaborative.com"
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "",
+            "icon": "facebook",
+            "href": ""
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "",
+            "icon": "instagram",
+            "href": ""
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "",
+            "icon": "email",
+            "href": ""
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "",
+            "icon": "linkedin",
+            "href": ""
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "",
+            "icon": "pinterest",
+            "href": ""
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "",
+            "icon": "tiktok",
+            "href": ""
+          }
+        },
+        {
+          "type": "footer-social",
+          "settings": {
+            "label": "",
+            "icon": "zalo",
+            "href": ""
           }
         }
       ]
