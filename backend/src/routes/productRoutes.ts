@@ -8,28 +8,21 @@ import {
   deleteProduct,
   uploadProductImage,
 } from '../controllers/productController';
+import { requireAuth } from '../middleware/auth';
+import { validate } from '../middleware/validate';
+import { createProductSchema, updateProductSchema } from '../validators';
 
 const router = Router();
 
-// Get all products
+// Public
 router.get('/', getAllProducts);
-
-// Get product by slug
 router.get('/slug/:slug', getProductBySlug);
-
-// Get product by ID
 router.get('/:id', getProductById);
 
-// Create product
-router.post('/', createProduct);
-
-// Update product
-router.put('/:id', updateProduct);
-
-// Delete product
-router.delete('/:id', deleteProduct);
-
-// Upload product image
-router.post('/:id/images', uploadProductImage);
+// Protected
+router.post('/', requireAuth, validate(createProductSchema), createProduct);
+router.put('/:id', requireAuth, validate(updateProductSchema), updateProduct);
+router.delete('/:id', requireAuth, deleteProduct);
+router.post('/:id/images', requireAuth, uploadProductImage);
 
 export default router;

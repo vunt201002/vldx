@@ -7,25 +7,20 @@ import {
   updateMenu,
   deleteMenu,
 } from '../controllers/menuController';
+import { requireAuth } from '../middleware/auth';
+import { validate } from '../middleware/validate';
+import { createMenuSchema, updateMenuSchema } from '../validators';
 
 const router = Router();
 
-// Get all menus
+// Public
 router.get('/', getAllMenus);
-
-// Get menu by handle
 router.get('/handle/:handle', getMenuByHandle);
-
-// Get menu by ID
 router.get('/:id', getMenuById);
 
-// Create menu
-router.post('/', createMenu);
-
-// Update menu
-router.put('/:id', updateMenu);
-
-// Delete menu
-router.delete('/:id', deleteMenu);
+// Protected
+router.post('/', requireAuth, validate(createMenuSchema), createMenu);
+router.put('/:id', requireAuth, validate(updateMenuSchema), updateMenu);
+router.delete('/:id', requireAuth, deleteMenu);
 
 export default router;
