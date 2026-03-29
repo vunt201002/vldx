@@ -19,7 +19,7 @@ function getSessionId() {
 export default function BlogDetailPage() {
   const router = useRouter();
   const { id } = router.query;
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const [blogPost, setBlogPost] = useState(null);
   const [comments, setComments] = useState([]);
@@ -63,7 +63,6 @@ export default function BlogDetailPage() {
   // Check if already liked
   useEffect(() => {
     if (!blogPost) return;
-    const sessionId = getSessionId();
     const likedPosts = JSON.parse(localStorage.getItem('blog_liked') || '{}');
     if (likedPosts[id]) setLiked(true);
   }, [blogPost, id]);
