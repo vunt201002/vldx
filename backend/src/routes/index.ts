@@ -6,6 +6,7 @@ import themeRoutes from './themeRoutes';
 import uploadRoutes from './uploadRoutes';
 import menuRoutes from './menuRoutes';
 import productRoutes from './productRoutes';
+import blogRoutes from './blogRoutes';
 import authRoutes from './authRoutes';
 import adminAuthRoutes from './adminAuthRoutes';
 import customerRoutes from './customerRoutes';
@@ -26,5 +27,6 @@ router.use('/theme', themeRoutes);
 router.use('/upload', uploadRoutes);
 router.use('/menus', menuRoutes);
 router.use('/products', productRoutes);
+router.use('/blog', blogRoutes);
 
 export default router;
