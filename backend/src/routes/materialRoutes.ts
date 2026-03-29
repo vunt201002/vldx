@@ -1,12 +1,16 @@
 import { Router } from 'express';
 import * as materialController from '../controllers/materialController';
+import { requireAuth } from '../middleware/auth';
 
 const router = Router();
 
+// Public
 router.get('/', materialController.getAll);
 router.get('/:id', materialController.getById);
-router.post('/', materialController.create);
-router.put('/:id', materialController.update);
-router.delete('/:id', materialController.remove);
+
+// Protected
+router.post('/', requireAuth, materialController.create);
+router.put('/:id', requireAuth, materialController.update);
+router.delete('/:id', requireAuth, materialController.remove);
 
 export default router;

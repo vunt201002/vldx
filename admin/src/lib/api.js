@@ -1,14 +1,29 @@
 const BASE = import.meta.env.VITE_API_URL
 
+function getAuthHeaders() {
+  const token = localStorage.getItem('admin_token')
+  return token ? { Authorization: `Bearer ${token}` } : {}
+}
+
 async function request(path, options = {}) {
   const url = `${BASE}${path}`
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
+      ...getAuthHeaders(),
       ...options.headers,
     },
     ...options,
   })
+
+  // Redirect to login on 401
+  if (res.status === 401) {
+    localStorage.removeItem('admin_token')
+    if (window.location.pathname !== '/login') {
+      window.location.href = '/login'
+    }
+    throw new Error('Authentication required')
+  }
 
   if (!res.ok) {
     const error = await res.text().catch(() => res.statusText)

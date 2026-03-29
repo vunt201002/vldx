@@ -6,6 +6,7 @@ import themeRoutes from './themeRoutes';
 import uploadRoutes from './uploadRoutes';
 import menuRoutes from './menuRoutes';
 import productRoutes from './productRoutes';
+import authRoutes from './authRoutes';
 
 const router = Router();
 
@@ -13,6 +14,7 @@ router.get('/health', (_req, res) => {
   res.json({ success: true, message: 'API is running' });
 });
 
+router.use('/auth', authRoutes);
 router.use('/materials', materialRoutes);
 router.use('/blocks', blockRoutes);
 router.use('/pages', pageRoutes);

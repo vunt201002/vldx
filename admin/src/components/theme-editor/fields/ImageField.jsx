@@ -19,8 +19,10 @@ export default function ImageField({ field, value, onChange }) {
       formData.append('image', file)
       formData.append('folder', field.uploadFolder || 'general')
 
+      const token = localStorage.getItem('admin_token')
       const res = await fetch(`${API_URL}/upload`, {
         method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
         body: formData,
       })
 
