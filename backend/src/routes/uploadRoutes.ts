@@ -18,11 +18,12 @@ const upload = multer({
   },
 });
 
-import { requireAuth } from '../middleware/auth';
+import { requireAuth, authenticate } from '../middleware/auth';
 
 const router = Router();
 
 router.post('/', requireAuth, upload.single('image'), uploadImage);
+router.post('/customer', authenticate, upload.single('image'), uploadImage);
 router.delete('/:publicId', requireAuth, deleteImage);
 
 export default router;

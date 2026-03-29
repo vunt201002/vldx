@@ -8,8 +8,10 @@ export interface ICustomer extends Document {
   firstName: string;
   lastName: string;
   phone?: string;
+  birthday?: Date;
   googleId?: string;
   profilePicture?: string;
+  favoriteProducts: mongoose.Types.ObjectId[];
   isEmailVerified: boolean;
   emailVerificationToken?: string;
   emailVerificationExpires?: Date;
@@ -59,6 +61,13 @@ const customerSchema = new Schema<ICustomer>(
       type: String,
       trim: true,
     },
+    birthday: {
+      type: Date,
+    },
+    favoriteProducts: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+    }],
     googleId: {
       type: String,
       unique: true,

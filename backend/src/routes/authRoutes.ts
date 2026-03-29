@@ -27,5 +27,7 @@ router.post('/logout-all', authenticate, authController.logoutAll);
 router.get('/me', authenticate, authController.getMe);
 router.put('/me', authenticate, authController.updateMe);
 router.put('/change-password', authenticate, authController.changePassword);
+router.post('/favorites/:productId', authenticate, authController.toggleFavorite);
+router.get('/favorites', authenticate, authController.getFavorites);
 
 export default router;

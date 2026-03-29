@@ -275,7 +275,9 @@ export const getMe = async (req: Request, res: Response, next: NextFunction) => 
         firstName: req.user.firstName,
         lastName: req.user.lastName,
         phone: req.user.phone,
+        birthday: req.user.birthday,
         profilePicture: req.user.profilePicture,
+        favoriteProducts: req.user.favoriteProducts,
         isEmailVerified: req.user.isEmailVerified,
         createdAt: req.user.createdAt,
         lastLoginAt: req.user.lastLoginAt,
@@ -295,7 +297,7 @@ export const updateMe = async (req: Request, res: Response, next: NextFunction) 
       return res.status(401).json({ success: false, message: 'Authentication required' });
     }
 
-    const { firstName, lastName, phone } = req.body;
+    const { firstName, lastName, phone, birthday, profilePicture } = req.body;
 
     const customer = await Customer.findById(req.user._id);
 
@@ -306,6 +308,8 @@ export const updateMe = async (req: Request, res: Response, next: NextFunction) 
     if (firstName) customer.firstName = firstName.trim();
     if (lastName) customer.lastName = lastName.trim();
     if (phone !== undefined) customer.phone = phone ? phone.trim() : undefined;
+    if (birthday !== undefined) customer.birthday = birthday ? new Date(birthday) : undefined;
+    if (profilePicture !== undefined) customer.profilePicture = profilePicture;
 
     await customer.save();
 
@@ -318,7 +322,9 @@ export const updateMe = async (req: Request, res: Response, next: NextFunction) 
         firstName: customer.firstName,
         lastName: customer.lastName,
         phone: customer.phone,
+        birthday: customer.birthday,
         profilePicture: customer.profilePicture,
+        favoriteProducts: customer.favoriteProducts,
         isEmailVerified: customer.isEmailVerified,
       },
     });
@@ -367,6 +373,72 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
     res.json({
       success: true,
       message: 'Password changed successfully. Please log in again with your new password.',
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * POST /api/auth/favorites/:productId
+ * Toggle favorite product
+ */
+export const toggleFavorite = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: 'Authentication required' });
+    }
+
+    const { productId } = req.params;
+    const customer = await Customer.findById(req.user._id);
+
+    if (!customer) {
+      return res.status(404).json({ success: false, message: 'Customer not found' });
+    }
+
+    const index = customer.favoriteProducts.findIndex(
+      (id) => id.toString() === productId,
+    );
+
+    let isFavorite: boolean;
+    if (index >= 0) {
+      customer.favoriteProducts.splice(index, 1);
+      isFavorite = false;
+    } else {
+      customer.favoriteProducts.push(productId as any);
+      isFavorite = true;
+    }
+
+    await customer.save();
+
+    res.json({
+      success: true,
+      data: { isFavorite, favoriteProducts: customer.favoriteProducts },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * GET /api/auth/favorites
+ * Get favorite products with details
+ */
+export const getFavorites = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ success: false, message: 'Authentication required' });
+    }
+
+    const customer = await Customer.findById(req.user._id).populate('favoriteProducts');
+
+    if (!customer) {
+      return res.status(404).json({ success: false, message: 'Customer not found' });
+    }
+
+    res.json({
+      success: true,
+      data: customer.favoriteProducts,
     });
   } catch (err) {
     next(err);

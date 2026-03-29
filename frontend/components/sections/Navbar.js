@@ -105,7 +105,7 @@ export default function Navbar({ settings, blocks }) {
                   {dropdownOpen && (
                     <div className="absolute right-0 mt-2 w-44 rounded-lg border border-warm-200 bg-white py-1.5 shadow-lg z-50">
                       <Link
-                        href="/login"
+                        href="/account"
                         onClick={() => setDropdownOpen(false)}
                         className="block px-4 py-2 text-sm text-warm-700 hover:bg-warm-50 transition-colors"
                       >
@@ -182,7 +182,7 @@ export default function Navbar({ settings, blocks }) {
               {isAuthenticated ? (
                 <>
                   <Link
-                    href="/login"
+                    href="/account"
                     onClick={() => setMenuOpen(false)}
                     className="block font-body tracking-[0.15em] lowercase transition-colors"
                     style={{ fontSize, color: color || '#6B5D4E' }}
