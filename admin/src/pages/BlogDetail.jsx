@@ -225,7 +225,7 @@ const quillModules = {
     ['bold', 'italic', 'underline', 'strike'],
     [{ list: 'ordered' }, { list: 'bullet' }],
     ['blockquote', 'code-block'],
-    ['link', 'image'],
+    ['link', 'image', 'video'],
     [{ align: [] }],
     ['clean'],
   ],
@@ -234,7 +234,7 @@ const quillModules = {
 const quillFormats = [
   'header', 'bold', 'italic', 'underline', 'strike',
   'list', 'blockquote', 'code-block',
-  'link', 'image', 'align',
+  'link', 'image', 'video', 'align',
 ]
 
 const EMPTY_FORM = {
