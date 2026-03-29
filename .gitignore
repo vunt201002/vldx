@@ -4,6 +4,7 @@ node_modules/
 .env.prod
 .env.docker
 *.log
+client_secret_*.json
 # Track .claude/ config but ignore bulky skill submodules
 .claude/skills/perfect-web-clone-skill/
 .claude/skills/ui-ux-pro-max/
