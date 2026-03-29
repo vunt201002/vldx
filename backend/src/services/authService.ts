@@ -18,17 +18,8 @@ const googleClient = new OAuth2Client(config.googleClientId);
  * @throws Error if password doesn't meet requirements
  */
 function validatePassword(password: string): void {
-  if (password.length < 8) {
-    throw new Error('Password must be at least 8 characters long');
-  }
-  if (!/[A-Z]/.test(password)) {
-    throw new Error('Password must contain at least one uppercase letter');
-  }
-  if (!/[a-z]/.test(password)) {
-    throw new Error('Password must contain at least one lowercase letter');
-  }
-  if (!/[0-9]/.test(password)) {
-    throw new Error('Password must contain at least one number');
+  if (!password || password.length < 1) {
+    throw new Error('Password is required');
   }
 }
 
