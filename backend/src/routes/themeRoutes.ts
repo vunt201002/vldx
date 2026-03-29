@@ -20,6 +20,8 @@ import {
   deleteFooterBlock,
 } from '../controllers/themeController';
 import { requireAuth } from '../middleware/auth';
+import { validate } from '../middleware/validate';
+import { createPageSchema } from '../validators';
 
 const router = Router();
 
@@ -39,7 +41,7 @@ router.post('/footer/blocks', requireAuth, addFooterBlock);
 router.post('/footer/blocks/clone', requireAuth, cloneFooterBlock);
 router.delete('/header/blocks/:blockId', requireAuth, deleteHeaderBlock);
 router.delete('/footer/blocks/:blockId', requireAuth, deleteFooterBlock);
-router.post('/pages', requireAuth, createPage);
+router.post('/pages', requireAuth, validate(createPageSchema), createPage);
 router.delete('/pages/:slug', requireAuth, deletePage);
 router.put('/pages/:slug', requireAuth, savePageTheme);
 router.post('/pages/:slug/blocks/clone', requireAuth, cloneBlock);

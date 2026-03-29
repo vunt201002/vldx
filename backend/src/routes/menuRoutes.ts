@@ -8,6 +8,8 @@ import {
   deleteMenu,
 } from '../controllers/menuController';
 import { requireAuth } from '../middleware/auth';
+import { validate } from '../middleware/validate';
+import { createMenuSchema, updateMenuSchema } from '../validators';
 
 const router = Router();
 
@@ -17,8 +19,8 @@ router.get('/handle/:handle', getMenuByHandle);
 router.get('/:id', getMenuById);
 
 // Protected
-router.post('/', requireAuth, createMenu);
-router.put('/:id', requireAuth, updateMenu);
+router.post('/', requireAuth, validate(createMenuSchema), createMenu);
+router.put('/:id', requireAuth, validate(updateMenuSchema), updateMenu);
 router.delete('/:id', requireAuth, deleteMenu);
 
 export default router;
