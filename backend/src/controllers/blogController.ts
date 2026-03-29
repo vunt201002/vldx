@@ -78,9 +78,9 @@ export const getPublished = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
-export const getBySlug = async (req: Request, res: Response, next: NextFunction) => {
+export const getById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const post = await BlogPost.findOne({ slug: req.params.slug, isPublished: true })
+    const post = await BlogPost.findOne({ _id: req.params.id, isPublished: true })
       .populate('comments.customer', 'firstName lastName profilePicture')
       .lean();
 
@@ -111,7 +111,7 @@ export const getBySlug = async (req: Request, res: Response, next: NextFunction)
 
 export const getComments = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const post = await BlogPost.findOne({ slug: req.params.slug, isPublished: true })
+    const post = await BlogPost.findOne({ _id: req.params.id, isPublished: true })
       .select('comments')
       .populate('comments.customer', 'firstName lastName profilePicture')
       .lean();
@@ -134,7 +134,7 @@ export const getComments = async (req: Request, res: Response, next: NextFunctio
 
 export const addComment = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const post = await BlogPost.findOne({ slug: req.params.slug, isPublished: true });
+    const post = await BlogPost.findOne({ _id: req.params.id, isPublished: true });
     if (!post) {
       const error: AppError = new Error('Blog post not found');
       error.statusCode = 404;
@@ -165,9 +165,9 @@ export const addComment = async (req: Request, res: Response, next: NextFunction
 
 export const deleteComment = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { slug, commentId } = req.params;
+    const { id, commentId } = req.params;
     const result = await BlogPost.updateOne(
-      { slug },
+      { _id: id },
       { $pull: { comments: { _id: commentId } } },
     );
 
@@ -188,7 +188,7 @@ export const deleteComment = async (req: Request, res: Response, next: NextFunct
 
 export const toggleLike = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const post = await BlogPost.findOne({ slug: req.params.slug, isPublished: true });
+    const post = await BlogPost.findOne({ _id: req.params.id, isPublished: true });
     if (!post) {
       const error: AppError = new Error('Blog post not found');
       error.statusCode = 404;
@@ -261,7 +261,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
-export const getById = async (req: Request, res: Response, next: NextFunction) => {
+export const getByIdAdmin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const post = await BlogPost.findById(req.params.id).lean();
     if (!post) {

@@ -15,7 +15,6 @@ export interface IBlogLike {
 
 export interface IBlogPost extends Document {
   title: string;
-  slug: string;
   content: string;
   excerpt: string;
   coverImage?: string;
@@ -27,16 +26,6 @@ export interface IBlogPost extends Document {
   comments: IBlogComment[];
   createdAt: Date;
   updatedAt: Date;
-}
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/đ/g, 'd')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 }
 
 const blogCommentSchema = new Schema<IBlogComment>(
@@ -59,17 +48,6 @@ const blogLikeSchema = new Schema<IBlogLike>(
 const blogPostSchema = new Schema<IBlogPost>(
   {
     title: { type: String, required: true, trim: true },
-    slug: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-      trim: true,
-      validate: {
-        validator: (v: string) => /^[a-z0-9-]+$/.test(v),
-        message: 'Slug can only contain lowercase letters, numbers, and hyphens',
-      },
-    },
     content: { type: String, default: '' },
     excerpt: { type: String, default: '', trim: true },
     coverImage: { type: String, default: '' },
@@ -84,16 +62,12 @@ const blogPostSchema = new Schema<IBlogPost>(
 );
 
 blogPostSchema.pre('validate', function (next) {
-  if (this.title && !this.slug) {
-    this.slug = slugify(this.title);
-  }
   if (this.isPublished && !this.publishedAt) {
     this.publishedAt = new Date();
   }
   next();
 });
 
-blogPostSchema.index({ slug: 1 }, { unique: true });
 blogPostSchema.index({ isPublished: 1, publishedAt: -1 });
 blogPostSchema.index({ tags: 1 });
 

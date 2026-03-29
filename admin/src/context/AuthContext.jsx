@@ -11,7 +11,7 @@ export function AuthProvider({ children }) {
     if (token) {
       // Verify token is still valid
       const BASE = import.meta.env.VITE_API_URL
-      fetch(`${BASE}/auth/me`, {
+      fetch(`${BASE}/admin/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => {

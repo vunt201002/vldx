@@ -1,13 +1,13 @@
 #!/bin/bash
 # Blog API Test Script
 # Usage: bash backend/src/scripts/testBlogApi.sh
-# Requires: backend running on localhost:5000, curl, jq (optional)
+# Requires: backend running on localhost:5000, curl
 
 BASE="http://localhost:5000/api"
 PASS=0
 FAIL=0
 TOKEN=""
-POST_SLUG=""
+POST_ID=""
 COMMENT_ID=""
 
 green() { echo -e "\033[32m✓ $1\033[0m"; }
@@ -76,9 +76,7 @@ BODY=$(echo "$RESP" | sed '$d')
 assert_status "Create blog post" "201" "$HTTP" "$BODY"
 
 POST_ID=$(echo "$BODY" | grep -o '"_id":"[^"]*"' | head -1 | cut -d'"' -f4)
-POST_SLUG=$(echo "$BODY" | grep -o '"slug":"[^"]*"' | head -1 | cut -d'"' -f4)
 echo "  Post ID: $POST_ID"
-echo "  Slug: $POST_SLUG"
 
 # ─── 3. Get all posts (admin) ────────────────────
 RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/admin/list" \
@@ -117,11 +115,11 @@ HTTP=$(echo "$RESP" | tail -1)
 BODY=$(echo "$RESP" | sed '$d')
 assert_status "Public listing (tag filter)" "200" "$HTTP" "$BODY"
 
-# ─── 8. Get by slug ──────────────────────────────
-RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_SLUG")
+# ─── 8. Get by ID (public) ───────────────────────
+RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_ID")
 HTTP=$(echo "$RESP" | tail -1)
 BODY=$(echo "$RESP" | sed '$d')
-assert_status "Get by slug" "200" "$HTTP" "$BODY"
+assert_status "Get by ID (public)" "200" "$HTTP" "$BODY"
 
 # ─── 9. ETag caching — second request returns 304 ─
 ETAG=$(curl -s -D - "$BASE/blog" -o /dev/null 2>/dev/null | grep -i etag | tr -d '\r' | awk '{print $2}')
@@ -137,7 +135,7 @@ fi
 # ─── 10. Anonymous comment ────────────────────────
 echo ""
 echo "── Comments ──"
-RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_SLUG/comments" \
+RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_ID/comments" \
   -H "Content-Type: application/json" \
   -d '{"content": "Bài viết rất hữu ích!"}')
 HTTP=$(echo "$RESP" | tail -1)
@@ -156,7 +154,7 @@ fi
 COMMENT_ID=$(echo "$BODY" | grep -o '"_id":"[^"]*"' | head -1 | cut -d'"' -f4)
 
 # ─── 11. Named anonymous comment ─────────────────
-RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_SLUG/comments" \
+RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_ID/comments" \
   -H "Content-Type: application/json" \
   -d '{"content": "Cảm ơn bạn!", "name": "Nguyễn Văn A"}')
 HTTP=$(echo "$RESP" | tail -1)
@@ -164,7 +162,7 @@ BODY=$(echo "$RESP" | sed '$d')
 assert_status "Named anonymous comment" "201" "$HTTP" "$BODY"
 
 # ─── 12. Get comments ────────────────────────────
-RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_SLUG/comments")
+RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_ID/comments")
 HTTP=$(echo "$RESP" | tail -1)
 BODY=$(echo "$RESP" | sed '$d')
 assert_status "Get comments" "200" "$HTTP" "$BODY"
@@ -172,7 +170,7 @@ assert_status "Get comments" "200" "$HTTP" "$BODY"
 # ─── 13. Anonymous like ──────────────────────────
 echo ""
 echo "── Likes ──"
-RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_SLUG/likes" \
+RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_ID/likes" \
   -H "Content-Type: application/json" \
   -d '{"sessionId": "test-session-abc"}')
 HTTP=$(echo "$RESP" | tail -1)
@@ -188,7 +186,7 @@ else
 fi
 
 # ─── 14. Unlike (toggle off) ─────────────────────
-RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_SLUG/likes" \
+RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_ID/likes" \
   -H "Content-Type: application/json" \
   -d '{"sessionId": "test-session-abc"}')
 HTTP=$(echo "$RESP" | tail -1)
@@ -204,7 +202,7 @@ else
 fi
 
 # ─── 15. Like without sessionId fails ────────────
-RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_SLUG/likes" \
+RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_ID/likes" \
   -H "Content-Type: application/json" \
   -d '{}')
 HTTP=$(echo "$RESP" | tail -1)
@@ -214,7 +212,7 @@ assert_status "Like without sessionId → 400" "400" "$HTTP" "$BODY"
 # ─── 16. Admin delete comment ────────────────────
 echo ""
 echo "── Admin Moderation ──"
-RESP=$(curl -s -w "\n%{http_code}" -X DELETE "$BASE/blog/$POST_SLUG/comments/$COMMENT_ID" \
+RESP=$(curl -s -w "\n%{http_code}" -X DELETE "$BASE/blog/$POST_ID/comments/$COMMENT_ID" \
   -H "Authorization: Bearer $TOKEN")
 HTTP=$(echo "$RESP" | tail -1)
 BODY=$(echo "$RESP" | sed '$d')
@@ -230,7 +228,7 @@ BODY=$(echo "$RESP" | sed '$d')
 assert_status "Delete blog post" "200" "$HTTP" "$BODY"
 
 # ─── 18. Verify deleted ──────────────────────────
-RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_SLUG")
+RESP=$(curl -s -w "\n%{http_code}" "$BASE/blog/$POST_ID")
 HTTP=$(echo "$RESP" | tail -1)
 assert_status "Deleted post returns 404" "404" "$HTTP" ""
 

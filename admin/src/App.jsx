@@ -9,6 +9,8 @@ import ProductDetail from '@/pages/ProductDetail'
 import BlockLibrary from '@/pages/BlockLibrary'
 import BlockPreview from '@/pages/BlockPreview'
 import ThemeEditor from '@/pages/ThemeEditor'
+import Blogs from '@/pages/Blogs'
+import BlogDetail from '@/pages/BlogDetail'
 import Login from '@/pages/Login'
 
 function ProtectedRoute({ children }) {
@@ -32,6 +34,8 @@ function AppRoutes() {
         <Route path="menus" element={<MenuManager />} />
         <Route path="products" element={<Products />} />
         <Route path="products/:id" element={<ProductDetail />} />
+        <Route path="blogs" element={<Blogs />} />
+        <Route path="blogs/:id" element={<BlogDetail />} />
         <Route path="blocks" element={<BlockLibrary />} />
         <Route path="blocks/preview" element={<BlockPreview />} />
         <Route path="theme-editor" element={<ThemeEditor />} />

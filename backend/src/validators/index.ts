@@ -64,7 +64,6 @@ export const updateMaterialSchema = createMaterialSchema.partial();
 // Blog posts
 export const createBlogPostSchema = z.object({
   title: z.string().min(1, 'Title is required').max(300),
-  slug: z.string().regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens').optional(),
   content: z.string().optional(),
   excerpt: z.string().max(500).optional(),
   coverImage: z.string().url().optional().or(z.literal('')),
