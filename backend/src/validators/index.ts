@@ -60,3 +60,21 @@ export const createMaterialSchema = z.object({
 }).passthrough(); // allow extra fields from Mongoose schema
 
 export const updateMaterialSchema = createMaterialSchema.partial();
+
+// Blog posts
+export const createBlogPostSchema = z.object({
+  title: z.string().min(1, 'Title is required').max(300),
+  content: z.string().optional(),
+  excerpt: z.string().max(500).optional(),
+  coverImage: z.string().url().optional().or(z.literal('')),
+  tags: z.array(z.string().max(50)).max(10).optional(),
+  isPublished: z.boolean().optional(),
+});
+
+export const updateBlogPostSchema = createBlogPostSchema.partial();
+
+// Blog comments
+export const createCommentSchema = z.object({
+  content: z.string().min(1, 'Comment content is required').max(2000),
+  name: z.string().max(100).optional(),
+});
