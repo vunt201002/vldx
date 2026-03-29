@@ -12,6 +12,7 @@ import ThemeEditor from '@/pages/ThemeEditor'
 import Blogs from '@/pages/Blogs'
 import BlogDetail from '@/pages/BlogDetail'
 import Login from '@/pages/Login'
+import AuditLog from '@/pages/AuditLog'
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated, loading } = useAuth()
@@ -40,6 +41,7 @@ function AppRoutes() {
         <Route path="blocks/preview" element={<BlockPreview />} />
         <Route path="theme-editor" element={<ThemeEditor />} />
         <Route path="theme-editor/:slug" element={<ThemeEditor />} />
+        <Route path="audit-log" element={<AuditLog />} />
       </Route>
     </Routes>
   )

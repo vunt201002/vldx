@@ -10,6 +10,7 @@ const navItems = [
   { to: '/blogs', label: 'Blog', icon: '✍️' },
   { to: '/blocks', label: 'Block Library', icon: '🧩' },
   { to: '/theme-editor', label: 'Theme Editor', icon: '🎨' },
+  { to: '/audit-log', label: 'Audit Log', icon: '📋' },
 ]
 
 export default function AdminLayout() {
@@ -23,6 +24,7 @@ export default function AdminLayout() {
     if (location.pathname.startsWith('/blogs')) return 'Blog'
     if (location.pathname.startsWith('/blocks')) return 'Block Library'
     if (location.pathname.startsWith('/theme-editor')) return 'Theme Editor'
+    if (location.pathname.startsWith('/audit-log')) return 'Audit Log'
     return 'Admin Panel'
   }
 
