@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { get, post, put, del } from '@/lib/api'
 import ReactQuill from 'react-quill-new'
 import 'react-quill-new/dist/quill.snow.css'
+import Toast from '@/components/Toast'
 
 const quillStyle = document.createElement('style')
 quillStyle.textContent = '.ql-editor { min-height: 400px; }'
@@ -11,7 +12,7 @@ document.head.appendChild(quillStyle)
 const isNew = (id) => id === 'new'
 
 const styles = {
-  container: { maxWidth: '900px' },
+  container: { maxWidth: '900px', position: 'relative' },
   header: {
     display: 'flex',
     alignItems: 'center',
@@ -256,8 +257,7 @@ export default function BlogDetail() {
   const [loading, setLoading] = useState(!isNew(id))
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
-  const [error, setError] = useState(null)
-  const [success, setSuccess] = useState(null)
+  const [toast, setToast] = useState(null)
 
   useEffect(() => {
     if (isNew(id)) return
@@ -277,7 +277,7 @@ export default function BlogDetail() {
         setLoading(false)
       })
       .catch((err) => {
-        setError(err.message || 'Failed to load blog post')
+        setToast({ message: err.message || 'Failed to load blog post', type: 'error' })
         setLoading(false)
       })
   }, [id])
@@ -287,8 +287,6 @@ export default function BlogDetail() {
     const newValue = type === 'checkbox' ? checked : value
 
     setForm((prev) => ({ ...prev, [name]: newValue }))
-    setError(null)
-    setSuccess(null)
   }
 
   const addTag = () => {
@@ -314,7 +312,6 @@ export default function BlogDetail() {
     const file = e.target.files?.[0]
     if (!file) return
     setUploading(true)
-    setError(null)
     try {
       const BASE = import.meta.env.VITE_API_URL
       const token = localStorage.getItem('admin_token')
@@ -330,7 +327,7 @@ export default function BlogDetail() {
       if (!res.ok) throw new Error(data.message || 'Upload failed')
       setForm((prev) => ({ ...prev, coverImage: data.data.url }))
     } catch (err) {
-      setError(err.message || 'Upload failed')
+      setToast({ message: err.message || 'Upload failed', type: 'error' })
     } finally {
       setUploading(false)
     }
@@ -342,27 +339,25 @@ export default function BlogDetail() {
       await del(`/blog/${id}/comments/${commentId}`)
       setComments((prev) => prev.filter((c) => c._id !== commentId))
     } catch (err) {
-      setError(err.message || 'Failed to delete comment')
+      setToast({ message: err.message || 'Failed to delete comment', type: 'error' })
     }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setSaving(true)
-    setError(null)
-    setSuccess(null)
 
     try {
       if (isNew(id)) {
         await post('/blog/admin', form)
-        setSuccess('Blog post created!')
+        setToast({ message: 'Blog post created!', type: 'success' })
         setTimeout(() => navigate('/blogs'), 1200)
       } else {
         await put(`/blog/admin/${id}`, form)
-        setSuccess('Blog post updated!')
+        setToast({ message: 'Blog post updated!', type: 'success' })
       }
     } catch (err) {
-      setError(err.message || 'Failed to save blog post')
+      setToast({ message: err.message || 'Failed to save blog post', type: 'error' })
     } finally {
       setSaving(false)
     }
@@ -374,7 +369,7 @@ export default function BlogDetail() {
       await del(`/blog/admin/${id}`)
       navigate('/blogs')
     } catch (err) {
-      setError(err.message || 'Failed to delete blog post')
+      setToast({ message: err.message || 'Failed to delete blog post', type: 'error' })
     }
   }
 
@@ -394,10 +389,58 @@ export default function BlogDetail() {
         <h1 style={styles.title}>{isNew(id) ? 'New Blog Post' : 'Edit Blog Post'}</h1>
       </div>
 
-      {error && <div style={styles.errorBox}>{error}</div>}
-      {success && <div style={styles.successBox}>{success}</div>}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
 
-      <form onSubmit={handleSubmit}>
+      {/* Sticky bottom bar */}
+      <div style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 'var(--sidebar-width, 240px)',
+        right: 0,
+        backgroundColor: 'var(--color-surface)',
+        borderTop: '1px solid var(--color-border)',
+        padding: '0.75rem 2rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        zIndex: 100,
+        boxShadow: '0 -2px 8px rgba(0,0,0,0.06)',
+      }}>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button
+            type="button"
+            onClick={() => document.getElementById('blog-form').requestSubmit()}
+            disabled={saving}
+            style={{ ...styles.saveBtn, opacity: saving ? 0.7 : 1 }}
+          >
+            {saving ? 'Saving...' : isNew(id) ? 'Create Post' : 'Save Changes'}
+          </button>
+          <button
+            type="button"
+            style={styles.cancelBtn}
+            onClick={() => navigate('/blogs')}
+          >
+            Cancel
+          </button>
+        </div>
+        {!isNew(id) && (
+          <button
+            type="button"
+            style={styles.deleteBtn}
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+        )}
+      </div>
+
+      <form id="blog-form" onSubmit={handleSubmit} style={{ paddingBottom: '5rem' }}>
         {/* Basic Information */}
         <div style={styles.card}>
           <div style={styles.sectionTitle}>Basic Information</div>
@@ -503,11 +546,7 @@ export default function BlogDetail() {
               <ReactQuill
                 theme="snow"
                 value={form.content}
-                onChange={(value) => {
-                  setForm((prev) => ({ ...prev, content: value }))
-                  setError(null)
-                  setSuccess(null)
-                }}
+                onChange={(value) => setForm((prev) => ({ ...prev, content: value }))}
                 modules={quillModules}
                 formats={quillFormats}
                 style={{ minHeight: '500px' }}
@@ -585,34 +624,6 @@ export default function BlogDetail() {
           </div>
         )}
 
-        {/* Footer Actions */}
-        <div style={styles.footer}>
-          <div style={styles.footerLeft}>
-            <button
-              type="submit"
-              disabled={saving}
-              style={{ ...styles.saveBtn, opacity: saving ? 0.7 : 1 }}
-            >
-              {saving ? 'Saving...' : isNew(id) ? 'Create Post' : 'Save Changes'}
-            </button>
-            <button
-              type="button"
-              style={styles.cancelBtn}
-              onClick={() => navigate('/blogs')}
-            >
-              Cancel
-            </button>
-          </div>
-          {!isNew(id) && (
-            <button
-              type="button"
-              style={styles.deleteBtn}
-              onClick={handleDelete}
-            >
-              Delete Post
-            </button>
-          )}
-        </div>
       </form>
     </div>
   )
