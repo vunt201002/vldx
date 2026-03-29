@@ -49,7 +49,7 @@ FRONTEND_PORT=80
 ADMIN_PORT=8888        # change if 8080 is in use
 MONGODB_URI=mongodb://mongodb:27017/vlxd  # Docker MongoDB (empty)
 # OR use Atlas to have data:
-MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/?appName=vlxd
+MONGODB_URI=mongodb+srv://<USER>:<PASSWORD>@<CLUSTER>.mongodb.net/?appName=vlxd
 CLOUDINARY_CLOUD_NAME=xxx
 CLOUDINARY_API_KEY=xxx
 CLOUDINARY_API_SECRET=xxx
@@ -111,7 +111,7 @@ TAG=test-v1
 DOMAIN=160.250.187.138
 PROTOCOL=http
 
-MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/?appName=vlxd
+MONGODB_URI=mongodb+srv://<USER>:<PASSWORD>@<CLUSTER>.mongodb.net/?appName=vlxd
 MONGO_USER=vlxd
 MONGO_PASSWORD=strong_password_here
 JWT_SECRET=random_string_here
@@ -175,7 +175,7 @@ cd ~/vlxd
 ### 3.4 Create `.env.prod` on VPS
 
 ```bash
-echo -e "DOCKER_USER=nguyenduy12\nTAG=test-v1\nMONGO_USER=vlxd\nMONGO_PASSWORD=strong_password\nJWT_SECRET=random_string\nFRONTEND_URL=http://160.250.187.138\nADMIN_URL=http://160.250.187.138:8080\nMONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/?appName=vlxd\nCLOUDINARY_CLOUD_NAME=xxx\nCLOUDINARY_API_KEY=xxx\nCLOUDINARY_API_SECRET=xxx" > .env.prod
+echo -e "DOCKER_USER=nguyenduy12\nTAG=test-v1\nMONGO_USER=vlxd\nMONGO_PASSWORD=strong_password\nJWT_SECRET=random_string\nFRONTEND_URL=http://160.250.187.138\nADMIN_URL=http://160.250.187.138:8080\nMONGODB_URI=mongodb+srv://<USER>:<PASSWORD>@<CLUSTER>.mongodb.net/?appName=vlxd\nCLOUDINARY_CLOUD_NAME=xxx\nCLOUDINARY_API_KEY=xxx\nCLOUDINARY_API_SECRET=xxx" > .env.prod
 ```
 
 ### 3.5 Create `docker-compose.prod.yml` on VPS
