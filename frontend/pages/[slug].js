@@ -1,11 +1,19 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import ThemeLayout from '@/components/layouts/ThemeLayout';
 import SectionRenderer from '@/components/sections/SectionRenderer';
 import { transformPageData } from '@/lib/transformPageConfig';
+import { trackPageView } from '@/lib/analytics';
 
 export default function DynamicPage({ globalTheme: initialGlobalTheme, pageConfig: initialPageConfig }) {
+  const router = useRouter();
   const [pageConfig, setPageConfig] = useState(initialPageConfig);
   const [globalTheme, setGlobalTheme] = useState(initialGlobalTheme);
+
+  // Track page view
+  useEffect(() => {
+    if (router.query.slug) trackPageView(`/${router.query.slug}`);
+  }, [router.query.slug]);
 
   // Listen for live preview updates from the theme editor
   useEffect(() => {

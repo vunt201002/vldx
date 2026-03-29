@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { get, post } from '@/lib/api';
 import { useAuth } from '@/hooks/useAuth';
 import { transformBlogContent } from '@/lib/transformBlogContent';
+import { trackBlogView } from '@/lib/analytics';
 
 function getSessionId() {
   if (typeof window === 'undefined') return null;
@@ -38,6 +39,7 @@ export default function BlogDetailPage() {
       const res = await get(`/blog/${id}`);
       setBlogPost(res.data);
       setLikeCount(res.data.likeCount || 0);
+      trackBlogView(id, res.data.title, `/blog/${id}`);
     } catch {
       setBlogPost(null);
     } finally {

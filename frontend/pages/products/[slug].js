@@ -1,10 +1,15 @@
+import { useEffect } from 'react';
 import ThemeLayout from '@/components/layouts/ThemeLayout';
 import ProductDetail from '@/components/products/ProductDetail';
 import SectionRenderer from '@/components/sections/SectionRenderer';
 import SEO, { generateProductSchema } from '@/components/SEO';
 import { blocksToConfig } from '@/lib/transformPageConfig';
+import { trackProductView } from '@/lib/analytics';
 
 export default function ProductDetailPage({ globalTheme, product, template }) {
+  useEffect(() => {
+    if (product?._id) trackProductView(product._id, product.name, `/products/${product.slug}`);
+  }, [product]);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://vlxd.com';
 
   const pageMetadata = {
