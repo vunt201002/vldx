@@ -141,6 +141,12 @@ html {
   color: #1A1714;
 }
 
+/* Contact FAB animation */
+@keyframes fab-pop-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.8); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 /* Blog content typography */
 .blog-content h1 { font-size: 2rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
 .blog-content h2 { font-size: 1.5rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
