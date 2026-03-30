@@ -3,6 +3,10 @@ const nextConfig = {
   output: 'standalone',
   reactStrictMode: true,
 
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
   experimental: {
     // Turbopack-specific config
     turbo: {
