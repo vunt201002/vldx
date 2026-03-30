@@ -28,7 +28,10 @@ export function trackEvent(type, data = {}) {
 }
 
 export function trackPageView(path) {
-  trackEvent('page_view', { path });
+  trackEvent('page_view', {
+    path,
+    metadata: { referrer: typeof document !== 'undefined' ? document.referrer : '' },
+  });
 }
 
 export function trackProductView(productId, productName, path) {
@@ -41,4 +44,20 @@ export function trackBlogView(blogId, blogTitle, path) {
 
 export function trackColorSelect(colorName, hex) {
   trackEvent('color_select', { path: window.location.pathname, metadata: { colorName, hex } });
+}
+
+export function trackBlogComment(blogId, blogTitle) {
+  trackEvent('blog_comment', { path: `/blog/${blogId}`, referenceId: blogId, referenceName: blogTitle });
+}
+
+export function trackBlogLike(blogId, blogTitle) {
+  trackEvent('blog_like', { path: `/blog/${blogId}`, referenceId: blogId, referenceName: blogTitle });
+}
+
+export function trackAuth(action) {
+  trackEvent('auth', { path: window.location.pathname, metadata: { action } });
+}
+
+export function trackFavorite(productId, productName, added) {
+  trackEvent('favorite', { path: '/account', referenceId: productId, referenceName: productName, metadata: { added } });
 }

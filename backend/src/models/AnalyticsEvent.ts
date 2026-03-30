@@ -16,7 +16,7 @@ const analyticsEventSchema = new Schema<IAnalyticsEvent>(
     type: {
       type: String,
       required: true,
-      enum: ['page_view', 'product_view', 'blog_view', 'color_select'],
+      enum: ['page_view', 'product_view', 'blog_view', 'color_select', 'blog_comment', 'blog_like', 'auth', 'favorite'],
     },
     path: { type: String, required: true, trim: true },
     referenceId: { type: String },

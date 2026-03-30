@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { useAuth } from '@/hooks/useAuth';
 import { get, post } from '@/lib/api';
+import { trackFavorite } from '@/lib/analytics';
 
 export default function AccountPage() {
   const router = useRouter();
@@ -112,6 +113,8 @@ export default function AccountPage() {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
       });
+      const removed = favorites.find((p) => p._id === productId);
+      if (removed) trackFavorite(productId, removed.name, false);
       setFavorites((prev) => prev.filter((p) => p._id !== productId));
     } catch {}
   };
