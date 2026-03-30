@@ -50,7 +50,7 @@ const items = [
 ];
 
 export default function ContactFAB() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(contact.defaultOpen ?? false);
 
   return (
     <div className="fixed bottom-6 right-6 z-[9999] flex flex-col-reverse items-end gap-3">
@@ -62,16 +62,16 @@ export default function ContactFAB() {
           target={item.href.startsWith('http') ? '_blank' : undefined}
           rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
           title={item.label}
-          className="flex items-center gap-2 rounded-full shadow-lg transition-all duration-200 hover:scale-105"
+          className="flex items-center justify-center rounded-full shadow-lg transition-all duration-200 hover:scale-110"
           style={{
             backgroundColor: item.color,
             color: '#fff',
-            padding: '10px 16px',
+            width: '48px',
+            height: '48px',
             animation: `fab-pop-in 0.2s ease ${i * 0.05}s both`,
           }}
         >
           {item.icon}
-          <span className="text-sm font-medium hidden sm:inline">{item.label}</span>
         </a>
       ))}
 
