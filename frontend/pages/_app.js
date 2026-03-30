@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import '../styles/globals.css';
 import { AuthProvider } from '@/lib/AuthContext';
 import { trackPageView } from '@/lib/analytics';
+import ContactFAB from '@/components/ContactFAB';
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function App({ Component, pageProps }) {
   return (
     <AuthProvider>
       <Component {...pageProps} />
+      <ContactFAB />
     </AuthProvider>
   );
 }
