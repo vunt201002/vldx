@@ -202,6 +202,21 @@ Uses Google Identity Services (GSI) — no npm package required:
 
 `components/auth/ProtectedRoute.js` — wraps pages that require authentication. Redirects to `/login?redirect=...` if not authenticated.
 
+## Analytics Tracking
+
+`lib/analytics.js` provides fire-and-forget tracking functions. All use `fetch().catch(() => {})` — never block page load.
+
+| Function | Called in | Tracks |
+|----------|----------|--------|
+| `trackPageView(path)` | `pages/[slug].js` | CMS page views |
+| `trackProductView(id, name, path)` | `pages/products/[slug].js` | Product detail views |
+| `trackBlogView(id, title, path)` | `pages/blog/[id].js` | Blog post views |
+| `trackColorSelect(name, hex)` | `components/sections/ColorPicker.js` | Color swatch clicks |
+
+Uses `sessionId` from `localStorage` for anonymous visitor tracking (same pattern as blog likes).
+
+**When adding a new trackable page/interaction**, import the relevant function from `@/lib/analytics` and call it in a `useEffect` or event handler.
+
 ## Custom Hooks
 
 - **`useReveal`** (`hooks/useReveal.js`): IntersectionObserver-based scroll reveal. Returns a ref; attach to section root. Adds `.revealed` class when element enters viewport. Used with `.reveal`, `.reveal-left`, `.reveal-right`, `.stagger-children` CSS classes defined in `globals.css`.

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { trackColorSelect } from '@/lib/analytics';
 
 export default function ColorPicker({ settings, blocks }) {
   const colors = (blocks || []).filter((b) => b.type === 'color-swatch');
@@ -69,7 +70,7 @@ export default function ColorPicker({ settings, blocks }) {
                 return (
                   <button
                     key={i}
-                    onClick={() => setSelected(i)}
+                    onClick={() => { setSelected(i); trackColorSelect(c.settings.name, c.settings.hex); }}
                     style={{
                       padding: 0, border: 'none', cursor: 'pointer',
                       background: 'none', textAlign: 'center',

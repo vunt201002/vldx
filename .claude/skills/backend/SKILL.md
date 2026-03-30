@@ -400,9 +400,69 @@ Uses `google-auth-library` on the backend — no server-side redirect flow:
 - Google OAuth fields: `googleId`, `isEmailVerified` (auto-true for Google users)
 - Email verification currently disabled (check commented out in `authService.ts`)
 
+## Analytics & Audit Log
+
+### Analytics Tracking
+
+`AnalyticsEvent` model tracks storefront activity. Events have a **90-day TTL** (auto-deleted via MongoDB TTL index).
+
+**Event types**: `page_view`, `product_view`, `blog_view`, `color_select`
+
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| POST | `/api/analytics/events` | public | Record tracking event (fire-and-forget) |
+| GET | `/api/analytics/summary` | `requireAuth` | Dashboard totals (today/week/unique) |
+| GET | `/api/analytics/top-pages` | `requireAuth` | Top viewed pages (aggregation) |
+| GET | `/api/analytics/top-products` | `requireAuth` | Top viewed products |
+| GET | `/api/analytics/top-colors` | `requireAuth` | Top selected colors |
+| GET | `/api/analytics/trends` | `requireAuth` | Views per day time-series |
+
+Analytics endpoints use **MongoDB aggregation pipelines** (`$match → $group → $sort → $limit → $project`).
+
+### Audit Log
+
+`AuditLog` model records all admin CUD actions (no TTL — kept indefinitely).
+
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | `/api/audit-log` | `requireAuth` | Paginated log with entity/action/admin filters |
+
+### Audit Service Pattern (fire-and-forget)
+
+`services/auditService.ts` provides a `log()` function that writes to DB without blocking:
+
+```typescript
+import * as auditService from '../services/auditService';
+
+// In any admin controller, after a CUD operation:
+const admin = (req as AuthRequest).adminUser;
+if (admin) auditService.log({
+  adminId: admin.id,
+  adminEmail: admin.email,
+  action: 'create',      // 'create' | 'update' | 'delete'
+  entity: 'product',     // 'product' | 'blog' | 'material' | etc.
+  entityId: product._id.toString(),
+  entityName: product.name,
+  changes: { before, after }, // optional, for updates
+});
+```
+
+**When adding a new admin CRUD controller**, add `auditService.log()` calls after create, update, and delete operations. Cast `req as AuthRequest` to access `adminUser`.
+
+### Frontend Tracking Utility
+
+`frontend/lib/analytics.js` provides fire-and-forget tracking functions:
+- `trackPageView(path)` — called in `[slug].js`
+- `trackProductView(id, name, path)` — called in `products/[slug].js`
+- `trackBlogView(id, title, path)` — called in `blog/[id].js`
+- `trackColorSelect(name, hex)` — called in `ColorPicker.js`
+
+All use `fetch().catch(() => {})` — never block, never throw.
+
 ## Conventions
 
 1. **TypeScript** — all backend code is typed
 2. **Centralized config** — never use `process.env` directly
 3. **Error handler middleware** — always the last middleware registered
 4. **CORS** — restricted to `FRONTEND_URL` in production
+5. **Audit logging** — all admin CUD controllers must call `auditService.log()` after mutations

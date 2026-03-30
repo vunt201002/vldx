@@ -50,6 +50,13 @@ All three apps use path aliases for imports:
 - Google OAuth: frontend sends ID token to backend for verification — no redirect flow
 - JWT tokens stored in `localStorage` on frontend (access + refresh)
 
+## Analytics & Audit
+
+- Frontend tracking calls are fire-and-forget (`fetch().catch(() => {})`) — never block or throw
+- All admin CUD controllers must call `auditService.log()` after mutations
+- `AnalyticsEvent` has 90-day TTL; `AuditLog` has no TTL (kept indefinitely)
+- Analytics tracking endpoint (`POST /api/analytics/events`) is public but rate-limited
+
 ## Environment Variables
 
 - Backend: access via centralized `config/env.ts` — never use `process.env` directly in routes

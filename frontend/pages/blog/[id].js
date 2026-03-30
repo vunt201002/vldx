@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { get, post } from '@/lib/api';
 import { useAuth } from '@/hooks/useAuth';
 import { transformBlogContent } from '@/lib/transformBlogContent';
+import { trackBlogView, trackBlogComment, trackBlogLike } from '@/lib/analytics';
 
 function getSessionId() {
   if (typeof window === 'undefined') return null;
@@ -38,6 +39,7 @@ export default function BlogDetailPage() {
       const res = await get(`/blog/${id}`);
       setBlogPost(res.data);
       setLikeCount(res.data.likeCount || 0);
+      trackBlogView(id, res.data.title, `/blog/${id}`);
     } catch {
       setBlogPost(null);
     } finally {
@@ -90,6 +92,7 @@ export default function BlogDetailPage() {
 
       setLiked(res.data.liked);
       setLikeCount(res.data.likeCount);
+      if (res.data.liked && blogPost) trackBlogLike(id, blogPost.title);
 
       // Track in localStorage
       const likedPosts = JSON.parse(localStorage.getItem('blog_liked') || '{}');
@@ -111,6 +114,7 @@ export default function BlogDetailPage() {
       await post(`/blog/${id}/comments`, body);
       setCommentContent('');
       setCommentName('');
+      if (blogPost) trackBlogComment(id, blogPost.title);
       fetchComments();
     } catch {}
     setSubmitting(false);

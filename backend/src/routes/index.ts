@@ -10,6 +10,8 @@ import blogRoutes from './blogRoutes';
 import authRoutes from './authRoutes';
 import adminAuthRoutes from './adminAuthRoutes';
 import customerRoutes from './customerRoutes';
+import analyticsRoutes from './analyticsRoutes';
+import auditLogRoutes from './auditLogRoutes';
 
 const router = Router();
 
@@ -28,5 +30,7 @@ router.use('/upload', uploadRoutes);
 router.use('/menus', menuRoutes);
 router.use('/products', productRoutes);
 router.use('/blog', blogRoutes);
+router.use('/analytics', analyticsRoutes);
+router.use('/audit-log', auditLogRoutes);
 
 export default router;

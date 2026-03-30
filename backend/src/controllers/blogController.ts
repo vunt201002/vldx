@@ -3,6 +3,8 @@ import { createHash } from 'crypto';
 import BlogPost from '../models/BlogPost';
 import blogEvents from '../events/blogEvents';
 import { AppError } from '../middleware/errorHandler';
+import { AuthRequest } from '../middleware/auth';
+import * as auditService from '../services/auditService';
 
 function makeEtag(data: unknown): string {
   return `"${createHash('md5').update(JSON.stringify(data)).digest('hex')}"`;
@@ -279,6 +281,8 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
   try {
     const post = await BlogPost.create(req.body);
     blogEvents.emit('blog-updated');
+    const admin = (req as AuthRequest).adminUser;
+    if (admin) auditService.log({ adminId: admin.id, adminEmail: admin.email, action: 'create', entity: 'blog', entityId: post._id.toString(), entityName: post.title });
     res.status(201).json({ success: true, data: post });
   } catch (err) {
     next(err);
@@ -294,6 +298,8 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
       throw error;
     }
 
+    const before = { title: post.title, isPublished: post.isPublished };
+
     // Set publishedAt when first published
     if (req.body.isPublished && !post.publishedAt) {
       req.body.publishedAt = new Date();
@@ -302,6 +308,9 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
     Object.assign(post, req.body);
     await post.save();
     blogEvents.emit('blog-updated');
+
+    const admin = (req as AuthRequest).adminUser;
+    if (admin) auditService.log({ adminId: admin.id, adminEmail: admin.email, action: 'update', entity: 'blog', entityId: post._id.toString(), entityName: post.title, changes: { before, after: { title: post.title, isPublished: post.isPublished } } });
 
     res.json({ success: true, data: post });
   } catch (err) {
@@ -319,6 +328,8 @@ export const remove = async (req: Request, res: Response, next: NextFunction) =>
     }
 
     blogEvents.emit('blog-updated');
+    const admin = (req as AuthRequest).adminUser;
+    if (admin) auditService.log({ adminId: admin.id, adminEmail: admin.email, action: 'delete', entity: 'blog', entityId: post._id.toString(), entityName: post.title });
     res.json({ success: true, message: 'Blog post deleted' });
   } catch (err) {
     next(err);

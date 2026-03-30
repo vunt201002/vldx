@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
+import { trackAuth } from '@/lib/analytics';
 
 export const AuthContext = createContext(null);
 
@@ -129,6 +130,7 @@ export function AuthProvider({ children }) {
     setTokens(data.data.accessToken, data.data.refreshToken);
     setUser(data.data.customer);
     setIsAuthenticated(true);
+    trackAuth('login');
   };
 
   // Login with Google
@@ -150,6 +152,7 @@ export function AuthProvider({ children }) {
     setTokens(data.data.accessToken, data.data.refreshToken);
     setUser(data.data.customer);
     setIsAuthenticated(true);
+    trackAuth('google_login');
   };
 
   // Register new account
@@ -169,6 +172,7 @@ export function AuthProvider({ children }) {
     }
 
     // Don't auto-login after registration - user needs to verify email
+    trackAuth('register');
     return data;
   };
 

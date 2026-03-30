@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Product from '../models/Product';
+import { AuthRequest } from '../middleware/auth';
+import * as auditService from '../services/auditService';
 
 // Get all products
 export const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
@@ -68,6 +70,8 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
       isPublished: isPublished || false,
     });
 
+    const admin = (req as AuthRequest).adminUser;
+    if (admin) auditService.log({ adminId: admin.id, adminEmail: admin.email, action: 'create', entity: 'product', entityId: product._id.toString(), entityName: product.name });
     res.status(201).json({ success: true, data: product });
   } catch (err: any) {
     if (err.code === 11000) {
@@ -99,6 +103,8 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
 
     await product.save();
 
+    const admin = (req as AuthRequest).adminUser;
+    if (admin) auditService.log({ adminId: admin.id, adminEmail: admin.email, action: 'update', entity: 'product', entityId: product._id.toString(), entityName: product.name });
     res.json({ success: true, data: product });
   } catch (err: any) {
     if (err.code === 11000) {
@@ -117,6 +123,8 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
       return res.status(404).json({ success: false, message: 'Product not found' });
     }
 
+    const admin = (req as AuthRequest).adminUser;
+    if (admin) auditService.log({ adminId: admin.id, adminEmail: admin.email, action: 'delete', entity: 'product', entityId: product._id.toString(), entityName: product.name });
     res.json({ success: true, message: 'Product deleted successfully' });
   } catch (err) {
     next(err);
