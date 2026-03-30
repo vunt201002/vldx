@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
 import { useAuth } from '@/hooks/useAuth';
-import { get, post } from '@/lib/api';
 import { trackFavorite } from '@/lib/analytics';
 
 export default function AccountPage() {
