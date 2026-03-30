@@ -78,8 +78,10 @@ export default function ContactFAB() {
       {/* Main toggle button */}
       <button
         onClick={() => setOpen(!open)}
-        className="flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition-all duration-300 hover:scale-105"
+        className="flex items-center justify-center rounded-full shadow-xl transition-all duration-300 hover:scale-110"
         style={{
+          width: '48px',
+          height: '48px',
           background: open ? '#555' : 'linear-gradient(135deg, #C4A882, #8B7D6B)',
         }}
         aria-label="Lien he"
@@ -91,8 +93,8 @@ export default function ContactFAB() {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          width="24"
-          height="24"
+          width="20"
+          height="20"
           style={{
             transition: 'transform 0.3s',
             transform: open ? 'rotate(45deg)' : 'rotate(0deg)',
