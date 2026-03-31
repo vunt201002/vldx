@@ -37,98 +37,53 @@ export default function Login() {
   }
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: '#f5f0eb',
-    }}>
-      <form onSubmit={handleSubmit} style={{
-        background: '#fff',
-        padding: '2.5rem',
-        borderRadius: '12px',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
-        width: '100%',
-        maxWidth: '400px',
-      }}>
-        <h1 style={{ margin: '0 0 0.5rem', color: '#2E2720', fontSize: '1.5rem' }}>
-          VLXD Admin
-        </h1>
-        <p style={{ margin: '0 0 1.5rem', color: '#8B7D6B', fontSize: '0.9rem' }}>
-          Sign in to manage your site
+    <div className="login-page">
+      <div className="login-brand">
+        <h2 className="login-brand-title">VLXD Admin</h2>
+        <p className="login-brand-description">
+          Building materials management platform. Control your products, content, and analytics from one place.
         </p>
+      </div>
+      <div className="login-form-side">
+        <form onSubmit={handleSubmit} className="login-card">
+          <h1 className="login-title">VLXD Admin</h1>
+          <p className="login-subtitle">Sign in to manage your site</p>
 
-        {error && (
-          <div style={{
-            padding: '0.75rem',
-            background: '#fee',
-            color: '#c00',
-            borderRadius: '6px',
-            marginBottom: '1rem',
-            fontSize: '0.85rem',
-          }}>
-            {error}
+          {error && <div className="error-alert">{error}</div>}
+
+          <div className="form-group">
+            <label className="form-label" htmlFor="login-email">Email</label>
+            <input
+              id="login-email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="form-input"
+            />
           </div>
-        )}
 
-        <div style={{ marginBottom: '1rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.4rem', color: '#555', fontSize: '0.85rem' }}>
-            Email
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{
-              width: '100%',
-              padding: '0.6rem 0.8rem',
-              border: '1px solid #ddd',
-              borderRadius: '6px',
-              fontSize: '0.95rem',
-              boxSizing: 'border-box',
-            }}
-          />
-        </div>
+          <div className="form-group">
+            <label className="form-label" htmlFor="login-password">Password</label>
+            <input
+              id="login-password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="form-input"
+            />
+          </div>
 
-        <div style={{ marginBottom: '1.5rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.4rem', color: '#555', fontSize: '0.85rem' }}>
-            Password
-          </label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{
-              width: '100%',
-              padding: '0.6rem 0.8rem',
-              border: '1px solid #ddd',
-              borderRadius: '6px',
-              fontSize: '0.95rem',
-              boxSizing: 'border-box',
-            }}
-          />
-        </div>
-
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            width: '100%',
-            padding: '0.7rem',
-            background: loading ? '#999' : '#2563eb',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '6px',
-            fontSize: '1rem',
-            cursor: loading ? 'not-allowed' : 'pointer',
-          }}
-        >
-          {loading ? 'Signing in...' : 'Sign In'}
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn btn-primary login-submit-btn"
+          >
+            {loading ? 'Signing in...' : 'Sign In'}
+          </button>
+        </form>
+      </div>
     </div>
   )
 }

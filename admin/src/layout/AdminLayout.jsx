@@ -1,16 +1,28 @@
 import React, { useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import {
+  LayoutDashboard,
+  Menu,
+  Package,
+  PenLine,
+  LayoutGrid,
+  Palette,
+  ClipboardList,
+  ChevronsLeft,
+  ChevronsRight,
+  LogOut,
+} from 'lucide-react'
 import '@/styles/layout.css'
 import { LayoutContext } from '@/context/LayoutContext'
 
 const navItems = [
-  { to: '/dashboard', label: 'Dashboard', icon: '📊' },
-  { to: '/menus', label: 'Menus', icon: '📋' },
-  { to: '/products', label: 'Products', icon: '📦' },
-  { to: '/blogs', label: 'Blog', icon: '✍️' },
-  { to: '/blocks', label: 'Block Library', icon: '🧩' },
-  { to: '/theme-editor', label: 'Theme Editor', icon: '🎨' },
-  { to: '/audit-log', label: 'Audit Log', icon: '📋' },
+  { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/menus', label: 'Menus', icon: Menu },
+  { to: '/products', label: 'Products', icon: Package },
+  { to: '/blogs', label: 'Blog', icon: PenLine },
+  { to: '/blocks', label: 'Block Library', icon: LayoutGrid },
+  { to: '/theme-editor', label: 'Theme Editor', icon: Palette },
+  { to: '/audit-log', label: 'Audit Log', icon: ClipboardList },
 ]
 
 export default function AdminLayout() {
@@ -28,6 +40,11 @@ export default function AdminLayout() {
     return 'Admin Panel'
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken')
+    window.location.href = '/login'
+  }
+
   return (
     <div
       className="admin-layout"
@@ -35,37 +52,58 @@ export default function AdminLayout() {
     >
       <aside className={`sidebar${collapsed ? ' collapsed' : ''}`}>
         <div className="sidebar-logo">
-          {collapsed ? <span>V</span> : <>VLXD <span>Admin</span></>}
+          {collapsed ? <span className="logo-mark">V</span> : <>VLXD <span className="logo-accent">Admin</span></>}
         </div>
         <button
           className="sidebar-toggle"
           onClick={() => setCollapsed((c) => !c)}
           title={collapsed ? 'Expand menu' : 'Collapse menu'}
         >
-          {collapsed ? '›' : '‹'}
+          {collapsed ? <ChevronsRight size={16} /> : <ChevronsLeft size={16} />}
         </button>
         <nav className="sidebar-nav">
           {!collapsed && <div className="nav-section-title">Main Menu</div>}
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
-            >
-              <span className="nav-link-icon">{item.icon}</span>
-              <span className="nav-link-label">{item.label}</span>
-              <span className="nav-link-tooltip">{item.label}</span>
-            </NavLink>
-          ))}
+          {navItems.map((item) => {
+            const Icon = item.icon
+            return (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
+              >
+                <span className="nav-link-icon">
+                  <Icon size={18} strokeWidth={1.75} />
+                </span>
+                <span className="nav-link-label">{item.label}</span>
+                <span className="nav-link-tooltip">{item.label}</span>
+              </NavLink>
+            )
+          })}
         </nav>
+        <div className="sidebar-footer">
+          <div className="sidebar-user">
+            <div className="sidebar-avatar">A</div>
+            <div className="sidebar-user-info">
+              <div className="sidebar-user-name">Admin</div>
+              <div className="sidebar-user-email">admin@vlxd.vn</div>
+            </div>
+          </div>
+          <button className="nav-link sidebar-logout" onClick={handleLogout}>
+            <span className="nav-link-icon">
+              <LogOut size={18} strokeWidth={1.75} />
+            </span>
+            <span className="nav-link-label">Logout</span>
+          </button>
+        </div>
       </aside>
 
       <div className="main-content">
         <header className="topbar">
           <span className="topbar-title">{getPageTitle()}</span>
-          <span style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
-            VLXD Management System
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <span className="topbar-system">VLXD Management System</span>
+            <div className="sidebar-avatar" style={{ width: 28, height: 28, fontSize: 11 }}>A</div>
+          </div>
         </header>
         <main className="page-content">
           <LayoutContext.Provider value={{ collapsed, setCollapsed }}>
