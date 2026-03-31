@@ -1,115 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Plus, Pencil, FileText } from 'lucide-react'
 import { get } from '@/lib/api'
-
-const styles = {
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: '1.5rem',
-  },
-  title: {
-    fontSize: '1.25rem',
-    fontWeight: 700,
-    color: 'var(--color-text)',
-  },
-  addBtn: {
-    backgroundColor: 'var(--color-primary)',
-    color: '#fff',
-    border: 'none',
-    padding: '0.6rem 1.2rem',
-    borderRadius: 'var(--radius)',
-    fontWeight: 600,
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-    transition: 'background-color 0.15s',
-  },
-  filters: {
-    display: 'flex',
-    gap: '0.5rem',
-    marginBottom: '1rem',
-  },
-  filterBtn: {
-    padding: '0.4rem 0.9rem',
-    borderRadius: '999px',
-    fontSize: '0.8rem',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.15s',
-    border: '1px solid var(--color-border)',
-    backgroundColor: '#fff',
-    color: 'var(--color-text-muted)',
-  },
-  filterBtnActive: {
-    padding: '0.4rem 0.9rem',
-    borderRadius: '999px',
-    fontSize: '0.8rem',
-    fontWeight: 600,
-    cursor: 'pointer',
-    border: '1px solid var(--color-primary)',
-    backgroundColor: 'var(--color-primary)',
-    color: '#fff',
-  },
-  tableWrapper: {
-    backgroundColor: 'var(--color-surface)',
-    borderRadius: 'var(--radius)',
-    boxShadow: 'var(--shadow)',
-    border: '1px solid var(--color-border)',
-    overflow: 'hidden',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-  },
-  th: {
-    padding: '0.75rem 1rem',
-    textAlign: 'left',
-    fontSize: '0.75rem',
-    fontWeight: 600,
-    textTransform: 'uppercase',
-    letterSpacing: '0.05em',
-    color: 'var(--color-text-muted)',
-    backgroundColor: '#f8fafc',
-    borderBottom: '1px solid var(--color-border)',
-  },
-  td: {
-    padding: '0.85rem 1rem',
-    fontSize: '0.9rem',
-    color: 'var(--color-text)',
-    borderBottom: '1px solid var(--color-border)',
-  },
-  editBtn: {
-    backgroundColor: 'transparent',
-    color: 'var(--color-primary)',
-    border: '1px solid var(--color-primary)',
-    padding: '0.35rem 0.8rem',
-    borderRadius: '6px',
-    fontSize: '0.8rem',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'background-color 0.15s, color 0.15s',
-  },
-  tag: {
-    display: 'inline-block',
-    padding: '0.15rem 0.5rem',
-    backgroundColor: '#e0e7ff',
-    color: '#3730a3',
-    borderRadius: '999px',
-    fontSize: '0.7rem',
-    fontWeight: 600,
-    marginRight: '0.3rem',
-  },
-  errorBox: {
-    padding: '1rem',
-    backgroundColor: '#fef2f2',
-    border: '1px solid #fecaca',
-    borderRadius: 'var(--radius)',
-    color: 'var(--color-danger)',
-    marginBottom: '1rem',
-    fontSize: '0.9rem',
-  },
-}
+import { Button, Badge, Table, Th, Td, PageHeader, EmptyState, ErrorAlert } from '@/components/ui'
 
 export default function Blogs() {
   const navigate = useNavigate()
@@ -132,7 +25,7 @@ export default function Blogs() {
   }, [filter])
 
   if (loading) {
-    return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>Loading blog posts...</div>
+    return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--gray-400)' }}>Loading blog posts...</div>
   }
 
   const formatDate = (date) => {
@@ -142,23 +35,17 @@ export default function Blogs() {
 
   return (
     <div>
-      <div style={styles.header}>
-        <h1 style={styles.title}>Blog Posts ({posts.length})</h1>
-        <button
-          style={styles.addBtn}
-          onClick={() => navigate('/blogs/new')}
-          onMouseEnter={(e) => (e.target.style.backgroundColor = 'var(--color-primary-hover)')}
-          onMouseLeave={(e) => (e.target.style.backgroundColor = 'var(--color-primary)')}
-        >
-          + New Post
-        </button>
-      </div>
+      <PageHeader title={`Blog Posts (${posts.length})`}>
+        <Button variant="primary" icon={Plus} onClick={() => navigate('/blogs/new')}>
+          New Post
+        </Button>
+      </PageHeader>
 
-      <div style={styles.filters}>
+      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
         {['all', 'published', 'draft'].map((f) => (
           <button
             key={f}
-            style={filter === f ? styles.filterBtnActive : styles.filterBtn}
+            className={`filter-btn${filter === f ? ' active' : ''}`}
             onClick={() => setFilter(f)}
           >
             {f === 'all' ? 'All' : f === 'published' ? 'Published' : 'Draft'}
@@ -166,85 +53,62 @@ export default function Blogs() {
         ))}
       </div>
 
-      {error && <div style={styles.errorBox}>{error}</div>}
+      {error && <ErrorAlert message={error} />}
 
-      <div style={styles.tableWrapper}>
-        <table style={styles.table}>
-          <thead>
-            <tr>
-              <th style={styles.th}>Title</th>
-              <th style={styles.th}>Tags</th>
-              <th style={styles.th}>Status</th>
-              <th style={styles.th}>Date</th>
-              <th style={styles.th}>Views</th>
-              <th style={styles.th}>Actions</th>
+      <Table>
+        <thead>
+          <tr>
+            <Th>Title</Th>
+            <Th>Tags</Th>
+            <Th>Status</Th>
+            <Th>Date</Th>
+            <Th>Views</Th>
+            <Th>Actions</Th>
+          </tr>
+        </thead>
+        <tbody>
+          {posts.map((post, idx) => (
+            <tr key={post._id || idx}>
+              <Td style={{ fontWeight: 600, maxWidth: '300px' }}>
+                {post.title}
+                {post.excerpt && (
+                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 400, marginTop: '0.2rem' }}>
+                    {post.excerpt.substring(0, 80)}{post.excerpt.length > 80 ? '...' : ''}
+                  </div>
+                )}
+              </Td>
+              <Td>
+                {(post.tags || []).slice(0, 3).map((tag) => (
+                  <Badge key={tag} variant="accent">{tag}</Badge>
+                ))}
+              </Td>
+              <Td>
+                <Badge variant={post.isPublished ? 'success' : 'danger'}>
+                  {post.isPublished ? 'Published' : 'Draft'}
+                </Badge>
+              </Td>
+              <Td style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                {formatDate(post.publishedAt || post.createdAt)}
+              </Td>
+              <Td style={{ fontSize: '0.85rem' }}>
+                {post.viewCount || 0}
+              </Td>
+              <Td>
+                <Button variant="secondary" size="sm" icon={Pencil} onClick={() => navigate(`/blogs/${post._id}`)}>
+                  Edit
+                </Button>
+              </Td>
             </tr>
-          </thead>
-          <tbody>
-            {posts.map((post, idx) => (
-              <tr
-                key={post._id || idx}
-                style={{ backgroundColor: idx % 2 === 0 ? '#fff' : '#fafafa' }}
-              >
-                <td style={{ ...styles.td, fontWeight: 600, maxWidth: '300px' }}>
-                  {post.title}
-                  {post.excerpt && (
-                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 400, marginTop: '0.2rem' }}>
-                      {post.excerpt.substring(0, 80)}{post.excerpt.length > 80 ? '...' : ''}
-                    </div>
-                  )}
-                </td>
-                <td style={styles.td}>
-                  {(post.tags || []).slice(0, 3).map((tag) => (
-                    <span key={tag} style={styles.tag}>{tag}</span>
-                  ))}
-                </td>
-                <td style={styles.td}>
-                  <span style={{
-                    padding: '0.2rem 0.6rem',
-                    backgroundColor: post.isPublished ? '#d1fae5' : '#fee2e2',
-                    color: post.isPublished ? '#065f46' : '#991b1b',
-                    borderRadius: '999px',
-                    fontSize: '0.75rem',
-                    fontWeight: 600,
-                  }}>
-                    {post.isPublished ? 'Published' : 'Draft'}
-                  </span>
-                </td>
-                <td style={{ ...styles.td, fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
-                  {formatDate(post.publishedAt || post.createdAt)}
-                </td>
-                <td style={{ ...styles.td, fontSize: '0.85rem' }}>
-                  {post.viewCount || 0}
-                </td>
-                <td style={styles.td}>
-                  <button
-                    style={styles.editBtn}
-                    onClick={() => navigate(`/blogs/${post._id}`)}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = 'var(--color-primary)'
-                      e.target.style.color = '#fff'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'transparent'
-                      e.target.style.color = 'var(--color-primary)'
-                    }}
-                  >
-                    Edit
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {posts.length === 0 && (
-              <tr>
-                <td colSpan={6} style={{ ...styles.td, textAlign: 'center', color: 'var(--color-text-muted)', padding: '2rem' }}>
-                  No blog posts found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+          ))}
+          {posts.length === 0 && (
+            <tr>
+              <td colSpan={6}>
+                <EmptyState icon={FileText} title="No blog posts found" description="Create your first blog post to get started." />
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
     </div>
   )
 }

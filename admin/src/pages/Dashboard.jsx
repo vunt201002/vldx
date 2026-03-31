@@ -1,134 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import {
+  Eye, TrendingUp, User, Zap, FileText, ShoppingBag, ClipboardList,
+  ArrowUpRight, ArrowRight, Globe, Package, PenLine, LayoutGrid, Activity,
+} from 'lucide-react'
 import { get } from '@/lib/api'
-
-const styles = {
-  container: {
-    maxWidth: '1200px',
-  },
-  heading: {
-    fontSize: '1.5rem',
-    fontWeight: 700,
-    color: 'var(--color-text)',
-    marginBottom: '0.5rem',
-  },
-  subheading: {
-    fontSize: '0.95rem',
-    color: 'var(--color-text-muted)',
-    marginBottom: '2rem',
-  },
-  statsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-    gap: '1.25rem',
-    marginBottom: '2rem',
-  },
-  card: {
-    backgroundColor: 'var(--color-surface)',
-    borderRadius: 'var(--radius)',
-    padding: '1.25rem',
-    boxShadow: 'var(--shadow)',
-    border: '1px solid var(--color-border)',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
-  },
-  iconBox: (color) => ({
-    width: '3rem',
-    height: '3rem',
-    borderRadius: '50%',
-    backgroundColor: `${color}18`,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '1.4rem',
-    flexShrink: 0,
-  }),
-  cardBody: {
-    flex: 1,
-  },
-  cardValue: {
-    fontSize: '1.5rem',
-    fontWeight: 700,
-    color: 'var(--color-text)',
-    lineHeight: 1,
-  },
-  cardLabel: {
-    fontSize: '0.8rem',
-    color: 'var(--color-text-muted)',
-    marginTop: '0.25rem',
-  },
-  columnsGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '1.25rem',
-  },
-  section: {
-    backgroundColor: 'var(--color-surface)',
-    borderRadius: 'var(--radius)',
-    padding: '1.25rem',
-    boxShadow: 'var(--shadow)',
-    border: '1px solid var(--color-border)',
-    marginBottom: '1.25rem',
-  },
-  sectionTitle: {
-    fontSize: '1rem',
-    fontWeight: 600,
-    marginBottom: '1rem',
-    color: 'var(--color-text)',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-  },
-  th: {
-    padding: '0.6rem 0.75rem',
-    textAlign: 'left',
-    fontSize: '0.75rem',
-    fontWeight: 600,
-    textTransform: 'uppercase',
-    letterSpacing: '0.05em',
-    color: 'var(--color-text-muted)',
-    backgroundColor: '#f8fafc',
-    borderBottom: '1px solid var(--color-border)',
-  },
-  td: {
-    padding: '0.6rem 0.75rem',
-    fontSize: '0.85rem',
-    color: 'var(--color-text)',
-    borderBottom: '1px solid var(--color-border)',
-  },
-  placeholder: {
-    textAlign: 'center',
-    padding: '2rem',
-    color: 'var(--color-text-muted)',
-    fontSize: '0.9rem',
-  },
-  actionBadge: (action) => {
-    const colors = {
-      create: { bg: '#d1fae5', color: '#065f46' },
-      update: { bg: '#dbeafe', color: '#1e40af' },
-      delete: { bg: '#fee2e2', color: '#991b1b' },
-    }
-    const c = colors[action] || { bg: '#f3f4f6', color: '#374151' }
-    return {
-      padding: '0.15rem 0.5rem',
-      backgroundColor: c.bg,
-      color: c.color,
-      borderRadius: '999px',
-      fontSize: '0.7rem',
-      fontWeight: 600,
-    }
-  },
-  errorBox: {
-    padding: '1rem',
-    backgroundColor: '#fef2f2',
-    border: '1px solid #fecaca',
-    borderRadius: 'var(--radius)',
-    color: 'var(--color-danger)',
-    marginBottom: '1rem',
-    fontSize: '0.9rem',
-  },
-}
+import { Card, Table, Th, Td, Badge, ErrorAlert, EmptyState, Button } from '@/components/ui'
 
 export default function Dashboard() {
   const [summary, setSummary] = useState(null)
@@ -159,14 +36,19 @@ export default function Dashboard() {
   }, [])
 
   if (loading) {
-    return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>Loading dashboard...</div>
+    return (
+      <div className="dashboard-loading">
+        <div className="dashboard-loading-spinner" />
+        <span>Loading dashboard...</span>
+      </div>
+    )
   }
 
   const statCards = [
-    { label: 'Views Today', value: summary?.todayViews ?? '—', icon: '👁️', color: '#2563eb' },
-    { label: 'Views This Week', value: summary?.weekViews ?? '—', icon: '📈', color: '#7c3aed' },
-    { label: 'Unique Today', value: summary?.todayUnique ?? '—', icon: '👤', color: '#059669' },
-    { label: 'Total Events', value: summary?.totalEvents ?? '—', icon: '⚡', color: '#d97706' },
+    { label: 'Views Today', value: summary?.todayViews ?? 0, icon: Eye, color: 'blue', trend: '+12%' },
+    { label: 'Views This Week', value: summary?.weekViews ?? 0, icon: TrendingUp, color: 'purple', trend: '+8%' },
+    { label: 'Unique Visitors', value: summary?.todayUnique ?? 0, icon: User, color: 'green', trend: '+5%' },
+    { label: 'Total Events', value: summary?.totalEvents ?? 0, icon: Zap, color: 'amber', trend: null },
   ]
 
   const formatDate = (d) => {
@@ -175,108 +57,182 @@ export default function Dashboard() {
     return date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
   }
 
+  const actionVariant = (action) => {
+    const map = { create: 'success', update: 'accent', delete: 'danger' }
+    return map[action] || 'neutral'
+  }
+
+  const formatPath = (path) => {
+    if (!path) return '/'
+    if (path.length > 30) return path.substring(0, 30) + '...'
+    return path
+  }
+
+  const quickLinks = [
+    { label: 'Products', icon: Package, to: '/products', desc: 'Manage catalog' },
+    { label: 'Blog', icon: PenLine, to: '/blogs', desc: 'Write articles' },
+    { label: 'Blocks', icon: LayoutGrid, to: '/blocks', desc: 'Page sections' },
+    { label: 'Audit Log', icon: Activity, to: '/audit-log', desc: 'View activity' },
+  ]
+
   return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>Welcome back!</h1>
-      <p style={styles.subheading}>Here is what is happening with your store today.</p>
+    <div className="dashboard">
+      {error && <ErrorAlert message={error} />}
 
-      {error && <div style={styles.errorBox}>{error}</div>}
-
-      <div style={styles.statsGrid}>
-        {statCards.map((card) => (
-          <div key={card.label} style={styles.card}>
-            <div style={styles.iconBox(card.color)}>{card.icon}</div>
-            <div style={styles.cardBody}>
-              <div style={styles.cardValue}>{card.value}</div>
-              <div style={styles.cardLabel}>{card.label}</div>
-            </div>
-          </div>
-        ))}
+      {/* Welcome banner */}
+      <div className="dash-banner">
+        <div className="dash-banner-content">
+          <h1 className="dash-banner-title">Welcome back</h1>
+          <p className="dash-banner-subtitle">Here is an overview of your store performance.</p>
+        </div>
+        <div className="dash-banner-decoration" />
       </div>
 
-      <div style={styles.columnsGrid}>
-        <div>
-          <div style={styles.section}>
-            <h2 style={styles.sectionTitle}>Top Pages (7 days)</h2>
-            {topPages.length === 0 ? (
-              <div style={styles.placeholder}>No page data yet.</div>
-            ) : (
-              <table style={styles.table}>
-                <thead>
-                  <tr>
-                    <th style={styles.th}>Page</th>
-                    <th style={{ ...styles.th, textAlign: 'right' }}>Views</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {topPages.map((p, i) => (
-                    <tr key={i} style={{ backgroundColor: i % 2 === 0 ? '#fff' : '#fafafa' }}>
-                      <td style={{ ...styles.td, fontFamily: 'monospace', fontSize: '0.8rem' }}>{p.path}</td>
-                      <td style={{ ...styles.td, textAlign: 'right', fontWeight: 600 }}>{p.views}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>
+      {/* Stat cards */}
+      <div className="dash-stats">
+        {statCards.map((card) => {
+          const Icon = card.icon
+          return (
+            <div key={card.label} className={`dash-stat-card dash-stat-card--${card.color}`}>
+              <div className="dash-stat-header">
+                <div className={`dash-stat-icon dash-stat-icon--${card.color}`}>
+                  <Icon size={20} strokeWidth={1.75} />
+                </div>
+                {card.trend && (
+                  <span className={`dash-stat-trend dash-stat-trend--up`}>
+                    <ArrowUpRight size={12} /> {card.trend}
+                  </span>
+                )}
+              </div>
+              <div className="dash-stat-value">{card.value.toLocaleString?.() ?? card.value}</div>
+              <div className="dash-stat-label">{card.label}</div>
+            </div>
+          )
+        })}
+      </div>
 
-          <div style={styles.section}>
-            <h2 style={styles.sectionTitle}>Top Products (7 days)</h2>
-            {topProducts.length === 0 ? (
-              <div style={styles.placeholder}>No product data yet.</div>
-            ) : (
-              <table style={styles.table}>
-                <thead>
-                  <tr>
-                    <th style={styles.th}>Product</th>
-                    <th style={{ ...styles.th, textAlign: 'right' }}>Views</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {topProducts.map((p, i) => (
-                    <tr key={i} style={{ backgroundColor: i % 2 === 0 ? '#fff' : '#fafafa' }}>
-                      <td style={{ ...styles.td, fontWeight: 600 }}>{p.name}</td>
-                      <td style={{ ...styles.td, textAlign: 'right', fontWeight: 600 }}>{p.views}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
+      {/* Main grid: 3 columns */}
+      <div className="dash-grid">
+        {/* Top Pages */}
+        <Card className="dash-card">
+          <div className="dash-card-header">
+            <div className="dash-card-header-left">
+              <Globe size={16} strokeWidth={1.75} className="dash-card-header-icon" />
+              <h2 className="dash-card-title">Top Pages</h2>
+            </div>
+            <span className="dash-card-period">Last 7 days</span>
           </div>
-        </div>
+          {topPages.length === 0 ? (
+            <EmptyState icon={FileText} title="No page data yet" description="Tracking data will appear here." />
+          ) : (
+            <div className="dash-list">
+              {topPages.slice(0, 8).map((p, i) => (
+                <div key={i} className="dash-list-item">
+                  <div className="dash-list-rank">{i + 1}</div>
+                  <div className="dash-list-name" title={p.path}>{formatPath(p.path)}</div>
+                  <div className="dash-list-bar-wrap">
+                    <div
+                      className="dash-list-bar"
+                      style={{ width: `${Math.max(8, (p.views / topPages[0].views) * 100)}%` }}
+                    />
+                  </div>
+                  <div className="dash-list-value">{p.views}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </Card>
 
-        <div>
-          <div style={styles.section}>
-            <h2 style={styles.sectionTitle}>Recent Audit Log</h2>
+        {/* Top Products */}
+        <Card className="dash-card">
+          <div className="dash-card-header">
+            <div className="dash-card-header-left">
+              <ShoppingBag size={16} strokeWidth={1.75} className="dash-card-header-icon" />
+              <h2 className="dash-card-title">Top Products</h2>
+            </div>
+            <span className="dash-card-period">Last 7 days</span>
+          </div>
+          {topProducts.length === 0 ? (
+            <EmptyState icon={ShoppingBag} title="No product data" description="Product views will appear here." />
+          ) : (
+            <div className="dash-list">
+              {topProducts.slice(0, 8).map((p, i) => (
+                <div key={i} className="dash-list-item">
+                  <div className="dash-list-rank">{i + 1}</div>
+                  <div className="dash-list-name">{p.name}</div>
+                  <div className="dash-list-bar-wrap">
+                    <div
+                      className="dash-list-bar dash-list-bar--purple"
+                      style={{ width: `${Math.max(8, (p.views / topProducts[0].views) * 100)}%` }}
+                    />
+                  </div>
+                  <div className="dash-list-value">{p.views}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </Card>
+
+        {/* Right column: Audit + Quick Links */}
+        <div className="dash-right-col">
+          {/* Recent Activity */}
+          <Card className="dash-card">
+            <div className="dash-card-header">
+              <div className="dash-card-header-left">
+                <Activity size={16} strokeWidth={1.75} className="dash-card-header-icon" />
+                <h2 className="dash-card-title">Recent Activity</h2>
+              </div>
+              <Link to="/audit-log" className="dash-card-link">
+                View all <ArrowRight size={12} />
+              </Link>
+            </div>
             {auditLog.length === 0 ? (
-              <div style={styles.placeholder}>No audit entries yet.</div>
+              <EmptyState icon={ClipboardList} title="No activity yet" description="Actions will appear here." />
             ) : (
-              <table style={styles.table}>
-                <thead>
-                  <tr>
-                    <th style={styles.th}>Date</th>
-                    <th style={styles.th}>Admin</th>
-                    <th style={styles.th}>Action</th>
-                    <th style={styles.th}>Entity</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {auditLog.map((entry, i) => (
-                    <tr key={i} style={{ backgroundColor: i % 2 === 0 ? '#fff' : '#fafafa' }}>
-                      <td style={{ ...styles.td, fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>{formatDate(entry.createdAt)}</td>
-                      <td style={{ ...styles.td, fontSize: '0.8rem' }}>{entry.adminEmail}</td>
-                      <td style={styles.td}>
-                        <span style={styles.actionBadge(entry.action)}>{entry.action}</span>
-                      </td>
-                      <td style={{ ...styles.td, fontSize: '0.8rem' }}>
-                        {entry.entity}{entry.entityName ? `: ${entry.entityName}` : ''}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="dash-activity">
+                {auditLog.map((entry, i) => (
+                  <div key={i} className="dash-activity-item">
+                    <div className={`dash-activity-dot dash-activity-dot--${actionVariant(entry.action)}`} />
+                    <div className="dash-activity-content">
+                      <div className="dash-activity-text">
+                        <Badge variant={actionVariant(entry.action)}>{entry.action}</Badge>
+                        <span className="dash-activity-entity">
+                          {entry.entity}{entry.entityName ? `: ${entry.entityName}` : ''}
+                        </span>
+                      </div>
+                      <div className="dash-activity-meta">
+                        {entry.adminEmail} &middot; {formatDate(entry.createdAt)}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
-          </div>
+          </Card>
+
+          {/* Quick Links */}
+          <Card className="dash-card">
+            <div className="dash-card-header">
+              <h2 className="dash-card-title">Quick Actions</h2>
+            </div>
+            <div className="dash-quick-links">
+              {quickLinks.map((link) => {
+                const Icon = link.icon
+                return (
+                  <Link key={link.to} to={link.to} className="dash-quick-link">
+                    <div className="dash-quick-link-icon">
+                      <Icon size={18} strokeWidth={1.75} />
+                    </div>
+                    <div>
+                      <div className="dash-quick-link-label">{link.label}</div>
+                      <div className="dash-quick-link-desc">{link.desc}</div>
+                    </div>
+                    <ArrowRight size={14} className="dash-quick-link-arrow" />
+                  </Link>
+                )
+              })}
+            </div>
+          </Card>
         </div>
       </div>
     </div>

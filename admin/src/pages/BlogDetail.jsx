@@ -1,224 +1,17 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { get, post, put, del } from '@/lib/api'
 import ReactQuill from 'react-quill-new'
 import 'react-quill-new/dist/quill.snow.css'
 import Toast from '@/components/Toast'
+import { ArrowLeft, Plus, Trash2, Save, X } from 'lucide-react'
+import { Button, Card, Badge, FormGroup, PageHeader } from '@/components/ui'
 
 const quillStyle = document.createElement('style')
 quillStyle.textContent = '.ql-editor { min-height: 400px; }'
 document.head.appendChild(quillStyle)
 
 const isNew = (id) => id === 'new'
-
-const styles = {
-  container: { maxWidth: '900px', position: 'relative' },
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
-    marginBottom: '1.5rem',
-  },
-  backBtn: {
-    background: 'none',
-    border: '1px solid var(--color-border)',
-    borderRadius: 'var(--radius)',
-    padding: '0.45rem 0.9rem',
-    fontSize: '0.875rem',
-    color: 'var(--color-text-muted)',
-    cursor: 'pointer',
-  },
-  title: {
-    fontSize: '1.25rem',
-    fontWeight: 700,
-    color: 'var(--color-text)',
-  },
-  card: {
-    backgroundColor: 'var(--color-surface)',
-    borderRadius: 'var(--radius)',
-    boxShadow: 'var(--shadow)',
-    border: '1px solid var(--color-border)',
-    padding: '1.75rem',
-    marginBottom: '1.5rem',
-  },
-  sectionTitle: {
-    fontSize: '1rem',
-    fontWeight: 700,
-    color: 'var(--color-text)',
-    marginBottom: '1rem',
-    paddingBottom: '0.5rem',
-    borderBottom: '2px solid var(--color-border)',
-  },
-  formGroup: { marginBottom: '1.25rem' },
-  label: {
-    display: 'block',
-    fontSize: '0.875rem',
-    fontWeight: 600,
-    color: 'var(--color-text)',
-    marginBottom: '0.4rem',
-  },
-  input: {
-    width: '100%',
-    padding: '0.6rem 0.85rem',
-    border: '1px solid var(--color-border)',
-    borderRadius: '6px',
-    fontSize: '0.9rem',
-    color: 'var(--color-text)',
-    backgroundColor: '#fff',
-    outline: 'none',
-    transition: 'border-color 0.15s',
-  },
-  textarea: {
-    width: '100%',
-    padding: '0.6rem 0.85rem',
-    border: '1px solid var(--color-border)',
-    borderRadius: '6px',
-    fontSize: '0.9rem',
-    color: 'var(--color-text)',
-    backgroundColor: '#fff',
-    outline: 'none',
-    resize: 'vertical',
-    transition: 'border-color 0.15s',
-  },
-  helpText: {
-    fontSize: '0.75rem',
-    color: 'var(--color-text-muted)',
-    marginTop: '0.25rem',
-  },
-  checkbox: { width: '18px', height: '18px', cursor: 'pointer' },
-  checkboxLabel: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-  },
-  coverPreview: {
-    maxWidth: '300px',
-    maxHeight: '200px',
-    objectFit: 'cover',
-    borderRadius: '6px',
-    border: '1px solid var(--color-border)',
-    marginTop: '0.5rem',
-  },
-  tagList: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '0.4rem',
-    marginTop: '0.5rem',
-  },
-  tag: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '0.3rem',
-    padding: '0.25rem 0.6rem',
-    backgroundColor: '#e0e7ff',
-    color: '#3730a3',
-    borderRadius: '999px',
-    fontSize: '0.8rem',
-    fontWeight: 600,
-  },
-  tagRemove: {
-    background: 'none',
-    border: 'none',
-    color: '#3730a3',
-    cursor: 'pointer',
-    fontSize: '1rem',
-    lineHeight: 1,
-    padding: 0,
-  },
-  commentItem: {
-    padding: '0.75rem',
-    backgroundColor: '#f8fafc',
-    borderRadius: '6px',
-    marginBottom: '0.5rem',
-    border: '1px solid var(--color-border)',
-  },
-  commentHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '0.3rem',
-  },
-  commentName: {
-    fontSize: '0.85rem',
-    fontWeight: 600,
-    color: 'var(--color-text)',
-  },
-  commentDate: {
-    fontSize: '0.75rem',
-    color: 'var(--color-text-muted)',
-  },
-  commentContent: {
-    fontSize: '0.85rem',
-    color: 'var(--color-text)',
-  },
-  deleteCommentBtn: {
-    background: 'none',
-    border: 'none',
-    color: 'var(--color-danger)',
-    cursor: 'pointer',
-    fontSize: '0.8rem',
-    fontWeight: 600,
-  },
-  footer: {
-    display: 'flex',
-    gap: '0.75rem',
-    justifyContent: 'space-between',
-    marginTop: '1.5rem',
-    paddingTop: '1.25rem',
-    borderTop: '1px solid var(--color-border)',
-  },
-  footerLeft: { display: 'flex', gap: '0.75rem' },
-  saveBtn: {
-    backgroundColor: 'var(--color-primary)',
-    color: '#fff',
-    border: 'none',
-    padding: '0.65rem 1.5rem',
-    borderRadius: 'var(--radius)',
-    fontWeight: 600,
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-  },
-  cancelBtn: {
-    backgroundColor: 'transparent',
-    color: 'var(--color-text-muted)',
-    border: '1px solid var(--color-border)',
-    padding: '0.65rem 1.5rem',
-    borderRadius: 'var(--radius)',
-    fontWeight: 600,
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-  },
-  deleteBtn: {
-    backgroundColor: 'var(--color-danger)',
-    color: '#fff',
-    border: 'none',
-    padding: '0.65rem 1.5rem',
-    borderRadius: 'var(--radius)',
-    fontWeight: 600,
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-  },
-  errorBox: {
-    padding: '0.75rem 1rem',
-    backgroundColor: '#fef2f2',
-    border: '1px solid #fecaca',
-    borderRadius: 'var(--radius)',
-    color: 'var(--color-danger)',
-    marginBottom: '1rem',
-    fontSize: '0.875rem',
-  },
-  successBox: {
-    padding: '0.75rem 1rem',
-    backgroundColor: '#f0fdf4',
-    border: '1px solid #bbf7d0',
-    borderRadius: 'var(--radius)',
-    color: '#166534',
-    marginBottom: '1rem',
-    fontSize: '0.875rem',
-  },
-}
 
 const quillModules = {
   toolbar: [
@@ -373,21 +166,17 @@ export default function BlogDetail() {
     }
   }
 
-  const focusStyle = (e) => (e.target.style.borderColor = 'var(--color-primary)')
-  const blurStyle = (e) => (e.target.style.borderColor = 'var(--color-border)')
-
   if (loading) {
     return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>Loading blog post...</div>
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <button style={styles.backBtn} onClick={() => navigate('/blogs')}>
-          ← Back
-        </button>
-        <h1 style={styles.title}>{isNew(id) ? 'New Blog Post' : 'Edit Blog Post'}</h1>
-      </div>
+    <div style={{ maxWidth: '900px', position: 'relative' }}>
+      <PageHeader title={isNew(id) ? 'New Blog Post' : 'Edit Blog Post'}>
+        <Button variant="ghost" icon={ArrowLeft} onClick={() => navigate('/blogs')}>
+          Back
+        </Button>
+      </PageHeader>
 
       {toast && (
         <Toast
@@ -413,42 +202,37 @@ export default function BlogDetail() {
         boxShadow: '0 -2px 8px rgba(0,0,0,0.06)',
       }}>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <button
+          <Button
+            variant="primary"
+            icon={Save}
             type="button"
             onClick={() => document.getElementById('blog-form').requestSubmit()}
             disabled={saving}
-            style={{ ...styles.saveBtn, opacity: saving ? 0.7 : 1 }}
+            style={{ opacity: saving ? 0.7 : 1 }}
           >
             {saving ? 'Saving...' : isNew(id) ? 'Create Post' : 'Save Changes'}
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="secondary"
             type="button"
-            style={styles.cancelBtn}
             onClick={() => navigate('/blogs')}
           >
             Cancel
-          </button>
+          </Button>
         </div>
         {!isNew(id) && (
-          <button
-            type="button"
-            style={styles.deleteBtn}
-            onClick={handleDelete}
-          >
+          <Button variant="danger" icon={Trash2} type="button" onClick={handleDelete}>
             Delete
-          </button>
+          </Button>
         )}
       </div>
 
       <form id="blog-form" onSubmit={handleSubmit} style={{ paddingBottom: '5rem' }}>
         {/* Basic Information */}
-        <div style={styles.card}>
-          <div style={styles.sectionTitle}>Basic Information</div>
+        <Card>
+          <h3 className="card-section-title">Basic Information</h3>
 
-          <div style={styles.formGroup}>
-            <label style={styles.label} htmlFor="title">
-              Title <span style={{ color: 'var(--color-danger)' }}>*</span>
-            </label>
+          <FormGroup label={<>Title <span style={{ color: 'var(--color-danger)' }}>*</span></>} htmlFor="title">
             <input
               id="title"
               name="title"
@@ -456,65 +240,55 @@ export default function BlogDetail() {
               required
               value={form.title}
               onChange={handleChange}
-              style={styles.input}
-              placeholder="e.g. Hướng dẫn chọn xi măng phù hợp"
-              onFocus={focusStyle}
-              onBlur={blurStyle}
+              className="form-input"
+              placeholder="e.g. Huong dan chon xi mang phu hop"
             />
-          </div>
+          </FormGroup>
 
-          <div style={styles.formGroup}>
-            <label style={styles.label} htmlFor="excerpt">Excerpt</label>
+          <FormGroup label="Excerpt" htmlFor="excerpt">
             <textarea
               id="excerpt"
               name="excerpt"
               value={form.excerpt}
               onChange={handleChange}
-              style={{ ...styles.textarea, minHeight: '60px' }}
+              className="form-textarea"
+              style={{ minHeight: '60px' }}
               placeholder="Short summary shown on blog listing..."
-              onFocus={focusStyle}
-              onBlur={blurStyle}
             />
-          </div>
+          </FormGroup>
 
-          <div style={styles.formGroup}>
-            <label style={styles.checkboxLabel}>
+          <div className="form-group">
+            <label className="checkbox-label">
               <input
                 type="checkbox"
                 name="isPublished"
                 checked={form.isPublished}
                 onChange={handleChange}
-                style={styles.checkbox}
+                className="checkbox-input"
               />
               <span>Published</span>
             </label>
           </div>
-        </div>
+        </Card>
 
         {/* Cover Image */}
-        <div style={styles.card}>
-          <div style={styles.sectionTitle}>Cover Image</div>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Upload or paste URL</label>
+        <Card>
+          <h3 className="card-section-title">Cover Image</h3>
+          <FormGroup label="Upload or paste URL">
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
               <input
                 name="coverImage"
                 type="text"
                 value={form.coverImage}
                 onChange={handleChange}
-                style={{ ...styles.input, flex: 1 }}
+                className="form-input"
+                style={{ flex: 1 }}
                 placeholder="https://res.cloudinary.com/..."
-                onFocus={focusStyle}
-                onBlur={blurStyle}
               />
-              <label style={{
-                ...styles.saveBtn,
-                padding: '0.6rem 1rem',
-                fontSize: '0.85rem',
+              <label className="btn btn-primary" style={{
                 whiteSpace: 'nowrap',
                 cursor: uploading ? 'not-allowed' : 'pointer',
                 opacity: uploading ? 0.7 : 1,
-                display: 'inline-block',
               }}>
                 {uploading ? 'Uploading...' : 'Upload'}
                 <input
@@ -530,18 +304,24 @@ export default function BlogDetail() {
               <img
                 src={form.coverImage}
                 alt="Cover preview"
-                style={styles.coverPreview}
+                style={{
+                  maxWidth: '300px',
+                  maxHeight: '200px',
+                  objectFit: 'cover',
+                  borderRadius: '6px',
+                  border: '1px solid var(--color-border)',
+                  marginTop: '0.5rem',
+                }}
                 onError={(e) => (e.target.style.display = 'none')}
               />
             )}
-          </div>
-        </div>
+          </FormGroup>
+        </Card>
 
         {/* Content */}
-        <div style={styles.card}>
-          <div style={styles.sectionTitle}>Content</div>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Content</label>
+        <Card>
+          <h3 className="card-section-title">Content</h3>
+          <FormGroup label="Content">
             <div style={{ backgroundColor: '#fff', borderRadius: '6px' }}>
               <ReactQuill
                 theme="snow"
@@ -553,75 +333,68 @@ export default function BlogDetail() {
                 placeholder="Write your blog content here..."
               />
             </div>
-          </div>
-        </div>
+          </FormGroup>
+        </Card>
 
         {/* Tags */}
-        <div style={styles.card}>
-          <div style={styles.sectionTitle}>Tags</div>
-          <div style={styles.formGroup}>
+        <Card>
+          <h3 className="card-section-title">Tags</h3>
+          <div className="form-group">
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <input
                 type="text"
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={handleTagKeyDown}
-                style={{ ...styles.input, flex: 1 }}
+                className="form-input"
+                style={{ flex: 1 }}
                 placeholder="Type a tag and press Enter"
-                onFocus={focusStyle}
-                onBlur={blurStyle}
               />
-              <button
-                type="button"
-                onClick={addTag}
-                style={{
-                  ...styles.saveBtn,
-                  padding: '0.6rem 1rem',
-                  fontSize: '0.85rem',
-                  whiteSpace: 'nowrap',
-                }}
-              >
+              <Button variant="primary" size="sm" icon={Plus} type="button" onClick={addTag}>
                 Add
-              </button>
+              </Button>
             </div>
-            <div style={styles.tagList}>
+            <div className="tag-list">
               {form.tags.map((tag) => (
-                <span key={tag} style={styles.tag}>
+                <Badge key={tag} variant="accent">
                   {tag}
-                  <button type="button" style={styles.tagRemove} onClick={() => removeTag(tag)}>
-                    ×
+                  <button type="button" className="tag-remove-btn" onClick={() => removeTag(tag)}>
+                    <X size={12} />
                   </button>
-                </span>
+                </Badge>
               ))}
             </div>
           </div>
-        </div>
+        </Card>
 
         {/* Comments (edit mode only) */}
         {!isNew(id) && comments.length > 0 && (
-          <div style={styles.card}>
-            <div style={styles.sectionTitle}>Comments ({comments.length})</div>
+          <Card>
+            <h3 className="card-section-title">Comments ({comments.length})</h3>
             {comments.map((comment) => (
-              <div key={comment._id} style={styles.commentItem}>
-                <div style={styles.commentHeader}>
+              <div key={comment._id} className="comment-item">
+                <div className="comment-header">
                   <div>
-                    <span style={styles.commentName}>{comment.name}</span>
-                    <span style={styles.commentDate}>
-                      {' '}— {new Date(comment.createdAt).toLocaleDateString('vi-VN')}
+                    <span className="comment-name">{comment.name}</span>
+                    <span className="comment-date">
+                      {' '} &mdash; {new Date(comment.createdAt).toLocaleDateString('vi-VN')}
                     </span>
                   </div>
-                  <button
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    icon={Trash2}
                     type="button"
-                    style={styles.deleteCommentBtn}
                     onClick={() => handleDeleteComment(comment._id)}
+                    className="comment-delete-btn"
                   >
                     Delete
-                  </button>
+                  </Button>
                 </div>
-                <div style={styles.commentContent}>{comment.content}</div>
+                <div className="comment-content">{comment.content}</div>
               </div>
             ))}
-          </div>
+          </Card>
         )}
 
       </form>

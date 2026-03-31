@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { get, post, put, del } from '@/lib/api'
+import { ArrowLeft, Plus, Trash2, Save } from 'lucide-react'
+import { Button, Card, FormGroup, ErrorAlert, PageHeader } from '@/components/ui'
 
 const isNew = (id) => id === 'new'
 
@@ -12,204 +14,6 @@ const generateSlug = (name) => {
     .replace(/đ/g, 'd')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
-}
-
-const styles = {
-  container: {
-    maxWidth: '900px',
-  },
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
-    marginBottom: '1.5rem',
-  },
-  backBtn: {
-    background: 'none',
-    border: '1px solid var(--color-border)',
-    borderRadius: 'var(--radius)',
-    padding: '0.45rem 0.9rem',
-    fontSize: '0.875rem',
-    color: 'var(--color-text-muted)',
-    cursor: 'pointer',
-    transition: 'border-color 0.15s, color 0.15s',
-  },
-  title: {
-    fontSize: '1.25rem',
-    fontWeight: 700,
-    color: 'var(--color-text)',
-  },
-  card: {
-    backgroundColor: 'var(--color-surface)',
-    borderRadius: 'var(--radius)',
-    boxShadow: 'var(--shadow)',
-    border: '1px solid var(--color-border)',
-    padding: '1.75rem',
-    marginBottom: '1.5rem',
-  },
-  sectionTitle: {
-    fontSize: '1rem',
-    fontWeight: 700,
-    color: 'var(--color-text)',
-    marginBottom: '1rem',
-    paddingBottom: '0.5rem',
-    borderBottom: '2px solid var(--color-border)',
-  },
-  formGroup: {
-    marginBottom: '1.25rem',
-  },
-  label: {
-    display: 'block',
-    fontSize: '0.875rem',
-    fontWeight: 600,
-    color: 'var(--color-text)',
-    marginBottom: '0.4rem',
-  },
-  input: {
-    width: '100%',
-    padding: '0.6rem 0.85rem',
-    border: '1px solid var(--color-border)',
-    borderRadius: '6px',
-    fontSize: '0.9rem',
-    color: 'var(--color-text)',
-    backgroundColor: '#fff',
-    outline: 'none',
-    transition: 'border-color 0.15s, box-shadow 0.15s',
-  },
-  textarea: {
-    width: '100%',
-    padding: '0.6rem 0.85rem',
-    border: '1px solid var(--color-border)',
-    borderRadius: '6px',
-    fontSize: '0.9rem',
-    color: 'var(--color-text)',
-    backgroundColor: '#fff',
-    outline: 'none',
-    minHeight: '100px',
-    resize: 'vertical',
-    transition: 'border-color 0.15s, box-shadow 0.15s',
-  },
-  helpText: {
-    fontSize: '0.75rem',
-    color: 'var(--color-text-muted)',
-    marginTop: '0.25rem',
-  },
-  itemRow: {
-    display: 'flex',
-    gap: '0.75rem',
-    marginBottom: '0.75rem',
-    alignItems: 'flex-start',
-  },
-  addBtn: {
-    backgroundColor: '#f8fafc',
-    color: 'var(--color-text)',
-    border: '1px solid var(--color-border)',
-    padding: '0.6rem 1rem',
-    borderRadius: 'var(--radius)',
-    cursor: 'pointer',
-    fontSize: '0.85rem',
-    fontWeight: 600,
-    width: '100%',
-    marginTop: '0.5rem',
-  },
-  removeBtn: {
-    backgroundColor: 'var(--color-danger)',
-    color: '#fff',
-    border: 'none',
-    padding: '0.6rem 0.8rem',
-    borderRadius: 'var(--radius)',
-    cursor: 'pointer',
-    fontSize: '0.85rem',
-    whiteSpace: 'nowrap',
-  },
-  colorPreview: {
-    width: '40px',
-    height: '40px',
-    borderRadius: '6px',
-    border: '2px solid var(--color-border)',
-  },
-  imagePreview: {
-    width: '100px',
-    height: '100px',
-    objectFit: 'cover',
-    borderRadius: '6px',
-    border: '1px solid var(--color-border)',
-  },
-  checkbox: {
-    width: '18px',
-    height: '18px',
-    cursor: 'pointer',
-  },
-  checkboxLabel: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-  },
-  footer: {
-    display: 'flex',
-    gap: '0.75rem',
-    justifyContent: 'space-between',
-    marginTop: '1.5rem',
-    paddingTop: '1.25rem',
-    borderTop: '1px solid var(--color-border)',
-  },
-  footerLeft: {
-    display: 'flex',
-    gap: '0.75rem',
-  },
-  saveBtn: {
-    backgroundColor: 'var(--color-primary)',
-    color: '#fff',
-    border: 'none',
-    padding: '0.65rem 1.5rem',
-    borderRadius: 'var(--radius)',
-    fontWeight: 600,
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-    transition: 'background-color 0.15s',
-  },
-  cancelBtn: {
-    backgroundColor: 'transparent',
-    color: 'var(--color-text-muted)',
-    border: '1px solid var(--color-border)',
-    padding: '0.65rem 1.5rem',
-    borderRadius: 'var(--radius)',
-    fontWeight: 600,
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-    transition: 'border-color 0.15s',
-  },
-  deleteBtn: {
-    backgroundColor: 'var(--color-danger)',
-    color: '#fff',
-    border: 'none',
-    padding: '0.65rem 1.5rem',
-    borderRadius: 'var(--radius)',
-    fontWeight: 600,
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-    transition: 'background-color 0.15s',
-  },
-  errorBox: {
-    padding: '0.75rem 1rem',
-    backgroundColor: '#fef2f2',
-    border: '1px solid #fecaca',
-    borderRadius: 'var(--radius)',
-    color: 'var(--color-danger)',
-    marginBottom: '1rem',
-    fontSize: '0.875rem',
-  },
-  successBox: {
-    padding: '0.75rem 1rem',
-    backgroundColor: '#f0fdf4',
-    border: '1px solid #bbf7d0',
-    borderRadius: 'var(--radius)',
-    color: '#166534',
-    marginBottom: '1rem',
-    fontSize: '0.875rem',
-  },
 }
 
 const EMPTY_FORM = {
@@ -387,26 +191,22 @@ export default function ProductDetail() {
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <button style={styles.backBtn} onClick={() => navigate('/products')}>
-          ← Back
-        </button>
-        <h1 style={styles.title}>{isNew(id) ? 'Add New Product' : 'Edit Product'}</h1>
-      </div>
+    <div style={{ maxWidth: '900px' }}>
+      <PageHeader title={isNew(id) ? 'Add New Product' : 'Edit Product'}>
+        <Button variant="ghost" icon={ArrowLeft} onClick={() => navigate('/products')}>
+          Back
+        </Button>
+      </PageHeader>
 
-      {error && <div style={styles.errorBox}>{error}</div>}
-      {success && <div style={styles.successBox}>{success}</div>}
+      <ErrorAlert message={error} onDismiss={() => setError(null)} />
+      {success && <div className="success-alert">{success}</div>}
 
       <form onSubmit={handleSubmit}>
         {/* Basic Information */}
-        <div style={styles.card}>
-          <div style={styles.sectionTitle}>Basic Information</div>
+        <Card>
+          <h3 className="card-section-title">Basic Information</h3>
 
-          <div style={styles.formGroup}>
-            <label style={styles.label} htmlFor="name">
-              Product Name <span style={{ color: 'var(--color-danger)' }}>*</span>
-            </label>
+          <FormGroup label={<>Product Name <span style={{ color: 'var(--color-danger)' }}>*</span></>} htmlFor="name">
             <input
               id="name"
               name="name"
@@ -414,17 +214,12 @@ export default function ProductDetail() {
               required
               value={form.name}
               onChange={handleChange}
-              style={styles.input}
-              placeholder="e.g. Tấm ốp cầu thang"
-              onFocus={(e) => (e.target.style.borderColor = 'var(--color-primary)')}
-              onBlur={(e) => (e.target.style.borderColor = 'var(--color-border)')}
+              className="form-input"
+              placeholder="e.g. Tam op cau thang"
             />
-          </div>
+          </FormGroup>
 
-          <div style={styles.formGroup}>
-            <label style={styles.label} htmlFor="slug">
-              Slug <span style={{ color: 'var(--color-danger)' }}>*</span>
-            </label>
+          <FormGroup label={<>Slug <span style={{ color: 'var(--color-danger)' }}>*</span></>} htmlFor="slug" help="Auto-generated from name. Must be unique.">
             <input
               id="slug"
               name="slug"
@@ -432,100 +227,99 @@ export default function ProductDetail() {
               required
               value={form.slug}
               onChange={handleChange}
-              style={styles.input}
+              className="form-input"
               placeholder="tam-op-cau-thang"
-              onFocus={(e) => (e.target.style.borderColor = 'var(--color-primary)')}
-              onBlur={(e) => (e.target.style.borderColor = 'var(--color-border)')}
             />
-            <div style={styles.helpText}>Auto-generated from name. Must be unique.</div>
-          </div>
+          </FormGroup>
 
-          <div style={styles.formGroup}>
-            <label style={styles.label} htmlFor="description">
-              Description
-            </label>
+          <FormGroup label="Description" htmlFor="description">
             <textarea
               id="description"
               name="description"
               value={form.description}
               onChange={handleChange}
-              style={styles.textarea}
+              className="form-textarea"
               placeholder="Product description..."
-              onFocus={(e) => (e.target.style.borderColor = 'var(--color-primary)')}
-              onBlur={(e) => (e.target.style.borderColor = 'var(--color-border)')}
             />
-          </div>
+          </FormGroup>
 
-          <div style={styles.formGroup}>
-            <label style={styles.checkboxLabel}>
+          <div className="form-group">
+            <label className="checkbox-label">
               <input
                 type="checkbox"
                 name="isPublished"
                 checked={form.isPublished}
                 onChange={handleChange}
-                style={styles.checkbox}
+                className="checkbox-input"
               />
               <span>Published</span>
             </label>
           </div>
-        </div>
+        </Card>
 
         {/* Variants */}
-        <div style={styles.card}>
-          <div style={styles.sectionTitle}>Variants</div>
+        <Card>
+          <h3 className="card-section-title">Variants</h3>
 
           {form.variants.map((variant, idx) => (
-            <div key={idx} style={styles.itemRow}>
+            <div key={idx} className="item-row">
               <input
                 type="text"
                 value={variant.name}
                 onChange={(e) => updateVariant(idx, 'name', e.target.value)}
                 placeholder="Variant name"
-                style={{ ...styles.input, flex: 2 }}
+                className="form-input"
+                style={{ flex: 2 }}
               />
               <input
                 type="text"
                 value={variant.sku}
                 onChange={(e) => updateVariant(idx, 'sku', e.target.value)}
                 placeholder="SKU"
-                style={{ ...styles.input, flex: 1 }}
+                className="form-input"
+                style={{ flex: 1 }}
               />
               <input
                 type="number"
                 value={variant.price}
                 onChange={(e) => updateVariant(idx, 'price', parseFloat(e.target.value) || 0)}
                 placeholder="Price"
-                style={{ ...styles.input, flex: 1 }}
+                className="form-input"
+                style={{ flex: 1 }}
                 min="0"
               />
-              <button
-                type="button"
-                style={styles.removeBtn}
-                onClick={() => removeVariant(idx)}
-              >
+              <Button variant="danger" size="sm" icon={Trash2} type="button" onClick={() => removeVariant(idx)}>
                 Remove
-              </button>
+              </Button>
             </div>
           ))}
 
-          <button type="button" style={styles.addBtn} onClick={addVariant}>
-            + Add Variant
-          </button>
-        </div>
+          <Button variant="secondary" icon={Plus} type="button" onClick={addVariant} className="btn-full-width">
+            Add Variant
+          </Button>
+        </Card>
 
         {/* Colors */}
-        <div style={styles.card}>
-          <div style={styles.sectionTitle}>Colors</div>
+        <Card>
+          <h3 className="card-section-title">Colors</h3>
 
           {form.colors.map((color, idx) => (
-            <div key={idx} style={styles.itemRow}>
-              <div style={{ ...styles.colorPreview, backgroundColor: color.hex }}></div>
+            <div key={idx} className="item-row">
+              <div style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '6px',
+                border: '2px solid var(--color-border)',
+                backgroundColor: color.hex,
+                flexShrink: 0,
+              }} />
               <input
                 type="text"
                 value={color.name}
                 onChange={(e) => updateColor(idx, 'name', e.target.value)}
                 placeholder="Color name"
-                style={{ ...styles.input, flex: 1 }}
+                className="form-input"
+                style={{ flex: 1 }}
               />
               <input
                 type="color"
@@ -538,34 +332,38 @@ export default function ProductDetail() {
                 value={color.image}
                 onChange={(e) => updateColor(idx, 'image', e.target.value)}
                 placeholder="Image URL (optional)"
-                style={{ ...styles.input, flex: 2 }}
+                className="form-input"
+                style={{ flex: 2 }}
               />
-              <button
-                type="button"
-                style={styles.removeBtn}
-                onClick={() => removeColor(idx)}
-              >
+              <Button variant="danger" size="sm" icon={Trash2} type="button" onClick={() => removeColor(idx)}>
                 Remove
-              </button>
+              </Button>
             </div>
           ))}
 
-          <button type="button" style={styles.addBtn} onClick={addColor}>
-            + Add Color
-          </button>
-        </div>
+          <Button variant="secondary" icon={Plus} type="button" onClick={addColor} className="btn-full-width">
+            Add Color
+          </Button>
+        </Card>
 
         {/* Images */}
-        <div style={styles.card}>
-          <div style={styles.sectionTitle}>Product Images</div>
+        <Card>
+          <h3 className="card-section-title">Product Images</h3>
 
           {form.images.map((image, idx) => (
-            <div key={idx} style={styles.itemRow}>
+            <div key={idx} className="item-row">
               {image && (
                 <img
                   src={image}
                   alt={`Product ${idx + 1}`}
-                  style={styles.imagePreview}
+                  style={{
+                    width: '100px',
+                    height: '100px',
+                    objectFit: 'cover',
+                    borderRadius: '6px',
+                    border: '1px solid var(--color-border)',
+                    flexShrink: 0,
+                  }}
                   onError={(e) => (e.target.style.display = 'none')}
                 />
               )}
@@ -574,49 +372,51 @@ export default function ProductDetail() {
                 value={image}
                 onChange={(e) => updateImage(idx, e.target.value)}
                 placeholder="Image URL"
-                style={{ ...styles.input, flex: 1 }}
+                className="form-input"
+                style={{ flex: 1 }}
               />
-              <button
-                type="button"
-                style={styles.removeBtn}
-                onClick={() => removeImage(idx)}
-              >
+              <Button variant="danger" size="sm" icon={Trash2} type="button" onClick={() => removeImage(idx)}>
                 Remove
-              </button>
+              </Button>
             </div>
           ))}
 
-          <button type="button" style={styles.addBtn} onClick={addImage}>
-            + Add Image
-          </button>
-        </div>
+          <Button variant="secondary" icon={Plus} type="button" onClick={addImage} className="btn-full-width">
+            Add Image
+          </Button>
+        </Card>
 
         {/* Footer Actions */}
-        <div style={styles.footer}>
-          <div style={styles.footerLeft}>
-            <button
+        <div style={{
+          display: 'flex',
+          gap: '0.75rem',
+          justifyContent: 'space-between',
+          marginTop: '1.5rem',
+          paddingTop: '1.25rem',
+          borderTop: '1px solid var(--color-border)',
+        }}>
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <Button
+              variant="primary"
+              icon={Save}
               type="submit"
               disabled={saving}
-              style={{ ...styles.saveBtn, opacity: saving ? 0.7 : 1 }}
+              style={{ opacity: saving ? 0.7 : 1 }}
             >
               {saving ? 'Saving...' : isNew(id) ? 'Create Product' : 'Save Changes'}
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="secondary"
               type="button"
-              style={styles.cancelBtn}
               onClick={() => navigate('/products')}
             >
               Cancel
-            </button>
+            </Button>
           </div>
           {!isNew(id) && (
-            <button
-              type="button"
-              style={styles.deleteBtn}
-              onClick={handleDelete}
-            >
+            <Button variant="danger" icon={Trash2} type="button" onClick={handleDelete}>
               Delete Product
-            </button>
+            </Button>
           )}
         </div>
       </form>
