@@ -128,6 +128,106 @@ DB (Page + Block models)
 2. Add mapping entry to `config/blockJsonMapping.ts`
 3. Add the section component to frontend registry (see Frontend Skill)
 
+### Blog (`/api/blog/`)
+
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | `/api/blog` | public | List published posts (paginated, filterable by tag) |
+| GET | `/api/blog/:id` | public | Get single post (increments viewCount fire-and-forget) |
+| POST | `/api/blog` | `requireAuth` | Create blog post |
+| PUT | `/api/blog/:id` | `requireAuth` | Update blog post |
+| DELETE | `/api/blog/:id` | `requireAuth` | Delete blog post |
+| POST | `/api/blog/:id/comments` | `optionalAuth` | Add comment (auth optional — anonymous uses name field) |
+| DELETE | `/api/blog/:id/comments/:commentId` | `requireAuth` | Delete comment |
+| POST | `/api/blog/:id/like` | public | Toggle like (uses sessionId) |
+| GET | `/api/blog/events` | public | SSE stream for real-time blog updates |
+
+### Menus (`/api/menus/`)
+
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | `/api/menus` | public | List all menus |
+| GET | `/api/menus/:id` | public | Get single menu |
+| POST | `/api/menus` | `requireAuth` | Create menu (auto-generates handle from name) |
+| PUT | `/api/menus/:id` | `requireAuth` | Update menu |
+| DELETE | `/api/menus/:id` | `requireAuth` | Delete menu |
+
+### Products (`/api/products/`)
+
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | `/api/products` | public | List products (paginated) |
+| GET | `/api/products/:id` | public | Get single product |
+| POST | `/api/products` | `requireAuth` | Create product |
+| PUT | `/api/products/:id` | `requireAuth` | Update product |
+| DELETE | `/api/products/:id` | `requireAuth` | Delete product |
+
+## Blog System
+
+### EventEmitter + SSE Pattern
+
+`events/blogEvents.ts` provides real-time blog updates using Node.js EventEmitter and Server-Sent Events:
+
+```typescript
+// blogEvents.ts — simple pub/sub
+const blogEvents = new EventEmitter();
+blogEvents.setMaxListeners(0); // unlimited SSE connections
+
+// Controller: emit on any blog mutation
+blogEvents.emit('blog-updated');
+
+// SSE endpoint: stream to connected clients
+blogEvents.on('blog-updated', () => {
+  res.write(`data: ${JSON.stringify({ type: 'blog-updated' })}\n\n`);
+});
+// Heartbeat every 30s to keep connection alive
+// Cleanup on request 'close' event
+```
+
+### ETag Caching
+
+Blog list endpoint generates MD5-based ETags and returns `304 Not Modified` when content hasn't changed. Reduces data transfer for polling clients.
+
+## Email Service
+
+`services/emailService.ts` handles transactional emails (password reset, email verification). Uses fire-and-forget pattern — email failures don't block the auth response.
+
+## Zod Validation
+
+`validators/index.ts` defines Zod schemas for input validation. Applied at the route level via `validate()` middleware:
+
+```typescript
+// routes/blogRoutes.ts
+router.post('/', requireAuth, validate(blogCreateSchema), blogController.create);
+```
+
+The `validate()` middleware (`middleware/validate.ts`) parses `req.body` with `schema.safeParse()`, returns 400 with field-level errors on failure, and replaces `req.body` with the parsed (cleaned) data on success.
+
+## Docker Deployment
+
+### Dockerfiles
+- `backend/Dockerfile` — multi-stage: build TypeScript → run with `node dist/index.js`
+- `frontend/Dockerfile` — multi-stage: `next build` → `next start`
+
+### Compose Files
+- `docker-compose.yml` — local development with MongoDB
+- `docker-compose.prod.yml` — production with Nginx reverse proxy, SSL termination
+
+### Nginx
+- `nginx/nginx.conf` — main config
+- `nginx/conf.d/default.conf` — HTTPS with SSL certificates
+- `nginx/conf.d/default-http-only.conf` — HTTP-only fallback for initial SSL setup
+
+### Deploy Scripts
+- `deploy.sh` — build and push to Docker Hub
+- `vps-deploy.sh` — pull and restart on VPS
+- `vps-init-ssl.sh` — initial SSL certificate setup with Let's Encrypt
+
+### Environment Files
+- `.env.local.example` — local development
+- `.env.prod.example` — production
+- `.env.docker` — Docker-specific overrides
+
 ## Dependencies
 
 | Package | Purpose |
@@ -139,6 +239,10 @@ DB (Page + Block models)
 | cloudinary | Image upload (Cloudinary SDK) |
 | multer | Multipart form parsing for image uploads |
 | node-cron | Scheduled daily JSON sync |
+| zod | Input validation schemas |
+| google-auth-library | Google OAuth ID token verification |
+| bcryptjs | Password hashing |
+| jsonwebtoken | JWT token generation and verification |
 
 ## Model Patterns
 

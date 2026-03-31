@@ -9,29 +9,43 @@ The admin panel is a Vite + React 18 SPA written in **JavaScript (JSX)**, using 
 ```
 admin/
   src/
-    App.jsx             # Root: React Router routes
+    App.jsx             # Root: React Router routes + ProtectedRoute guard
     main.jsx            # Vite entry point
     pages/
-      Dashboard.jsx     # Overview stats
+      Login.jsx         # Admin login (JWT auth)
+      Dashboard.jsx     # Real analytics: page views, product views, trends, top pages
       Products.jsx      # Products table with edit links
       ProductDetail.jsx # Single product edit form
+      Blogs.jsx         # Blog posts list
+      BlogDetail.jsx    # Rich text blog editor (React Quill, cover image, tags, comments)
+      MenuManager.jsx   # Menu CRUD with nested items and reordering
+      BlockLibrary.jsx  # Visual block type library
+      BlockPreview.jsx  # Block preview sandbox
+      AuditLog.jsx      # Admin activity log with entity/action filters
       ThemeEditor.jsx   # Shopify-like theme editor (main page)
     components/
       theme-editor/
         ThemeEditorSidebar.jsx    # Block list, add/delete/reorder, copy from page
         BlockEditorPanel.jsx      # Form for editing a single block's fields
+        BlockList.jsx             # Sortable block list component
+        BlockListItem.jsx         # Individual block item with controls
         PageSettingsPanel.jsx     # Page-level settings (title, fonts)
         ThemePreview.jsx          # Iframe embedding the frontend [slug] page
         CopyBlockModal.jsx        # Modal: select source page → copy a block
         fields/
           FieldRenderer.jsx       # Renders the correct input for each field type
           ImageField.jsx          # Image upload via POST /api/upload/image
+          MenuSelectField.jsx     # Dropdown fetching from /api/menus
+      BlockRenderer.jsx   # Generic block rendering component
+      Toast.jsx           # Temporary notification component (auto-dismiss 3s)
+    context/
+      AuthContext.jsx     # Admin JWT auth state + ProtectedRoute
     layout/
       AdminLayout.jsx   # Sidebar + content wrapper
     hooks/
       useFetch.js       # Generic data fetching hook
     lib/
-      api.js            # Axios/fetch client pointing to :5000
+      api.js            # Centralized fetch wrapper with auth header injection + 401 redirect
       buildPreviewConfig.js  # Client-side DB→JSON transform (mirrors backend generatePageJson)
 ```
 
@@ -136,6 +150,64 @@ CSS in `layout.css` reads `var(--sidebar-width)` for both the aside width and th
 
 Child pages read it with `useLayout()` from `@/context/LayoutContext`.
 
+## Dashboard (Real Analytics)
+
+`Dashboard.jsx` fetches real analytics data from the backend aggregation API:
+- Stats grid: total page views, product views, unique visitors, blog views
+- Top pages, top products, top colors tables
+- Trend chart (views per day)
+- Uses `Promise.all()` for parallel fetching of all analytics endpoints
+- Defensive parsing: `response.data || response` handles both wrapper formats
+
+## Audit Log Page
+
+`AuditLog.jsx` displays admin activity with:
+- Filter dropdowns: entity type (product, blog, material, etc.) and action (create, update, delete)
+- Pagination (20 items per page, controlled via query params)
+- Color-coded action badges (green=create, blue=update, red=delete)
+- Dates formatted in `vi-VN` locale
+
+## Blog Editor
+
+`BlogDetail.jsx` is the richest form page:
+- **React Quill** rich text editor for content
+- Cover image: URL text input OR file upload to Cloudinary
+- Tags: add via Enter key, displayed as pills with remove button
+- YouTube embed support in content
+- Comments section (read-only with admin delete)
+- Sticky bottom action bar (publish/draft toggle, save, delete)
+
+## ThemeEditor State Pattern
+
+`ThemeEditor.jsx` uses `useReducer` for complex state management:
+- Tracks `dirty` (page-specific changes) and `dirtyGlobal` (header/footer changes) separately
+- Global changes show a warning: "Changes to header/footer affect all pages"
+- Save behavior differs: page save vs global save with confirmation
+- Discard reverts to last-saved state from API
+
+## Admin Auth Flow
+
+1. `Login.jsx` sends credentials to `POST /api/admin/auth/login`
+2. Receives `{ token, user }` — stored in `AuthContext` + `localStorage`
+3. `AuthContext.jsx` validates token on mount via `GET /api/admin/auth/me`
+4. `ProtectedRoute` in `App.jsx` wraps all routes except `/login`
+5. `api.js` wrapper auto-injects `Authorization: Bearer <token>` and redirects to `/login` on 401
+
+## API Client (`lib/api.js`)
+
+Centralized fetch wrapper:
+```js
+// Auto-injects auth header, handles 401 redirect
+const { get, post, put, del } = api;
+
+// Usage in pages:
+const data = await get('/api/products');
+await post('/api/blog', { title, content });
+
+// File uploads bypass wrapper (need FormData):
+await fetch('/api/upload/image', { method: 'POST', body: formData, headers: { Authorization: `Bearer ${token}` } });
+```
+
 ## Conventions
 
 1. **JavaScript (JSX)** — no TypeScript in admin
@@ -143,3 +215,6 @@ Child pages read it with `useLayout()` from `@/context/LayoutContext`.
 3. **API base** — Vite proxy forwards `/api/*` to `http://localhost:5000`
 4. **Env vars** — prefix with `VITE_` for client-side access
 5. **No external UI library** — custom CSS-in-JS styles with inline `style={{}}`
+6. **Inline styles dominant** — ~90% of components use `const styles = {}` objects with CSS variables (`var(--color-primary)`, `var(--color-border)`, etc.)
+7. **Toast notifications** — use `Toast` component for temporary feedback (auto-dismiss after 3s)
+8. **Confirmation dialogs** — `window.confirm()` before destructive actions (delete, discard unsaved changes)
