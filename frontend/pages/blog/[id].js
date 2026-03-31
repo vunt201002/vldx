@@ -156,47 +156,27 @@ export default function BlogDetailPage() {
         {blogPost.coverImage && <meta property="og:image" content={blogPost.coverImage} />}
       </Head>
 
-      <div className="min-h-screen bg-cream">
-        {/* Cover image */}
-        {blogPost.coverImage && (
-          <div className="h-64 w-full md:h-96">
-            <img
-              src={blogPost.coverImage}
-              alt={blogPost.title}
-              className="h-full w-full object-cover"
-            />
+      <div className="min-h-screen" style={{ background: '#f5f5f5' }}>
+        {/* Header bar */}
+        <div style={{ background: '#fff', borderBottom: '1px solid #e0e0e0' }}>
+          <div className="mx-auto max-w-[760px] px-4 flex items-center" style={{ height: '50px' }}>
+            <Link href="/blog" className="text-sm transition flex items-center gap-1" style={{ color: '#888' }}>
+              <span>←</span> Quay lai Blog
+            </Link>
           </div>
-        )}
+        </div>
 
         {/* Article */}
-        <article className="mx-auto max-w-3xl px-4 py-8 md:py-12">
-          {/* Back link */}
-          <Link href="/blog" className="text-sm text-charcoal/50 hover:text-charcoal transition">
-            ← Quay lai Blog
-          </Link>
-
-          {/* Title */}
-          <h1 className="mt-6 text-3xl font-bold text-charcoal md:text-4xl leading-tight">
-            {blogPost.title}
-          </h1>
-
-          {/* Meta */}
-          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-charcoal/50">
-            <span>{formatDate(blogPost.publishedAt || blogPost.createdAt)}</span>
-            <span>·</span>
-            <span>{blogPost.viewCount || 0} luot xem</span>
-            <span>·</span>
-            <span>{blogPost.commentCount || comments.length} binh luan</span>
-          </div>
-
+        <article className="mx-auto max-w-[760px] px-4 py-6 md:py-8">
           {/* Tags */}
           {blogPost.tags?.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mb-3">
               {blogPost.tags.map((tag) => (
                 <Link
                   key={tag}
                   href={`/blog?tag=${tag}`}
-                  className="rounded-full bg-charcoal/5 px-3 py-1 text-xs font-medium text-charcoal/70 hover:bg-charcoal/10 transition"
+                  className="text-xs font-semibold uppercase tracking-wide transition"
+                  style={{ color: '#b80000' }}
                 >
                   {tag}
                 </Link>
@@ -204,9 +184,42 @@ export default function BlogDetailPage() {
             </div>
           )}
 
+          {/* Title */}
+          <h1 className="text-2xl md:text-[32px] font-bold leading-tight" style={{ color: '#1a1a1a' }}>
+            {blogPost.title}
+          </h1>
+
+          {/* Excerpt */}
+          {blogPost.excerpt && (
+            <p className="mt-3 text-base md:text-lg leading-relaxed" style={{ color: '#555' }}>
+              {blogPost.excerpt}
+            </p>
+          )}
+
+          {/* Meta */}
+          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm pb-4" style={{ color: '#999', borderBottom: '1px solid #e0e0e0' }}>
+            <span>{formatDate(blogPost.publishedAt || blogPost.createdAt)}</span>
+            <span>·</span>
+            <span>{blogPost.viewCount || 0} luot xem</span>
+            <span>·</span>
+            <span>{blogPost.commentCount || comments.length} binh luan</span>
+          </div>
+
+          {/* Cover image */}
+          {blogPost.coverImage && (
+            <figure className="mt-5">
+              <img
+                src={blogPost.coverImage}
+                alt={blogPost.title}
+                className="w-full rounded-lg"
+              />
+            </figure>
+          )}
+
           {/* Content */}
           <div
-            className="blog-content mt-8 prose prose-lg max-w-none text-charcoal/90"
+            className="blog-content mt-6"
+            style={{ fontSize: '18px', lineHeight: '1.8', color: '#1a1a1a' }}
             dangerouslySetInnerHTML={{ __html: transformBlogContent(blogPost.content) }}
           />
 
