@@ -15,7 +15,7 @@ export default function useReveal(threshold = 0.15) {
           }
         });
       },
-      { threshold, rootMargin: '0px 0px -60px 0px' }
+      { threshold, rootMargin: '0px 0px 80px 0px' }
     );
 
     const targets = node.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger-children');
