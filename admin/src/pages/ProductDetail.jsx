@@ -388,12 +388,17 @@ export default function ProductDetail() {
 
         {/* Footer Actions */}
         <div style={{
+          position: 'sticky',
+          bottom: 0,
           display: 'flex',
           gap: '0.75rem',
           justifyContent: 'space-between',
           marginTop: '1.5rem',
-          paddingTop: '1.25rem',
+          paddingTop: '1rem',
+          paddingBottom: '1rem',
           borderTop: '1px solid var(--color-border)',
+          background: 'var(--color-surface, #fff)',
+          zIndex: 10,
         }}>
           <div style={{ display: 'flex', gap: '0.75rem' }}>
             <Button
