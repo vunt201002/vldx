@@ -186,48 +186,7 @@ export default function BlogDetail() {
         />
       )}
 
-      {/* Sticky bottom bar */}
-      <div style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 'var(--sidebar-width, 240px)',
-        right: 0,
-        backgroundColor: 'var(--color-surface)',
-        borderTop: '1px solid var(--color-border)',
-        padding: '0.75rem 2rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        zIndex: 100,
-        boxShadow: '0 -2px 8px rgba(0,0,0,0.06)',
-      }}>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <Button
-            variant="primary"
-            icon={Save}
-            type="button"
-            onClick={() => document.getElementById('blog-form').requestSubmit()}
-            disabled={saving}
-            style={{ opacity: saving ? 0.7 : 1 }}
-          >
-            {saving ? 'Saving...' : isNew(id) ? 'Create Post' : 'Save Changes'}
-          </Button>
-          <Button
-            variant="secondary"
-            type="button"
-            onClick={() => navigate('/blogs')}
-          >
-            Cancel
-          </Button>
-        </div>
-        {!isNew(id) && (
-          <Button variant="danger" icon={Trash2} type="button" onClick={handleDelete}>
-            Delete
-          </Button>
-        )}
-      </div>
-
-      <form id="blog-form" onSubmit={handleSubmit} style={{ paddingBottom: '5rem' }}>
+      <form id="blog-form" onSubmit={handleSubmit}>
         {/* Basic Information */}
         <Card>
           <h3 className="card-section-title">Basic Information</h3>
@@ -397,6 +356,44 @@ export default function BlogDetail() {
           </Card>
         )}
 
+        {/* Sticky action bar */}
+        <div style={{
+          position: 'sticky',
+          bottom: 0,
+          display: 'flex',
+          gap: '0.75rem',
+          justifyContent: 'space-between',
+          marginTop: '1.5rem',
+          paddingTop: '1rem',
+          paddingBottom: '1rem',
+          borderTop: '1px solid var(--color-border)',
+          background: 'var(--color-surface, #fff)',
+          zIndex: 10,
+        }}>
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <Button
+              variant="primary"
+              icon={Save}
+              type="submit"
+              disabled={saving}
+              style={{ opacity: saving ? 0.7 : 1 }}
+            >
+              {saving ? 'Saving...' : isNew(id) ? 'Create Post' : 'Save Changes'}
+            </Button>
+            <Button
+              variant="secondary"
+              type="button"
+              onClick={() => navigate('/blogs')}
+            >
+              Cancel
+            </Button>
+          </div>
+          {!isNew(id) && (
+            <Button variant="danger" icon={Trash2} type="button" onClick={handleDelete}>
+              Delete
+            </Button>
+          )}
+        </div>
       </form>
     </div>
   )
