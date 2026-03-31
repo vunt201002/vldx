@@ -16,6 +16,9 @@ import {
   ChevronDown,
   Menu,
   X,
+  GripVertical,
+  ExternalLink,
+  Link2,
 } from 'lucide-react'
 
 export default function MenuManager() {
@@ -40,11 +43,7 @@ export default function MenuManager() {
   }
 
   const handleCreate = () => {
-    setEditingMenu({
-      name: '',
-      handle: '',
-      items: [],
-    })
+    setEditingMenu({ name: '', handle: '', items: [] })
     setIsCreating(true)
   }
 
@@ -55,7 +54,6 @@ export default function MenuManager() {
 
   const handleDelete = async (menuId) => {
     if (!confirm('Are you sure you want to delete this menu?')) return
-
     try {
       await del(`/menus/${menuId}`)
       await loadMenus()
@@ -102,10 +100,7 @@ export default function MenuManager() {
 
   const removeMenuItem = (index) => {
     const newItems = editingMenu.items.filter((_, i) => i !== index)
-    // Reorder remaining items
-    newItems.forEach((item, i) => {
-      item.order = i
-    })
+    newItems.forEach((item, i) => { item.order = i })
     setEditingMenu({ ...editingMenu, items: newItems })
   }
 
@@ -113,26 +108,22 @@ export default function MenuManager() {
     const newItems = [...editingMenu.items]
     const newIndex = index + direction
     if (newIndex < 0 || newIndex >= newItems.length) return
-
-    // Swap items
     ;[newItems[index], newItems[newIndex]] = [newItems[newIndex], newItems[index]]
-    // Update order
-    newItems.forEach((item, i) => {
-      item.order = i
-    })
+    newItems.forEach((item, i) => { item.order = i })
     setEditingMenu({ ...editingMenu, items: newItems })
   }
 
   if (loading) {
     return (
-      <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>
-        Loading menus...
+      <div className="dashboard-loading">
+        <div className="dashboard-loading-spinner" />
+        <span>Loading menus...</span>
       </div>
     )
   }
 
   return (
-    <div style={{ maxWidth: 1200 }}>
+    <div className="menu-manager">
       <PageHeader title={`Menus (${menus.length})`}>
         <Button variant="primary" icon={Plus} onClick={handleCreate}>
           Create Menu
@@ -143,112 +134,58 @@ export default function MenuManager() {
         <EmptyState
           icon={Menu}
           title="No menus yet"
-          description="Create your first menu to get started"
+          description="Create your first navigation menu to get started."
         />
       ) : (
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
-            gap: '1.5rem',
-          }}
-        >
+        <div className="menu-grid">
           {menus.map((menu) => (
-            <Card key={menu._id} className="menu-card">
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                  marginBottom: '1rem',
-                }}
-              >
-                <div>
-                  <div
-                    style={{
-                      fontSize: '1.1rem',
-                      fontWeight: 700,
-                      color: 'var(--color-text)',
-                      marginBottom: '0.25rem',
-                    }}
-                  >
-                    {menu.name}
+            <div key={menu._id} className="menu-panel">
+              {/* Menu header */}
+              <div className="menu-panel-header">
+                <div className="menu-panel-info">
+                  <div className="menu-panel-icon">
+                    <Menu size={16} strokeWidth={1.75} />
                   </div>
-                  <div
-                    style={{
-                      fontSize: '0.8rem',
-                      color: 'var(--color-text-muted)',
-                      fontFamily: 'monospace',
-                    }}
-                  >
-                    {menu.handle}
+                  <div>
+                    <h3 className="menu-panel-name">{menu.name}</h3>
+                    <span className="menu-panel-handle">{menu.handle}</span>
                   </div>
                 </div>
-                <div style={{ display: 'flex', gap: '0.25rem' }}>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    icon={Pencil}
-                    onClick={() => handleEdit(menu)}
-                    title="Edit menu"
-                  />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    icon={Trash2}
-                    onClick={() => handleDelete(menu._id)}
-                    title="Delete menu"
-                  />
+                <div className="menu-panel-actions">
+                  <button className="menu-action-btn" onClick={() => handleEdit(menu)} title="Edit menu">
+                    <Pencil size={14} strokeWidth={1.75} />
+                  </button>
+                  <button className="menu-action-btn menu-action-btn--danger" onClick={() => handleDelete(menu._id)} title="Delete menu">
+                    <Trash2 size={14} strokeWidth={1.75} />
+                  </button>
                 </div>
               </div>
 
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {/* Menu items count */}
+              <div className="menu-panel-meta">
+                <Link2 size={12} strokeWidth={1.75} />
+                <span>{menu.items.length} {menu.items.length === 1 ? 'item' : 'items'}</span>
+              </div>
+
+              {/* Menu items list */}
+              <div className="menu-panel-items">
                 {menu.items.map((item, idx) => (
-                  <li
-                    key={idx}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '0.6rem 0.8rem',
-                      backgroundColor: 'var(--gray-50)',
-                      borderRadius: 'var(--radius)',
-                      marginBottom: '0.5rem',
-                      fontSize: '0.85rem',
-                    }}
-                  >
-                    <span>
-                      <span style={{ fontWeight: 600, color: 'var(--color-text)' }}>
-                        {item.label}
-                      </span>
-                      <span
-                        style={{
-                          color: 'var(--color-text-muted)',
-                          fontSize: '0.75rem',
-                          marginLeft: '0.5rem',
-                        }}
-                      >
-                        {item.url}
-                      </span>
-                    </span>
-                  </li>
+                  <div key={idx} className="menu-item-row">
+                    <span className="menu-item-index">{idx + 1}</span>
+                    <div className="menu-item-content">
+                      <span className="menu-item-label">{item.label}</span>
+                      <span className="menu-item-url">{item.url}</span>
+                    </div>
+                    <ExternalLink size={12} className="menu-item-link-icon" />
+                  </div>
                 ))}
                 {menu.items.length === 0 && (
-                  <li
-                    style={{
-                      padding: '0.6rem 0.8rem',
-                      backgroundColor: 'var(--gray-50)',
-                      borderRadius: 'var(--radius)',
-                      fontSize: '0.85rem',
-                      fontStyle: 'italic',
-                      color: 'var(--color-text-muted)',
-                    }}
-                  >
-                    No items
-                  </li>
+                  <div className="menu-panel-empty">
+                    No menu items yet
+                  </div>
                 )}
-              </ul>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       )}
@@ -266,101 +203,73 @@ export default function MenuManager() {
                 type="text"
                 className="form-input"
                 value={editingMenu.name}
-                onChange={(e) =>
-                  setEditingMenu({ ...editingMenu, name: e.target.value })
-                }
+                onChange={(e) => setEditingMenu({ ...editingMenu, name: e.target.value })}
                 placeholder="Main Navigation"
               />
             </FormGroup>
 
-            <FormGroup label="Handle (optional)" htmlFor="menu-handle">
+            <FormGroup label="Handle" htmlFor="menu-handle" help="URL-friendly identifier. Auto-generated if empty.">
               <input
                 id="menu-handle"
                 type="text"
                 className="form-input"
                 value={editingMenu.handle || ''}
-                onChange={(e) =>
-                  setEditingMenu({ ...editingMenu, handle: e.target.value })
-                }
-                placeholder="main-navigation (auto-generated if empty)"
+                onChange={(e) => setEditingMenu({ ...editingMenu, handle: e.target.value })}
+                placeholder="main-navigation"
               />
             </FormGroup>
 
-            <FormGroup label="Menu Items">
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            <FormGroup label={`Menu Items (${editingMenu.items.length})`}>
+              <div className="modal-item-list">
                 {editingMenu.items.map((item, idx) => (
-                  <li
-                    key={idx}
-                    style={{
-                      display: 'flex',
-                      gap: '0.5rem',
-                      marginBottom: '0.75rem',
-                      alignItems: 'flex-start',
-                    }}
-                  >
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      icon={ChevronUp}
-                      onClick={() => idx > 0 && moveMenuItem(idx, -1)}
-                      title="Move up"
-                      disabled={idx === 0}
-                    />
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      icon={ChevronDown}
-                      onClick={() =>
-                        idx < editingMenu.items.length - 1 &&
-                        moveMenuItem(idx, 1)
-                      }
-                      title="Move down"
-                      disabled={idx === editingMenu.items.length - 1}
-                    />
-                    <input
-                      type="text"
-                      className="form-input"
-                      style={{ flex: 1 }}
-                      value={item.label}
-                      onChange={(e) =>
-                        updateMenuItem(idx, 'label', e.target.value)
-                      }
-                      placeholder="Label"
-                    />
-                    <input
-                      type="text"
-                      className="form-input"
-                      style={{ flex: 1 }}
-                      value={item.url}
-                      onChange={(e) =>
-                        updateMenuItem(idx, 'url', e.target.value)
-                      }
-                      placeholder="/path"
-                    />
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      icon={X}
-                      onClick={() => removeMenuItem(idx)}
-                      title="Remove item"
-                    />
-                  </li>
+                  <div key={idx} className="modal-item-row">
+                    <div className="modal-item-drag">
+                      <button
+                        className="modal-item-move"
+                        onClick={() => idx > 0 && moveMenuItem(idx, -1)}
+                        disabled={idx === 0}
+                        title="Move up"
+                      >
+                        <ChevronUp size={14} />
+                      </button>
+                      <button
+                        className="modal-item-move"
+                        onClick={() => idx < editingMenu.items.length - 1 && moveMenuItem(idx, 1)}
+                        disabled={idx === editingMenu.items.length - 1}
+                        title="Move down"
+                      >
+                        <ChevronDown size={14} />
+                      </button>
+                    </div>
+                    <div className="modal-item-fields">
+                      <input
+                        type="text"
+                        className="form-input"
+                        value={item.label}
+                        onChange={(e) => updateMenuItem(idx, 'label', e.target.value)}
+                        placeholder="Label"
+                      />
+                      <input
+                        type="text"
+                        className="form-input"
+                        value={item.url}
+                        onChange={(e) => updateMenuItem(idx, 'url', e.target.value)}
+                        placeholder="/path"
+                      />
+                    </div>
+                    <button className="modal-item-remove" onClick={() => removeMenuItem(idx)} title="Remove">
+                      <X size={14} />
+                    </button>
+                  </div>
                 ))}
-              </ul>
-              <Button
-                variant="secondary"
-                icon={Plus}
-                onClick={addMenuItem}
-                style={{ width: '100%', justifyContent: 'center' }}
-              >
-                Add Item
-              </Button>
+              </div>
+              <button className="modal-add-item" onClick={addMenuItem}>
+                <Plus size={14} /> Add Menu Item
+              </button>
             </FormGroup>
 
             <div className="modal-actions">
-              <Button variant="secondary" onClick={handleCancel}>
-                Cancel
-              </Button>
+              <Button variant="secondary" onClick={handleCancel}>Cancel</Button>
               <Button variant="primary" onClick={handleSave}>
                 {isCreating ? 'Create Menu' : 'Save Changes'}
               </Button>
