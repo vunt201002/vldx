@@ -34,7 +34,6 @@ module.exports = {
         'fade-in': 'fadeIn 1s ease-out forwards',
         'slide-right': 'slideRight 0.8s ease-out forwards',
         'scale-in': 'scaleIn 0.6s ease-out forwards',
-        'grain': 'grain 8s steps(10) infinite',
       },
       keyframes: {
         fadeUp: {
@@ -52,18 +51,6 @@ module.exports = {
         scaleIn: {
           '0%': { opacity: '0', transform: 'scale(0.95)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
-        },
-        grain: {
-          '0%, 100%': { transform: 'translate(0, 0)' },
-          '10%': { transform: 'translate(-5%, -10%)' },
-          '20%': { transform: 'translate(-15%, 5%)' },
-          '30%': { transform: 'translate(7%, -25%)' },
-          '40%': { transform: 'translate(-5%, 25%)' },
-          '50%': { transform: 'translate(-15%, 10%)' },
-          '60%': { transform: 'translate(15%, 0%)' },
-          '70%': { transform: 'translate(0%, 15%)' },
-          '80%': { transform: 'translate(3%, 35%)' },
-          '90%': { transform: 'translate(-10%, 10%)' },
         },
       },
     },

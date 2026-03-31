@@ -11,7 +11,15 @@ export default function useReveal(threshold = 0.15) {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            // Promote to GPU layer just before animating, then clean up
+            entry.target.style.willChange = 'opacity, transform';
             entry.target.classList.add('visible');
+            const cleanup = () => {
+              entry.target.style.willChange = '';
+              entry.target.removeEventListener('transitionend', cleanup);
+            };
+            entry.target.addEventListener('transitionend', cleanup, { once: true });
+            observer.unobserve(entry.target);
           }
         });
       },

@@ -39,13 +39,11 @@ body {
   transform: translateY(40px) translateZ(0);
   transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
               transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translateY(0) translateZ(0);
-  will-change: auto;
 }
 
 .reveal-left {
@@ -53,13 +51,11 @@ body {
   transform: translateX(-60px) translateZ(0);
   transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
               transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
 }
 
 .reveal-left.visible {
   opacity: 1;
   transform: translateX(0) translateZ(0);
-  will-change: auto;
 }
 
 .reveal-right {
@@ -67,13 +63,11 @@ body {
   transform: translateX(60px) translateZ(0);
   transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
               transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
 }
 
 .reveal-right.visible {
   opacity: 1;
   transform: translateX(0) translateZ(0);
-  will-change: auto;
 }
 
 /* Stagger children */
@@ -82,29 +76,25 @@ body {
   transform: translateY(30px) translateZ(0);
   transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
               transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
 }
 
-.stagger-children.visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: translateY(0) translateZ(0); will-change: auto; }
-.stagger-children.visible > *:nth-child(2) { transition-delay: 100ms; opacity: 1; transform: translateY(0) translateZ(0); will-change: auto; }
-.stagger-children.visible > *:nth-child(3) { transition-delay: 200ms; opacity: 1; transform: translateY(0) translateZ(0); will-change: auto; }
-.stagger-children.visible > *:nth-child(4) { transition-delay: 300ms; opacity: 1; transform: translateY(0) translateZ(0); will-change: auto; }
-.stagger-children.visible > *:nth-child(5) { transition-delay: 400ms; opacity: 1; transform: translateY(0) translateZ(0); will-change: auto; }
-.stagger-children.visible > *:nth-child(6) { transition-delay: 500ms; opacity: 1; transform: translateY(0) translateZ(0); will-change: auto; }
-.stagger-children.visible > *:nth-child(7) { transition-delay: 600ms; opacity: 1; transform: translateY(0) translateZ(0); will-change: auto; }
-.stagger-children.visible > *:nth-child(8) { transition-delay: 700ms; opacity: 1; transform: translateY(0) translateZ(0); will-change: auto; }
+.stagger-children.visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: translateY(0) translateZ(0); }
+.stagger-children.visible > *:nth-child(2) { transition-delay: 100ms; opacity: 1; transform: translateY(0) translateZ(0); }
+.stagger-children.visible > *:nth-child(3) { transition-delay: 200ms; opacity: 1; transform: translateY(0) translateZ(0); }
+.stagger-children.visible > *:nth-child(4) { transition-delay: 300ms; opacity: 1; transform: translateY(0) translateZ(0); }
+.stagger-children.visible > *:nth-child(5) { transition-delay: 400ms; opacity: 1; transform: translateY(0) translateZ(0); }
+.stagger-children.visible > *:nth-child(6) { transition-delay: 500ms; opacity: 1; transform: translateY(0) translateZ(0); }
+.stagger-children.visible > *:nth-child(7) { transition-delay: 600ms; opacity: 1; transform: translateY(0) translateZ(0); }
+.stagger-children.visible > *:nth-child(8) { transition-delay: 700ms; opacity: 1; transform: translateY(0) translateZ(0); }
 
-/* Grain texture overlay */
+/* Grain texture overlay — static grain, no animation to avoid GPU cost */
 .grain-overlay::after {
   content: '';
   position: absolute;
-  inset: -200%;
-  width: 400%;
-  height: 400%;
+  inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   opacity: 0.03;
   pointer-events: none;
-  animation: grain 8s steps(10) infinite;
 }
 
 /* Diagonal divider */
