@@ -222,6 +222,54 @@ Uses `sessionId` from `localStorage` for anonymous visitor tracking (same patter
 - **`useReveal`** (`hooks/useReveal.js`): IntersectionObserver-based scroll reveal. Returns a ref; attach to section root. Adds `.revealed` class when element enters viewport. Used with `.reveal`, `.reveal-left`, `.reveal-right`, `.stagger-children` CSS classes defined in `globals.css`.
 - **`useAuth`** (`hooks/useAuth.js`): Accesses `AuthContext`. Must be used within `AuthProvider` (wrapped in `_app.js`).
 
+## Blog Pages
+
+### Architecture
+
+```
+pages/blog/
+  index.js    # Blog listing — VnExpress-style news layout
+  [id].js     # Blog detail — article view with comments & likes
+```
+
+### Listing Layout (`pages/blog/index.js`)
+
+Uses a **VnExpress-style news layout** with three zones:
+1. **Featured hero** — `posts[0]` displayed as a large card with cover image overlay and gradient
+2. **Side posts** — `posts.slice(1, 4)` stacked as compact thumbnail+title cards
+3. **Feed list** — `posts.slice(4)` rendered as horizontal rows (image left, text right)
+
+Fetches `limit=13` to fill all slots. The grid is `lg:grid-cols-3` with the featured card spanning `lg:col-span-2`.
+
+### Detail Page (`pages/blog/[id].js`)
+
+- **Content rendering**: Uses `dangerouslySetInnerHTML` with a `transformBlogContent()` helper
+- **Likes**: Anonymous likes via `sessionId` stored in `localStorage`
+- **Comments**: Supports both authenticated and anonymous commenting
+- **View tracking**: Calls `trackBlogView()` from `@/lib/analytics` on mount
+
+### Real-Time Updates (SSE)
+
+The listing page uses `EventSource('/api/blog/events')` for live updates when admin publishes or edits posts. On any message, it re-fetches the post list.
+
+```js
+useEffect(() => {
+  const es = new EventSource('/api/blog/events');
+  es.onmessage = () => fetchPosts();
+  return () => es.close();
+}, []);
+```
+
+### User-Generated HTML Safety
+
+Containers rendering HTML via `dangerouslySetInnerHTML` (like `.blog-content`) must include overflow protection in `globals.css`:
+
+```css
+.blog-content { overflow-wrap: break-word; word-wrap: break-word; max-width: 100%; overflow: hidden; }
+```
+
+This prevents long URLs or unbroken strings from breaking the page layout.
+
 ## Key Conventions
 
 1. **No TypeScript** — all frontend code is plain JavaScript

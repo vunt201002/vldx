@@ -70,6 +70,21 @@ All three apps use path aliases for imports:
 - To update page content: use the theme editor admin UI or write a seed script in `backend/src/scripts/`
 - Source of truth is MongoDB; JSON files are derived artifacts
 
+## User-Generated HTML Content
+
+When rendering user-generated HTML via `dangerouslySetInnerHTML`, always apply overflow protection on the container:
+
+```css
+.container { overflow-wrap: break-word; word-wrap: break-word; max-width: 100%; overflow: hidden; }
+```
+
+This prevents long URLs, unbroken strings, or oversized embedded content from breaking page layout.
+
+## Code Hygiene
+
+- Remove all debug comments (`// claude --resume`, `// TODO: remove`, `console.log` used for debugging) before committing
+- Do not leave session IDs, conversation IDs, or tool-specific annotations in source code
+
 ## Adding a New Block Type (checklist)
 
 1. `backend/src/config/blockFieldDefs.ts` — add field schema
