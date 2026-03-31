@@ -7,69 +7,12 @@
     "bodyFont": ""
   },
   "order": [
-    "69be5516315aac49a5e9be3c",
     "69be5516315aac49a5e9be3e",
-    "69bf002327a98df2aa68722a",
-    "69befec927a98df2aa6871d6",
-    "69c179d5fca5ee72f439029e"
+    "69c6b5c24c5b95f3b1ab93ed",
+    "69c6b1ad951275f6c3356a6e",
+    "69c6b5c24c5b95f3b1ab93f0"
   ],
   "sections": {
-    "69be5516315aac49a5e9be3c": {
-      "type": "navbar",
-      "settings": {
-        "brandMode": "logo",
-        "brandName": "bê tông",
-        "brandAccent": "việt",
-        "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/7e5836f6-d36a-4433-b2ea-89324e5191e4/black+cc+word+logo-02.png?format=500w",
-        "menuFontSize": "20px",
-        "ctaLabel": "",
-        "ctaHref": ""
-      },
-      "blocks": [
-        {
-          "type": "nav-link",
-          "settings": {
-            "label": "trang chủ",
-            "href": "/landing"
-          }
-        },
-        {
-          "type": "nav-link",
-          "settings": {
-            "label": "tấm ốp cầu thang",
-            "href": "/tam-op-cau-thang"
-          }
-        },
-        {
-          "type": "nav-link",
-          "settings": {
-            "label": "gạch ốp lát",
-            "href": "/gach-op-lat"
-          }
-        },
-        {
-          "type": "nav-link",
-          "settings": {
-            "label": "ghế đá công viên",
-            "href": "/ghe-da-cong-vien"
-          }
-        },
-        {
-          "type": "nav-link",
-          "settings": {
-            "label": "bàn",
-            "href": "/ban"
-          }
-        },
-        {
-          "type": "nav-link",
-          "settings": {
-            "label": "thi công",
-            "href": "/service"
-          }
-        }
-      ]
-    },
     "69be5516315aac49a5e9be3e": {
       "type": "hero",
       "settings": {
@@ -78,7 +21,7 @@
       },
       "blocks": []
     },
-    "69bf002327a98df2aa68722a": {
+    "69c6b5c24c5b95f3b1ab93ed": {
       "type": "service-process",
       "settings": {
         "overline": "dịch vụ",
@@ -130,96 +73,59 @@
         }
       ]
     },
-    "69befec927a98df2aa6871d6": {
-      "type": "footer",
+    "69c6b1ad951275f6c3356a6e": {
+      "type": "why-choose-us",
       "settings": {
-        "logoUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1586821290470-46L6I4UQZEFD8HUGMOT0/bottomlogo.png",
-        "bgColor": "#f7e2ce"
+        "overline": "Nam Thắng",
+        "title": "Tại Sao Nên Chọn Chúng Tôi",
+        "bgColor": "",
+        "bgImage": ""
       },
       "blocks": [
         {
-          "type": "footer-line",
+          "type": "why-step",
           "settings": {
-            "text": "1.855.268.0800"
+            "icon": "",
+            "iconBgColor": "#FFD580",
+            "title": "Tư Vấn Tận Tâm",
+            "desc": "Đội ngũ chuyên gia sẵn sàng tư vấn miễn phí, giúp bạn lựa chọn vật liệu phù hợp nhất với ngân sách và công trình."
           }
         },
         {
-          "type": "footer-line",
+          "type": "why-step",
           "settings": {
-            "text": "sales@concrete-collaborative.com"
+            "icon": "",
+            "iconBgColor": "#A8E6CF",
+            "title": "Giao Hàng Đúng Hẹn",
+            "desc": "Cam kết giao hàng đúng tiến độ, không để công trình của bạn bị trì hoãn vì thiếu vật tư."
           }
         },
         {
-          "type": "footer-line",
+          "type": "why-step",
           "settings": {
-            "text": "concrete-collaborative.com"
+            "icon": "",
+            "iconBgColor": "#87CEEB",
+            "title": "Hàng Chính Hãng",
+            "desc": "100% sản phẩm có nguồn gốc rõ ràng, chứng nhận chất lượng — không hàng giả, không hàng nhái."
           }
         },
         {
-          "type": "footer-social",
+          "type": "why-step",
           "settings": {
-            "label": "",
-            "icon": "facebook",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "instagram",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "email",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "linkedin",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "pinterest",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "tiktok",
-            "href": ""
-          }
-        },
-        {
-          "type": "footer-social",
-          "settings": {
-            "label": "",
-            "icon": "zalo",
-            "href": ""
+            "icon": "",
+            "iconBgColor": "#F8B4C8",
+            "title": "Hậu Mãi Chu Đáo",
+            "desc": "Hỗ trợ sau bán hàng nhanh chóng, xử lý khiếu nại trong vòng 24 giờ, đảm bảo bạn luôn hài lòng."
           }
         }
       ]
     },
-    "69c179d5fca5ee72f439029e": {
+    "69c6b5c24c5b95f3b1ab93f0": {
       "type": "content-image",
       "settings": {
-        "imageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
+        "squareImageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
         "title": "modern concrete + terrazzo architectural finishes.",
-        "description": "pair our products together to flow seamlessly from inside to out. explore our next generation concrete and terrazzo surfaces like floor & wall tiles, exterior pavers & pool copings, countertops & vanities, stair-treads, patterned encaustic cement tiles, breeze-blocks, tabletops & basins. in a range of modern colors, unique natural stone aggregates and tactile textures. we have every surface covered!",
-        "direction": "image-left"
+        "description": "pair our products together to flow seamlessly from inside to out. explore our next generation concrete and terrazzo surfaces like floor & wall tiles, exterior pavers & pool copings, countertops & vanities, stair-treads, patterned encaustic cement tiles, breeze-blocks, tabletops & basins. in a range of modern colors, unique natural stone aggregates and tactile textures. we have every surface covered!"
       },
       "blocks": [
         {
@@ -228,7 +134,7 @@
             "label": "Shop",
             "href": "",
             "color": "",
-            "bgColor": ""
+            "borderColor": ""
           }
         }
       ]

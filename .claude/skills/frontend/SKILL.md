@@ -106,6 +106,23 @@ config/pages/landing.json → SectionRenderer → registry → Section Component
 ### Current registered section types (registry.js)
 `navbar`, `hero`, `collections`, `about`, `featured`, `gallery`, `contact`, `content-image`, `footer`, `material-showcase`, `color-picker`, `service-process`, `why-choose-us`
 
+### Global sections (navbar & footer)
+Navbar and footer are **not included in per-page configs**. They are rendered globally by the layout/app shell, so individual page JSON files only contain content sections. Do not add `navbar` or `footer` entries to page configs.
+
+### `content-image` section schema
+The `content-image` section uses a two-image layout with explicit positioning:
+
+| Setting | Description |
+|---------|-------------|
+| `squareImageUrl` | URL for the square image |
+| `rectImageUrl` | URL for the rectangular image |
+| `squarePosition` | `"left"` or `"right"` — which side the square image appears on |
+| `rectImageOrder` | `"top"` or `"bottom"` — vertical order of the rectangular image |
+| `title` | Optional heading text |
+| `description` | Body text |
+
+Child blocks: `content-button` with settings `{ label, href, color, borderColor }`.
+
 ### `transformPageConfig.js` — SSR child block transformation
 `frontend/lib/transformPageConfig.js` is the critical middleware between the raw API response and section components. It transforms `block.data.*` arrays into the `blocks: [{ type, settings }]` child arrays that section components consume.
 
