@@ -24,6 +24,7 @@ docker build -t $DOCKER_USER/vlxd-frontend:$TAG \
 docker build -t $DOCKER_USER/vlxd-admin:$TAG \
   --build-arg VITE_API_URL=/api \
   --build-arg VITE_STOREFRONT_URL=$PROTOCOL://$DOMAIN \
+  --build-arg VITE_BASE_PATH=/admin/ \
   ./admin
 
 echo "==> Pushing images to Docker Hub"
