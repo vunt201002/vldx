@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Prevent Git Bash on Windows from converting /paths to C:\paths in docker args
+export MSYS_NO_PATHCONV=1
+
 # Load env
 if [ -f .env.prod ]; then
   export $(grep -v '^#' .env.prod | xargs)
