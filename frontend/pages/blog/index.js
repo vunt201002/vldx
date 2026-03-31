@@ -62,25 +62,32 @@ export default function BlogPage() {
       </Head>
 
       <div className="min-h-screen" style={{ background: '#f5f5f5', fontFamily: "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>
-        {/* Top navigation bar */}
-        <div style={{ background: '#fff', borderBottom: '2px solid #b80000' }}>
+        {/* Header with logo */}
+        <div style={{ background: '#fff', borderBottom: '1px solid #e0e0e0' }}>
           <div className="mx-auto max-w-[1200px] px-4">
-            <div className="flex items-center justify-between" style={{ height: '50px' }}>
-              <div className="flex items-center gap-5">
-                <Link href="/landing" className="text-sm hover:text-red-700 transition" style={{ color: '#555' }}>
+            <div className="flex items-center justify-between" style={{ height: '60px' }}>
+              <Link href="/landing" className="flex items-center gap-2">
+                <span style={{ fontSize: '28px', fontWeight: 800, color: '#1a1a1a', letterSpacing: '-0.03em', lineHeight: 1 }}>
+                  VL<span style={{ color: '#b80000' }}>X</span>D
+                </span>
+                <span style={{ fontSize: '11px', color: '#999', borderLeft: '1px solid #ddd', paddingLeft: '8px', lineHeight: 1.3 }}>
+                  Vat lieu<br />xay dung
+                </span>
+              </Link>
+              <div className="flex items-center gap-4">
+                {tag && (
+                  <button
+                    onClick={() => { setTag(''); setPage(1); }}
+                    className="flex items-center gap-1.5 text-sm px-3 py-1 rounded transition"
+                    style={{ background: '#fff3f3', color: '#b80000', border: '1px solid #ffcdd2' }}
+                  >
+                    #{tag} <span style={{ color: '#e57373' }}>✕</span>
+                  </button>
+                )}
+                <Link href="/landing" className="text-sm transition hidden md:block" style={{ color: '#888' }}>
                   Trang chu
                 </Link>
-                <h1 className="text-lg font-bold" style={{ color: '#b80000' }}>Tin tuc</h1>
               </div>
-              {tag && (
-                <button
-                  onClick={() => { setTag(''); setPage(1); }}
-                  className="flex items-center gap-1.5 text-sm px-3 py-1 rounded transition"
-                  style={{ background: '#fff3f3', color: '#b80000', border: '1px solid #ffcdd2' }}
-                >
-                  #{tag} <span style={{ color: '#e57373' }}>✕</span>
-                </button>
-              )}
             </div>
           </div>
         </div>
