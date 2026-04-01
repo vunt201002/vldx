@@ -208,13 +208,61 @@ await post('/api/blog', { title, content });
 await fetch('/api/upload/image', { method: 'POST', body: formData, headers: { Authorization: `Bearer ${token}` } });
 ```
 
+## UI Component Library
+
+The admin uses a custom component library at `src/components/ui/`:
+
+### Components
+| Component | File | Purpose |
+|-----------|------|---------|
+| `Button` | `Button.jsx` | Variants: `primary`, `secondary`, `danger`, `ghost`. Sizes: `sm`, `md`. Accepts `icon` prop (Lucide React component) |
+| `Card` | `Card.jsx` | Simple wrapper with `.card` class, accepts className override |
+| `Badge` | `Badge.jsx` | Inline status labels with variant-based coloring |
+| `Table`, `Th`, `Td` | `Table.jsx` | Composition-based: export sub-components for full flexibility |
+| `Modal` | `Modal.jsx` | Overlay + content with click-outside-to-close (stopPropagation pattern) |
+| `PageHeader` | `PageHeader.jsx` | Title + subtitle left, `{children}` slot right for action buttons |
+| `StatCard` | `StatCard.jsx` | Dashboard stat with icon, label, value |
+| `FormGroup` | `FormGroup.jsx` | Label + input wrapper with error display |
+| `EmptyState` | `EmptyState.jsx` | Placeholder for empty lists |
+| `ErrorAlert` | `ErrorAlert.jsx` | Error message display |
+
+All exported from `components/ui/index.js`:
+```js
+import { Button, Card, Table, Th, Td, PageHeader, Modal } from '@/components/ui';
+```
+
+### Component Pattern
+- **Minimal wrappers**: apply className + forward `{...rest}` to native element
+- **Zero inline styles**: all styling in `components.css`, components only apply class names
+- **Composition over config**: `Table` exports sub-components (`Th`, `Td`) rather than column config props
+
+### CSS Architecture (Three-Tier)
+```
+src/styles/
+  design-tokens.css  — CSS custom properties only (colors, spacing, shadows, radii)
+  components.css     — Component styles using var(--token) references
+  layout.css         — Structural layout (sidebar, main-content, topbar)
+  globals.css        — Imports all above + resets
+```
+
+**Design tokens** define both raw scales (`--gray-50`..`--gray-900`, `--accent-500`) and semantic aliases (`--color-primary`, `--color-surface`, `--color-danger`). Sidebar width is also a token (`--sidebar-width: 240px`).
+
+### Sticky Action Bar Pattern
+Product and blog edit pages use a sticky bottom action bar for save/delete:
+```css
+position: sticky;
+bottom: 0;
+z-index: 10; /* below topbar (50) and sidebar (100) */
+```
+
 ## Conventions
 
 1. **JavaScript (JSX)** — no TypeScript in admin
 2. **Path alias** — `@/` maps to `./src/`
 3. **API base** — Vite proxy forwards `/api/*` to `http://localhost:5000`
 4. **Env vars** — prefix with `VITE_` for client-side access
-5. **No external UI library** — custom CSS-in-JS styles with inline `style={{}}`
-6. **Inline styles dominant** — ~90% of components use `const styles = {}` objects with CSS variables (`var(--color-primary)`, `var(--color-border)`, etc.)
+5. **CSS classes + design tokens** — use component classes from `components.css` with CSS variables from `design-tokens.css`. No inline `style={{}}` for new code.
+6. **Use UI components** — always use `@/components/ui` for buttons, cards, tables, modals, headers. Don't create one-off styled elements.
 7. **Toast notifications** — use `Toast` component for temporary feedback (auto-dismiss after 3s)
 8. **Confirmation dialogs** — `window.confirm()` before destructive actions (delete, discard unsaved changes)
+9. **Safe nullish access** — use `?.` and `?? defaultValue` consistently for API data

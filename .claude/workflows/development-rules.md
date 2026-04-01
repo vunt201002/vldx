@@ -87,6 +87,12 @@ Different frontend pages use different strategies — match the pattern when add
 - **Deploy workflow**: `deploy.sh` builds and pushes to Docker Hub → `vps-deploy.sh` pulls and restarts on VPS
 - **SSL**: `vps-init-ssl.sh` for initial Let's Encrypt setup, Nginx handles SSL termination
 - **ESLint in builds**: `next.config.js` has `eslint: { ignoreDuringBuilds: true }` — don't let lint errors block Docker builds
+- **Windows Git Bash**: `deploy.sh` must include `export MSYS_NO_PATHCONV=1` at the top to prevent Git Bash from converting `/api` paths in `--build-arg` values to `C:\api` Windows paths
+- **Admin sub-path routing** — three-layer pattern for serving admin at `/admin/`:
+  1. Nginx strips `/admin/` prefix when proxying to admin container (`location /admin/ { proxy_pass http://admin:80/; }`)
+  2. Vite `base: process.env.VITE_BASE_PATH` bakes the path into static assets at build time
+  3. React Router `basename={import.meta.env.BASE_URL}` aligns client-side routing
+- **Build args are compile-time**: Vite `VITE_*` args are baked into static assets during Docker build. Changing them requires a full rebuild — they cannot be overridden at runtime
 
 ## Blog System Conventions
 

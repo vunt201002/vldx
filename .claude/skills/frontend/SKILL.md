@@ -247,8 +247,14 @@ Uses `sessionId` from `localStorage` for anonymous visitor tracking (same patter
 
 ### Blog List (`pages/blog/index.js`)
 - Client-side fetching with loading state
-- Tag filtering, pagination
-- Card layout with cover image, title, excerpt, tags
+- Tag filtering (via `?tag=` URL param, resets pagination to page 1), pagination with numbered buttons
+- **VnExpress-style three-tier layout** (only on page 1 without tag filter):
+  1. Featured hero (2/3 width): large cover image with dark gradient overlay + headline
+  2. Side posts (1/3 width, desktop only): thumbnail grid (100x68px)
+  3. Feed posts (full width): card list with 140x90px → 200x130px responsive thumbnails
+- Uses **inline styles** (not Tailwind) because blog design diverges from landing page aesthetic
+- Vietnamese time-ago formatting (`X phut truoc`, `X gio truoc`, falls back to `vi-VN` date after 7 days)
+- SSE via `EventSource('/api/blog/events')` for instant content refresh without polling
 
 ### Blog Detail (`pages/blog/[id].js`)
 - Client-side fetching via `useRouter().query`
@@ -285,7 +291,11 @@ Rendered in `_app.js` on all pages. Buttons are uniform 48x48px with toggle butt
 
 ## Custom Hooks
 
-- **`useReveal`** (`hooks/useReveal.js`): IntersectionObserver-based scroll reveal. Returns a ref; attach to section root. Adds `.revealed` class when element enters viewport. Used with `.reveal`, `.reveal-left`, `.reveal-right`, `.stagger-children` CSS classes defined in `globals.css`.
+- **`useReveal`** (`hooks/useReveal.js`): IntersectionObserver-based scroll reveal. Returns a ref; attach to section root. Adds `.visible` class when element enters viewport. Used with `.reveal`, `.reveal-left`, `.reveal-right`, `.stagger-children` CSS classes defined in `globals.css`.
+  - **Temporal GPU optimization**: applies `will-change: opacity, transform` only during animation, clears it on `transitionend` to avoid permanent GPU memory overhead
+  - Uses `translateZ(0)` in CSS for GPU compositing without permanent layer cost
+  - Stagger children use CSS `nth-child` delays (0ms–700ms in 100ms steps) — no JS loops
+  - IntersectionObserver threshold: 0.15 with `rootMargin: '0px 0px 80px 0px'` for early trigger
 - **`useAuth`** (`hooks/useAuth.js`): Accesses `AuthContext`. Must be used within `AuthProvider` (wrapped in `_app.js`).
 - **`useProductState`** (`hooks/useProductState.js`): Manages product variant/color/image selection state for the product detail page.
 

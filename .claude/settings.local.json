@@ -42,7 +42,8 @@
       "WebSearch",
       "SlashCommand(/plan:*)",
       "Bash(sudo chown:*)",
-      "Bash(npm cache clean:*)"
+      "Bash(npm cache clean:*)",
+      "Bash(git revert:*)"
     ]
   }
 }
