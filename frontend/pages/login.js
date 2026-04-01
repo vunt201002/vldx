@@ -36,7 +36,7 @@ export default function LoginPage() {
             const redirect = router.query.redirect || '/profile';
             router.push(redirect);
           } catch (err) {
-            setError(err.message || 'Đăng nhập Google thất bại');
+            setError(err.message || 'Google login failed');
           } finally {
             setLoading(false);
           }
@@ -49,7 +49,7 @@ export default function LoginPage() {
           size: 'large',
           width: googleButtonRef.current.offsetWidth || 400,
           text: 'signin_with',
-          locale: 'vi',
+          locale: 'en',
         });
       }
     };
@@ -81,7 +81,7 @@ export default function LoginPage() {
       const redirect = router.query.redirect || '/profile';
       router.push(redirect);
     } catch (err) {
-      setError(err.message || 'Đăng nhập thất bại');
+      setError(err.message || 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -103,7 +103,7 @@ export default function LoginPage() {
           <h1 className="text-3xl font-light text-charcoal mb-2">
             bê tông <span className="font-normal">việt</span>
           </h1>
-          <p className="text-charcoal/70">đăng nhập tài khoản</p>
+          <p className="text-charcoal/70">sign in to your account</p>
         </div>
 
         {/* Login Form */}
@@ -135,7 +135,7 @@ export default function LoginPage() {
             {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-charcoal mb-2">
-                Mật khẩu
+                Password
               </label>
               <input
                 id="password"
@@ -154,7 +154,7 @@ export default function LoginPage() {
                 href="/forgot-password"
                 className="text-sm text-charcoal/70 hover:text-charcoal transition"
               >
-                quên mật khẩu?
+                Forgot Password?
               </Link>
             </div>
 
@@ -164,7 +164,7 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full bg-charcoal text-cream py-3 px-6 rounded-md hover:bg-charcoal/90 transition disabled:opacity-50 disabled:cursor-not-allowed font-medium"
             >
-              {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
+              {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
@@ -174,7 +174,7 @@ export default function LoginPage() {
               <div className="w-full border-t border-charcoal/10"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-charcoal/50">hoặc</span>
+              <span className="px-4 bg-white text-charcoal/50">or</span>
             </div>
           </div>
 
@@ -183,9 +183,9 @@ export default function LoginPage() {
 
           {/* Register Link */}
           <div className="mt-6 text-center text-sm">
-            <span className="text-charcoal/70">chưa có tài khoản? </span>
+            <span className="text-charcoal/70">Don't have an account? </span>
             <Link href="/register" className="text-charcoal font-medium hover:underline">
-              đăng ký ngay
+              Sign up
             </Link>
           </div>
         </div>
@@ -193,7 +193,7 @@ export default function LoginPage() {
         {/* Back to Home */}
         <div className="mt-6 text-center">
           <Link href="/landing" className="text-sm text-charcoal/70 hover:text-charcoal transition">
-            ← về trang chủ
+            ← Back to Home
           </Link>
         </div>
       </div>

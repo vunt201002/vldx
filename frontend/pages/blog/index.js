@@ -7,12 +7,12 @@ function formatTimeAgo(dateString) {
   if (!dateString) return '';
   const ms = Date.now() - new Date(dateString).getTime();
   const minutes = Math.floor(ms / 60000);
-  if (minutes < 1) return 'Vua xong';
-  if (minutes < 60) return `${minutes} phut truoc`;
+  if (minutes < 1) return 'Just now';
+  if (minutes < 60) return `${minutes} minutes ago`;
   const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours} gio truoc`;
+  if (hours < 24) return `${hours} hours ago`;
   const days = Math.floor(hours / 24);
-  if (days < 7) return `${days} ngay truoc`;
+  if (days < 7) return `${days} days ago`;
   return new Date(dateString).toLocaleDateString('vi-VN', {
     day: '2-digit', month: '2-digit', year: 'numeric',
   });
@@ -57,8 +57,8 @@ export default function BlogPage() {
   return (
     <>
       <Head>
-        <title>{tag ? `#${tag} - Tin tuc VLXD` : 'Tin tuc - VLXD'}</title>
-        <meta name="description" content="Tin tuc va bai viet ve vat lieu xay dung" />
+        <title>{tag ? `#${tag} - VLXD News` : 'News - VLXD'}</title>
+        <meta name="description" content="News and articles about construction materials" />
       </Head>
 
       <div className="min-h-screen" style={{ background: '#f5f5f5', fontFamily: "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>
@@ -71,7 +71,7 @@ export default function BlogPage() {
                   VL<span style={{ color: '#b80000' }}>X</span>D
                 </span>
                 <span style={{ fontSize: '11px', color: '#999', borderLeft: '1px solid #ddd', paddingLeft: '8px', lineHeight: 1.3 }}>
-                  Vat lieu<br />xay dung
+                  Construction<br />Materials
                 </span>
               </Link>
               <div className="flex items-center gap-4">
@@ -85,7 +85,7 @@ export default function BlogPage() {
                   </button>
                 )}
                 <Link href="/landing" className="text-sm transition hidden md:block" style={{ color: '#888' }}>
-                  Trang chu
+                  Home
                 </Link>
               </div>
             </div>
@@ -99,8 +99,8 @@ export default function BlogPage() {
             </div>
           ) : posts.length === 0 ? (
             <div className="py-20 text-center rounded-lg" style={{ background: '#fff' }}>
-              <p className="text-lg" style={{ color: '#999' }}>Chua co bai viet nao</p>
-              <p className="mt-1 text-sm" style={{ color: '#bbb' }}>Hay quay lai sau nhe!</p>
+              <p className="text-lg" style={{ color: '#999' }}>No articles yet</p>
+              <p className="mt-1 text-sm" style={{ color: '#bbb' }}>Please check back later!</p>
             </div>
           ) : (
             <>
@@ -128,7 +128,7 @@ export default function BlogPage() {
                           )}
                           <div className="mt-3 flex items-center gap-3 text-xs text-white/50">
                             <span>{formatTimeAgo(featured.publishedAt || featured.createdAt)}</span>
-                            {featured.viewCount > 0 && <><span>·</span><span>{featured.viewCount} luot xem</span></>}
+                            {featured.viewCount > 0 && <><span>·</span><span>{featured.viewCount} views</span></>}
                           </div>
                         </div>
                       </div>
@@ -204,7 +204,7 @@ export default function BlogPage() {
                         </div>
                         <div className="mt-2 flex items-center gap-3 text-xs" style={{ color: '#999' }}>
                           <span>{formatTimeAgo(p.publishedAt || p.createdAt)}</span>
-                          {p.viewCount > 0 && <><span>·</span><span>{p.viewCount} luot xem</span></>}
+                          {p.viewCount > 0 && <><span>·</span><span>{p.viewCount} views</span></>}
                           {p.tags?.length > 0 && (
                             <>
                               <span>·</span>

@@ -28,7 +28,7 @@ export async function sendVerificationEmail(
   const mailOptions = {
     from: `"Bê Tông Việt" <${config.emailFrom}>`,
     to: email,
-    subject: 'Xác nhận địa chỉ email của bạn',
+    subject: 'Verify Your Email Address',
     html: `
       <!DOCTYPE html>
       <html>
@@ -49,16 +49,16 @@ export async function sendVerificationEmail(
               <h1 style="margin: 0; color: #1d1d1d;">Bê Tông Việt</h1>
             </div>
             <div class="content">
-              <h2>Xin chào ${name}!</h2>
-              <p>Cảm ơn bạn đã đăng ký tài khoản tại Bê Tông Việt.</p>
-              <p>Vui lòng nhấn vào nút bên dưới để xác nhận địa chỉ email của bạn:</p>
+              <h2>Hello ${name}!</h2>
+              <p>Thank you for creating an account with Bê Tông Việt.</p>
+              <p>Please click the button below to verify your email address:</p>
               <div style="text-align: center;">
-                <a href="${verificationUrl}" class="button">Xác nhận email</a>
+                <a href="${verificationUrl}" class="button">Verify Email</a>
               </div>
-              <p>Hoặc copy đường link sau vào trình duyệt:</p>
+              <p>Or copy and paste the following link into your browser:</p>
               <p style="word-break: break-all; color: #666;">${verificationUrl}</p>
-              <p><strong>Link này sẽ hết hạn sau 24 giờ.</strong></p>
-              <p>Nếu bạn không tạo tài khoản này, vui lòng bỏ qua email này.</p>
+              <p><strong>This link will expire in 24 hours.</strong></p>
+              <p>If you did not create this account, please ignore this email.</p>
             </div>
             <div class="footer">
               <p>&copy; ${new Date().getFullYear()} Bê Tông Việt. All rights reserved.</p>
@@ -68,16 +68,16 @@ export async function sendVerificationEmail(
       </html>
     `,
     text: `
-      Xin chào ${name}!
+      Hello ${name}!
 
-      Cảm ơn bạn đã đăng ký tài khoản tại Bê Tông Việt.
+      Thank you for creating an account with Bê Tông Việt.
 
-      Vui lòng nhấn vào link sau để xác nhận địa chỉ email của bạn:
+      Please click the following link to verify your email address:
       ${verificationUrl}
 
-      Link này sẽ hết hạn sau 24 giờ.
+      This link will expire in 24 hours.
 
-      Nếu bạn không tạo tài khoản này, vui lòng bỏ qua email này.
+      If you did not create this account, please ignore this email.
 
       © ${new Date().getFullYear()} Bê Tông Việt. All rights reserved.
     `,
@@ -108,7 +108,7 @@ export async function sendPasswordResetEmail(
   const mailOptions = {
     from: `"Bê Tông Việt" <${config.emailFrom}>`,
     to: email,
-    subject: 'Đặt lại mật khẩu của bạn',
+    subject: 'Reset Your Password',
     html: `
       <!DOCTYPE html>
       <html>
@@ -130,18 +130,18 @@ export async function sendPasswordResetEmail(
               <h1 style="margin: 0; color: #1d1d1d;">Bê Tông Việt</h1>
             </div>
             <div class="content">
-              <h2>Xin chào ${name}!</h2>
-              <p>Chúng tôi nhận được yêu cầu đặt lại mật khẩu cho tài khoản của bạn.</p>
-              <p>Nhấn vào nút bên dưới để tạo mật khẩu mới:</p>
+              <h2>Hello ${name}!</h2>
+              <p>We received a request to reset your account password.</p>
+              <p>Click the button below to create a new password:</p>
               <div style="text-align: center;">
-                <a href="${resetUrl}" class="button">Đặt lại mật khẩu</a>
+                <a href="${resetUrl}" class="button">Reset Password</a>
               </div>
-              <p>Hoặc copy đường link sau vào trình duyệt:</p>
+              <p>Or copy and paste the following link into your browser:</p>
               <p style="word-break: break-all; color: #666;">${resetUrl}</p>
               <div class="warning">
-                <strong>⚠️ Link này sẽ hết hạn sau 1 giờ.</strong>
+                <strong>⚠️ This link will expire in 1 hour.</strong>
               </div>
-              <p><strong>Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.</strong> Tài khoản của bạn vẫn an toàn.</p>
+              <p><strong>If you did not request a password reset, please ignore this email.</strong> Your account is safe.</p>
             </div>
             <div class="footer">
               <p>&copy; ${new Date().getFullYear()} Bê Tông Việt. All rights reserved.</p>
@@ -151,16 +151,16 @@ export async function sendPasswordResetEmail(
       </html>
     `,
     text: `
-      Xin chào ${name}!
+      Hello ${name}!
 
-      Chúng tôi nhận được yêu cầu đặt lại mật khẩu cho tài khoản của bạn.
+      We received a request to reset your account password.
 
-      Nhấn vào link sau để tạo mật khẩu mới:
+      Click the following link to create a new password:
       ${resetUrl}
 
-      Link này sẽ hết hạn sau 1 giờ.
+      This link will expire in 1 hour.
 
-      Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này. Tài khoản của bạn vẫn an toàn.
+      If you did not request a password reset, please ignore this email. Your account is safe.
 
       © ${new Date().getFullYear()} Bê Tông Việt. All rights reserved.
     `,
@@ -187,7 +187,7 @@ export async function sendWelcomeEmail(
   const mailOptions = {
     from: `"Bê Tông Việt" <${config.emailFrom}>`,
     to: email,
-    subject: 'Chào mừng đến với Bê Tông Việt!',
+    subject: 'Welcome to Bê Tông Việt!',
     html: `
       <!DOCTYPE html>
       <html>
@@ -209,21 +209,21 @@ export async function sendWelcomeEmail(
               <h1 style="margin: 0; color: #1d1d1d;">Bê Tông Việt</h1>
             </div>
             <div class="content">
-              <h2>Chào mừng ${name}!</h2>
-              <p>Chúc mừng bạn đã trở thành thành viên của Bê Tông Việt!</p>
-              <p>Bạn có thể bắt đầu khám phá các sản phẩm:</p>
+              <h2>Welcome ${name}!</h2>
+              <p>Congratulations on becoming a member of Bê Tông Việt!</p>
+              <p>Start exploring our products:</p>
               <div class="feature">
-                ✓ Tấm ốp cầu thang cao cấp<br>
-                ✓ Gạch ốp lát terrazzo<br>
-                ✓ Ghế đá công viên<br>
-                ✓ Bàn đá & bê tông<br>
-                ✓ Dịch vụ thi công chuyên nghiệp
+                ✓ Premium stair cladding panels<br>
+                ✓ Terrazzo tiles<br>
+                ✓ Stone park benches<br>
+                ✓ Stone & concrete tables<br>
+                ✓ Professional construction services
               </div>
               <div style="text-align: center;">
-                <a href="${config.frontendUrl}/landing" class="button">Khám phá sản phẩm</a>
+                <a href="${config.frontendUrl}/landing" class="button">Explore Products</a>
               </div>
-              <p>Nếu bạn có bất kỳ câu hỏi nào, đừng ngần ngại liên hệ với chúng tôi!</p>
-              <p>Trân trọng,<br>Đội ngũ Bê Tông Việt</p>
+              <p>If you have any questions, don't hesitate to contact us!</p>
+              <p>Best regards,<br>The Bê Tông Việt Team</p>
             </div>
             <div class="footer">
               <p>&copy; ${new Date().getFullYear()} Bê Tông Việt. All rights reserved.</p>
@@ -233,23 +233,23 @@ export async function sendWelcomeEmail(
       </html>
     `,
     text: `
-      Chào mừng ${name}!
+      Welcome ${name}!
 
-      Chúc mừng bạn đã trở thành thành viên của Bê Tông Việt!
+      Congratulations on becoming a member of Bê Tông Việt!
 
-      Bạn có thể bắt đầu khám phá các sản phẩm:
-      ✓ Tấm ốp cầu thang cao cấp
-      ✓ Gạch ốp lát terrazzo
-      ✓ Ghế đá công viên
-      ✓ Bàn đá & bê tông
-      ✓ Dịch vụ thi công chuyên nghiệp
+      Start exploring our products:
+      ✓ Premium stair cladding panels
+      ✓ Terrazzo tiles
+      ✓ Stone park benches
+      ✓ Stone & concrete tables
+      ✓ Professional construction services
 
-      Truy cập: ${config.frontendUrl}/landing
+      Visit: ${config.frontendUrl}/landing
 
-      Nếu bạn có bất kỳ câu hỏi nào, đừng ngần ngại liên hệ với chúng tôi!
+      If you have any questions, don't hesitate to contact us!
 
-      Trân trọng,
-      Đội ngũ Bê Tông Việt
+      Best regards,
+      The Bê Tông Việt Team
 
       © ${new Date().getFullYear()} Bê Tông Việt. All rights reserved.
     `,

@@ -32,23 +32,23 @@ export default function RegisterPage() {
 
   const validateForm = () => {
     if (!formData.firstName.trim()) {
-      setError('Vui lòng nhập tên');
+      setError('Please enter your first name');
       return false;
     }
     if (!formData.lastName.trim()) {
-      setError('Vui lòng nhập họ');
+      setError('Please enter your last name');
       return false;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      setError('Email không hợp lệ');
+      setError('Invalid email address');
       return false;
     }
     if (!formData.password) {
-      setError('Vui lòng nhập mật khẩu');
+      setError('Please enter your password');
       return false;
     }
     if (formData.password !== formData.confirmPassword) {
-      setError('Mật khẩu xác nhận không khớp');
+      setError('Passwords do not match');
       return false;
     }
     return true;
@@ -68,7 +68,7 @@ export default function RegisterPage() {
       await register(formData.email, formData.password, formData.firstName, formData.lastName);
       setSuccess(true);
     } catch (err) {
-      setError(err.message || 'Đăng ký thất bại');
+      setError(err.message || 'Registration failed');
     } finally {
       setLoading(false);
     }
@@ -92,15 +92,15 @@ export default function RegisterPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
             </div>
-            <h2 className="text-2xl font-light text-charcoal mb-2">Đăng ký thành công!</h2>
+            <h2 className="text-2xl font-light text-charcoal mb-2">Registration Successful!</h2>
             <p className="text-charcoal/70 mb-6">
-              Tài khoản của bạn đã được tạo. Bạn có thể đăng nhập ngay bây giờ.
+              Your account has been created. You can now sign in.
             </p>
             <Link
               href="/login"
               className="inline-block bg-charcoal text-cream py-3 px-6 rounded-md hover:bg-charcoal/90 transition"
             >
-              Đến trang đăng nhập
+              Go to Login
             </Link>
           </div>
         </div>
@@ -116,7 +116,7 @@ export default function RegisterPage() {
           <h1 className="text-3xl font-light text-charcoal mb-2">
             bê tông <span className="font-normal">việt</span>
           </h1>
-          <p className="text-charcoal/70">tạo tài khoản mới</p>
+          <p className="text-charcoal/70">create a new account</p>
         </div>
 
         {/* Register Form */}
@@ -133,7 +133,7 @@ export default function RegisterPage() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label htmlFor="firstName" className="block text-sm font-medium text-charcoal mb-2">
-                  Tên *
+                  First Name *
                 </label>
                 <input
                   id="firstName"
@@ -143,12 +143,12 @@ export default function RegisterPage() {
                   value={formData.firstName}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-charcoal/20 rounded-md focus:outline-none focus:ring-2 focus:ring-charcoal/50 focus:border-transparent transition"
-                  placeholder="Văn"
+                  placeholder="John"
                 />
               </div>
               <div>
                 <label htmlFor="lastName" className="block text-sm font-medium text-charcoal mb-2">
-                  Họ *
+                  Last Name *
                 </label>
                 <input
                   id="lastName"
@@ -158,7 +158,7 @@ export default function RegisterPage() {
                   value={formData.lastName}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-charcoal/20 rounded-md focus:outline-none focus:ring-2 focus:ring-charcoal/50 focus:border-transparent transition"
-                  placeholder="Nguyễn"
+                  placeholder="Doe"
                 />
               </div>
             </div>
@@ -183,7 +183,7 @@ export default function RegisterPage() {
             {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-charcoal mb-2">
-                Mật khẩu *
+                Password *
               </label>
               <input
                 id="password"
@@ -200,7 +200,7 @@ export default function RegisterPage() {
             {/* Confirm Password Field */}
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-charcoal mb-2">
-                Xác nhận mật khẩu *
+                Confirm Password *
               </label>
               <input
                 id="confirmPassword"
@@ -220,15 +220,15 @@ export default function RegisterPage() {
               disabled={loading}
               className="w-full bg-charcoal text-cream py-3 px-6 rounded-md hover:bg-charcoal/90 transition disabled:opacity-50 disabled:cursor-not-allowed font-medium"
             >
-              {loading ? 'Đang đăng ký...' : 'Đăng ký'}
+              {loading ? 'Signing up...' : 'Sign Up'}
             </button>
           </form>
 
           {/* Login Link */}
           <div className="mt-6 text-center text-sm">
-            <span className="text-charcoal/70">đã có tài khoản? </span>
+            <span className="text-charcoal/70">Already have an account? </span>
             <Link href="/login" className="text-charcoal font-medium hover:underline">
-              đăng nhập ngay
+              Sign in
             </Link>
           </div>
         </div>
@@ -236,7 +236,7 @@ export default function RegisterPage() {
         {/* Back to Home */}
         <div className="mt-6 text-center">
           <Link href="/landing" className="text-sm text-charcoal/70 hover:text-charcoal transition">
-            ← về trang chủ
+            ← Back to Home
           </Link>
         </div>
       </div>

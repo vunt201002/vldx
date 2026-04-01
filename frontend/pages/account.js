@@ -97,9 +97,9 @@ export default function AccountPage() {
     setMessage(null);
     try {
       await updateProfile(form);
-      setMessage({ type: 'success', text: 'Cap nhat thanh cong!' });
+      setMessage({ type: 'success', text: 'Updated successfully!' });
     } catch (err) {
-      setMessage({ type: 'error', text: err.message || 'Cap nhat that bai' });
+      setMessage({ type: 'error', text: err.message || 'Update failed' });
     } finally {
       setSaving(false);
     }
@@ -129,7 +129,7 @@ export default function AccountPage() {
   return (
     <>
       <Head>
-        <title>Tai khoan - VLXD</title>
+        <title>Account - VLXD</title>
       </Head>
 
       <div className="min-h-screen bg-cream">
@@ -137,7 +137,7 @@ export default function AccountPage() {
         <div className="bg-charcoal text-cream">
           <div className="mx-auto max-w-3xl px-4 py-10">
             <Link href="/landing" className="text-sm text-cream/60 hover:text-cream transition">
-              ← Trang chu
+              ← Home
             </Link>
             <div className="mt-4 flex items-center gap-4">
               {/* Avatar */}
@@ -155,7 +155,7 @@ export default function AccountPage() {
                 )}
                 <label className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-full bg-black/0 group-hover:bg-black/40 transition">
                   <span className="hidden group-hover:block text-xs text-white font-medium">
-                    {uploading ? '...' : 'Doi'}
+                    {uploading ? '...' : 'Change'}
                   </span>
                   <input
                     type="file"
@@ -180,8 +180,8 @@ export default function AccountPage() {
         <div className="mx-auto max-w-3xl px-4">
           <div className="flex gap-0 border-b border-charcoal/10 -mt-px">
             {[
-              { key: 'profile', label: 'Thong tin' },
-              { key: 'favorites', label: 'Yeu thich' },
+              { key: 'profile', label: 'Info' },
+              { key: 'favorites', label: 'Favorites' },
             ].map((t) => (
               <button
                 key={t.key}
@@ -215,7 +215,7 @@ export default function AccountPage() {
             <form onSubmit={handleSave} className="space-y-5">
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-charcoal/70 mb-1.5">Ho</label>
+                  <label className="block text-sm font-medium text-charcoal/70 mb-1.5">Last Name</label>
                   <input
                     name="firstName"
                     value={form.firstName}
@@ -224,7 +224,7 @@ export default function AccountPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-charcoal/70 mb-1.5">Ten</label>
+                  <label className="block text-sm font-medium text-charcoal/70 mb-1.5">First Name</label>
                   <input
                     name="lastName"
                     value={form.lastName}
@@ -235,7 +235,7 @@ export default function AccountPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-charcoal/70 mb-1.5">So dien thoai</label>
+                <label className="block text-sm font-medium text-charcoal/70 mb-1.5">Phone</label>
                 <input
                   name="phone"
                   type="tel"
@@ -247,7 +247,7 @@ export default function AccountPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-charcoal/70 mb-1.5">Ngay sinh</label>
+                <label className="block text-sm font-medium text-charcoal/70 mb-1.5">Birthday</label>
                 <input
                   name="birthday"
                   type="date"
@@ -272,14 +272,14 @@ export default function AccountPage() {
                   disabled={saving}
                   className="rounded-lg bg-charcoal px-6 py-2.5 text-sm font-semibold text-cream transition hover:bg-charcoal/90 disabled:opacity-50"
                 >
-                  {saving ? 'Dang luu...' : 'Luu thay doi'}
+                  {saving ? 'Saving...' : 'Save Changes'}
                 </button>
                 <button
                   type="button"
                   onClick={logout}
                   className="rounded-lg border border-charcoal/20 px-6 py-2.5 text-sm font-medium text-charcoal/60 transition hover:bg-charcoal/5"
                 >
-                  Dang xuat
+                  Log Out
                 </button>
               </div>
             </form>
@@ -289,9 +289,9 @@ export default function AccountPage() {
             <div>
               {favorites.length === 0 ? (
                 <div className="py-16 text-center">
-                  <p className="text-charcoal/50">Chua co san pham yeu thich nao</p>
+                  <p className="text-charcoal/50">No favorite products yet</p>
                   <Link href="/products" className="mt-3 inline-block text-sm font-medium text-charcoal underline">
-                    Kham pha san pham
+                    Browse Products
                   </Link>
                 </div>
               ) : (
@@ -320,7 +320,7 @@ export default function AccountPage() {
                           </Link>
                           {product.price && (
                             <p className="mt-0.5 text-xs text-charcoal/50">
-                              {product.price.toLocaleString('vi-VN')} d
+                              {product.price.toLocaleString('en-US')} d
                             </p>
                           )}
                         </div>
@@ -328,7 +328,7 @@ export default function AccountPage() {
                           onClick={() => handleRemoveFavorite(product._id)}
                           className="self-start mt-1 text-xs text-red-500 hover:text-red-700 transition"
                         >
-                          Bo yeu thich
+                          Remove
                         </button>
                       </div>
                     </div>

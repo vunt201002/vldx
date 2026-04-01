@@ -29,8 +29,8 @@ export default function ThemeLayout({
 
   const fontVarsStyle = `:root { --font-display: "${displayFont}", serif; --font-body: "${bodyFont}", sans-serif; }`;
 
-  const title = pageMetadata.title || 'VLXD - Vật Liệu Xây Dựng';
-  const description = pageMetadata.description || 'Vật liệu xây dựng cao cấp';
+  const title = pageMetadata.title || 'VLXD - Construction Materials';
+  const description = pageMetadata.description || 'Premium construction materials';
   const bodyClass = pageMetadata.bodyClass || 'font-body bg-cream text-charcoal';
 
   // Transform global header and footer blocks to config format

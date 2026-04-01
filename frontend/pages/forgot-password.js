@@ -14,7 +14,7 @@ export default function ForgotPasswordPage() {
     setError('');
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Email không hợp lệ');
+      setError('Invalid email address');
       return;
     }
 
@@ -24,7 +24,7 @@ export default function ForgotPasswordPage() {
       await requestPasswordReset(email);
       setSuccess(true);
     } catch (err) {
-      setError(err.message || 'Gửi yêu cầu thất bại');
+      setError(err.message || 'Request failed');
     } finally {
       setLoading(false);
     }
@@ -40,19 +40,19 @@ export default function ForgotPasswordPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
               </svg>
             </div>
-            <h2 className="text-2xl font-light text-charcoal mb-2">Kiểm tra email của bạn</h2>
+            <h2 className="text-2xl font-light text-charcoal mb-2">Check Your Email</h2>
             <p className="text-charcoal/70 mb-2">
-              Nếu tài khoản tồn tại, chúng tôi đã gửi link đặt lại mật khẩu đến:
+              If an account exists, we've sent a password reset link to:
             </p>
             <p className="font-medium text-charcoal mb-6">{email}</p>
             <p className="text-sm text-charcoal/60 mb-6">
-              Link sẽ hết hạn sau 1 giờ. Kiểm tra cả thư mục spam nếu không thấy email.
+              The link expires in 1 hour. Check your spam folder if you don't see it.
             </p>
             <Link
               href="/login"
               className="inline-block text-sm text-charcoal hover:underline"
             >
-              ← quay lại đăng nhập
+              ← Back to Login
             </Link>
           </div>
         </div>
@@ -65,8 +65,8 @@ export default function ForgotPasswordPage() {
       <div className="max-w-md w-full">
         {/* Logo/Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-light text-charcoal mb-2">quên mật khẩu?</h1>
-          <p className="text-charcoal/70">nhập email để nhận link đặt lại mật khẩu</p>
+          <h1 className="text-3xl font-light text-charcoal mb-2">Forgot Password?</h1>
+          <p className="text-charcoal/70">enter your email to receive a password reset link</p>
         </div>
 
         {/* Form */}
@@ -101,14 +101,14 @@ export default function ForgotPasswordPage() {
               disabled={loading}
               className="w-full bg-charcoal text-cream py-3 px-6 rounded-md hover:bg-charcoal/90 transition disabled:opacity-50 disabled:cursor-not-allowed font-medium"
             >
-              {loading ? 'Đang gửi...' : 'Gửi link đặt lại mật khẩu'}
+              {loading ? 'Sending...' : 'Send Reset Link'}
             </button>
           </form>
 
           {/* Back to Login */}
           <div className="mt-6 text-center">
             <Link href="/login" className="text-sm text-charcoal/70 hover:text-charcoal transition">
-              ← quay lại đăng nhập
+              ← Back to Login
             </Link>
           </div>
         </div>
@@ -116,7 +116,7 @@ export default function ForgotPasswordPage() {
         {/* Back to Home */}
         <div className="mt-6 text-center">
           <Link href="/landing" className="text-sm text-charcoal/70 hover:text-charcoal transition">
-            ← về trang chủ
+            ← Back to Home
           </Link>
         </div>
       </div>

@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { get } from '../../lib/api';
 
 const CATEGORY_LABELS = {
-  'xi-mang': 'Xi Mang',
-  'gach': 'Gach',
-  'cat-son': 'Cat & Son',
-  'thep': 'Thep',
-  'da': 'Da',
-  'cat': 'Cat',
-  'ong-nuoc': 'Ong Nuoc',
-  'vat-lieu-khac': 'Khac',
+  'xi-mang': 'Cement',
+  'gach': 'Bricks',
+  'cat-son': 'Sand & Paint',
+  'thep': 'Steel',
+  'da': 'Stone',
+  'cat': 'Sand',
+  'ong-nuoc': 'Pipes',
+  'vat-lieu-khac': 'Other',
 };
 
 function formatPrice(price) {
@@ -61,7 +61,7 @@ export default function MaterialDetail({ material }) {
         <header className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
             <Link href="/" className="text-gray-500 hover:text-gray-900 text-sm">
-              &larr; Trang chu
+              &larr; Home
             </Link>
             <span className="text-gray-300">/</span>
             <span className="text-sm text-gray-700">{material.name}</span>
@@ -106,7 +106,7 @@ export default function MaterialDetail({ material }) {
                       : 'bg-red-100 text-red-700'
                   }`}
                 >
-                  {material.inStock ? 'Con hang' : 'Het hang'}
+                  {material.inStock ? 'In Stock' : 'Out of Stock'}
                 </span>
               </div>
 
@@ -120,7 +120,7 @@ export default function MaterialDetail({ material }) {
               {specEntries.length > 0 && (
                 <div className="mt-8">
                   <h2 className="text-lg font-semibold text-gray-900 mb-3">
-                    Thong so ky thuat
+                    Specifications
                   </h2>
                   <dl className="grid grid-cols-2 gap-2">
                     {specEntries.map(([key, value]) => (

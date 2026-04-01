@@ -48,15 +48,15 @@ export default function Contact({ id, settings, blocks }) {
             <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="font-body text-xs tracking-[0.2em] uppercase text-warm-500 mb-2 block">họ tên</label>
+                  <label className="font-body text-xs tracking-[0.2em] uppercase text-warm-500 mb-2 block">full name</label>
                   <input
                     type="text"
                     className="w-full bg-transparent border-b border-warm-700 py-3 font-body text-white placeholder-warm-600 focus:border-sandstone focus:outline-none transition-colors"
-                    placeholder="Nguyễn Văn A"
+                    placeholder="John Doe"
                   />
                 </div>
                 <div>
-                  <label className="font-body text-xs tracking-[0.2em] uppercase text-warm-500 mb-2 block">số điện thoại</label>
+                  <label className="font-body text-xs tracking-[0.2em] uppercase text-warm-500 mb-2 block">phone number</label>
                   <input
                     type="tel"
                     className="w-full bg-transparent border-b border-warm-700 py-3 font-body text-white placeholder-warm-600 focus:border-sandstone focus:outline-none transition-colors"
@@ -75,24 +75,24 @@ export default function Contact({ id, settings, blocks }) {
               </div>
 
               <div>
-                <label className="font-body text-xs tracking-[0.2em] uppercase text-warm-500 mb-2 block">sản phẩm quan tâm</label>
+                <label className="font-body text-xs tracking-[0.2em] uppercase text-warm-500 mb-2 block">product of interest</label>
                 <select className="w-full bg-transparent border-b border-warm-700 py-3 font-body text-warm-400 focus:border-sandstone focus:outline-none transition-colors appearance-none cursor-pointer">
-                  <option value="" className="bg-charcoal">Chọn sản phẩm</option>
-                  <option value="gach-lat" className="bg-charcoal">Gạch Lát Sân Vườn</option>
-                  <option value="da-granite" className="bg-charcoal">Đá Granite</option>
+                  <option value="" className="bg-charcoal">Select a product</option>
+                  <option value="gach-lat" className="bg-charcoal">Garden Pavers</option>
+                  <option value="da-granite" className="bg-charcoal">Granite Stone</option>
                   <option value="terrazzo" className="bg-charcoal">Terrazzo</option>
-                  <option value="gach-block" className="bg-charcoal">Gạch Block</option>
-                  <option value="da-op-lat" className="bg-charcoal">Đá Ốp Lát</option>
-                  <option value="bac-thang" className="bg-charcoal">Bậc Thang & Coping</option>
+                  <option value="gach-block" className="bg-charcoal">Concrete Blocks</option>
+                  <option value="da-op-lat" className="bg-charcoal">Cladding Stone</option>
+                  <option value="bac-thang" className="bg-charcoal">Stair Treads & Copings</option>
                 </select>
               </div>
 
               <div>
-                <label className="font-body text-xs tracking-[0.2em] uppercase text-warm-500 mb-2 block">nội dung</label>
+                <label className="font-body text-xs tracking-[0.2em] uppercase text-warm-500 mb-2 block">message</label>
                 <textarea
                   rows="4"
                   className="w-full bg-transparent border-b border-warm-700 py-3 font-body text-white placeholder-warm-600 focus:border-sandstone focus:outline-none transition-colors resize-none"
-                  placeholder="Mô tả yêu cầu của bạn..."
+                  placeholder="Describe your requirements..."
                 />
               </div>
 

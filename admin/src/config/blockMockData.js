@@ -11,19 +11,19 @@ export const BLOCK_MOCK_DATA = {
       logoUrl: '/',
     },
     blocks: [
-      { type: 'nav-link', settings: { label: 'Trang chủ', url: '/' } },
-      { type: 'nav-link', settings: { label: 'Sản phẩm', url: '/products' } },
-      { type: 'nav-link', settings: { label: 'Dịch vụ', url: '/service' } },
-      { type: 'nav-link', settings: { label: 'Liên hệ', url: '/contact' } },
+      { type: 'nav-link', settings: { label: 'Home', url: '/' } },
+      { type: 'nav-link', settings: { label: 'Products', url: '/products' } },
+      { type: 'nav-link', settings: { label: 'Services', url: '/service' } },
+      { type: 'nav-link', settings: { label: 'Contact', url: '/contact' } },
     ],
   },
 
   hero: {
     settings: {
-      title: 'Vật Liệu Xây Dựng Cao Cấp',
-      subtitle: 'Chất lượng hàng đầu - Giá cả hợp lý',
+      title: 'Premium Construction Materials',
+      subtitle: 'Top quality — Fair prices',
       backgroundImage: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1200',
-      ctaText: 'Xem sản phẩm',
+      ctaText: 'View Products',
       ctaUrl: '/products',
     },
   },
@@ -52,21 +52,21 @@ export const BLOCK_MOCK_DATA = {
 
   collections: {
     settings: {
-      overline: 'bộ sưu tập',
-      title: 'sản phẩm',
-      titleAccent: 'nổi bật',
+      overline: 'collections',
+      title: 'products',
+      titleAccent: 'featured',
       description:
-        'mỗi dòng sản phẩm được sản xuất thủ công, kiểm soát chất lượng nghiêm ngặt từ nguyên liệu đến thành phẩm.',
-      cardLinkLabel: 'xem chi tiết',
+        'each product line is handcrafted with strict quality control from raw materials to finished goods.',
+      cardLinkLabel: 'view details',
     },
     blocks: [
       {
         type: 'product-card',
         settings: {
-          name: 'Gạch Lát Sân Vườn',
+          name: 'Garden Pavers',
           slug: 'gach-lat',
-          desc: 'Bề mặt chống trơn, chịu lực cao, phù hợp lối đi và sân vườn ngoài trời.',
-          specs: '400×400mm  ·  50mm dày',
+          desc: 'Anti-slip surface, high load-bearing capacity, ideal for walkways and outdoor gardens.',
+          specs: '400×400mm  ·  50mm thick',
           color: 'from-amber-800/80 to-amber-900/90',
           image: 'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=600',
         },
@@ -74,10 +74,10 @@ export const BLOCK_MOCK_DATA = {
       {
         type: 'product-card',
         settings: {
-          name: 'Đá Granite',
+          name: 'Granite Stone',
           slug: 'da-granite',
-          desc: 'Đá tự nhiên gia công chính xác, bề mặt mài nhám hoặc đánh bóng theo yêu cầu.',
-          specs: '600×300mm  ·  20mm dày',
+          desc: 'Precision-cut natural stone with honed or polished finish to order.',
+          specs: '600×300mm  ·  20mm thick',
           color: 'from-stone-600/80 to-stone-800/90',
           image: 'https://images.unsplash.com/photo-1607434472257-d9f8e57a643d?w=600',
         },
@@ -87,8 +87,8 @@ export const BLOCK_MOCK_DATA = {
         settings: {
           name: 'Terrazzo',
           slug: 'terrazzo',
-          desc: 'Phối trộn đá marble, granite và xi măng — mỗi viên gạch là một tác phẩm nghệ thuật.',
-          specs: '400×400mm  ·  30mm dày',
+          desc: 'A blend of marble, granite, and cement — every tile is a work of art.',
+          specs: '400×400mm  ·  30mm thick',
           color: 'from-rose-800/70 to-stone-800/90',
           image: 'https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=600',
         },
@@ -98,57 +98,57 @@ export const BLOCK_MOCK_DATA = {
 
   about: {
     settings: {
-      overline: 'về chúng tôi',
-      title: 'cam kết',
-      titleAccent: 'chất lượng',
+      overline: 'about us',
+      title: 'our',
+      titleAccent: 'commitment',
       description:
-        'Với hơn 10 năm kinh nghiệm trong ngành vật liệu xây dựng, chúng tôi tự hào mang đến những sản phẩm chất lượng cao nhất.',
+        'With over 10 years of experience in the construction materials industry, we take pride in delivering the highest quality products.',
     },
     blocks: [
-      { type: 'stat', settings: { value: '10+', label: 'Năm kinh nghiệm' } },
-      { type: 'stat', settings: { value: '1000+', label: 'Dự án hoàn thành' } },
-      { type: 'stat', settings: { value: '500+', label: 'Khách hàng hài lòng' } },
-      { type: 'stat', settings: { value: '50+', label: 'Đối tác tin cậy' } },
+      { type: 'stat', settings: { value: '10+', label: 'Years of experience' } },
+      { type: 'stat', settings: { value: '1000+', label: 'Projects completed' } },
+      { type: 'stat', settings: { value: '500+', label: 'Happy customers' } },
+      { type: 'stat', settings: { value: '50+', label: 'Trusted partners' } },
     ],
   },
 
   featured: {
     settings: {
-      overline: 'tại sao chọn chúng tôi',
-      title: 'ưu điểm',
-      titleAccent: 'vượt trội',
+      overline: 'why choose us',
+      title: 'key',
+      titleAccent: 'advantages',
     },
     blocks: [
       {
         type: 'feature-card',
         settings: {
           icon: '✓',
-          title: 'Chất lượng cao',
-          description: 'Sản phẩm đạt tiêu chuẩn quốc tế, được kiểm định nghiêm ngặt.',
+          title: 'High Quality',
+          description: 'Products meet international standards with rigorous quality testing.',
         },
       },
       {
         type: 'feature-card',
         settings: {
           icon: '⚡',
-          title: 'Giao hàng nhanh',
-          description: 'Vận chuyển toàn quốc, cam kết đúng hẹn.',
+          title: 'Fast Delivery',
+          description: 'Nationwide shipping with guaranteed on-time delivery.',
         },
       },
       {
         type: 'feature-card',
         settings: {
           icon: '💰',
-          title: 'Giá cả hợp lý',
-          description: 'Giá trực tiếp từ nhà máy, không qua trung gian.',
+          title: 'Fair Prices',
+          description: 'Factory-direct pricing with no middlemen.',
         },
       },
       {
         type: 'feature-card',
         settings: {
           icon: '🛠️',
-          title: 'Hỗ trợ tận tình',
-          description: 'Tư vấn kỹ thuật miễn phí, hỗ trợ 24/7.',
+          title: 'Dedicated Support',
+          description: 'Free technical consultation and 24/7 support.',
         },
       },
     ],
@@ -156,35 +156,35 @@ export const BLOCK_MOCK_DATA = {
 
   'material-showcase': {
     settings: {
-      title: 'Các loại vật liệu',
-      subtitle: 'Chọn loại vật liệu phù hợp với nhu cầu của bạn',
+      title: 'Material Types',
+      subtitle: 'Choose the material that fits your needs',
     },
     blocks: [
       {
         type: 'variant-item',
         settings: {
-          name: 'Gạch 40x40',
+          name: 'Tile 40x40',
           image: 'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=400',
           price: '250,000đ',
-          description: 'Kích thước: 400x400x50mm',
+          description: 'Size: 400x400x50mm',
         },
       },
       {
         type: 'variant-item',
         settings: {
-          name: 'Gạch 50x50',
+          name: 'Tile 50x50',
           image: 'https://images.unsplash.com/photo-1607434472257-d9f8e57a643d?w=400',
           price: '350,000đ',
-          description: 'Kích thước: 500x500x50mm',
+          description: 'Size: 500x500x50mm',
         },
       },
       {
         type: 'variant-item',
         settings: {
-          name: 'Gạch 60x30',
+          name: 'Tile 60x30',
           image: 'https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=400',
           price: '280,000đ',
-          description: 'Kích thước: 600x300x50mm',
+          description: 'Size: 600x300x50mm',
         },
       },
     ],
@@ -192,57 +192,57 @@ export const BLOCK_MOCK_DATA = {
 
   'color-picker': {
     settings: {
-      title: 'Chọn màu sắc',
-      subtitle: 'Màu sắc đa dạng, phù hợp với mọi phong cách',
+      title: 'Choose Color',
+      subtitle: 'A wide range of colors to match every style',
     },
     blocks: [
-      { type: 'color-swatch', settings: { name: 'Xám đá', hex: '#808080', image: '' } },
-      { type: 'color-swatch', settings: { name: 'Be nhạt', hex: '#d4c5b9', image: '' } },
-      { type: 'color-swatch', settings: { name: 'Đen than', hex: '#2d2d2d', image: '' } },
-      { type: 'color-swatch', settings: { name: 'Nâu gỗ', hex: '#8b4513', image: '' } },
-      { type: 'color-swatch', settings: { name: 'Trắng ngà', hex: '#fffff0', image: '' } },
-      { type: 'color-swatch', settings: { name: 'Xanh rêu', hex: '#556b2f', image: '' } },
+      { type: 'color-swatch', settings: { name: 'Stone Gray', hex: '#808080', image: '' } },
+      { type: 'color-swatch', settings: { name: 'Light Beige', hex: '#d4c5b9', image: '' } },
+      { type: 'color-swatch', settings: { name: 'Charcoal Black', hex: '#2d2d2d', image: '' } },
+      { type: 'color-swatch', settings: { name: 'Wood Brown', hex: '#8b4513', image: '' } },
+      { type: 'color-swatch', settings: { name: 'Ivory White', hex: '#fffff0', image: '' } },
+      { type: 'color-swatch', settings: { name: 'Moss Green', hex: '#556b2f', image: '' } },
     ],
   },
 
   'service-process': {
     settings: {
-      overline: 'quy trình',
-      title: 'làm việc',
-      titleAccent: 'chuyên nghiệp',
-      description: 'Quy trình 4 bước đơn giản, minh bạch',
+      overline: 'our',
+      title: 'work',
+      titleAccent: 'process',
+      description: 'A simple, transparent 4-step process',
     },
     blocks: [
       {
         type: 'process-step',
         settings: {
           step: '01',
-          title: 'Tư vấn',
-          description: 'Khảo sát hiện trường, tư vấn giải pháp phù hợp',
+          title: 'Consultation',
+          description: 'On-site survey and tailored solution consulting',
         },
       },
       {
         type: 'process-step',
         settings: {
           step: '02',
-          title: 'Báo giá',
-          description: 'Lập báo giá chi tiết, minh bạch',
+          title: 'Quotation',
+          description: 'Detailed and transparent pricing',
         },
       },
       {
         type: 'process-step',
         settings: {
           step: '03',
-          title: 'Thi công',
-          description: 'Đội ngũ thi công chuyên nghiệp, đúng tiến độ',
+          title: 'Construction',
+          description: 'Professional construction team, on schedule',
         },
       },
       {
         type: 'process-step',
         settings: {
           step: '04',
-          title: 'Bàn giao',
-          description: 'Nghiệm thu, bàn giao và bảo hành',
+          title: 'Handover',
+          description: 'Inspection, handover, and warranty',
         },
       },
     ],
@@ -250,26 +250,26 @@ export const BLOCK_MOCK_DATA = {
 
   'why-choose-us-v2': {
     settings: {
-      title: 'Tại sao chọn chúng tôi?',
+      title: 'Why Choose Us?',
       description:
-        'Chúng tôi cam kết mang đến cho bạn những sản phẩm và dịch vụ tốt nhất với giá cả hợp lý nhất.',
+        'We are committed to bringing you the best products and services at the most competitive prices.',
     },
   },
 
   contact: {
     settings: {
-      overline: 'liên hệ',
-      title: 'thông tin',
-      titleAccent: 'liên lạc',
-      description: 'Hãy liên hệ với chúng tôi để được tư vấn chi tiết',
-      formTitle: 'Gửi tin nhắn',
+      overline: 'contact',
+      title: 'get in',
+      titleAccent: 'touch',
+      description: 'Reach out to us for a detailed consultation',
+      formTitle: 'Send a message',
     },
     blocks: [
       {
         type: 'contact-info',
         settings: {
           icon: '📞',
-          label: 'Điện thoại',
+          label: 'Phone',
           value: '0123 456 789',
           link: 'tel:0123456789',
         },
@@ -287,8 +287,8 @@ export const BLOCK_MOCK_DATA = {
         type: 'contact-info',
         settings: {
           icon: '📍',
-          label: 'Địa chỉ',
-          value: '123 Đường ABC, Quận XYZ, TP.HCM',
+          label: 'Address',
+          value: '123 ABC Street, XYZ District, HCMC',
           link: '',
         },
       },
@@ -314,12 +314,12 @@ export const BLOCK_MOCK_DATA = {
   footer: {
     settings: {
       copyright: '© 2024 VLXD. All rights reserved.',
-      tagline: 'Vật liệu xây dựng cao cấp',
+      tagline: 'Premium construction materials',
     },
     blocks: [
-      { type: 'footer-line', settings: { text: 'Về chúng tôi', url: '/about' } },
-      { type: 'footer-line', settings: { text: 'Sản phẩm', url: '/products' } },
-      { type: 'footer-line', settings: { text: 'Liên hệ', url: '/contact' } },
+      { type: 'footer-line', settings: { text: 'About Us', url: '/about' } },
+      { type: 'footer-line', settings: { text: 'Products', url: '/products' } },
+      { type: 'footer-line', settings: { text: 'Contact', url: '/contact' } },
       { type: 'footer-social', settings: { platform: 'facebook', url: 'https://facebook.com' } },
       { type: 'footer-social', settings: { platform: 'instagram', url: 'https://instagram.com' } },
       { type: 'footer-social', settings: { platform: 'youtube', url: 'https://youtube.com' } },

@@ -42,27 +42,27 @@ export default function ResetPasswordPage() {
 
   const validateForm = () => {
     if (!token) {
-      setError('Token không hợp lệ');
+      setError('Invalid token');
       return false;
     }
     if (password.length < 8) {
-      setError('Mật khẩu phải có ít nhất 8 ký tự');
+      setError('Password must be at least 8 characters');
       return false;
     }
     if (!/[A-Z]/.test(password)) {
-      setError('Mật khẩu phải có ít nhất 1 chữ hoa');
+      setError('Password must contain at least 1 uppercase letter');
       return false;
     }
     if (!/[a-z]/.test(password)) {
-      setError('Mật khẩu phải có ít nhất 1 chữ thường');
+      setError('Password must contain at least 1 lowercase letter');
       return false;
     }
     if (!/[0-9]/.test(password)) {
-      setError('Mật khẩu phải có ít nhất 1 số');
+      setError('Password must contain at least 1 number');
       return false;
     }
     if (password !== confirmPassword) {
-      setError('Mật khẩu xác nhận không khớp');
+      setError('Passwords do not match');
       return false;
     }
     return true;
@@ -82,7 +82,7 @@ export default function ResetPasswordPage() {
       await resetPassword(token, password);
       setSuccess(true);
     } catch (err) {
-      setError(err.message || 'Đặt lại mật khẩu thất bại');
+      setError(err.message || 'Password reset failed');
     } finally {
       setLoading(false);
     }
@@ -98,15 +98,15 @@ export default function ResetPasswordPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
             </div>
-            <h2 className="text-2xl font-light text-charcoal mb-2">Đặt lại mật khẩu thành công!</h2>
+            <h2 className="text-2xl font-light text-charcoal mb-2">Password Reset Successful!</h2>
             <p className="text-charcoal/70 mb-6">
-              Bạn có thể đăng nhập với mật khẩu mới.
+              You can now sign in with your new password.
             </p>
             <Link
               href="/login"
               className="inline-block bg-charcoal text-cream py-3 px-6 rounded-md hover:bg-charcoal/90 transition"
             >
-              Đến trang đăng nhập
+              Go to Login
             </Link>
           </div>
         </div>
@@ -119,8 +119,8 @@ export default function ResetPasswordPage() {
       <div className="max-w-md w-full">
         {/* Logo/Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-light text-charcoal mb-2">đặt lại mật khẩu</h1>
-          <p className="text-charcoal/70">nhập mật khẩu mới của bạn</p>
+          <h1 className="text-3xl font-light text-charcoal mb-2">Reset Password</h1>
+          <p className="text-charcoal/70">enter your new password</p>
         </div>
 
         {/* Form */}
@@ -136,7 +136,7 @@ export default function ResetPasswordPage() {
             {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-charcoal mb-2">
-                Mật khẩu mới *
+                New Password *
               </label>
               <input
                 id="password"
@@ -176,21 +176,21 @@ export default function ResetPasswordPage() {
                     ></div>
                   </div>
                   <p className="text-xs text-charcoal/60 mt-1">
-                    {passwordStrength === 'weak' && 'Yếu'}
-                    {passwordStrength === 'medium' && 'Trung bình'}
-                    {passwordStrength === 'strong' && 'Mạnh'}
+                    {passwordStrength === 'weak' && 'Weak'}
+                    {passwordStrength === 'medium' && 'Medium'}
+                    {passwordStrength === 'strong' && 'Strong'}
                   </p>
                 </div>
               )}
               <p className="text-xs text-charcoal/60 mt-2">
-                Tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường và số
+                Minimum 8 characters, including uppercase, lowercase and numbers
               </p>
             </div>
 
             {/* Confirm Password Field */}
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-charcoal mb-2">
-                Xác nhận mật khẩu *
+                Confirm Password *
               </label>
               <input
                 id="confirmPassword"
@@ -209,14 +209,14 @@ export default function ResetPasswordPage() {
               disabled={loading}
               className="w-full bg-charcoal text-cream py-3 px-6 rounded-md hover:bg-charcoal/90 transition disabled:opacity-50 disabled:cursor-not-allowed font-medium"
             >
-              {loading ? 'Đang đặt lại...' : 'Đặt lại mật khẩu'}
+              {loading ? 'Resetting...' : 'Reset Password'}
             </button>
           </form>
 
           {/* Back to Login */}
           <div className="mt-6 text-center">
             <Link href="/login" className="text-sm text-charcoal/70 hover:text-charcoal transition">
-              ← quay lại đăng nhập
+              ← Back to Login
             </Link>
           </div>
         </div>
@@ -224,7 +224,7 @@ export default function ResetPasswordPage() {
         {/* Back to Home */}
         <div className="mt-6 text-center">
           <Link href="/landing" className="text-sm text-charcoal/70 hover:text-charcoal transition">
-            ← về trang chủ
+            ← Back to Home
           </Link>
         </div>
       </div>

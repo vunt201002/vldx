@@ -23,7 +23,7 @@ export default function VerifyEmailPage() {
       setStatus('success');
     } catch (err) {
       setStatus('error');
-      setError(err.message || 'Xác nhận email thất bại');
+      setError(err.message || 'Email verification failed');
     }
   };
 
@@ -32,8 +32,8 @@ export default function VerifyEmailPage() {
       <div className="min-h-screen bg-cream flex items-center justify-center px-4 py-12">
         <div className="max-w-md w-full text-center">
           <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-charcoal mb-4"></div>
-          <h2 className="text-2xl font-light text-charcoal mb-2">Đang xác nhận email...</h2>
-          <p className="text-charcoal/70">Vui lòng đợi trong giây lát</p>
+          <h2 className="text-2xl font-light text-charcoal mb-2">Verifying email...</h2>
+          <p className="text-charcoal/70">Please wait a moment</p>
         </div>
       </div>
     );
@@ -49,20 +49,20 @@ export default function VerifyEmailPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
             </div>
-            <h2 className="text-2xl font-light text-charcoal mb-2">Email đã được xác nhận!</h2>
+            <h2 className="text-2xl font-light text-charcoal mb-2">Email Verified!</h2>
             <p className="text-charcoal/70 mb-6">
-              Tài khoản của bạn đã được kích hoạt thành công. Bạn có thể đăng nhập ngay bây giờ.
+              Your account has been activated. You can now sign in.
             </p>
             <Link
               href="/login"
               className="inline-block bg-charcoal text-cream py-3 px-6 rounded-md hover:bg-charcoal/90 transition"
             >
-              Đến trang đăng nhập
+              Go to Login
             </Link>
           </div>
           <div className="mt-6 text-center">
             <Link href="/landing" className="text-sm text-charcoal/70 hover:text-charcoal transition">
-              ← về trang chủ
+              ← Back to Home
             </Link>
           </div>
         </div>
@@ -80,23 +80,23 @@ export default function VerifyEmailPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             </div>
-            <h2 className="text-2xl font-light text-charcoal mb-2">Xác nhận thất bại</h2>
+            <h2 className="text-2xl font-light text-charcoal mb-2">Verification Failed</h2>
             <p className="text-red-600 mb-6">{error}</p>
             <p className="text-charcoal/70 text-sm mb-6">
-              Link xác nhận có thể đã hết hạn hoặc không hợp lệ.
+              The verification link may have expired or is invalid.
             </p>
             <div className="space-x-4">
               <Link
                 href="/login"
                 className="inline-block bg-charcoal text-cream py-3 px-6 rounded-md hover:bg-charcoal/90 transition"
               >
-                Đến trang đăng nhập
+                Go to Login
               </Link>
             </div>
           </div>
           <div className="mt-6 text-center">
             <Link href="/landing" className="text-sm text-charcoal/70 hover:text-charcoal transition">
-              ← về trang chủ
+              ← Back to Home
             </Link>
           </div>
         </div>

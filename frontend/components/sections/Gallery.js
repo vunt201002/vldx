@@ -56,7 +56,7 @@ export default function Gallery({ id, settings, blocks }) {
                       {item.label}
                     </h3>
                     <div className="mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 font-body text-xs tracking-widest uppercase text-sandstone">
-                      xem dự án
+                      view project
                     </div>
                   </div>
                 </div>

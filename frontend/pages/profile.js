@@ -42,9 +42,9 @@ function ProfileContent() {
 
     try {
       await updateProfile(profileData);
-      setSuccess('Cập nhật thông tin thành công!');
+      setSuccess('Profile updated successfully!');
     } catch (err) {
-      setError(err.message || 'Cập nhật thất bại');
+      setError(err.message || 'Update failed');
     } finally {
       setLoading(false);
     }
@@ -56,12 +56,12 @@ function ProfileContent() {
     setSuccess('');
 
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      setError('Mật khẩu mới không khớp');
+      setError('New passwords do not match');
       return;
     }
 
     if (passwordData.newPassword.length < 8) {
-      setError('Mật khẩu mới phải có ít nhất 8 ký tự');
+      setError('New password must be at least 8 characters');
       return;
     }
 
@@ -71,7 +71,7 @@ function ProfileContent() {
       await changePassword(passwordData.currentPassword, passwordData.newPassword);
       // User will be logged out automatically after password change
     } catch (err) {
-      setError(err.message || 'Đổi mật khẩu thất bại');
+      setError(err.message || 'Password change failed');
       setLoading(false);
     }
   };
@@ -84,12 +84,12 @@ function ProfileContent() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-light text-charcoal">
-                Xin chào, {user?.firstName}!
+                Hello, {user?.firstName}!
               </h1>
               <p className="text-charcoal/70 text-sm mt-1">{user?.email}</p>
             </div>
             <Link href="/landing" className="text-sm text-charcoal/70 hover:text-charcoal transition">
-              ← về trang chủ
+              ← Back to Home
             </Link>
           </div>
         </div>
@@ -107,7 +107,7 @@ function ProfileContent() {
                 : 'border-transparent text-charcoal/50 hover:text-charcoal'
             }`}
           >
-            Thông tin cá nhân
+            Personal Info
           </button>
           <button
             onClick={() => setActiveTab('password')}
@@ -117,14 +117,14 @@ function ProfileContent() {
                 : 'border-transparent text-charcoal/50 hover:text-charcoal'
             }`}
           >
-            Đổi mật khẩu
+            Change Password
           </button>
         </div>
 
         {/* Profile Tab */}
         {activeTab === 'profile' && (
           <div className="bg-white rounded-lg shadow-sm border border-charcoal/10 p-8">
-            <h2 className="text-xl font-light text-charcoal mb-6">Thông tin cá nhân</h2>
+            <h2 className="text-xl font-light text-charcoal mb-6">Personal Info</h2>
 
             <form onSubmit={handleProfileSubmit} className="space-y-5">
               {/* Messages */}
@@ -150,14 +150,14 @@ function ProfileContent() {
                   disabled
                   className="w-full px-4 py-3 border border-charcoal/20 rounded-md bg-gray-50 text-charcoal/50 cursor-not-allowed"
                 />
-                <p className="text-xs text-charcoal/60 mt-1">Email không thể thay đổi</p>
+                <p className="text-xs text-charcoal/60 mt-1">Email cannot be changed</p>
               </div>
 
               {/* Name Fields */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-charcoal mb-2">
-                    Tên
+                    First Name
                   </label>
                   <input
                     id="firstName"
@@ -170,7 +170,7 @@ function ProfileContent() {
                 </div>
                 <div>
                   <label htmlFor="lastName" className="block text-sm font-medium text-charcoal mb-2">
-                    Họ
+                    Last Name
                   </label>
                   <input
                     id="lastName"
@@ -186,7 +186,7 @@ function ProfileContent() {
               {/* Phone */}
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-charcoal mb-2">
-                  Số điện thoại (tùy chọn)
+                  Phone Number (optional)
                 </label>
                 <input
                   id="phone"
@@ -206,26 +206,26 @@ function ProfileContent() {
                   disabled={loading}
                   className="bg-charcoal text-cream py-3 px-6 rounded-md hover:bg-charcoal/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {loading ? 'Đang lưu...' : 'Lưu thay đổi'}
+                  {loading ? 'Saving...' : 'Save Changes'}
                 </button>
               </div>
             </form>
 
             {/* Account Info */}
             <div className="mt-8 pt-6 border-t border-charcoal/10">
-              <h3 className="text-sm font-medium text-charcoal mb-3">Thông tin tài khoản</h3>
+              <h3 className="text-sm font-medium text-charcoal mb-3">Account Info</h3>
               <div className="space-y-2 text-sm text-charcoal/70">
                 <p>
-                  <span className="font-medium">Trạng thái email:</span>{' '}
+                  <span className="font-medium">Email status:</span>{' '}
                   {user?.isEmailVerified ? (
-                    <span className="text-green-600">Đã xác nhận</span>
+                    <span className="text-green-600">Verified</span>
                   ) : (
-                    <span className="text-yellow-600">Chưa xác nhận</span>
+                    <span className="text-yellow-600">Not verified</span>
                   )}
                 </p>
                 <p>
-                  <span className="font-medium">Ngày tạo:</span>{' '}
-                  {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('vi-VN') : 'N/A'}
+                  <span className="font-medium">Created:</span>{' '}
+                  {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US') : 'N/A'}
                 </p>
               </div>
             </div>
@@ -236,7 +236,7 @@ function ProfileContent() {
                 onClick={logout}
                 className="text-red-600 hover:text-red-700 text-sm font-medium"
               >
-                Đăng xuất
+                Log Out
               </button>
             </div>
           </div>
@@ -245,7 +245,7 @@ function ProfileContent() {
         {/* Password Tab */}
         {activeTab === 'password' && (
           <div className="bg-white rounded-lg shadow-sm border border-charcoal/10 p-8">
-            <h2 className="text-xl font-light text-charcoal mb-6">Đổi mật khẩu</h2>
+            <h2 className="text-xl font-light text-charcoal mb-6">Change Password</h2>
 
             <form onSubmit={handlePasswordSubmit} className="space-y-5 max-w-md">
               {/* Messages */}
@@ -258,7 +258,7 @@ function ProfileContent() {
               {/* Current Password */}
               <div>
                 <label htmlFor="currentPassword" className="block text-sm font-medium text-charcoal mb-2">
-                  Mật khẩu hiện tại
+                  Current Password
                 </label>
                 <input
                   id="currentPassword"
@@ -275,7 +275,7 @@ function ProfileContent() {
               {/* New Password */}
               <div>
                 <label htmlFor="newPassword" className="block text-sm font-medium text-charcoal mb-2">
-                  Mật khẩu mới
+                  New Password
                 </label>
                 <input
                   id="newPassword"
@@ -288,14 +288,14 @@ function ProfileContent() {
                   placeholder="••••••••"
                 />
                 <p className="text-xs text-charcoal/60 mt-2">
-                  Tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường và số
+                  Minimum 8 characters, including uppercase, lowercase and numbers
                 </p>
               </div>
 
               {/* Confirm New Password */}
               <div>
                 <label htmlFor="confirmPassword" className="block text-sm font-medium text-charcoal mb-2">
-                  Xác nhận mật khẩu mới
+                  Confirm New Password
                 </label>
                 <input
                   id="confirmPassword"
@@ -311,7 +311,7 @@ function ProfileContent() {
 
               {/* Warning */}
               <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded text-sm">
-                ⚠️ Sau khi đổi mật khẩu, bạn sẽ được đăng xuất và cần đăng nhập lại.
+                ⚠️ After changing your password, you will be logged out and need to sign in again.
               </div>
 
               {/* Submit Button */}
@@ -320,7 +320,7 @@ function ProfileContent() {
                 disabled={loading}
                 className="bg-charcoal text-cream py-3 px-6 rounded-md hover:bg-charcoal/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? 'Đang đổi...' : 'Đổi mật khẩu'}
+                {loading ? 'Changing...' : 'Change Password'}
               </button>
             </form>
           </div>
