@@ -1,33 +1,14 @@
 services:
-  mongodb:
-    image: mongo:7
-    restart: unless-stopped
-    volumes:
-      - mongo-data:/data/db
-    environment:
-      MONGO_INITDB_DATABASE: vlxd
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-vlxd}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
-    command: ["mongod", "--wiredTigerCacheSizeGB", "0.25"]
-    healthcheck:
-      test: ["CMD", "mongosh", "-u", "${MONGO_USER:-vlxd}", "-p", "${MONGO_PASSWORD}", "--authenticationDatabase", "admin", "--eval", "db.adminCommand('ping')"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   backend:
     image: ${DOCKER_USER}/vlxd-backend:${TAG:-latest}
     restart: unless-stopped
-    depends_on:
-      mongodb:
-        condition: service_healthy
     environment:
       NODE_ENV: production
       PORT: 5000
-      MONGODB_URI: mongodb://${MONGO_USER:-vlxd}:${MONGO_PASSWORD}@mongodb:27017/vlxd?authSource=admin
+      MONGODB_URI: ${MONGODB_URI}
       JWT_SECRET: ${JWT_SECRET}
-      FRONTEND_URL: https://${DOMAIN}
-      ADMIN_URL: https://admin.${DOMAIN}
+      FRONTEND_URL: ${PROTOCOL:-https}://${DOMAIN}
+      ADMIN_URL: ${PROTOCOL:-https}://${DOMAIN}/admin
       FRONTEND_CONFIG_DIR: /data/config/pages
       CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
       CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
@@ -81,7 +62,6 @@ services:
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 volumes:
-  mongo-data:
   shared-config:
   certbot-etc:
   certbot-var:

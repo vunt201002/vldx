@@ -15,7 +15,7 @@ docker pull $DOCKER_USER/vlxd-frontend:$TAG
 docker pull $DOCKER_USER/vlxd-admin:$TAG
 
 echo "==> Restarting services"
-docker compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
 
 echo "==> Deployment complete"
-docker compose -f docker-compose.prod.yml ps
+docker compose -f docker-compose.prod.yml --env-file .env.prod ps
