@@ -96,10 +96,14 @@ Different frontend pages use different strategies — match the pattern when add
 
 ## Blog System Conventions
 
+- Blog pages use **WSJ editorial design system** — CSS custom properties (`--wsj-serif`, `--wsj-sans`, `--wsj-teal`) + utility classes (`.wsj-category`, `.wsj-title`, `.wsj-excerpt`, `.wsj-timestamp`) in `globals.css`
 - Blog content supports YouTube embeds — `transformBlogContent.js` auto-converts YouTube URLs to responsive iframes
 - Blog real-time updates use SSE (Server-Sent Events) via `blogEvents` EventEmitter — no WebSocket needed
 - Blog likes use `sessionId` from `localStorage` for anonymous tracking
 - Comments support optional auth — anonymous users provide a name field
+- Blog detail uses **two-column layout** on desktop: article + sticky "Most Popular" sidebar (sorted by viewCount client-side)
+- Related + popular posts: single `GET /blog?limit=20` call, split client-side — avoids backend changes
+- Read time estimated client-side: strip HTML tags, count words, divide by 200 wpm
 
 ## Adding a New Block Type (checklist)
 

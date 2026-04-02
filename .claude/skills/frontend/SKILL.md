@@ -245,26 +245,44 @@ Uses `sessionId` from `localStorage` for anonymous visitor tracking (same patter
 
 ## Blog Pages
 
+Blog pages use a **WSJ (Wall Street Journal) editorial style** — distinct from the landing page aesthetic. They use CSS custom properties and utility classes defined in `globals.css`:
+
+### WSJ Design Token System
+```css
+--wsj-serif: 'Georgia', 'Times New Roman', 'Times', serif;  /* titles, body text */
+--wsj-sans: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;  /* UI, meta */
+--wsj-teal: #0274B6;  /* timestamps, links, accents */
+--wsj-divider: #E2E2E2;  /* section dividers */
+--wsj-text: #111111;  /* primary text */
+```
+Utility classes: `.wsj-category` (11px uppercase label), `.wsj-title` (serif bold), `.wsj-excerpt` (sans-serif secondary), `.wsj-timestamp` (teal 13px), `.wsj-divider` (bottom border).
+
 ### Blog List (`pages/blog/index.js`)
 - Client-side fetching with loading state
-- Tag filtering (via `?tag=` URL param, resets pagination to page 1), pagination with numbered buttons
-- **VnExpress-style three-tier layout** (only on page 1 without tag filter):
-  1. Featured hero (2/3 width): large cover image with dark gradient overlay + headline
-  2. Side posts (1/3 width, desktop only): thumbnail grid (100x68px)
-  3. Feed posts (full width): card list with 140x90px → 200x130px responsive thumbnails
-- Uses **inline styles** (not Tailwind) because blog design diverges from landing page aesthetic
+- Tag filtering (via `?tag=` URL param, resets pagination to page 1), text-only pagination (bold+underline active)
+- **WSJ-style two-tier layout** (only on page 1 without tag filter):
+  1. Featured hero (3/5 width): clean image + text below (no gradient overlay) with category label, serif title, excerpt, teal timestamp
+  2. Sidebar (2/5 width, desktop only): **text-only** articles separated by dividers (no thumbnails)
+  3. Feed: horizontal cards (`flex`) — 220x140 image left, text right with category label
+- Uses **inline styles + WSJ utility classes** (not Tailwind) because blog design uses editorial serif typography
 - Vietnamese time-ago formatting (`X phut truoc`, `X gio truoc`, falls back to `vi-VN` date after 7 days)
 - SSE via `EventSource('/api/blog/events')` for instant content refresh without polling
 
 ### Blog Detail (`pages/blog/[id].js`)
+- **Two-column desktop layout**: `grid lg:grid-cols-[1fr_280px]` — article left + sticky "Xem nhieu nhat" (Most Popular) sidebar right
 - Client-side fetching via `useRouter().query`
 - Real-time updates via SSE (Server-Sent Events) — listens to `/api/blog/events`
+- **Action bar** above cover image: Share button (clipboard API) + Like button (SVG heart) + read time estimate
+- `estimateReadTime(html)`: strips HTML tags, counts words, divides by 200 wpm — pure frontend, no backend change
+- Share button: `navigator.clipboard.writeText(url)` with brief "Da sao!" toast state
 - Session-based like tracking via `localStorage` sessionId
 - Comments with optional auth (anonymous users provide name, authenticated users auto-fill)
 - View count tracked on mount (fire-and-forget)
+- **"Doc tiep" section**: What to Read Next — recent 4 articles excluding current post
+- **Related + Popular posts**: single `GET /blog?limit=20` call, split client-side into `relatedPosts` (recent) and `popularPosts` (sorted by viewCount)
 
 ### Blog Content Transform (`lib/transformBlogContent.js`)
-Parses blog HTML content for YouTube URLs and transforms them into responsive iframe embeds. Applied before rendering blog post content.
+Parses blog HTML content for YouTube URLs and transforms them into responsive iframe embeds. Applied before rendering blog post content. `.blog-content` uses serif font (19px, line-height 1.85) for editorial feel.
 
 ## ContactFAB Component
 
