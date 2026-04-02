@@ -177,7 +177,7 @@ export default function BlogPage() {
             <>
               {/* HERO — WSJ style: image left, text right, side-by-side */}
               {featured && (
-                <div className="pb-8 mb-6" style={{ borderBottom: '1px solid #ddd' }}>
+                <div className="pb-8 mb-6" style={{ borderBottom: '2px solid #ddd' }}>
                   <Link href={`/blog/${featured._id}`} className="group grid grid-cols-1 lg:grid-cols-5 gap-6">
                     {/* Large image */}
                     <div className="lg:col-span-3">
@@ -219,7 +219,7 @@ export default function BlogPage() {
                       key={p._id}
                       href={`/blog/${p._id}`}
                       className="group flex flex-col sm:flex-row gap-5 py-6"
-                      style={{ borderBottom: '1px solid #eee' }}
+                      style={{ borderBottom: '2px solid #ddd' }}
                     >
                       {p.coverImage && (
                         <div className="w-full sm:w-[250px] h-[180px] sm:h-[160px] flex-shrink-0 overflow-hidden">
