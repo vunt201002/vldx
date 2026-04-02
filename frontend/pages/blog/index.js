@@ -24,6 +24,8 @@ export default function BlogPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [tag, setTag] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const fetchPosts = async () => {
     try {
@@ -61,180 +63,202 @@ export default function BlogPage() {
         <meta name="description" content="Tin tuc va bai viet ve vat lieu xay dung" />
       </Head>
 
-      <div className="min-h-screen" style={{ background: '#f5f5f5', fontFamily: "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" }}>
-        {/* Header with logo */}
-        <div style={{ background: '#fff', borderBottom: '1px solid #e0e0e0' }}>
-          <div className="mx-auto max-w-[1200px] px-4">
-            <div className="flex items-center justify-between" style={{ height: '60px' }}>
-              <Link href="/landing" className="flex items-center gap-2">
-                <span style={{ fontSize: '28px', fontWeight: 800, color: '#1a1a1a', letterSpacing: '-0.03em', lineHeight: 1 }}>
-                  VL<span style={{ color: '#b80000' }}>X</span>D
-                </span>
-                <span style={{ fontSize: '11px', color: '#999', borderLeft: '1px solid #ddd', paddingLeft: '8px', lineHeight: 1.3 }}>
-                  Vat lieu<br />xay dung
-                </span>
-              </Link>
-              <div className="flex items-center gap-4">
-                {tag && (
-                  <button
-                    onClick={() => { setTag(''); setPage(1); }}
-                    className="flex items-center gap-1.5 text-sm px-3 py-1 rounded transition"
-                    style={{ background: '#fff3f3', color: '#b80000', border: '1px solid #ffcdd2' }}
-                  >
-                    #{tag} <span style={{ color: '#e57373' }}>✕</span>
-                  </button>
-                )}
-                <Link href="/landing" className="text-sm transition hidden md:block" style={{ color: '#888' }}>
-                  Trang chu
-                </Link>
-              </div>
-            </div>
-          </div>
+      <div className="min-h-screen" style={{ background: '#fff', fontFamily: "var(--wsj-sans, 'Arial Narrow', Arial, sans-serif)" }}>
+        {/* Masthead — WSJ-style centered logo */}
+        <div className="text-center py-5">
+          <Link href="/landing">
+            <span style={{
+              fontFamily: 'var(--wsj-serif)',
+              fontSize: '32px',
+              fontWeight: 700,
+              fontStyle: 'italic',
+              color: 'var(--wsj-text)',
+              letterSpacing: '-0.01em',
+            }}>
+              Vat Lieu Xay Dung
+            </span>
+          </Link>
         </div>
 
-        <div className="mx-auto max-w-[1200px] px-4 py-5">
+        {/* Category nav bar — WSJ style */}
+        <div>
+          <div className="mx-auto max-w-[1200px] px-4 flex items-center justify-center gap-6 py-2.5" style={{ fontSize: '13px', fontFamily: 'var(--wsj-sans)', color: '#333' }}>
+            {['Gach op lat', 'Noi that', 'Huong dan', 'Cong nghe', 'Xu huong'].map((cat) => (
+              <button
+                key={cat}
+                onClick={() => { setTag(cat.toLowerCase()); setPage(1); }}
+                className="hover:underline transition whitespace-nowrap"
+                style={{ fontWeight: tag === cat.toLowerCase() ? 700 : 400 }}
+              >
+                {cat}
+              </button>
+            ))}
+            {/* Search icon */}
+            <button
+              onClick={() => setSearchOpen(!searchOpen)}
+              className="ml-2 hover:opacity-70 transition"
+              style={{ color: '#333' }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </button>
+          </div>
+          {/* Search bar (expandable) */}
+          {searchOpen && (
+            <div className="mx-auto max-w-[1200px] px-4 pb-3">
+              <div className="flex items-center gap-2" style={{ borderBottom: '2px solid var(--wsj-text)' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && searchQuery.trim()) {
+                      setTag(searchQuery.trim().toLowerCase());
+                      setPage(1);
+                      setSearchOpen(false);
+                      setSearchQuery('');
+                    }
+                  }}
+                  placeholder="Tim kiem bai viet..."
+                  autoFocus
+                  className="flex-1 py-2 text-sm outline-none"
+                  style={{ fontFamily: 'var(--wsj-sans)', color: 'var(--wsj-text)', background: 'transparent' }}
+                />
+                <button
+                  onClick={() => { setSearchOpen(false); setSearchQuery(''); }}
+                  className="text-sm hover:opacity-70"
+                  style={{ color: '#999' }}
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Section heading with full-width rules */}
+        <div className="mx-auto max-w-[1200px] px-4">
+          <div style={{ borderBottom: '1px solid #ccc', marginTop: '12px' }} />
+          <h1 className="wsj-title text-center py-4" style={{ fontSize: '48px' }}>
+            {tag ? `#${tag}` : 'Tin tuc'}
+          </h1>
+          <div style={{ borderBottom: '1px solid #ccc' }} />
+          {tag && (
+            <div className="text-center pt-3">
+              <button
+                onClick={() => { setTag(''); setPage(1); }}
+                className="text-sm transition hover:underline"
+                style={{ color: 'var(--wsj-teal)', fontFamily: 'var(--wsj-sans)' }}
+              >
+                ✕ Xoa bo loc: #{tag}
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="mx-auto max-w-[1200px] px-4 pb-12 mt-6">
           {loading ? (
             <div className="flex justify-center py-20">
-              <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-300" style={{ borderTopColor: '#b80000' }}></div>
+              <div className="h-8 w-8 animate-spin rounded-full border-2" style={{ borderColor: '#ddd', borderTopColor: '#333' }} />
             </div>
           ) : posts.length === 0 ? (
-            <div className="py-20 text-center rounded-lg" style={{ background: '#fff' }}>
-              <p className="text-lg" style={{ color: '#999' }}>Chua co bai viet nao</p>
-              <p className="mt-1 text-sm" style={{ color: '#bbb' }}>Hay quay lai sau nhe!</p>
+            <div className="py-20 text-center">
+              <p style={{ color: '#999', fontFamily: 'var(--wsj-serif)', fontSize: '20px' }}>Chua co bai viet nao</p>
+              <p className="mt-2 text-sm" style={{ color: '#bbb' }}>Hay quay lai sau nhe!</p>
             </div>
           ) : (
             <>
-              {/* Featured hero + side posts */}
+              {/* HERO — WSJ style: image left, text right, side-by-side */}
               {featured && (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 mb-5 rounded-lg overflow-hidden" style={{ background: '#fff' }}>
-                  {/* Hero */}
-                  <Link href={`/blog/${featured._id}`} className="lg:col-span-2 group relative block overflow-hidden">
-                    {featured.coverImage ? (
-                      <div className="relative" style={{ height: '420px' }}>
+                <div className="pb-8 mb-6" style={{ borderBottom: '1px solid #ddd' }}>
+                  <Link href={`/blog/${featured._id}`} className="group grid grid-cols-1 lg:grid-cols-5 gap-6">
+                    {/* Large image */}
+                    <div className="lg:col-span-3">
+                      {featured.coverImage && (
                         <img
                           src={featured.coverImage}
                           alt={featured.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full object-cover"
+                          style={{ height: '380px' }}
                         />
-                        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 40%, transparent 70%)' }} />
-                        <div className="absolute bottom-0 left-0 right-0 p-6">
-                          <h2 className="text-2xl md:text-[28px] font-bold text-white leading-tight line-clamp-3 group-hover:underline decoration-1 underline-offset-4">
-                            {featured.title}
-                          </h2>
-                          {featured.excerpt && (
-                            <p className="mt-2.5 text-[15px] text-white/75 line-clamp-2 hidden md:block leading-relaxed">
-                              {featured.excerpt}
-                            </p>
-                          )}
-                          <div className="mt-3 flex items-center gap-3 text-xs text-white/50">
-                            <span>{formatTimeAgo(featured.publishedAt || featured.createdAt)}</span>
-                            {featured.viewCount > 0 && <><span>·</span><span>{featured.viewCount} luot xem</span></>}
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="p-6" style={{ minHeight: '300px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-                        <h2 className="text-2xl font-bold group-hover:underline" style={{ color: '#1a1a1a' }}>{featured.title}</h2>
-                        {featured.excerpt && <p className="mt-2 text-sm" style={{ color: '#666' }}>{featured.excerpt}</p>}
-                      </div>
-                    )}
-                  </Link>
-
-                  {/* Side posts */}
-                  {sidePosts.length > 0 && (
-                    <div className="hidden lg:flex flex-col" style={{ borderLeft: '1px solid #eee' }}>
-                      {sidePosts.map((sp, i) => (
-                        <Link
-                          key={sp._id}
-                          href={`/blog/${sp._id}`}
-                          className="group flex-1 flex flex-col justify-center px-5 py-4 transition hover:bg-gray-50"
-                          style={{ borderBottom: i < sidePosts.length - 1 ? '1px solid #eee' : 'none' }}
-                        >
-                          <div className="flex gap-3">
-                            {sp.coverImage && (
-                              <div className="w-[100px] h-[68px] flex-shrink-0 rounded overflow-hidden">
-                                <img src={sp.coverImage} alt={sp.title} className="w-full h-full object-cover" />
-                              </div>
-                            )}
-                            <div className="flex-1 min-w-0">
-                              <h3 className="text-[15px] font-semibold leading-snug line-clamp-2 group-hover:text-red-800 transition" style={{ color: '#1a1a1a' }}>
-                                {sp.title}
-                              </h3>
-                              <span className="mt-1.5 block text-xs" style={{ color: '#999' }}>
-                                {formatTimeAgo(sp.publishedAt || sp.createdAt)}
-                              </span>
-                            </div>
-                          </div>
-                        </Link>
-                      ))}
+                      )}
                     </div>
-                  )}
+                    {/* Article info */}
+                    <div className="lg:col-span-2 flex flex-col justify-center">
+                      {featured.tags?.[0] && (
+                        <span className="wsj-category">{featured.tags[0]}</span>
+                      )}
+                      <h2 className="wsj-title mt-2 group-hover:underline decoration-1 underline-offset-4" style={{ fontSize: '26px' }}>
+                        {featured.title}
+                      </h2>
+                      {featured.excerpt && (
+                        <p className="wsj-excerpt mt-3 line-clamp-4" style={{ fontSize: '15px', lineHeight: '1.6' }}>
+                          {featured.excerpt}
+                        </p>
+                      )}
+                      <span className="wsj-timestamp mt-3 block">
+                        {formatTimeAgo(featured.publishedAt || featured.createdAt)}
+                      </span>
+                    </div>
+                  </Link>
                 </div>
               )}
 
-              {/* News feed */}
-              {feedPosts.length > 0 && (
-                <div className="rounded-lg overflow-hidden" style={{ background: '#fff' }}>
-                  {feedPosts.map((p, i) => (
+              {/* FEED — WSJ style: image left, text right */}
+              {(sidePosts.length > 0 || feedPosts.length > 0) && (
+                <div>
+                  {[...sidePosts, ...feedPosts].map((p) => (
                     <Link
                       key={p._id}
                       href={`/blog/${p._id}`}
-                      className="group flex gap-4 md:gap-5 p-4 md:p-5 transition hover:bg-gray-50"
-                      style={{ borderBottom: i < feedPosts.length - 1 ? '1px solid #f0f0f0' : 'none' }}
+                      className="group flex flex-col sm:flex-row gap-5 py-6"
+                      style={{ borderBottom: '1px solid #eee' }}
                     >
                       {p.coverImage && (
-                        <div className="w-[140px] h-[90px] md:w-[200px] md:h-[130px] flex-shrink-0 rounded overflow-hidden">
+                        <div className="w-full sm:w-[250px] h-[180px] sm:h-[160px] flex-shrink-0 overflow-hidden">
                           <img
                             src={p.coverImage}
                             alt={p.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            className="w-full h-full object-cover"
                           />
                         </div>
                       )}
-                      <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
-                        <div>
-                          <h3 className="text-base md:text-lg font-bold leading-snug line-clamp-2 group-hover:text-red-800 transition" style={{ color: '#1a1a1a' }}>
-                            {p.title}
-                          </h3>
-                          {p.excerpt && (
-                            <p className="mt-1.5 text-[14px] line-clamp-2 hidden md:block leading-relaxed" style={{ color: '#666' }}>
-                              {p.excerpt}
-                            </p>
-                          )}
-                        </div>
-                        <div className="mt-2 flex items-center gap-3 text-xs" style={{ color: '#999' }}>
-                          <span>{formatTimeAgo(p.publishedAt || p.createdAt)}</span>
-                          {p.viewCount > 0 && <><span>·</span><span>{p.viewCount} luot xem</span></>}
-                          {p.tags?.length > 0 && (
-                            <>
-                              <span>·</span>
-                              {p.tags.slice(0, 2).map((t) => (
-                                <button
-                                  key={t}
-                                  onClick={(e) => { e.preventDefault(); setTag(t); setPage(1); }}
-                                  className="hover:underline"
-                                  style={{ color: '#b80000' }}
-                                >
-                                  #{t}
-                                </button>
-                              ))}
-                            </>
-                          )}
-                        </div>
+                      <div className="flex-1 min-w-0 flex flex-col justify-center">
+                        {p.tags?.[0] && (
+                          <span className="wsj-category">{p.tags[0]}</span>
+                        )}
+                        <h3 className="wsj-title mt-1 line-clamp-2 group-hover:underline decoration-1 underline-offset-4" style={{ fontSize: '22px' }}>
+                          {p.title}
+                        </h3>
+                        {p.excerpt && (
+                          <p className="wsj-excerpt mt-2 line-clamp-2" style={{ fontSize: '15px', lineHeight: '1.5' }}>
+                            {p.excerpt}
+                          </p>
+                        )}
+                        <span className="wsj-timestamp mt-2 block">
+                          {formatTimeAgo(p.publishedAt || p.createdAt)}
+                        </span>
                       </div>
                     </Link>
                   ))}
                 </div>
               )}
 
-              {/* Pagination */}
+              {/* Pagination — minimal WSJ style */}
               {totalPages > 1 && (
-                <div className="mt-6 flex justify-center gap-1">
+                <div className="mt-10 flex justify-center items-center gap-1" style={{ fontFamily: 'var(--wsj-sans)' }}>
                   <button
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={page <= 1}
-                    className="px-3 py-2 rounded text-sm font-medium transition disabled:opacity-30 disabled:cursor-not-allowed"
-                    style={{ background: '#fff', color: '#333', border: '1px solid #ddd' }}
+                    className="px-3 py-2 text-sm transition disabled:opacity-30 disabled:cursor-not-allowed hover:underline"
+                    style={{ color: 'var(--wsj-text)' }}
                   >
                     ←
                   </button>
@@ -242,11 +266,12 @@ export default function BlogPage() {
                     <button
                       key={p}
                       onClick={() => setPage(p)}
-                      className="w-9 h-9 rounded text-sm font-medium transition"
+                      className="w-9 h-9 text-sm transition"
                       style={{
-                        background: page === p ? '#b80000' : '#fff',
-                        color: page === p ? '#fff' : '#333',
-                        border: page === p ? '1px solid #b80000' : '1px solid #ddd',
+                        color: 'var(--wsj-text)',
+                        fontWeight: page === p ? '700' : '400',
+                        textDecoration: page === p ? 'underline' : 'none',
+                        textUnderlineOffset: '4px',
                       }}
                     >
                       {p}
@@ -255,8 +280,8 @@ export default function BlogPage() {
                   <button
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                     disabled={page >= totalPages}
-                    className="px-3 py-2 rounded text-sm font-medium transition disabled:opacity-30 disabled:cursor-not-allowed"
-                    style={{ background: '#fff', color: '#333', border: '1px solid #ddd' }}
+                    className="px-3 py-2 text-sm transition disabled:opacity-30 disabled:cursor-not-allowed hover:underline"
+                    style={{ color: 'var(--wsj-text)' }}
                   >
                     →
                   </button>

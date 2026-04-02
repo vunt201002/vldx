@@ -144,14 +144,30 @@ html {
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Blog content typography */
-.blog-content { overflow-wrap: break-word; word-wrap: break-word; max-width: 100%; overflow: hidden; }
+/* WSJ-style blog design tokens */
+:root {
+  --wsj-serif: 'Georgia', 'Times New Roman', 'Times', serif;
+  --wsj-sans: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  --wsj-teal: #0274B6;
+  --wsj-divider: #E2E2E2;
+  --wsj-text: #111111;
+  --wsj-text-secondary: #555555;
+}
+
+.wsj-category { font-family: var(--wsj-sans); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--wsj-text); }
+.wsj-title { font-family: var(--wsj-serif); font-weight: 700; line-height: 1.2; color: var(--wsj-text); }
+.wsj-excerpt { font-family: var(--wsj-sans); line-height: 1.5; color: var(--wsj-text-secondary); }
+.wsj-timestamp { font-family: var(--wsj-sans); font-size: 13px; color: var(--wsj-teal); }
+.wsj-divider { border-bottom: 1px solid var(--wsj-divider); }
+
+/* Blog content typography (WSJ editorial style) */
+.blog-content { overflow-wrap: break-word; word-wrap: break-word; max-width: 100%; overflow: hidden; font-family: var(--wsj-serif); font-size: 19px; line-height: 1.85; color: var(--wsj-text); }
 .blog-content h1 { font-size: 2rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
 .blog-content h2 { font-size: 1.5rem; font-weight: 700; margin: 1.5rem 0 0.75rem; }
 .blog-content h3 { font-size: 1.25rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
-.blog-content p { margin: 0.75rem 0; line-height: 1.8; }
+.blog-content p { margin: 0.75rem 0; line-height: 1.85; }
 .blog-content ul, .blog-content ol { margin: 0.75rem 0; padding-left: 1.5rem; }
-.blog-content li { margin: 0.25rem 0; line-height: 1.7; }
+.blog-content li { margin: 0.25rem 0; line-height: 1.8; }
 .blog-content blockquote {
   border-left: 4px solid #C4A882;
   padding: 0.5rem 1rem;
@@ -167,13 +183,14 @@ html {
   border-radius: 8px;
   overflow-x: auto;
   margin: 1rem 0;
+  font-family: monospace;
+  font-size: 0.85em;
 }
 .blog-content code { font-size: 0.9em; }
-.blog-content a { color: #2563eb; text-decoration: underline; }
+.blog-content a { color: var(--wsj-teal); text-decoration: underline; }
 .blog-content img {
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
   margin: 1rem 0;
 }
 
