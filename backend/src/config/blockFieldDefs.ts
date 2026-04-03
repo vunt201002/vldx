@@ -63,20 +63,24 @@ const blockFieldDefs: BlockTypeDef[] = [
     icon: '🖼️',
     fields: [
       // Layout controls
-      { key: 'squarePosition', label: 'Square Image Side', type: 'select', options: [
+      { key: 'squarePosition', label: 'Image Gallery Side', type: 'select', options: [
         { label: 'Left', value: 'left' },
         { label: 'Right', value: 'right' },
       ]},
-      { key: 'rectImageOrder', label: 'Rectangle Image Position', type: 'select', options: [
-        { label: 'Top (image above content)', value: 'top' },
-        { label: 'Bottom (image below content)', value: 'bottom' },
+      { key: 'galleryLayout', label: '6-Image Layout', type: 'select', options: [
+        { label: 'Featured (1 large + 5 small)', value: 'featured' },
+        { label: 'Grid (3x2)', value: 'grid' },
       ]},
-      // Square image
-      { key: 'squareImageUrl', label: 'Square Image', type: 'image' as any, uploadFolder: 'pages' },
-      { key: 'squareImageAlt', label: 'Square Image Alt', type: 'text' },
-      // Rectangle image
-      { key: 'rectImageUrl', label: 'Rectangle Image', type: 'image' as any, uploadFolder: 'pages' },
-      { key: 'rectImageAlt', label: 'Rectangle Image Alt', type: 'text' },
+      // Gallery images (up to 6)
+      {
+        key: 'images',
+        label: 'Gallery Images (max 6)',
+        type: 'array',
+        fields: [
+          { key: 'url', label: 'Image', type: 'image' as any, uploadFolder: 'pages', required: true },
+          { key: 'alt', label: 'Alt Text', type: 'text' },
+        ],
+      },
       // Content
       { key: 'overline', label: 'Overline', type: 'text', placeholder: 'e.g. our story' },
       { key: 'title', label: 'Title', type: 'text' },
