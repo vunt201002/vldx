@@ -3,8 +3,8 @@
     "title": "Tấm ốp cầu thang",
     "description": "",
     "bodyClass": "font-body bg-cream text-charcoal",
-    "displayFont": "",
-    "bodyFont": ""
+    "displayFont": "Montserrat",
+    "bodyFont": "Montserrat"
   },
   "order": [
     "69beea492fcf0ebbe3aed0ca",

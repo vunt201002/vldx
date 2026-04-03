@@ -63,18 +63,25 @@ const blockFieldDefs: BlockTypeDef[] = [
     icon: '🖼️',
     fields: [
       // Layout controls
-      { key: 'squarePosition', label: 'Image Gallery Side', type: 'select', options: [
+      { key: 'squarePosition', label: 'Gallery Side', type: 'select', options: [
         { label: 'Left', value: 'left' },
         { label: 'Right', value: 'right' },
       ]},
-      { key: 'galleryLayout', label: '6-Image Layout', type: 'select', options: [
-        { label: 'Featured (1 large + 5 small)', value: 'featured' },
-        { label: 'Grid (3x2)', value: 'grid' },
+      { key: 'rectImageOrder', label: 'Content Image Position', type: 'select', options: [
+        { label: 'Above Text', value: 'top' },
+        { label: 'Below Text', value: 'bottom' },
       ]},
-      // Gallery images (up to 6)
+      { key: 'galleryLayout', label: 'Gallery Layout (5+ images)', type: 'select', options: [
+        { label: 'Featured (1 large + small)', value: 'featured' },
+        { label: 'Grid', value: 'grid' },
+      ]},
+      // Content side image (always 1)
+      { key: 'contentImageUrl', label: 'Content Side Image', type: 'image' as any, uploadFolder: 'pages' },
+      { key: 'contentImageAlt', label: 'Content Image Alt', type: 'text' },
+      // Gallery side images (1-6)
       {
         key: 'images',
-        label: 'Gallery Images (max 6)',
+        label: 'Gallery Side Images (max 6)',
         type: 'array',
         fields: [
           { key: 'url', label: 'Image', type: 'image' as any, uploadFolder: 'pages', required: true },

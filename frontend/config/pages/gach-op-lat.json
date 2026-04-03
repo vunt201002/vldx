@@ -1,16 +1,17 @@
 {
   "page": {
-    "title": "Gạch Ốp Lát — Bê Tông Việt",
+    "title": "Gạch Ốp Lát",
     "description": "Gạch ốp lát terrazzo và đá tự nhiên cao cấp, sản xuất thủ công tại Việt Nam.",
     "bodyClass": "font-body bg-cream text-charcoal",
-    "displayFont": "",
-    "bodyFont": ""
+    "displayFont": "Montserrat",
+    "bodyFont": "Montserrat"
   },
   "order": [
     "69c2b27ceececadddd7bafad",
     "69c2b27ceececadddd7bafae",
     "69c2b27ceececadddd7bafaf",
-    "69c2b27ceececadddd7bafb0"
+    "69c2b27ceececadddd7bafb0",
+    "69ce5ed88e73e3c85d6eaa88"
   ],
   "sections": {
     "69c2b27ceececadddd7bafad": {
@@ -210,6 +211,90 @@
             "title": "Ốp lát & hoàn thiện",
             "description": "Thi công ốp lát theo phương án đã thiết kế, chà ron và đánh bóng bề mặt đạt chuẩn thẩm mỹ cao nhất.",
             "image": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80"
+          }
+        }
+      ]
+    },
+    "69ce5ed88e73e3c85d6eaa88": {
+      "type": "color-picker",
+      "settings": {
+        "overline": "bảng màu",
+        "title": "Chọn Tông Màu Phù Hợp",
+        "description": "Đa dạng tông màu từ trung tính đến đậm, phù hợp mọi phong cách kiến trúc nội — ngoại thất.",
+        "columns": "3",
+        "bgColor": "#ffffff"
+      },
+      "blocks": [
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Snow White",
+            "hex": "#F8F5F0",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Alabaster",
+            "hex": "#F2EDE3",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Ivory",
+            "hex": "#E8DFD0",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Pearl",
+            "hex": "#D4C8B8",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Quietude",
+            "hex": "#C4B8A5",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Acier",
+            "hex": "#A89F91",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Fossil",
+            "hex": "#8B8178",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Mocha",
+            "hex": "#6B5D4E",
+            "image": ""
+          }
+        },
+        {
+          "type": "color-swatch",
+          "settings": {
+            "name": "Ebony",
+            "hex": "#3D352C",
+            "image": ""
           }
         }
       ]

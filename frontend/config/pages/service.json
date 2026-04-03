@@ -1,10 +1,10 @@
 {
   "page": {
-    "title": "Our service",
+    "title": "Thi công",
     "description": "",
     "bodyClass": "font-body bg-cream text-charcoal",
-    "displayFont": "",
-    "bodyFont": ""
+    "displayFont": "Montserrat",
+    "bodyFont": "Montserrat"
   },
   "order": [
     "69be5516315aac49a5e9be3e",
@@ -123,7 +123,6 @@
     "69c6b5c24c5b95f3b1ab93f0": {
       "type": "content-image",
       "settings": {
-        "squareImageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
         "title": "modern concrete + terrazzo architectural finishes.",
         "description": "pair our products together to flow seamlessly from inside to out. explore our next generation concrete and terrazzo surfaces like floor & wall tiles, exterior pavers & pool copings, countertops & vanities, stair-treads, patterned encaustic cement tiles, breeze-blocks, tabletops & basins. in a range of modern colors, unique natural stone aggregates and tactile textures. we have every surface covered!"
       },

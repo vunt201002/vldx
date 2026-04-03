@@ -1,10 +1,10 @@
 {
   "page": {
-    "title": "Bê Tông Việt — Vật Liệu Xây Dựng Cao Cấp",
+    "title": "Landing",
     "description": "Gạch lát sân vườn, đá granite, terrazzo, gạch block — sản xuất thủ công tại Việt Nam với nguyên liệu tự nhiên hảo hạng.",
     "bodyClass": "font-body bg-cream text-charcoal",
-    "displayFont": "Cormorant",
-    "bodyFont": "Cormorant"
+    "displayFont": "Montserrat",
+    "bodyFont": "Montserrat"
   },
   "order": [
     "69c6c2f4fa16261af8d5479e",
@@ -27,31 +27,15 @@
       "type": "content-image",
       "settings": {
         "squarePosition": "left",
-        "rectImageOrder": "top",
-        "squareImageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
-        "rectImageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/0e15b51c-1600-477e-8c20-bbbbb51d3598/24_SpecGuide_VeniceNew_18.png?format=2500w",
         "title": "",
         "description": "pair our products together to flow seamlessly from inside to out. explore our next generation concrete"
       },
-      "blocks": [
-        {
-          "type": "content-button",
-          "settings": {
-            "label": "Shop",
-            "href": "/shop",
-            "color": "",
-            "bgColor": ""
-          }
-        }
-      ]
+      "blocks": []
     },
     "69c6cfe2a7367deab9cda375": {
       "type": "content-image",
       "settings": {
         "squarePosition": "right",
-        "rectImageOrder": "top",
-        "squareImageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
-        "rectImageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/0e15b51c-1600-477e-8c20-bbbbb51d3598/24_SpecGuide_VeniceNew_18.png?format=2500w",
         "title": "",
         "description": "pair our products together to flow seamlessly from inside to out. explore our next generation concrete"
       },
@@ -71,9 +55,6 @@
       "type": "content-image",
       "settings": {
         "squarePosition": "left",
-        "rectImageOrder": "top",
-        "squareImageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/1584991447258-2VEIRTCVITYYRJTHXUQX/lightimage1.png",
-        "rectImageUrl": "https://images.squarespace-cdn.com/content/v1/5e7264e09353654eb06bde4d/0e15b51c-1600-477e-8c20-bbbbb51d3598/24_SpecGuide_VeniceNew_18.png?format=2500w",
         "title": "",
         "description": "pair our products together to flow seamlessly from inside to out. explore our next generation concrete"
       },

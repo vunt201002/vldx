@@ -1,10 +1,10 @@
 {
   "page": {
-    "title": "Ghế Đá Công Viên — Bê Tông Việt",
+    "title": "Ghế Đá Công Viên",
     "description": "Ghế đá công viên đúc bê tông nguyên khối, bền vững và thẩm mỹ cho không gian ngoại thất.",
     "bodyClass": "font-body bg-cream text-charcoal",
-    "displayFont": "",
-    "bodyFont": ""
+    "displayFont": "Montserrat",
+    "bodyFont": "Montserrat"
   },
   "order": [
     "69c2b27ceececadddd7bafba",
