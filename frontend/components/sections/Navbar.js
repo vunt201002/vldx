@@ -42,9 +42,9 @@ export default function Navbar({ settings, blocks }) {
   return (
     <nav className="relative z-50 border-b border-warm-300/50" style={navBg ? { backgroundColor: navBg } : undefined}>
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
-        <div className="flex items-start gap-10 py-5 lg:py-6">
+        <div className="flex items-center gap-10 py-5 lg:py-6">
           {/* Brand: text or logo */}
-          <Link href="/landing" className="flex-shrink-0 pt-0.5">
+          <Link href="/landing" className="flex-shrink-0">
             {isLogo ? (
               <img
                 src={settings.logoUrl}
@@ -67,7 +67,7 @@ export default function Navbar({ settings, blocks }) {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex flex-wrap items-center gap-x-7 gap-y-2 pt-1 justify-end flex-1">
+          <div className="hidden lg:flex items-center gap-x-5 justify-end flex-1">
             {navLinks.map((link) => (
               <NavLink
                 key={link.settings.label}
