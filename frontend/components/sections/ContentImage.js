@@ -104,9 +104,7 @@ export default function ContentImage({ settings, blocks }) {
 
   // ── New layout ─────────────────────────────────────────────
   const galleryCount = galleryImages.length;
-  const galleryClass = galleryCount >= 5 && galleryLayout === 'grid'
-    ? `ci-gallery ci-gallery--grid`
-    : `ci-gallery`;
+  const galleryClass = 'ci-gallery';
 
   // Content side: rect image (top or bottom) + text
   const contentCol = (
@@ -221,43 +219,24 @@ const sharedStyles = (
     /* ─── Gallery column ───────────────────── */
     .ci-gallery-col { width: 100%; flex-shrink: 0; }
     .ci-gallery { display: grid; gap: 3px; width: 100%; }
-    .ci-gallery-item { overflow: hidden; }
-    .ci-gallery-item--square { aspect-ratio: 1/1; }
+    .ci-gallery-item { overflow: hidden; min-height: 0; }
     .ci-gallery-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    /* 1 image → landscape on mobile, square on tablet+ */
-    .ci-gallery[data-count="1"] { grid-template-columns: 1fr; }
-    .ci-gallery[data-count="1"] .ci-gallery-item { aspect-ratio: 4/3; }
-
-    /* 2 images → side by side on mobile */
-    .ci-gallery[data-count="2"] { grid-template-columns: 1fr 1fr; }
-    .ci-gallery[data-count="2"] .ci-gallery-item { aspect-ratio: 1/1; }
-
-    /* 3 images → 1 top + 2 bottom */
-    .ci-gallery[data-count="3"] { grid-template-columns: 1fr 1fr; }
-    .ci-gallery[data-count="3"] .ci-gallery-item:first-child { grid-column: 1 / -1; aspect-ratio: 16/9; }
-    .ci-gallery[data-count="3"] .ci-gallery-item:not(:first-child) { aspect-ratio: 1/1; }
-
-    /* 4 images → 2x2 */
-    .ci-gallery[data-count="4"] { grid-template-columns: 1fr 1fr; }
-    .ci-gallery[data-count="4"] .ci-gallery-item { aspect-ratio: 1/1; }
-
-    /* 5 images — featured: 1 large left + 2 right + 2 bottom */
-    .ci-gallery[data-count="5"]:not(.ci-gallery--grid) { grid-template-columns: 1fr 1fr; }
-    .ci-gallery[data-count="5"]:not(.ci-gallery--grid) .ci-gallery-item:first-child { grid-row: 1 / 3; aspect-ratio: auto; }
-    .ci-gallery[data-count="5"]:not(.ci-gallery--grid) .ci-gallery-item:not(:first-child) { aspect-ratio: 1/1; }
-
-    /* 5 images — grid: 3 top + 2 bottom */
-    .ci-gallery[data-count="5"].ci-gallery--grid { grid-template-columns: 1fr 1fr 1fr; }
-    .ci-gallery[data-count="5"].ci-gallery--grid .ci-gallery-item { aspect-ratio: 1/1; }
-
-    /* 6 images — featured: 1 large left + 2 right + 3 bottom */
-    .ci-gallery[data-count="6"]:not(.ci-gallery--grid) { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
-    .ci-gallery[data-count="6"]:not(.ci-gallery--grid) .ci-gallery-item:nth-child(1) { grid-row: 1 / 3; }
-
-    /* 6 images — grid: 3x2 */
-    .ci-gallery[data-count="6"].ci-gallery--grid { grid-template-columns: 1fr 1fr 1fr; }
-    .ci-gallery[data-count="6"].ci-gallery--grid .ci-gallery-item { aspect-ratio: 1/1; }
+    /* ─── Mobile: explicit heights so gallery fills space nicely ─ */
+    .ci-gallery[data-count="1"] { height: 260px; grid-template-columns: 1fr; grid-template-rows: 1fr; }
+    .ci-gallery[data-count="2"] { height: 320px; grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+    .ci-gallery[data-count="3"] { height: 320px; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+    .ci-gallery[data-count="3"] .ci-gallery-item:nth-child(1) { grid-row: 1 / 3; }
+    .ci-gallery[data-count="4"] { height: 360px; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+    /* 5 images: 3 top + 2 centered — 6-col grid trick */
+    .ci-gallery[data-count="5"] { height: 360px; grid-template-columns: repeat(6, 1fr); grid-template-rows: 1fr 1fr; }
+    .ci-gallery[data-count="5"] .ci-gallery-item:nth-child(1) { grid-column: 1 / 3; }
+    .ci-gallery[data-count="5"] .ci-gallery-item:nth-child(2) { grid-column: 3 / 5; }
+    .ci-gallery[data-count="5"] .ci-gallery-item:nth-child(3) { grid-column: 5 / 7; }
+    .ci-gallery[data-count="5"] .ci-gallery-item:nth-child(4) { grid-column: 2 / 4; }
+    .ci-gallery[data-count="5"] .ci-gallery-item:nth-child(5) { grid-column: 4 / 6; }
+    /* 6 images: 3 top + 3 bottom */
+    .ci-gallery[data-count="6"] { height: 360px; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
 
     /* ─── Buttons ──────────────────────────── */
     .ci-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 2rem; }
@@ -267,19 +246,25 @@ const sharedStyles = (
     /* ─── Tablet 640px ─────────────────────── */
     @media (min-width: 640px) {
       .ci-container { padding: 0 2rem; }
-      .ci-row { flex-direction: row; align-items: center; gap: 2.5rem; }
+      .ci-row { flex-direction: row; align-items: stretch; gap: 2.5rem; }
       .ci-row--reverse { flex-direction: row-reverse; }
-      .ci-gallery-col { flex: 0 0 38%; max-width: 38%; }
+      .ci-gallery-col { flex: 0 0 38%; max-width: 38%; align-self: stretch; }
+      /* Gallery fills the full column height on tablet+ */
+      .ci-gallery { height: 100%; }
+      .ci-gallery[data-count="1"],
+      .ci-gallery[data-count="2"],
+      .ci-gallery[data-count="3"],
+      .ci-gallery[data-count="4"],
+      .ci-gallery[data-count="5"],
+      .ci-gallery[data-count="6"] { height: 100%; }
       .ci-gallery-item { transition: transform 0.3s ease; }
       .ci-gallery-item:hover { transform: scale(1.02); }
-      /* restore square for 1 image on tablet+ */
-      .ci-gallery[data-count="1"] .ci-gallery-item { aspect-ratio: 1/1; }
     }
 
     /* ─── Desktop 1024px ───────────────────── */
     @media (min-width: 1024px) {
       .ci-container { padding: 0 2.5rem; }
-      .ci-row { gap: 3.5rem; align-items: flex-start; }
+      .ci-row { gap: 3.5rem; }
       .ci-gallery-col { flex: 0 0 40%; max-width: 40%; }
     }
   `}</style>
