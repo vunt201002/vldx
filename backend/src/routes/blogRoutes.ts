@@ -11,6 +11,7 @@ const router = Router();
 router.get('/events', blogController.events);
 
 // Public routes
+router.get('/tags', blogController.getTags);
 router.get('/', blogController.getPublished);
 router.get('/:id', blogController.getById);
 router.get('/:id/comments', blogController.getComments);

@@ -26,6 +26,17 @@ export default function BlogPage() {
   const [tag, setTag] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
+  const [tags, setTags] = useState([]);
+  const [moreOpen, setMoreOpen] = useState(false);
+
+  const fetchTags = async () => {
+    try {
+      const res = await get('/blog/tags');
+      setTags(res.data || []);
+    } catch {
+      setTags([]);
+    }
+  };
 
   const fetchPosts = async () => {
     try {
@@ -39,6 +50,10 @@ export default function BlogPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchTags();
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -82,17 +97,59 @@ export default function BlogPage() {
 
         {/* Category nav bar — WSJ style */}
         <div>
-          <div className="mx-auto max-w-[1200px] px-4 flex items-center justify-center gap-6 py-2.5" style={{ fontSize: '13px', fontFamily: 'var(--wsj-sans)', color: '#333' }}>
-            {['Gach op lat', 'Noi that', 'Huong dan', 'Cong nghe', 'Xu huong'].map((cat) => (
+          <div className="mx-auto max-w-[1200px] px-4 flex items-center justify-center gap-4 sm:gap-6 py-2.5 relative" style={{ fontSize: '13px', fontFamily: 'var(--wsj-sans)', color: '#333' }}>
+            {/* Mobile: first 4, Desktop: first 8 */}
+            {tags.slice(0, 3).map((t) => (
               <button
-                key={cat}
-                onClick={() => { setTag(cat.toLowerCase()); setPage(1); }}
-                className="hover:underline transition whitespace-nowrap"
-                style={{ fontWeight: tag === cat.toLowerCase() ? 700 : 400 }}
+                key={t}
+                onClick={() => { setTag(t); setPage(1); setMoreOpen(false); }}
+                className="hover:underline transition whitespace-nowrap capitalize"
+                style={{ fontWeight: tag === t ? 700 : 400 }}
               >
-                {cat}
+                {t}
               </button>
             ))}
+            {tags.slice(3, 8).map((t) => (
+              <button
+                key={t}
+                onClick={() => { setTag(t); setPage(1); setMoreOpen(false); }}
+                className="hidden sm:block hover:underline transition whitespace-nowrap capitalize"
+                style={{ fontWeight: tag === t ? 700 : 400 }}
+              >
+                {t}
+              </button>
+            ))}
+            {/* "More" dropdown — visible on mobile when >4 tags, on desktop when >8 */}
+            {tags.length > 3 && (
+              <div className={`relative ${tags.length <= 8 ? 'sm:hidden' : ''}`}>
+                <button
+                  onClick={() => setMoreOpen(!moreOpen)}
+                  className="hover:underline transition whitespace-nowrap flex items-center gap-1"
+                >
+                  Xem them
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points={moreOpen ? '18 15 12 9 6 15' : '6 9 12 15 18 9'} />
+                  </svg>
+                </button>
+                {moreOpen && (
+                  <>
+                    <div className="fixed inset-0 z-10" onClick={() => setMoreOpen(false)} />
+                    <div className="absolute top-full mt-2 right-0 z-20 bg-white shadow-lg border py-2 min-w-[160px] max-h-[240px] overflow-y-auto" style={{ fontSize: '13px' }}>
+                      {tags.slice(3).map((t, i) => (
+                        <button
+                          key={t}
+                          onClick={() => { setTag(t); setPage(1); setMoreOpen(false); }}
+                          className={`block w-full text-left px-4 py-2 hover:bg-gray-50 capitalize transition ${i < 5 ? 'sm:hidden' : ''}`}
+                          style={{ fontWeight: tag === t ? 700 : 400, color: '#333' }}
+                        >
+                          {t}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
             {/* Search icon */}
             <button
               onClick={() => setSearchOpen(!searchOpen)}

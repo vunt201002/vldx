@@ -48,6 +48,15 @@ export const events = (req: Request, res: Response) => {
 
 // ─── Public routes ───────────────────────────────────────────────────────────
 
+export const getTags = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const tags: string[] = await BlogPost.distinct('tags', { isPublished: true });
+    sendWithEtag(req, res, { success: true, data: tags.sort() });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getPublished = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { tag, limit = '12', page = '1' } = req.query;
