@@ -85,51 +85,6 @@ export default function Navbar({ settings, blocks }) {
                 hoverColor={hoverColor}
               />
             )}
-
-            {/* Auth */}
-            {!isLoading && (
-              isAuthenticated ? (
-                <div ref={dropdownRef} className="relative ml-2">
-                  <button
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className="flex items-center gap-2 font-body text-warm-600 hover:text-warm-800 transition-colors"
-                    style={{ fontSize }}
-                  >
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-warm-200 text-xs font-bold text-warm-700">
-                      {(user?.firstName || 'U')[0].toUpperCase()}
-                    </span>
-                    <span className="tracking-[0.1em] lowercase hidden xl:inline">
-                      {user?.firstName || 'Account'}
-                    </span>
-                  </button>
-                  {dropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-44 rounded-lg border border-warm-200 bg-white py-1.5 shadow-lg z-50">
-                      <Link
-                        href="/account"
-                        onClick={() => setDropdownOpen(false)}
-                        className="block px-4 py-2 text-sm text-warm-700 hover:bg-warm-50 transition-colors"
-                      >
-                        Tai khoan
-                      </Link>
-                      <button
-                        onClick={() => { setDropdownOpen(false); logout(); }}
-                        className="block w-full text-left px-4 py-2 text-sm text-warm-700 hover:bg-warm-50 transition-colors"
-                      >
-                        Dang xuat
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <Link
-                  href="/login"
-                  className="ml-2 font-body tracking-[0.15em] lowercase transition-colors duration-200"
-                  style={linkStyle}
-                >
-                  dang nhap
-                </Link>
-              )
-            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -159,7 +114,7 @@ export default function Navbar({ settings, blocks }) {
               key={link.settings.label}
               href={link.settings.href}
               onClick={() => setMenuOpen(false)}
-              className="block font-body tracking-[0.15em] lowercase transition-colors"
+              className="block font-body tracking-[0.15em] transition-colors"
               style={{ fontSize, color: color || '#6B5D4E' }}
             >
               {link.settings.label}
@@ -169,55 +124,11 @@ export default function Navbar({ settings, blocks }) {
             <a
               href={settings.ctaHref}
               onClick={() => setMenuOpen(false)}
-              className="block font-body tracking-[0.15em] lowercase transition-colors"
+              className="block font-body tracking-[0.15em] transition-colors"
               style={{ fontSize, color: color || '#6B5D4E' }}
             >
               {settings.ctaLabel}
             </a>
-          )}
-
-          {/* Mobile auth links */}
-          {!isLoading && (
-            <div className="border-t border-warm-300/30 pt-3 mt-2">
-              {isAuthenticated ? (
-                <>
-                  <Link
-                    href="/account"
-                    onClick={() => setMenuOpen(false)}
-                    className="block font-body tracking-[0.15em] lowercase transition-colors"
-                    style={{ fontSize, color: color || '#6B5D4E' }}
-                  >
-                    tai khoan ({user?.firstName})
-                  </Link>
-                  <button
-                    onClick={() => { setMenuOpen(false); logout(); }}
-                    className="block font-body tracking-[0.15em] lowercase transition-colors mt-3 text-left"
-                    style={{ fontSize, color: color || '#6B5D4E' }}
-                  >
-                    dang xuat
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    onClick={() => setMenuOpen(false)}
-                    className="block font-body tracking-[0.15em] lowercase transition-colors"
-                    style={{ fontSize, color: color || '#6B5D4E' }}
-                  >
-                    dang nhap
-                  </Link>
-                  <Link
-                    href="/register"
-                    onClick={() => setMenuOpen(false)}
-                    className="block font-body tracking-[0.15em] lowercase transition-colors mt-3"
-                    style={{ fontSize, color: color || '#6B5D4E' }}
-                  >
-                    dang ky
-                  </Link>
-                </>
-              )}
-            </div>
           )}
         </div>
       </div>
@@ -236,7 +147,7 @@ function NavLink({ href, label, style, hoverColor }) {
   return (
     <a
       href={href}
-      className="font-body tracking-[0.15em] lowercase transition-colors duration-200"
+      className="font-body tracking-[0.15em] transition-colors duration-200"
       style={computedStyle}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
