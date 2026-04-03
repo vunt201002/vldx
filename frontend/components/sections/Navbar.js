@@ -114,7 +114,7 @@ export default function Navbar({ settings, blocks }) {
               key={link.settings.label}
               href={link.settings.href}
               onClick={() => setMenuOpen(false)}
-              className="block font-body tracking-[0.15em] transition-colors"
+              className="block font-body tracking-[0.03em] transition-colors"
               style={{ fontSize, color: color || '#6B5D4E' }}
             >
               {link.settings.label}
@@ -124,7 +124,7 @@ export default function Navbar({ settings, blocks }) {
             <a
               href={settings.ctaHref}
               onClick={() => setMenuOpen(false)}
-              className="block font-body tracking-[0.15em] transition-colors"
+              className="block font-body tracking-[0.03em] transition-colors"
               style={{ fontSize, color: color || '#6B5D4E' }}
             >
               {settings.ctaLabel}
@@ -147,7 +147,7 @@ function NavLink({ href, label, style, hoverColor }) {
   return (
     <a
       href={href}
-      className="font-body tracking-[0.15em] transition-colors duration-200"
+      className="font-body tracking-[0.03em] transition-colors duration-200"
       style={computedStyle}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
