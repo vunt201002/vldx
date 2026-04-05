@@ -106,6 +106,10 @@ const blockJsonMappings: Record<string, BlockJsonMapping> = {
       { dataKey: 'steps', blockType: 'process-step' },
     ],
   },
+  'blog-showcase': {
+    settingsFields: ['overline', 'title', 'description', 'postCount', 'tag', 'viewAllLabel', 'viewAllHref', 'bgColor'],
+    arrayBlocks: [],
+  },
 };
 
 export default blockJsonMappings;
