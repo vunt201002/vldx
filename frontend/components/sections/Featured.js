@@ -22,21 +22,24 @@ export default function Featured({ settings, blocks }) {
           {features.map((block, i) => {
             const f = block.settings;
             const Icon = icons[f.iconName];
+            const Tag = f.href ? 'a' : 'div';
+            const linkProps = f.href ? { href: f.href } : {};
             return (
-              <div
+              <Tag
                 key={i}
-                className="bg-cream p-8 lg:p-10 group hover:bg-warm-50 transition-colors duration-500"
+                {...linkProps}
+                className={`bg-cream p-8 lg:p-10 group hover:bg-warm-50 transition-colors duration-500 ${f.href ? 'cursor-pointer' : ''}`}
               >
                 <div className="mb-6 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
                   {Icon && <Icon className="w-10 h-10 text-sandstone" />}
                 </div>
-                <h3 className="font-display text-xl text-charcoal mb-3">
+                <h3 className={`font-display text-xl text-charcoal mb-3 ${f.href ? 'group-hover:underline decoration-1 underline-offset-4' : ''}`}>
                   {f.title}
                 </h3>
                 <p className="font-body text-sm text-warm-500 leading-relaxed">
                   {f.desc}
                 </p>
-              </div>
+              </Tag>
             );
           })}
         </div>

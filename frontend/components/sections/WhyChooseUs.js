@@ -58,15 +58,19 @@ export default function WhyChooseUs({ settings, blocks }) {
               const s = block.settings;
               const isEven = i % 2 === 0;
 
+              const Tag = s.href ? 'a' : 'div';
+              const linkProps = s.href ? { href: s.href } : {};
+
               return (
-                <div
+                <Tag
                   key={i}
-                  className="flex flex-col items-center text-center"
+                  {...linkProps}
+                  className={`flex flex-col items-center text-center group ${s.href ? 'cursor-pointer' : ''}`}
                   style={{ marginTop: isEven ? 0 : 40 }}
                 >
                   {/* Circular icon */}
                   <div
-                    className="w-28 h-28 lg:w-36 lg:h-36 rounded-full flex items-center justify-center mb-6 relative z-10"
+                    className={`w-28 h-28 lg:w-36 lg:h-36 rounded-full flex items-center justify-center mb-6 relative z-10 transition-transform duration-300 ${s.href ? 'group-hover:scale-105' : ''}`}
                     style={{ backgroundColor: s.iconBgColor || '#FFD580' }}
                   >
                     {s.icon && (
@@ -79,7 +83,7 @@ export default function WhyChooseUs({ settings, blocks }) {
                   </div>
 
                   {/* Title */}
-                  <h3 className="font-display text-lg lg:text-xl text-charcoal font-semibold mb-3 leading-snug max-w-[240px]">
+                  <h3 className={`font-display text-lg lg:text-xl text-charcoal font-semibold mb-3 leading-snug max-w-[240px] ${s.href ? 'group-hover:underline decoration-1 underline-offset-4' : ''}`}>
                     {s.title}
                   </h3>
 
@@ -89,7 +93,7 @@ export default function WhyChooseUs({ settings, blocks }) {
                       {s.desc}
                     </p>
                   )}
-                </div>
+                </Tag>
               );
             })}
           </div>
