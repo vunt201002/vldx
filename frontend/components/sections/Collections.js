@@ -92,15 +92,16 @@ function ProductCard({ block, settings }) {
     : p.image
       ? [{ url: p.image }]
       : [];
-  const linkHref = p.href || `/materials?category=${p.slug}`;
   const hasImages = images.length > 0;
   const shouldSlide = isMobile ? isVisible : isHovered;
+  const Tag = p.href ? 'a' : 'div';
+  const linkProps = p.href ? { href: p.href } : {};
 
   return (
-    <a
+    <Tag
       ref={cardRef}
-      href={linkHref}
-      className="group relative aspect-[4/5] overflow-hidden cursor-pointer"
+      {...linkProps}
+      className={`group relative aspect-[4/5] overflow-hidden ${p.href ? 'cursor-pointer' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -135,7 +136,7 @@ function ProductCard({ block, settings }) {
 
       {/* Hover border effect */}
       <div className="absolute inset-0 border border-white/0 group-hover:border-white/20 transition-all duration-500" />
-    </a>
+    </Tag>
   );
 }
 
@@ -168,8 +169,8 @@ export default function Collections({ id, settings, blocks }) {
 
         {/* Products Grid */}
         <div className="stagger-children grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {products.map((block) => (
-            <ProductCard key={block.settings.slug} block={block} settings={settings} />
+          {products.map((block, index) => (
+            <ProductCard key={block.settings.name || index} block={block} settings={settings} />
           ))}
         </div>
       </div>

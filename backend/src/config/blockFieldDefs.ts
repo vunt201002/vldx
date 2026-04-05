@@ -121,8 +121,7 @@ const blockFieldDefs: BlockTypeDef[] = [
         type: 'array',
         fields: [
           { key: 'name', label: 'Name', type: 'text', required: true },
-          { key: 'slug', label: 'Slug', type: 'text', required: true },
-          { key: 'href', label: 'Link URL', type: 'url', placeholder: '/materials?category=...' },
+          { key: 'href', label: 'Link URL', type: 'url', placeholder: 'https://...' },
           {
             key: 'images',
             label: 'Images / GIFs',
