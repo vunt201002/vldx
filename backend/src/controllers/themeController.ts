@@ -184,14 +184,33 @@ export const getPageTheme = async (req: Request, res: Response): Promise<void> =
           bodyFont: page.bodyFont || '',
           isPublished: page.isPublished,
         },
-        blocks: sortedBlocks.map((pb: any) => ({
-          _id: pb.block._id,
-          type: pb.block.type,
-          name: pb.block.name,
-          data: pb.block.data ?? {},
-          settings: pb.block.settings ?? {},
-          order: pb.order,
-        })),
+        blocks: sortedBlocks.map((pb: any) => {
+          const data = pb.block.data ?? {};
+
+          // Normalize legacy `image` (string) → `images` (array) for collections products
+          if (pb.block.type === 'collections' && Array.isArray(data.products)) {
+            data.products = data.products.map((p: any) => {
+              if (!p.images || p.images.length === 0) {
+                if (p.image) {
+                  p.images = [{ url: p.image }];
+                  delete p.image;
+                } else {
+                  p.images = [];
+                }
+              }
+              return p;
+            });
+          }
+
+          return {
+            _id: pb.block._id,
+            type: pb.block.type,
+            name: pb.block.name,
+            data,
+            settings: pb.block.settings ?? {},
+            order: pb.order,
+          };
+        }),
       },
     });
   } catch (err: any) {

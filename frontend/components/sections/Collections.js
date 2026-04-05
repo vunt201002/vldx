@@ -1,4 +1,118 @@
+import { useState, useRef, useCallback, useEffect } from 'react';
 import useReveal from '@/hooks/useReveal';
+
+function ProductCardImages({ images, name, color, isHovered }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    if (isHovered && images.length > 1) {
+      // First slide happens quickly, then normal interval
+      const firstTimeout = setTimeout(() => {
+        setActiveIndex(1);
+        intervalRef.current = setInterval(() => {
+          setActiveIndex((prev) => (prev + 1) % images.length);
+        }, 2500);
+      }, 600);
+      return () => {
+        clearTimeout(firstTimeout);
+        clearInterval(intervalRef.current);
+      };
+    } else {
+      clearInterval(intervalRef.current);
+      setActiveIndex(0);
+    }
+    return () => clearInterval(intervalRef.current);
+  }, [isHovered, images.length]);
+
+  if (!images || images.length === 0) {
+    return (
+      <div className={`absolute inset-0 bg-gradient-to-br ${color} transition-transform duration-700 group-hover:scale-105`} />
+    );
+  }
+
+  return (
+    <div className="absolute inset-0">
+      {images.map((img, i) => (
+        <img
+          key={i}
+          src={img.url || img}
+          alt={name}
+          loading={i === 0 ? 'eager' : 'lazy'}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${
+            i === activeIndex ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+      ))}
+      {images.length > 1 && (
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
+          {images.map((_, i) => (
+            <span
+              key={i}
+              className={`block w-1.5 h-1.5 rounded-full transition-colors duration-300 ${
+                i === activeIndex ? 'bg-white' : 'bg-white/40'
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProductCard({ block, settings }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const p = block.settings;
+
+  const images = p.images && p.images.length > 0
+    ? p.images
+    : p.image
+      ? [{ url: p.image }]
+      : [];
+  const linkHref = p.href || `/materials?category=${p.slug}`;
+  const hasImages = images.length > 0;
+
+  return (
+    <a
+      href={linkHref}
+      className="group relative aspect-[4/5] overflow-hidden cursor-pointer"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <ProductCardImages images={images} name={p.name} color={p.color} isHovered={isHovered} />
+
+      {/* Dark overlay for text readability on images */}
+      {hasImages && <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-500" />}
+
+      {/* Content overlay */}
+      <div className="relative z-10 h-full flex flex-col justify-between p-6 lg:p-8">
+        <div>
+          <span className="font-body text-[10px] tracking-[0.25em] uppercase text-white/60">
+            {p.specs}
+          </span>
+        </div>
+
+        <div>
+          <h3 className="font-display text-2xl lg:text-3xl text-white leading-tight">
+            {p.name}
+          </h3>
+          <p className="mt-3 font-body text-sm text-white/70 leading-relaxed max-w-[280px]">
+            {p.desc}
+          </p>
+          <div className="mt-5 flex items-center gap-2 font-body text-xs tracking-widest uppercase text-sandstone">
+            <span>{settings.cardLinkLabel}</span>
+            <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      {/* Hover border effect */}
+      <div className="absolute inset-0 border border-white/0 group-hover:border-white/20 transition-all duration-500" />
+    </a>
+  );
+}
 
 export default function Collections({ id, settings, blocks }) {
   const sectionRef = useReveal();
@@ -11,9 +125,17 @@ export default function Collections({ id, settings, blocks }) {
         {/* Section Header */}
         <div className="reveal mb-16 lg:mb-24">
           <span className="font-body text-xs tracking-[0.3em] uppercase text-sandstone">{settings.overline}</span>
-          <h2 className="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl text-charcoal leading-[1.1]">
-            {settings.title} <span className="italic text-concrete">{settings.titleAccent}</span>
-          </h2>
+          {settings.titleLink ? (
+            <a href={settings.titleLink} className="block mt-4 group/title">
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-charcoal leading-[1.1] group-hover/title:underline decoration-1 underline-offset-8">
+                {settings.title}
+              </h2>
+            </a>
+          ) : (
+            <h2 className="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl text-charcoal leading-[1.1]">
+              {settings.title}
+            </h2>
+          )}
           <p className="mt-6 font-body text-warm-500 max-w-xl leading-relaxed">
             {settings.description}
           </p>
@@ -21,56 +143,9 @@ export default function Collections({ id, settings, blocks }) {
 
         {/* Products Grid */}
         <div className="stagger-children grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {products.map((block) => {
-            const p = block.settings;
-            return (
-              <a
-                key={p.slug}
-                href={`/materials?category=${p.slug}`}
-                className="group relative aspect-[4/5] overflow-hidden cursor-pointer"
-              >
-                {/* Product image or gradient fallback */}
-                {p.image ? (
-                  <img
-                    src={p.image}
-                    alt={p.name}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className={`absolute inset-0 bg-gradient-to-br ${p.color} transition-transform duration-700 group-hover:scale-105`} />
-                )}
-                {/* Dark overlay for text readability on images */}
-                {p.image && <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-500" />}
-
-                {/* Content overlay */}
-                <div className="relative z-10 h-full flex flex-col justify-between p-6 lg:p-8">
-                  <div>
-                    <span className="font-body text-[10px] tracking-[0.25em] uppercase text-white/60">
-                      {p.specs}
-                    </span>
-                  </div>
-
-                  <div>
-                    <h3 className="font-display text-2xl lg:text-3xl text-white leading-tight">
-                      {p.name}
-                    </h3>
-                    <p className="mt-3 font-body text-sm text-white/70 leading-relaxed max-w-[280px]">
-                      {p.desc}
-                    </p>
-                    <div className="mt-5 flex items-center gap-2 font-body text-xs tracking-widest uppercase text-sandstone">
-                      <span>{settings.cardLinkLabel}</span>
-                      <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Hover border effect */}
-                <div className="absolute inset-0 border border-white/0 group-hover:border-white/20 transition-all duration-500" />
-              </a>
-            );
-          })}
+          {products.map((block) => (
+            <ProductCard key={block.settings.slug} block={block} settings={settings} />
+          ))}
         </div>
       </div>
     </section>
