@@ -44,7 +44,7 @@ const blockJsonMappings: Record<string, BlockJsonMapping> = {
     ],
   },
   collections: {
-    settingsFields: ['overline', 'title', 'titleAccent', 'description', 'cardLinkLabel'],
+    settingsFields: ['overline', 'title', 'titleLink', 'description', 'cardLinkLabel'],
     arrayBlocks: [
       { dataKey: 'products', blockType: 'product-card' },
     ],

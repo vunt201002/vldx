@@ -53,8 +53,7 @@ const landingBlocks = [
     name: 'Product Collections',
     data: {
       overline: 'bộ sưu tập',
-      title: 'sản phẩm',
-      titleAccent: 'nổi bật',
+      title: 'sản phẩm nổi bật',
       description:
         'mỗi dòng sản phẩm được sản xuất thủ công, kiểm soát chất lượng nghiêm ngặt từ nguyên liệu đến thành phẩm.',
       cardLinkLabel: 'xem chi tiết',
@@ -62,6 +61,8 @@ const landingBlocks = [
         {
           name: 'Gạch Lát Sân Vườn',
           slug: 'gach-lat',
+          href: '/materials?category=gach-lat',
+          images: [],
           desc: 'Bề mặt chống trơn, chịu lực cao, phù hợp lối đi và sân vườn ngoài trời.',
           specs: '400×400mm  ·  50mm dày',
           color: 'from-amber-800/80 to-amber-900/90',
@@ -69,6 +70,8 @@ const landingBlocks = [
         {
           name: 'Đá Granite',
           slug: 'da-granite',
+          href: '/materials?category=da-granite',
+          images: [],
           desc: 'Đá tự nhiên gia công chính xác, bề mặt mài nhám hoặc đánh bóng theo yêu cầu.',
           specs: '600×300mm  ·  20mm dày',
           color: 'from-stone-600/80 to-stone-800/90',
@@ -76,6 +79,8 @@ const landingBlocks = [
         {
           name: 'Terrazzo',
           slug: 'terrazzo',
+          href: '/materials?category=terrazzo',
+          images: [],
           desc: 'Phối trộn đá marble, granite và xi măng — mỗi viên gạch là một tác phẩm nghệ thuật.',
           specs: '400×400mm  ·  30mm dày',
           color: 'from-rose-800/70 to-stone-800/90',
@@ -83,6 +88,8 @@ const landingBlocks = [
         {
           name: 'Gạch Block',
           slug: 'gach-block',
+          href: '/materials?category=gach-block',
+          images: [],
           desc: 'Gạch thông gió trang trí, tạo điểm nhấn kiến trúc cho tường rào và mặt tiền.',
           specs: '190×190mm  ·  90mm dày',
           color: 'from-slate-600/80 to-slate-800/90',
@@ -90,6 +97,8 @@ const landingBlocks = [
         {
           name: 'Đá Ốp Lát',
           slug: 'da-op-lat',
+          href: '/materials?category=da-op-lat',
+          images: [],
           desc: 'Đá ốp tường và lát nền, vân tự nhiên, phù hợp không gian nội thất cao cấp.',
           specs: '600×600mm  ·  15mm dày',
           color: 'from-warm-500/80 to-warm-800/90',
@@ -97,6 +106,8 @@ const landingBlocks = [
         {
           name: 'Bậc Thang & Coping',
           slug: 'bac-thang',
+          href: '/materials?category=bac-thang',
+          images: [],
           desc: 'Bậc cầu thang và viền hồ bơi, bo cạnh tròn an toàn, chống trơn trượt.',
           specs: '1000×350mm  ·  40mm dày',
           color: 'from-cyan-800/70 to-slate-800/90',
@@ -267,14 +278,15 @@ const productsBlocks = [
     name: 'All Products',
     data: {
       overline: '',
-      title: 'danh mục',
-      titleAccent: 'sản phẩm',
+      title: 'danh mục sản phẩm',
       description: '',
       cardLinkLabel: 'xem chi tiết',
       products: [
         {
           name: 'Gạch Lát Sân Vườn',
           slug: 'gach-lat',
+          href: '/materials?category=gach-lat',
+          images: [],
           desc: 'Bề mặt chống trơn, chịu lực cao, phù hợp lối đi và sân vườn ngoài trời.',
           specs: '400×400mm  ·  50mm dày',
           color: 'from-amber-800/80 to-amber-900/90',
@@ -282,6 +294,8 @@ const productsBlocks = [
         {
           name: 'Đá Granite',
           slug: 'da-granite',
+          href: '/materials?category=da-granite',
+          images: [],
           desc: 'Đá tự nhiên gia công chính xác, bề mặt mài nhám hoặc đánh bóng theo yêu cầu.',
           specs: '600×300mm  ·  20mm dày',
           color: 'from-stone-600/80 to-stone-800/90',
@@ -289,6 +303,8 @@ const productsBlocks = [
         {
           name: 'Terrazzo',
           slug: 'terrazzo',
+          href: '/materials?category=terrazzo',
+          images: [],
           desc: 'Phối trộn đá marble, granite và xi măng — mỗi viên gạch là một tác phẩm nghệ thuật.',
           specs: '400×400mm  ·  30mm dày',
           color: 'from-rose-800/70 to-stone-800/90',
@@ -296,6 +312,8 @@ const productsBlocks = [
         {
           name: 'Gạch Block',
           slug: 'gach-block',
+          href: '/materials?category=gach-block',
+          images: [],
           desc: 'Gạch thông gió trang trí, tạo điểm nhấn kiến trúc cho tường rào và mặt tiền.',
           specs: '190×190mm  ·  90mm dày',
           color: 'from-slate-600/80 to-slate-800/90',
@@ -303,6 +321,8 @@ const productsBlocks = [
         {
           name: 'Đá Ốp Lát',
           slug: 'da-op-lat',
+          href: '/materials?category=da-op-lat',
+          images: [],
           desc: 'Đá ốp tường và lát nền, vân tự nhiên, phù hợp không gian nội thất cao cấp.',
           specs: '600×600mm  ·  15mm dày',
           color: 'from-warm-500/80 to-warm-800/90',
@@ -310,6 +330,8 @@ const productsBlocks = [
         {
           name: 'Bậc Thang & Coping',
           slug: 'bac-thang',
+          href: '/materials?category=bac-thang',
+          images: [],
           desc: 'Bậc cầu thang và viền hồ bơi, bo cạnh tròn an toàn, chống trơn trượt.',
           specs: '1000×350mm  ·  40mm dày',
           color: 'from-cyan-800/70 to-slate-800/90',

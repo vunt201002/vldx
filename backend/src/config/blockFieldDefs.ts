@@ -111,7 +111,7 @@ const blockFieldDefs: BlockTypeDef[] = [
     fields: [
       { key: 'overline', label: 'Overline', type: 'text' },
       { key: 'title', label: 'Title', type: 'text', required: true },
-      { key: 'titleAccent', label: 'Title Accent', type: 'text' },
+      { key: 'titleLink', label: 'Title Link', type: 'url', placeholder: 'https://...' },
       { key: 'description', label: 'Description', type: 'textarea' },
       { key: 'cardLinkLabel', label: 'Card Link Label', type: 'text' },
       {
@@ -121,7 +121,15 @@ const blockFieldDefs: BlockTypeDef[] = [
         fields: [
           { key: 'name', label: 'Name', type: 'text', required: true },
           { key: 'slug', label: 'Slug', type: 'text', required: true },
-          { key: 'image', label: 'Image', type: 'image' as any, uploadFolder: 'products' },
+          { key: 'href', label: 'Link URL', type: 'url', placeholder: '/materials?category=...' },
+          {
+            key: 'images',
+            label: 'Images / GIFs',
+            type: 'array',
+            fields: [
+              { key: 'url', label: 'Image URL', type: 'image' as any, uploadFolder: 'products' },
+            ],
+          },
           { key: 'desc', label: 'Description', type: 'textarea' },
           { key: 'specs', label: 'Specs', type: 'text' },
           { key: 'color', label: 'Gradient Color', type: 'text' },
