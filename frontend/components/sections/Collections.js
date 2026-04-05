@@ -62,7 +62,30 @@ function ProductCardImages({ images, name, color, isHovered }) {
 
 function ProductCard({ block, settings }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const cardRef = useRef(null);
   const p = block.settings;
+
+  // Detect mobile (no hover support)
+  useEffect(() => {
+    const mq = window.matchMedia('(hover: none)');
+    setIsMobile(mq.matches);
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  // Auto-play on mobile when card is visible in viewport
+  useEffect(() => {
+    if (!isMobile || !cardRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.5 }
+    );
+    observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, [isMobile]);
 
   const images = p.images && p.images.length > 0
     ? p.images
@@ -71,15 +94,17 @@ function ProductCard({ block, settings }) {
       : [];
   const linkHref = p.href || `/materials?category=${p.slug}`;
   const hasImages = images.length > 0;
+  const shouldSlide = isMobile ? isVisible : isHovered;
 
   return (
     <a
+      ref={cardRef}
       href={linkHref}
       className="group relative aspect-[4/5] overflow-hidden cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <ProductCardImages images={images} name={p.name} color={p.color} isHovered={isHovered} />
+      <ProductCardImages images={images} name={p.name} color={p.color} isHovered={shouldSlide} />
 
       {/* Dark overlay for text readability on images */}
       {hasImages && <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-500" />}
