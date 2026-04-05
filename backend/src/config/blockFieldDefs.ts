@@ -114,6 +114,7 @@ const blockFieldDefs: BlockTypeDef[] = [
       { key: 'titleLink', label: 'Title Link', type: 'url', placeholder: 'https://...' },
       { key: 'description', label: 'Description', type: 'textarea' },
       { key: 'cardLinkLabel', label: 'Card Link Label', type: 'text' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#F5F0EB' },
       {
         key: 'products',
         label: 'Products',
