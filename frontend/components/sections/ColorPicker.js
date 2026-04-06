@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { trackColorSelect } from '@/lib/analytics';
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 9;
 
 export default function ColorPicker({ settings, blocks }) {
   const colors = (blocks || []).filter((b) => b.type === 'color-swatch');
@@ -145,40 +145,42 @@ export default function ColorPicker({ settings, blocks }) {
             {totalPages > 1 && (
               <div style={{
                 display: 'flex', justifyContent: 'center', alignItems: 'center',
-                gap: '1rem', marginTop: '1.5rem',
+                gap: '0.75rem', marginTop: '1.25rem',
               }}>
                 <button
                   onClick={() => setPage((p) => Math.max(0, p - 1))}
                   disabled={page === 0}
-                  className="font-body"
                   style={{
-                    padding: '0.4rem 1rem', fontSize: '0.8125rem',
-                    border: '1px solid #C4A882', borderRadius: '4px',
-                    background: page === 0 ? '#F5F0EB' : '#fff',
-                    color: page === 0 ? '#C4B9A8' : '#6B5D4E',
+                    width: '28px', height: '28px', padding: 0,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    border: 'none', borderRadius: '50%',
+                    background: page === 0 ? 'transparent' : 'rgba(196,168,130,0.15)',
+                    color: page === 0 ? '#D4C9BC' : '#8B7D6B',
                     cursor: page === 0 ? 'default' : 'pointer',
-                    transition: 'all 0.2s',
+                    transition: 'all 0.25s ease',
+                    fontSize: '0.75rem',
                   }}
                 >
-                  &#8592;
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 19l-7-7 7-7"/></svg>
                 </button>
-                <span className="font-body" style={{ fontSize: '0.8125rem', color: '#6B5D4E' }}>
+                <span className="font-body" style={{ fontSize: '0.6875rem', color: '#A89B8C', letterSpacing: '0.05em' }}>
                   {page + 1} / {totalPages}
                 </span>
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
                   disabled={page === totalPages - 1}
-                  className="font-body"
                   style={{
-                    padding: '0.4rem 1rem', fontSize: '0.8125rem',
-                    border: '1px solid #C4A882', borderRadius: '4px',
-                    background: page === totalPages - 1 ? '#F5F0EB' : '#fff',
-                    color: page === totalPages - 1 ? '#C4B9A8' : '#6B5D4E',
+                    width: '28px', height: '28px', padding: 0,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    border: 'none', borderRadius: '50%',
+                    background: page === totalPages - 1 ? 'transparent' : 'rgba(196,168,130,0.15)',
+                    color: page === totalPages - 1 ? '#D4C9BC' : '#8B7D6B',
                     cursor: page === totalPages - 1 ? 'default' : 'pointer',
-                    transition: 'all 0.2s',
+                    transition: 'all 0.25s ease',
+                    fontSize: '0.75rem',
                   }}
                 >
-                  &#8594;
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 5l7 7-7 7"/></svg>
                 </button>
               </div>
             )}
