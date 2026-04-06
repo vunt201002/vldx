@@ -95,8 +95,7 @@ export default function BlogShowcase({ id, settings }) {
   const rafRef = useRef(null);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [canScrollUp, setCanScrollUp] = useState(false);
-  const [canScrollDown, setCanScrollDown] = useState(false);
+  const [scrollDirection, setScrollDirection] = useState('down');
   const [containerHeight, setContainerHeight] = useState(null);
 
   // Fetch posts
@@ -133,12 +132,14 @@ export default function BlogShowcase({ id, settings }) {
     });
   }, [posts, loading]);
 
-  // Track scroll for arrow visibility
+  // Track scroll to toggle direction
   const updateScrollState = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
-    setCanScrollUp(el.scrollTop > 10);
-    setCanScrollDown(el.scrollTop < el.scrollHeight - el.clientHeight - 10);
+    const atBottom = el.scrollTop >= el.scrollHeight - el.clientHeight - 10;
+    const atTop = el.scrollTop <= 10;
+    if (atBottom) setScrollDirection('up');
+    else if (atTop) setScrollDirection('down');
   }, []);
 
   useEffect(() => {
@@ -218,23 +219,14 @@ export default function BlogShowcase({ id, settings }) {
           }
         </div>
 
-        {/* Scroll buttons */}
+        {/* Scroll button */}
         {hasMore && (
-          <div className="flex justify-center gap-3 mt-6">
-            {canScrollUp && (
-              <ScrollButton
-                direction="up"
-                onMouseEnter={() => startScroll(-1)}
-                onMouseLeave={stopScroll}
-              />
-            )}
-            {canScrollDown && (
-              <ScrollButton
-                direction="down"
-                onMouseEnter={() => startScroll(1)}
-                onMouseLeave={stopScroll}
-              />
-            )}
+          <div className="flex justify-center mt-6">
+            <ScrollButton
+              direction={scrollDirection}
+              onMouseEnter={() => startScroll(scrollDirection === 'down' ? 1 : -1)}
+              onMouseLeave={stopScroll}
+            />
           </div>
         )}
 
