@@ -83,17 +83,39 @@ export default function ContentImage({ settings, blocks }) {
   );
 
   // ── Square column: image gallery (1-6 images) ──────────────────
-  const count = squareImages.length;
+  const count = Math.min(squareImages.length, 6);
+
+  // Grid columns: max 3 per row
+  const cols = Math.min(count, 3);
+  const gridStyle = {
+    display: 'grid',
+    gridTemplateColumns: `repeat(${cols}, 1fr)`,
+    gap: '0.5rem',
+    width: '100%',
+  };
+
+  // For 4 images: last item spans full width
+  const cellStyle = (i) => {
+    const base = { overflow: 'hidden', borderRadius: '4px', aspectRatio: '1 / 1' };
+    if (count === 4 && i === 3) return { ...base, gridColumn: '1 / -1', aspectRatio: '3 / 1' };
+    if (count === 5 && i >= 3) return { ...base, gridColumn: 'span 3', aspectRatio: '3 / 2' };
+    if (count === 5 && i < 3) return { ...base, gridColumn: 'span 2' };
+    return base;
+  };
+
+  // For 5 images: use 6-column base grid
+  const gridColumns = count === 5 ? 'repeat(6, 1fr)' : `repeat(${cols}, 1fr)`;
+
   const squareCol = (
     <div className="ci-square-col">
       {count > 0 && (
-        <div className={`ci-grid ci-grid--${Math.min(count, 6)}`}>
+        <div style={{ ...gridStyle, gridTemplateColumns: gridColumns }}>
           {squareImages.slice(0, 6).map((img, i) => (
-            <div key={i} className="ci-grid-cell">
+            <div key={i} style={cellStyle(i)}>
               <img
                 src={img.url}
                 alt={img.alt || ''}
-                className="ci-grid-img"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                 loading={i > 0 ? 'lazy' : undefined}
               />
             </div>
@@ -155,62 +177,11 @@ export default function ContentImage({ settings, blocks }) {
         /* ─── Square column ─────────────────────── */
         .ci-square-col {
           width: 100%;
-          max-width: 320px;
           overflow: hidden;
           flex-shrink: 0;
         }
 
-        /* ─── Image grid ───────────────────────── */
-        .ci-grid {
-          display: grid;
-          gap: 0.5rem;
-          width: 100%;
-        }
-        .ci-grid-cell {
-          overflow: hidden;
-          border-radius: 4px;
-        }
-        .ci-grid-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
-
-        /* 1 image: full width, square */
-        .ci-grid--1 { grid-template-columns: 1fr; }
-        .ci-grid--1 .ci-grid-cell { aspect-ratio: 1 / 1; }
-
-        /* 2 images: side by side */
-        .ci-grid--2 { grid-template-columns: 1fr 1fr; }
-        .ci-grid--2 .ci-grid-cell { aspect-ratio: 1 / 1; }
-
-        /* 3 images: 3 columns */
-        .ci-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
-        .ci-grid--3 .ci-grid-cell { aspect-ratio: 1 / 1; }
-
-        /* 4 images: row 1 = 3 cols, row 2 = 1 full-width */
-        .ci-grid--4 { grid-template-columns: 1fr 1fr 1fr; }
-        .ci-grid--4 .ci-grid-cell { aspect-ratio: 1 / 1; }
-        .ci-grid--4 .ci-grid-cell:nth-child(4) {
-          grid-column: 1 / -1;
-          aspect-ratio: 3 / 1;
-        }
-
-        /* 5 images: row 1 = 3 cols, row 2 = 2 cols (6-col base grid) */
-        .ci-grid--5 { grid-template-columns: repeat(6, 1fr); }
-        .ci-grid--5 .ci-grid-cell:nth-child(-n+3) {
-          grid-column: span 2;
-          aspect-ratio: 1 / 1;
-        }
-        .ci-grid--5 .ci-grid-cell:nth-child(n+4) {
-          grid-column: span 3;
-          aspect-ratio: 3 / 2;
-        }
-
-        /* 6 images: 2 rows of 3 */
-        .ci-grid--6 { grid-template-columns: 1fr 1fr 1fr; }
-        .ci-grid--6 .ci-grid-cell { aspect-ratio: 1 / 1; }
+        /* Grid styles are inline (style jsx can't scope .map() children) */
 
         /* ─── Rect column ───────────────────────── */
         .ci-rect-col {
@@ -290,8 +261,8 @@ export default function ContentImage({ settings, blocks }) {
             flex-direction: row-reverse; /* square-col left, rect-col right */
           }
           .ci-square-col {
-            flex: 0 0 36%;
-            max-width: 36%;
+            flex: 0 0 45%;
+            max-width: 45%;
           }
         }
 
@@ -305,8 +276,8 @@ export default function ContentImage({ settings, blocks }) {
             align-items: flex-start;
           }
           .ci-square-col {
-            flex: 0 0 38%;
-            max-width: 38%;
+            flex: 0 0 50%;
+            max-width: 50%;
           }
         }
       `}</style>
