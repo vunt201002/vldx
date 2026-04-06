@@ -109,7 +109,7 @@ function readJson(filename) {
 
 async function proxyToBackend(req, res, apiPath) {
   try {
-    const url = new URL(apiPath, BACKEND_URL);
+    const url = new URL(BACKEND_URL + apiPath);
     // Forward query params
     Object.entries(req.query).forEach(([key, val]) => {
       if (key !== 'path') url.searchParams.set(key, val);
