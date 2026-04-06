@@ -1,8 +1,15 @@
 export default function ContentImage({ settings, blocks }) {
   const buttons = (blocks || []).filter((b) => b.type === 'content-button');
 
+  // Resolve square images: prefer gallery array, fall back to legacy single image
+  const squareImages = settings.squareImages?.length > 0
+    ? settings.squareImages
+    : settings.squareImageUrl
+      ? [{ url: settings.squareImageUrl, alt: settings.squareImageAlt || '' }]
+      : [];
+
   if (
-    !settings.squareImageUrl &&
+    squareImages.length === 0 &&
     !settings.rectImageUrl &&
     !settings.title &&
     !settings.description &&
@@ -75,15 +82,48 @@ export default function ContentImage({ settings, blocks }) {
     </div>
   );
 
-  // ── Square column: square image only ───────────────────────────
+  // ── Square column: image gallery (1-6 images) ──────────────────
+  const count = Math.min(squareImages.length, 6);
+
+  // Grid columns: max 3 per row
+  const cols = Math.min(count, 3);
+  const gridStyle = {
+    display: 'grid',
+    gridTemplateColumns: `repeat(${cols}, 1fr)`,
+    gap: '0.5rem',
+    width: '100%',
+  };
+
+  // For 4 images: last item spans full width
+  const cellStyle = (i) => {
+    const base = { overflow: 'hidden', borderRadius: '4px', aspectRatio: '1 / 1' };
+    if (count === 4 && i === 3) return { ...base, gridColumn: '1 / -1', aspectRatio: '3 / 1' };
+    if (count === 5 && i >= 3) return { ...base, gridColumn: 'span 3', aspectRatio: '3 / 2' };
+    if (count === 5 && i < 3) return { ...base, gridColumn: 'span 2' };
+    return base;
+  };
+
+  // For 5 images: use 6-column base grid
+  const gridColumns = count === 5 ? 'repeat(6, 1fr)' : `repeat(${cols}, 1fr)`;
+
+  // Square column width: 1 image = original size, 2+ = slightly wider
+  const squareColWidth = count <= 1 ? undefined : '42%';
+
   const squareCol = (
-    <div className="ci-square-col">
-      {settings.squareImageUrl && (
-        <img
-          src={settings.squareImageUrl}
-          alt={settings.squareImageAlt || ''}
-          className="ci-square-img"
-        />
+    <div className="ci-square-col" style={squareColWidth ? { flex: `0 0 ${squareColWidth}`, maxWidth: squareColWidth } : undefined}>
+      {count > 0 && (
+        <div style={{ ...gridStyle, gridTemplateColumns: gridColumns }}>
+          {squareImages.slice(0, 6).map((img, i) => (
+            <div key={i} style={cellStyle(i)}>
+              <img
+                src={img.url}
+                alt={img.alt || ''}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                loading={i > 0 ? 'lazy' : undefined}
+              />
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
@@ -140,17 +180,11 @@ export default function ContentImage({ settings, blocks }) {
         /* ─── Square column ─────────────────────── */
         .ci-square-col {
           width: 100%;
-          max-width: 320px;
-          aspect-ratio: 1 / 1;
           overflow: hidden;
           flex-shrink: 0;
         }
-        .ci-square-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
+
+        /* Grid styles are inline (style jsx can't scope .map() children) */
 
         /* ─── Rect column ───────────────────────── */
         .ci-rect-col {
