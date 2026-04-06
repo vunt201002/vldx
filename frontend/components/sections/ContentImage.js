@@ -1,8 +1,15 @@
 export default function ContentImage({ settings, blocks }) {
   const buttons = (blocks || []).filter((b) => b.type === 'content-button');
 
+  // Resolve square images: prefer gallery array, fall back to legacy single image
+  const squareImages = settings.squareImages?.length > 0
+    ? settings.squareImages
+    : settings.squareImageUrl
+      ? [{ url: settings.squareImageUrl, alt: settings.squareImageAlt || '' }]
+      : [];
+
   if (
-    !settings.squareImageUrl &&
+    squareImages.length === 0 &&
     !settings.rectImageUrl &&
     !settings.title &&
     !settings.description &&
@@ -75,15 +82,23 @@ export default function ContentImage({ settings, blocks }) {
     </div>
   );
 
-  // ── Square column: square image only ───────────────────────────
+  // ── Square column: image gallery (1-6 images) ──────────────────
+  const count = squareImages.length;
   const squareCol = (
     <div className="ci-square-col">
-      {settings.squareImageUrl && (
-        <img
-          src={settings.squareImageUrl}
-          alt={settings.squareImageAlt || ''}
-          className="ci-square-img"
-        />
+      {count > 0 && (
+        <div className={`ci-grid ci-grid--${Math.min(count, 6)}`}>
+          {squareImages.slice(0, 6).map((img, i) => (
+            <div key={i} className="ci-grid-cell">
+              <img
+                src={img.url}
+                alt={img.alt || ''}
+                className="ci-grid-img"
+                loading={i > 0 ? 'lazy' : undefined}
+              />
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
@@ -141,16 +156,61 @@ export default function ContentImage({ settings, blocks }) {
         .ci-square-col {
           width: 100%;
           max-width: 320px;
-          aspect-ratio: 1 / 1;
           overflow: hidden;
           flex-shrink: 0;
         }
-        .ci-square-img {
+
+        /* ─── Image grid ───────────────────────── */
+        .ci-grid {
+          display: grid;
+          gap: 0.5rem;
+          width: 100%;
+        }
+        .ci-grid-cell {
+          overflow: hidden;
+          border-radius: 4px;
+        }
+        .ci-grid-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
           display: block;
         }
+
+        /* 1 image: full width, square */
+        .ci-grid--1 { grid-template-columns: 1fr; }
+        .ci-grid--1 .ci-grid-cell { aspect-ratio: 1 / 1; }
+
+        /* 2 images: side by side */
+        .ci-grid--2 { grid-template-columns: 1fr 1fr; }
+        .ci-grid--2 .ci-grid-cell { aspect-ratio: 1 / 1; }
+
+        /* 3 images: 3 columns */
+        .ci-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
+        .ci-grid--3 .ci-grid-cell { aspect-ratio: 1 / 1; }
+
+        /* 4 images: row 1 = 3 cols, row 2 = 1 full-width */
+        .ci-grid--4 { grid-template-columns: 1fr 1fr 1fr; }
+        .ci-grid--4 .ci-grid-cell { aspect-ratio: 1 / 1; }
+        .ci-grid--4 .ci-grid-cell:nth-child(4) {
+          grid-column: 1 / -1;
+          aspect-ratio: 3 / 1;
+        }
+
+        /* 5 images: row 1 = 3 cols, row 2 = 2 cols (6-col base grid) */
+        .ci-grid--5 { grid-template-columns: repeat(6, 1fr); }
+        .ci-grid--5 .ci-grid-cell:nth-child(-n+3) {
+          grid-column: span 2;
+          aspect-ratio: 1 / 1;
+        }
+        .ci-grid--5 .ci-grid-cell:nth-child(n+4) {
+          grid-column: span 3;
+          aspect-ratio: 3 / 2;
+        }
+
+        /* 6 images: 2 rows of 3 */
+        .ci-grid--6 { grid-template-columns: 1fr 1fr 1fr; }
+        .ci-grid--6 .ci-grid-cell { aspect-ratio: 1 / 1; }
 
         /* ─── Rect column ───────────────────────── */
         .ci-rect-col {

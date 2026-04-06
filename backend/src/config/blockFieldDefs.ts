@@ -71,9 +71,16 @@ const blockFieldDefs: BlockTypeDef[] = [
         { label: 'Top (image above content)', value: 'top' },
         { label: 'Bottom (image below content)', value: 'bottom' },
       ]},
-      // Square image
-      { key: 'squareImageUrl', label: 'Square Image', type: 'image' as any, uploadFolder: 'pages' },
-      { key: 'squareImageAlt', label: 'Square Image Alt', type: 'text' },
+      // Square images (1-6 images in a grid)
+      {
+        key: 'squareImages',
+        label: 'Square Images',
+        type: 'array',
+        fields: [
+          { key: 'url', label: 'Image', type: 'image' as any, uploadFolder: 'pages' },
+          { key: 'alt', label: 'Alt Text', type: 'text' },
+        ],
+      },
       // Rectangle image
       { key: 'rectImageUrl', label: 'Rectangle Image', type: 'image' as any, uploadFolder: 'pages' },
       { key: 'rectImageAlt', label: 'Rectangle Image Alt', type: 'text' },
