@@ -5,6 +5,7 @@ import SectionRenderer from '@/components/sections/SectionRenderer';
 import SEO, { generateProductSchema } from '@/components/SEO';
 import { blocksToConfig } from '@/lib/transformPageConfig';
 import { trackProductView } from '@/lib/analytics';
+import { fetchStaticData, fetchThemeData } from '@/lib/fetchPageData';
 
 export default function ProductDetailPage({ globalTheme, product, template }) {
   useEffect(() => {
@@ -55,57 +56,37 @@ export default function ProductDetailPage({ globalTheme, product, template }) {
 }
 
 export async function getStaticPaths() {
-  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5001/api';
-
   try {
-    const res = await fetch(`${apiBase}/products?published=true`);
-    const data = await res.json();
-    const products = data.data || [];
-
-    const paths = products.map((product) => ({
-      params: { slug: product.slug }
-    }));
+    const productsData = await fetchStaticData('products.json', '/products?published=true');
+    const products = productsData?.data || [];
 
     return {
-      paths,
-      fallback: 'blocking' // Generate new pages on-demand
+      paths: products.map((product) => ({ params: { slug: product.slug } })),
+      fallback: 'blocking',
     };
   } catch (error) {
     console.error('Error generating product paths:', error);
-    return {
-      paths: [],
-      fallback: 'blocking'
-    };
+    return { paths: [], fallback: 'blocking' };
   }
 }
 
 export async function getStaticProps({ params }) {
-  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5001/api';
-
   try {
-    // Fetch global theme, product data, and optional template in parallel
-    const [themeRes, productRes, templateRes] = await Promise.all([
-      fetch(`${apiBase}/theme/active`),
-      fetch(`${apiBase}/products/slug/${params.slug}`),
-      fetch(`${apiBase}/theme/pages/product-template`).catch(() => null)
+    const [globalTheme, productData, templateData] = await Promise.all([
+      fetchThemeData(),
+      fetchStaticData(`products/${params.slug}.json`, `/products/slug/${params.slug}`),
+      fetchStaticData(`pages/product-template.json`, `/theme/pages/product-template`).catch(() => null),
     ]);
 
-    // Check if product exists
-    if (!productRes.ok) {
-      return { notFound: true };
-    }
-
-    const themeData = await themeRes.json();
-    const productData = await productRes.json();
-    const templateData = templateRes ? await templateRes.json().catch(() => null) : null;
+    if (!productData?.data) return { notFound: true };
 
     return {
       props: {
-        globalTheme: themeData.data || null,
+        globalTheme,
         product: productData.data,
-        template: templateData?.data || null
+        template: templateData?.data || null,
       },
-      revalidate: 60 // ISR: Regenerate page every 60 seconds
+      revalidate: 60,
     };
   } catch (error) {
     console.error('Error fetching product:', error);

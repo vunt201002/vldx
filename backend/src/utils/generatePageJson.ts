@@ -3,6 +3,9 @@ import path from 'path';
 import { config } from '../config/env';
 import blockJsonMappings from '../config/blockJsonMapping';
 import Theme from '../models/Theme';
+import Menu from '../models/Menu';
+import BlogPost from '../models/BlogPost';
+import Product from '../models/Product';
 
 interface PopulatedBlock {
   _id: string;
@@ -249,4 +252,154 @@ export async function generatePageJsonWithTheme(page: PageData): Promise<object>
 export async function writePageJsonWithTheme(slug: string, page: PageData): Promise<void> {
   const json = await generatePageJsonWithTheme(page);
   writePageJson(slug, json);
+}
+
+/**
+ * Generate and write theme.json for static data mode.
+ * Contains header and footer blocks in the same format as the API response.
+ */
+export async function writeThemeJson(): Promise<void> {
+  const theme = await Theme.findOne({ isActive: true })
+    .populate('header.blocks.block')
+    .populate('footer.blocks.block')
+    .lean();
+
+  if (!theme) return;
+
+  const sortedHeaderBlocks = [...theme.header.blocks].sort((a: any, b: any) => a.order - b.order);
+  const sortedFooterBlocks = [...theme.footer.blocks].sort((a: any, b: any) => a.order - b.order);
+
+  // Resolve menu items for navbar blocks
+  const headerBlocksData = await Promise.all(
+    sortedHeaderBlocks.map(async (b: any) => {
+      const blockData: any = {
+        _id: b.block._id,
+        type: b.block.type,
+        name: b.block.name,
+        data: b.block.data ?? {},
+        settings: b.block.settings ?? {},
+        order: b.order,
+      };
+
+      if (b.block.type === 'navbar' && b.block.data?.menuHandle) {
+        const menu = await Menu.findOne({ handle: b.block.data.menuHandle }).lean();
+        if (menu) {
+          const sortedItems = [...(menu as any).items].sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+          blockData.menuItems = sortedItems.map((item: any) => ({
+            label: item.label,
+            url: item.url,
+          }));
+        }
+      }
+
+      return blockData;
+    })
+  );
+
+  const footerBlocksData = sortedFooterBlocks.map((b: any) => ({
+    _id: b.block._id,
+    type: b.block.type,
+    name: b.block.name,
+    data: b.block.data ?? {},
+    settings: b.block.settings ?? {},
+    order: b.order,
+  }));
+
+  const json = {
+    header: { blocks: headerBlocksData },
+    footer: { blocks: footerBlocksData },
+  };
+
+  // Write to config dir parent (sibling of pages/)
+  const dir = path.dirname(config.frontendConfigDir);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+
+  const filePath = path.join(dir, 'theme.json');
+  fs.writeFileSync(filePath, JSON.stringify(json, null, 2), 'utf-8');
+}
+
+/**
+ * Generate and write blog.json for static data mode.
+ * Contains all published blog posts (without content/comments/likes for list view).
+ */
+export async function writeBlogJson(): Promise<void> {
+  const posts = await BlogPost.find({ isPublished: true })
+    .select('-content -comments -likes')
+    .sort({ publishedAt: -1 })
+    .lean();
+
+  const tags: string[] = await BlogPost.distinct('tags', { isPublished: true });
+
+  // Also generate individual post files for detail pages
+  const fullPosts = await BlogPost.find({ isPublished: true })
+    .populate('comments.customer', 'firstName lastName profilePicture')
+    .sort({ publishedAt: -1 })
+    .lean();
+
+  const dir = path.dirname(config.frontendConfigDir);
+  const blogDir = path.join(dir, 'blog');
+  if (!fs.existsSync(blogDir)) {
+    fs.mkdirSync(blogDir, { recursive: true });
+  }
+
+  // Write blog list
+  const listJson = {
+    success: true,
+    data: posts,
+    total: posts.length,
+    page: 1,
+    totalPages: 1,
+  };
+  fs.writeFileSync(path.join(dir, 'blog.json'), JSON.stringify(listJson, null, 2), 'utf-8');
+
+  // Write tags
+  fs.writeFileSync(path.join(dir, 'blog-tags.json'), JSON.stringify({ success: true, data: tags.sort() }, null, 2), 'utf-8');
+
+  // Write individual post files
+  for (const post of fullPosts) {
+    const postData = {
+      ...post,
+      likeCount: (post as any).likes?.length || 0,
+      commentCount: (post as any).comments?.length || 0,
+      likes: undefined,
+    };
+    fs.writeFileSync(
+      path.join(blogDir, `${post._id}.json`),
+      JSON.stringify({ success: true, data: postData }, null, 2),
+      'utf-8'
+    );
+  }
+}
+
+/**
+ * Generate and write products.json for static data mode.
+ */
+export async function writeProductsJson(): Promise<void> {
+  const products = await Product.find({ isPublished: true })
+    .sort({ createdAt: -1 })
+    .lean();
+
+  const dir = path.dirname(config.frontendConfigDir);
+  const productsDir = path.join(dir, 'products');
+  if (!fs.existsSync(productsDir)) {
+    fs.mkdirSync(productsDir, { recursive: true });
+  }
+
+  // Write products list
+  fs.writeFileSync(
+    path.join(dir, 'products.json'),
+    JSON.stringify({ success: true, data: products }, null, 2),
+    'utf-8'
+  );
+
+  // Write individual product files (by slug)
+  for (const product of products) {
+    fs.writeFileSync(
+      path.join(productsDir, `${(product as any).slug}.json`),
+      JSON.stringify({ success: true, data: product }, null, 2),
+      'utf-8'
+    );
+  }
 }

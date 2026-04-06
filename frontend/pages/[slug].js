@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import ThemeLayout from '@/components/layouts/ThemeLayout';
 import SectionRenderer from '@/components/sections/SectionRenderer';
-import { transformPageData } from '@/lib/transformPageConfig';
+import { fetchPageData } from '@/lib/fetchPageData';
 
 export default function DynamicPage({ globalTheme: initialGlobalTheme, pageConfig: initialPageConfig }) {
   const [pageConfig, setPageConfig] = useState(initialPageConfig);
@@ -36,27 +36,14 @@ export default function DynamicPage({ globalTheme: initialGlobalTheme, pageConfi
 
 export async function getServerSideProps({ params }) {
   const { slug } = params;
-  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5001/api';
-
   try {
-    const [themeRes, pageRes] = await Promise.all([
-      fetch(`${apiBase}/theme/active`),
-      fetch(`${apiBase}/theme/pages/${slug}`)
-    ]);
-
-    if (!pageRes.ok) return { notFound: true };
-
-    const themeData = await themeRes.json();
-    const pageData = await pageRes.json();
-
-    // Transform backend format to frontend config format
-    const pageConfig = transformPageData(pageData.data);
-
+    const result = await fetchPageData(slug);
+    if (result.notFound) return { notFound: true };
     return {
       props: {
-        globalTheme: themeData.data,
-        pageConfig
-      }
+        globalTheme: result.globalTheme,
+        pageConfig: result.pageConfig,
+      },
     };
   } catch (error) {
     console.error('Error loading page:', error);

@@ -1,5 +1,6 @@
 import ThemeLayout from '@/components/layouts/ThemeLayout';
 import ProductCard from '@/components/products/ProductCard';
+import { fetchStaticData, fetchThemeData } from '@/lib/fetchPageData';
 
 export default function ProductsPage({ globalTheme, products, error }) {
   if (error) {
@@ -80,28 +81,20 @@ export default function ProductsPage({ globalTheme, products, error }) {
 }
 
 export async function getStaticProps() {
-  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5001/api';
-
   try {
-    const [themeRes, productsRes] = await Promise.all([
-      fetch(`${apiBase}/theme/active`),
-      fetch(`${apiBase}/products?published=true`)
-    ]);
-
-    const themeData = await themeRes.json();
-    const productsData = await productsRes.json();
+    const globalTheme = await fetchThemeData();
+    const productsData = await fetchStaticData('products.json', '/products?published=true');
 
     return {
       props: {
-        globalTheme: themeData.data || null,
-        products: productsData.data || [],
+        globalTheme,
+        products: productsData?.data || [],
         error: null
       },
-      revalidate: 60 // ISR: Regenerate page every 60 seconds
+      revalidate: 60
     };
   } catch (error) {
     console.error('Error fetching products:', error);
-
     return {
       props: {
         globalTheme: null,

@@ -30,7 +30,7 @@ services:
       MONGODB_URI: ${MONGODB_URI:-mongodb://mongodb:27017/vlxd}
       FRONTEND_CONFIG_DIR: /data/config/pages
     volumes:
-      - shared-config:/data/config/pages
+      - shared-config:/data/config
     expose:
       - "5000"
 
@@ -44,8 +44,9 @@ services:
       - backend
     environment:
       INTERNAL_API_URL: http://backend:5000/api
+      DATA_MODE: ${DATA_MODE:-api}
     volumes:
-      - shared-config:/app/config/pages
+      - shared-config:/app/config
     ports:
       - "${FRONTEND_PORT:-80}:3000"
 

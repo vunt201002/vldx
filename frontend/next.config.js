@@ -3,6 +3,10 @@ const nextConfig = {
   output: 'standalone',
   reactStrictMode: true,
 
+  env: {
+    DATA_MODE: process.env.DATA_MODE || 'api',
+  },
+
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -33,9 +37,11 @@ const nextConfig = {
     optimizePackageImports: [],
   },
 
-  // Proxy /api/* → Express backend
+  // Proxy /api/* → Express backend (only in api mode)
+  // In static mode, pages/api/[...path].js handles all /api/* requests
   // BACKEND_URL is set at build time for Docker, defaults to localhost for local dev
   async rewrites() {
+    if (process.env.DATA_MODE === 'static') return [];
     const backendUrl = process.env.BACKEND_URL || 'http://127.0.0.1:5000/api';
     return [
       {

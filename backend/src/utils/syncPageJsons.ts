@@ -1,6 +1,6 @@
 import cron from 'node-cron';
 import Page from '../models/Page';
-import { generatePageJson, writePageJson } from './generatePageJson';
+import { generatePageJson, writePageJson, writeThemeJson, writeBlogJson, writeProductsJson } from './generatePageJson';
 
 /**
  * Regenerate all page JSON files from MongoDB.
@@ -15,7 +15,12 @@ export async function regenerateAllPageJsons(): Promise<void> {
       writePageJson(page.slug, json);
     }
 
-    console.info(`[sync] Regenerated ${pages.length} page JSON files at ${new Date().toLocaleString()}`);
+    // Also generate static JSON files for static data mode
+    await writeThemeJson();
+    await writeBlogJson();
+    await writeProductsJson();
+
+    console.info(`[sync] Regenerated ${pages.length} page JSON files + static data at ${new Date().toLocaleString()}`);
   } catch (err) {
     console.error('[sync] Failed to regenerate page JSONs:', err);
   }
