@@ -74,11 +74,9 @@ export default function WhyChooseUs({ settings, blocks }) {
                     style={{ backgroundColor: s.iconBgColor || '#D4CC8C' }}
                   >
                     {s.icon && (
-                      <img
-                        src={s.icon}
-                        alt={s.title || ''}
-                        className="w-14 h-14 lg:w-18 lg:h-18 object-contain"
-                      />
+                      s.icon.trim().startsWith('<svg')
+                        ? <div className="w-14 h-14 lg:w-18 lg:h-18" dangerouslySetInnerHTML={{ __html: s.icon }} />
+                        : <img src={s.icon} alt={s.title || ''} className="w-14 h-14 lg:w-18 lg:h-18 object-contain" />
                     )}
                   </div>
 
