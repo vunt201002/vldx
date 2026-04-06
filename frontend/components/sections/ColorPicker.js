@@ -155,7 +155,7 @@ export default function ColorPicker({ settings, blocks }) {
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     border: 'none', borderRadius: '50%',
                     background: page === 0 ? 'transparent' : 'rgba(155,153,123,0.15)',
-                    color: page === 0 ? '#C5C4B5' : '#7A7866',
+                    color: page === 0 ? '#BCC2AC' : '#7A7866',
                     cursor: page === 0 ? 'default' : 'pointer',
                     transition: 'all 0.25s ease',
                     fontSize: '0.75rem',
@@ -163,7 +163,7 @@ export default function ColorPicker({ settings, blocks }) {
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 19l-7-7 7-7"/></svg>
                 </button>
-                <span className="font-body" style={{ fontSize: '0.6875rem', color: '#9A9888', letterSpacing: '0.05em' }}>
+                <span className="font-body" style={{ fontSize: '0.6875rem', color: '#96A085', letterSpacing: '0.05em' }}>
                   {page + 1} / {totalPages}
                 </span>
                 <button
@@ -174,7 +174,7 @@ export default function ColorPicker({ settings, blocks }) {
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     border: 'none', borderRadius: '50%',
                     background: page === totalPages - 1 ? 'transparent' : 'rgba(155,153,123,0.15)',
-                    color: page === totalPages - 1 ? '#C5C4B5' : '#7A7866',
+                    color: page === totalPages - 1 ? '#BCC2AC' : '#7A7866',
                     cursor: page === totalPages - 1 ? 'default' : 'pointer',
                     transition: 'all 0.25s ease',
                     fontSize: '0.75rem',

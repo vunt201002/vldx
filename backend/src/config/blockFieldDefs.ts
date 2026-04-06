@@ -38,7 +38,7 @@ const blockFieldDefs: BlockTypeDef[] = [
       { key: 'brandAccent', label: 'Brand Subtitle', type: 'text' },
       { key: 'logoUrl', label: 'Logo Image', type: 'image', uploadFolder: 'pages' },
       { key: 'logoMaxWidth', label: 'Logo Max Width (px)', type: 'number', placeholder: '160' },
-      { key: 'navBgColor', label: 'Nav Background Color', type: 'text', placeholder: '#E2E1D6' },
+      { key: 'navBgColor', label: 'Nav Background Color', type: 'text', placeholder: '#DDE1CE' },
       { key: 'menuFontSize', label: 'Menu Font Size', type: 'text', placeholder: '0.8rem' },
       { key: 'menuColor', label: 'Menu Text Color', type: 'text', placeholder: '#5E5C4D' },
       { key: 'menuHoverColor', label: 'Menu Hover Color', type: 'text', placeholder: '#2B2A25' },
@@ -114,7 +114,7 @@ const blockFieldDefs: BlockTypeDef[] = [
       { key: 'titleLink', label: 'Title Link', type: 'url', placeholder: 'https://...' },
       { key: 'description', label: 'Description', type: 'textarea' },
       { key: 'cardLinkLabel', label: 'Card Link Label', type: 'text' },
-      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#F0EFE9' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#EDF0E4' },
       {
         key: 'products',
         label: 'Products',
@@ -184,7 +184,7 @@ const blockFieldDefs: BlockTypeDef[] = [
         type: 'array',
         fields: [
           { key: 'name', label: 'Name', type: 'text', required: true },
-          { key: 'hex', label: 'Color (hex)', type: 'text', placeholder: '#CCC9B8' },
+          { key: 'hex', label: 'Color (hex)', type: 'text', placeholder: '#C8CCB6' },
           { key: 'image', label: 'Texture Image', type: 'image' as any, uploadFolder: 'products' },
         ],
       },
@@ -215,7 +215,7 @@ const blockFieldDefs: BlockTypeDef[] = [
         { label: '6', value: '6' },
       ]},
       { key: 'showSpecs', label: 'Show Specs', type: 'boolean' },
-      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#F0EFE9' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#EDF0E4' },
       {
         key: 'variants',
         label: 'Material Variants',
@@ -239,7 +239,7 @@ const blockFieldDefs: BlockTypeDef[] = [
       { key: 'logoMaxWidth', label: 'Logo Max Width (px)', type: 'number', placeholder: '180' },
       { key: 'brandName', label: 'Brand Name (alt text)', type: 'text' },
       { key: 'copyright', label: 'Copyright Text', type: 'text' },
-      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#E2E1D6' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#DDE1CE' },
       { key: 'textColor', label: 'Text Color', type: 'text', placeholder: '#1A1A17' },
       { key: 'fontSize', label: 'Info Font Size', type: 'text', placeholder: '0.9rem' },
       {
@@ -397,7 +397,7 @@ const blockFieldDefs: BlockTypeDef[] = [
       { key: 'imageAlt', label: 'Image Alt Text', type: 'text' },
       { key: 'ctaLabel', label: 'CTA Button Label', type: 'text' },
       { key: 'ctaHref', label: 'CTA Button Link', type: 'url' },
-      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#F0EFE9' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#EDF0E4' },
       {
         key: 'steps',
         label: 'Process Steps',
@@ -423,7 +423,7 @@ const blockFieldDefs: BlockTypeDef[] = [
       { key: 'tag', label: 'Filter by Tag', type: 'text', placeholder: 'Leave empty for latest' },
       { key: 'viewAllLabel', label: 'View All Label', type: 'text', placeholder: 'View all articles' },
       { key: 'viewAllHref', label: 'View All Link', type: 'url', placeholder: '/blog' },
-      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#F0EFE9' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#EDF0E4' },
     ],
   },
 ];

@@ -73,7 +73,7 @@ export default function MaterialShowcase({ settings, blocks }) {
                   padding: 0,
                   cursor: 'pointer',
                   transition: 'border-color 0.2s',
-                  background: '#eceee6',
+                  background: '#e3e8d4',
                   flexShrink: 0,
                 }}
               >
@@ -103,7 +103,7 @@ export default function MaterialShowcase({ settings, blocks }) {
             height: '500px',
             overflow: 'hidden',
             borderRadius: '4px',
-            backgroundColor: '#eceee6',
+            backgroundColor: '#e3e8d4',
           }}>
             {variants.map((v, i) => (
               <img
@@ -142,7 +142,7 @@ export default function MaterialShowcase({ settings, blocks }) {
             {showSpecs && current.specs && (
               <p style={{
                 fontSize: '0.8125rem', color: '#7A7866',
-                borderTop: '1px solid #E2E1D6', paddingTop: '1rem', marginTop: '1rem',
+                borderTop: '1px solid #DDE1CE', paddingTop: '1rem', marginTop: '1rem',
               }}>
                 {current.specs}
               </p>

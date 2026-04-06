@@ -41,7 +41,7 @@ export default function ContactFAB() {
   return (
     <div className="fab-dock fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[9999] flex flex-col gap-1 rounded-2xl p-1.5 sm:p-2 shadow-md"
       style={{
-        backgroundColor: '#F0EFE9',
+        backgroundColor: '#EDF0E4',
         border: '1px solid rgba(155, 153, 123, 0.4)',
       }}
     >

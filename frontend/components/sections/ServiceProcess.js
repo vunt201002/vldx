@@ -1,6 +1,6 @@
 export default function ServiceProcess({ settings, blocks }) {
   const steps = (blocks || []).filter((b) => b.type === 'process-step');
-  const bgColor = settings.bgColor || '#F0EFE9';
+  const bgColor = settings.bgColor || '#EDF0E4';
 
   return (
     <section className="font-body" style={{ backgroundColor: bgColor, padding: '5rem 0' }}>
@@ -57,7 +57,7 @@ export default function ServiceProcess({ settings, blocks }) {
                   {s.image && (
                     <div style={{
                       width: '100%', aspectRatio: '4/3', overflow: 'hidden',
-                      backgroundColor: '#E2E1D6',
+                      backgroundColor: '#DDE1CE',
                     }}>
                       <img
                         src={s.image}

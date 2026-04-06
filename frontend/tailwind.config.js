@@ -7,16 +7,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        cream: '#F0EFE9',
-        sand: '#E2E1D6',
+        cream: '#EDF0E4',
+        sand: '#DDE1CE',
         sandstone: '#9B997B',
         concrete: '#7A7866',
         charcoal: '#1A1A17',
         warm: {
-          50: '#F7F7F4',
-          100: '#F0EFE9',
-          200: '#E2E1D6',
-          300: '#CCC9B8',
+          50: '#F5F6F0',
+          100: '#EDF0E4',
+          200: '#DDE1CE',
+          300: '#C8CCB6',
           400: '#9B997B',
           500: '#7A7866',
           600: '#5E5C4D',

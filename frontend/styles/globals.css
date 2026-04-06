@@ -129,7 +129,7 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #F0EFE9;
+  background: #EDF0E4;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -213,12 +213,12 @@ html {
   padding: 0.5rem 1rem;
   margin: 1rem 0;
   color: #555;
-  background: #f5f5f0;
+  background: #f0f2e8;
   border-radius: 0 6px 6px 0;
 }
 .blog-content pre {
   background: #1A1A17;
-  color: #F0EFE9;
+  color: #EDF0E4;
   padding: 1rem;
   border-radius: 8px;
   overflow-x: auto;
