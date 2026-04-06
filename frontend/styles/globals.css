@@ -129,22 +129,22 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #F5F0EB;
+  background: #F0EFE9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #C4A882;
+  background: #9B997B;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #8B7D6B;
+  background: #7A7866;
 }
 
 /* Selection color */
 ::selection {
-  background: #C4A882;
-  color: #1A1714;
+  background: #9B997B;
+  color: #1A1A17;
 }
 
 /* Contact FAB — Sandstone Dock */
@@ -160,7 +160,7 @@ html {
 .fab-dock-btn {
   width: 38px;
   height: 38px;
-  color: #8B7D6B;
+  color: #7A7866;
 }
 
 .fab-dock-btn svg {
@@ -170,7 +170,7 @@ html {
 
 .fab-dock-btn:hover {
   color: var(--hover-color);
-  background: rgba(196, 168, 130, 0.15);
+  background: rgba(155, 153, 123, 0.15);
 }
 
 @media (min-width: 640px) {
@@ -209,16 +209,16 @@ html {
 .blog-content ul, .blog-content ol { margin: 0.75rem 0; padding-left: 1.5rem; }
 .blog-content li { margin: 0.25rem 0; line-height: 1.8; }
 .blog-content blockquote {
-  border-left: 4px solid #C4A882;
+  border-left: 4px solid #9B997B;
   padding: 0.5rem 1rem;
   margin: 1rem 0;
   color: #555;
-  background: #f9f7f4;
+  background: #f5f5f0;
   border-radius: 0 6px 6px 0;
 }
 .blog-content pre {
-  background: #1A1714;
-  color: #f5f0eb;
+  background: #1A1A17;
+  color: #F0EFE9;
   padding: 1rem;
   border-radius: 8px;
   overflow-x: auto;

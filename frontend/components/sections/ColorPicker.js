@@ -71,7 +71,7 @@ export default function ColorPicker({ settings, blocks }) {
                 {settings.overline && (
                   <span style={{
                     display: 'block', fontSize: '0.75rem', letterSpacing: '0.2em',
-                    textTransform: 'uppercase', color: '#C4A882', marginBottom: '0.75rem',
+                    textTransform: 'uppercase', color: '#9B997B', marginBottom: '0.75rem',
                   }}>
                     {settings.overline}
                   </span>
@@ -82,7 +82,7 @@ export default function ColorPicker({ settings, blocks }) {
                   </h2>
                 )}
                 {settings.description && (
-                  <p style={{ marginTop: '0.75rem', fontSize: '0.9375rem', lineHeight: 1.7, color: '#6B5D4E' }}>
+                  <p style={{ marginTop: '0.75rem', fontSize: '0.9375rem', lineHeight: 1.7, color: '#5E5C4D' }}>
                     {settings.description}
                   </p>
                 )}
@@ -110,8 +110,8 @@ export default function ColorPicker({ settings, blocks }) {
                     <div style={{
                       aspectRatio: '1/1', maxWidth: '120px', margin: '0 auto',
                       borderRadius: '4px', overflow: 'hidden',
-                      border: isActive ? '2px solid #C4A882' : '2px solid transparent',
-                      boxShadow: isActive ? '0 2px 8px rgba(196,168,130,0.3)' : '0 1px 4px rgba(0,0,0,0.06)',
+                      border: isActive ? '2px solid #9B997B' : '2px solid transparent',
+                      boxShadow: isActive ? '0 2px 8px rgba(155,153,123,0.3)' : '0 1px 4px rgba(0,0,0,0.06)',
                       transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
                       transform: isActive ? 'scale(1.02)' : 'scale(1)',
                     }}>
@@ -131,7 +131,7 @@ export default function ColorPicker({ settings, blocks }) {
                     </div>
                     <span className="font-body" style={{
                       display: 'block', marginTop: '0.5rem',
-                      fontSize: '0.8125rem', color: isActive ? '#1A1714' : '#8B7D6B',
+                      fontSize: '0.8125rem', color: isActive ? '#1A1A17' : '#7A7866',
                       fontWeight: isActive ? 600 : 400, transition: 'color 0.2s',
                     }}>
                       {s.name}
@@ -154,8 +154,8 @@ export default function ColorPicker({ settings, blocks }) {
                     width: '28px', height: '28px', padding: 0,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     border: 'none', borderRadius: '50%',
-                    background: page === 0 ? 'transparent' : 'rgba(196,168,130,0.15)',
-                    color: page === 0 ? '#D4C9BC' : '#8B7D6B',
+                    background: page === 0 ? 'transparent' : 'rgba(155,153,123,0.15)',
+                    color: page === 0 ? '#C5C4B5' : '#7A7866',
                     cursor: page === 0 ? 'default' : 'pointer',
                     transition: 'all 0.25s ease',
                     fontSize: '0.75rem',
@@ -163,7 +163,7 @@ export default function ColorPicker({ settings, blocks }) {
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 19l-7-7 7-7"/></svg>
                 </button>
-                <span className="font-body" style={{ fontSize: '0.6875rem', color: '#A89B8C', letterSpacing: '0.05em' }}>
+                <span className="font-body" style={{ fontSize: '0.6875rem', color: '#9A9888', letterSpacing: '0.05em' }}>
                   {page + 1} / {totalPages}
                 </span>
                 <button
@@ -173,8 +173,8 @@ export default function ColorPicker({ settings, blocks }) {
                     width: '28px', height: '28px', padding: 0,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     border: 'none', borderRadius: '50%',
-                    background: page === totalPages - 1 ? 'transparent' : 'rgba(196,168,130,0.15)',
-                    color: page === totalPages - 1 ? '#D4C9BC' : '#8B7D6B',
+                    background: page === totalPages - 1 ? 'transparent' : 'rgba(155,153,123,0.15)',
+                    color: page === totalPages - 1 ? '#C5C4B5' : '#7A7866',
                     cursor: page === totalPages - 1 ? 'default' : 'pointer',
                     transition: 'all 0.25s ease',
                     fontSize: '0.75rem',
@@ -233,7 +233,7 @@ export default function ColorPicker({ settings, blocks }) {
               )}
             </div>
             <div style={{ padding: '1rem', textAlign: 'center' }}>
-              <span className="font-body" style={{ fontSize: '0.9375rem', fontWeight: 600, color: '#1A1714' }}>
+              <span className="font-body" style={{ fontSize: '0.9375rem', fontWeight: 600, color: '#1A1A17' }}>
                 {current.name}
               </span>
             </div>

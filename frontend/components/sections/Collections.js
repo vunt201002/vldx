@@ -146,7 +146,7 @@ export default function Collections({ id, settings, blocks }) {
   const products = blocks.filter((b) => b.type === 'product-card');
 
   return (
-    <section id={id} className="py-24 lg:py-36 relative" style={{ backgroundColor: settings.bgColor || '#F5F0EB' }} ref={sectionRef}>
+    <section id={id} className="py-24 lg:py-36 relative" style={{ backgroundColor: settings.bgColor || '#F0EFE9' }} ref={sectionRef}>
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
         {/* Section Header */}
         <div className="reveal mb-16 lg:mb-24">

@@ -23,7 +23,7 @@ export default function MaterialShowcase({ settings, blocks }) {
             {settings.overline && (
               <span style={{
                 display: 'block', fontSize: '0.75rem', letterSpacing: '0.2em',
-                textTransform: 'uppercase', color: '#C4A882', marginBottom: '0.75rem',
+                textTransform: 'uppercase', color: '#9B997B', marginBottom: '0.75rem',
               }}>
                 {settings.overline}
               </span>
@@ -31,11 +31,11 @@ export default function MaterialShowcase({ settings, blocks }) {
             {settings.title && (
               <h2 className="font-display" style={{ fontSize: '2.5rem', fontWeight: 400, lineHeight: 1.2 }}>
                 {settings.title}{' '}
-                {settings.titleAccent && <span style={{ fontStyle: 'italic', color: '#C4A882' }}>{settings.titleAccent}</span>}
+                {settings.titleAccent && <span style={{ fontStyle: 'italic', color: '#9B997B' }}>{settings.titleAccent}</span>}
               </h2>
             )}
             {settings.description && (
-              <p style={{ marginTop: '1rem', fontSize: '1rem', lineHeight: 1.7, color: '#6B5D4E', maxWidth: '600px' }}>
+              <p style={{ marginTop: '1rem', fontSize: '1rem', lineHeight: 1.7, color: '#5E5C4D', maxWidth: '600px' }}>
                 {settings.description}
               </p>
             )}
@@ -69,11 +69,11 @@ export default function MaterialShowcase({ settings, blocks }) {
                   height: '80px',
                   overflow: 'hidden',
                   borderRadius: '4px',
-                  border: i === selected ? '2px solid #C4A882' : '2px solid transparent',
+                  border: i === selected ? '2px solid #9B997B' : '2px solid transparent',
                   padding: 0,
                   cursor: 'pointer',
                   transition: 'border-color 0.2s',
-                  background: '#f0ece7',
+                  background: '#eceee6',
                   flexShrink: 0,
                 }}
               >
@@ -87,7 +87,7 @@ export default function MaterialShowcase({ settings, blocks }) {
                   <span style={{
                     position: 'absolute', top: '2px', left: '2px',
                     fontSize: '0.5rem', padding: '1px 4px', borderRadius: '999px',
-                    backgroundColor: '#C4A882', color: 'white', textTransform: 'uppercase',
+                    backgroundColor: '#9B997B', color: 'white', textTransform: 'uppercase',
                   }}>
                     {v.settings.tag}
                   </span>
@@ -103,7 +103,7 @@ export default function MaterialShowcase({ settings, blocks }) {
             height: '500px',
             overflow: 'hidden',
             borderRadius: '4px',
-            backgroundColor: '#f0ece7',
+            backgroundColor: '#eceee6',
           }}>
             {variants.map((v, i) => (
               <img
@@ -126,7 +126,7 @@ export default function MaterialShowcase({ settings, blocks }) {
               <span style={{
                 display: 'inline-block', fontSize: '0.6875rem', letterSpacing: '0.1em',
                 textTransform: 'uppercase', padding: '0.25rem 0.75rem', borderRadius: '999px',
-                backgroundColor: '#C4A882', color: 'white', marginBottom: '1rem',
+                backgroundColor: '#9B997B', color: 'white', marginBottom: '1rem',
               }}>
                 {current.tag}
               </span>
@@ -135,14 +135,14 @@ export default function MaterialShowcase({ settings, blocks }) {
               {current.name}
             </h3>
             {current.description && (
-              <p style={{ fontSize: '0.9375rem', lineHeight: 1.7, color: '#6B5D4E', marginBottom: '1rem' }}>
+              <p style={{ fontSize: '0.9375rem', lineHeight: 1.7, color: '#5E5C4D', marginBottom: '1rem' }}>
                 {current.description}
               </p>
             )}
             {showSpecs && current.specs && (
               <p style={{
-                fontSize: '0.8125rem', color: '#8B7D6B',
-                borderTop: '1px solid #E8E0D6', paddingTop: '1rem', marginTop: '1rem',
+                fontSize: '0.8125rem', color: '#7A7866',
+                borderTop: '1px solid #E2E1D6', paddingTop: '1rem', marginTop: '1rem',
               }}>
                 {current.specs}
               </p>
