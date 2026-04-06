@@ -102,7 +102,9 @@ export default function ArrayField({ field, value, onChange }) {
                   onClick={() => setEditingIndex(index)}
                 >
                   {thumb && (
-                    <img src={thumb} alt="" className="te-array-compact-thumb" />
+                    thumb.trim().startsWith('<svg')
+                      ? <div className="te-array-compact-thumb" dangerouslySetInnerHTML={{ __html: thumb }} />
+                      : <img src={thumb} alt="" className="te-array-compact-thumb" />
                   )}
                   <div className="te-array-compact-info">
                     <span className="te-array-compact-index">#{index + 1}</span>

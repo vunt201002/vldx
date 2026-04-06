@@ -57,11 +57,10 @@ export default function ImageField({ field, value, onChange }) {
           overflow: 'hidden',
           background: '#f0f0f0',
         }}>
-          <img
-            src={value}
-            alt="Preview"
-            style={{ width: '100%', maxHeight: '160px', objectFit: 'contain', display: 'block' }}
-          />
+          {value.trim().startsWith('<svg')
+            ? <div style={{ width: '100%', maxHeight: '160px', display: 'flex', justifyContent: 'center', padding: '1rem' }} dangerouslySetInnerHTML={{ __html: value }} />
+            : <img src={value} alt="Preview" style={{ width: '100%', maxHeight: '160px', objectFit: 'contain', display: 'block' }} />
+          }
         </div>
       )}
 
@@ -113,10 +112,10 @@ export default function ImageField({ field, value, onChange }) {
 
       {/* URL input fallback */}
       <input
-        type="url"
+        type="text"
         value={value || ''}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={field.placeholder || 'Or paste image URL'}
+        placeholder={field.placeholder || 'Or paste image URL or SVG markup'}
       />
 
       {error && (
