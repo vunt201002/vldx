@@ -77,6 +77,16 @@ const blockJsonMappings = {
       { dataKey: 'steps', blockType: 'process-step' },
     ],
   },
+  'stats-bar': {
+    settingsFields: ['overline', 'bgColor'],
+    arrayBlocks: [
+      { dataKey: 'stats', blockType: 'stat-item' },
+    ],
+  },
+  'cta-banner': {
+    settingsFields: ['overline', 'title', 'subtitle', 'ctaLabel', 'ctaHref', 'imageUrl', 'imageAlt', 'bgColor'],
+    arrayBlocks: [],
+  },
 }
 
 function capitalize(str) {

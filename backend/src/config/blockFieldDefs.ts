@@ -433,6 +433,47 @@ const blockFieldDefs: BlockTypeDef[] = [
       { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#EDF0E4' },
     ],
   },
+  {
+    type: 'stats-bar',
+    label: 'Stats Bar',
+    icon: '📊',
+    fields: [
+      { key: 'overline', label: 'Overline', type: 'text' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#9B997B' },
+      {
+        key: 'stats',
+        label: 'Stats',
+        type: 'array',
+        fields: [
+          { key: 'icon', label: 'Icon', type: 'select', options: [
+            { label: 'Building', value: 'building' },
+            { label: 'Clock', value: 'clock' },
+            { label: 'Star', value: 'star' },
+            { label: 'Phone', value: 'phone' },
+            { label: 'Shield', value: 'shield' },
+            { label: 'Truck', value: 'truck' },
+          ]},
+          { key: 'number', label: 'Number', type: 'text', required: true, placeholder: '150+' },
+          { key: 'label', label: 'Label', type: 'text', required: true },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'cta-banner',
+    label: 'CTA Banner',
+    icon: '📣',
+    fields: [
+      { key: 'overline', label: 'Overline', type: 'text' },
+      { key: 'title', label: 'Title', type: 'text', required: true },
+      { key: 'subtitle', label: 'Subtitle', type: 'textarea' },
+      { key: 'ctaLabel', label: 'Button Label', type: 'text' },
+      { key: 'ctaHref', label: 'Button Link', type: 'url' },
+      { key: 'imageUrl', label: 'Image', type: 'image' as any, uploadFolder: 'pages' },
+      { key: 'imageAlt', label: 'Image Alt', type: 'text' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#EDF0E4' },
+    ],
+  },
 ];
 
 export default blockFieldDefs;

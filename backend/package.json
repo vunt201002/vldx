@@ -22,7 +22,8 @@
     "migrate:products": "ts-node-dev --transpile-only src/migrations/002-migrate-products.ts",
     "seed:fern-colors": "ts-node-dev --transpile-only src/scripts/seedFernColors.ts",
     "seed:fern-colors:restore": "ts-node-dev --transpile-only src/scripts/seedFernColorsRestore.ts",
-    "seed:migrate-square-images": "ts-node-dev --transpile-only src/scripts/seedMigrateSquareImages.ts"
+    "seed:migrate-square-images": "ts-node-dev --transpile-only src/scripts/seedMigrateSquareImages.ts",
+    "seed:service-page-v2": "ts-node-dev --transpile-only src/scripts/seedServicePageV2.ts"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
