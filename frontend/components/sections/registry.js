@@ -12,6 +12,9 @@ import ColorPicker from './ColorPicker';
 import ServiceProcess from './ServiceProcess';
 import WhyChooseUs from './WhyChooseUs';
 import BlogShowcase from './BlogShowcase';
+import StatsBar from './StatsBar';
+import CtaBanner from './CtaBanner';
+import WhyInstall from './WhyInstall';
 
 export const registry = {
   navbar: Navbar,
@@ -28,4 +31,7 @@ export const registry = {
   'service-process': ServiceProcess,
   'why-choose-us': WhyChooseUs,
   'blog-showcase': BlogShowcase,
+  'stats-bar': StatsBar,
+  'cta-banner': CtaBanner,
+  'why-install': WhyInstall,
 };

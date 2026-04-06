@@ -16,6 +16,7 @@ const ARRAY_BLOCK_MAP = {
                         { dataKey: 'socialLinks',  blockType: 'social-link' }],
   'service-process':   [{ dataKey: 'steps',       blockType: 'process-step' }],
   'why-choose-us':     [{ dataKey: 'steps',       blockType: 'why-step' }],
+  'stats-bar':         [{ dataKey: 'stats',       blockType: 'stat-item' }],
 };
 
 /**

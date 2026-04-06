@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Truck body -->
+  <rect x="4" y="24" width="30" height="18" rx="2"/>
+  <!-- Truck cab -->
+  <path d="M34 30h10l6 8v4H34V30z"/>
+  <!-- Wheels -->
+  <circle cx="16" cy="46" r="4"/>
+  <circle cx="44" cy="46" r="4"/>
+  <!-- Axle line -->
+  <line x1="20" y1="46" x2="40" y2="46"/>
+  <!-- Clock on truck -->
+  <circle cx="19" cy="33" r="6" stroke-width="2"/>
+  <line x1="19" y1="33" x2="19" y2="29" stroke-width="2"/>
+  <line x1="19" y1="33" x2="22" y2="33" stroke-width="2"/>
+  <!-- Speed lines -->
+  <line x1="1" y1="30" x2="4" y2="30" stroke-width="1.5" opacity="0.6"/>
+  <line x1="0" y1="34" x2="4" y2="34" stroke-width="1.5" opacity="0.6"/>
+  <line x1="1" y1="38" x2="4" y2="38" stroke-width="1.5" opacity="0.6"/>
+</svg>

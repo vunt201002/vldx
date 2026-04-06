@@ -111,6 +111,20 @@ const blockJsonMappings: Record<string, BlockJsonMapping> = {
     settingsFields: ['overline', 'title', 'description', 'postCount', 'tag', 'viewAllLabel', 'viewAllHref', 'bgColor'],
     arrayBlocks: [],
   },
+  'stats-bar': {
+    settingsFields: ['overline', 'bgColor'],
+    arrayBlocks: [
+      { dataKey: 'stats', blockType: 'stat-item' },
+    ],
+  },
+  'cta-banner': {
+    settingsFields: ['overline', 'title', 'subtitle', 'ctaLabel', 'ctaHref', 'imageUrl', 'imageAlt', 'bgColor'],
+    arrayBlocks: [],
+  },
+  'why-install': {
+    settingsFields: ['overline', 'title', 'description', 'imageUrl', 'imageAlt', 'card1Label', 'card2Label', 'card3Label', 'bgColor'],
+    arrayBlocks: [],
+  },
 };
 
 export default blockJsonMappings;
