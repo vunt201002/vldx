@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAB Style Preview — 6 Options</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #F5F0EB;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  h1 { color: #1A1714; margin-bottom: 10px; font-size: 1.5rem; }
+  p.sub { color: #8B7D6B; margin-bottom: 40px; font-size: 0.9rem; }
+
+  .options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1100px;
+    width: 100%;
+  }
+  @media (max-width: 800px) {
+    .options { grid-template-columns: 1fr; }
+  }
+
+  .option-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    position: relative;
+    min-height: 500px;
+  }
+  .option-card h2 {
+    font-size: 1.1rem; color: #1A1714; margin-bottom: 6px;
+  }
+  .option-card .desc {
+    font-size: 0.8rem; color: #8B7D6B; line-height: 1.5; margin-bottom: 20px;
+  }
+
+  .preview-area {
+    position: relative;
+    background: linear-gradient(180deg, #E8E0D6 0%, #F5F0EB 100%);
+    border-radius: 12px;
+    height: 360px;
+    overflow: hidden;
+  }
+  .preview-area .fake-content {
+    padding: 20px;
+    opacity: 0.3;
+  }
+  .preview-area .fake-content div {
+    background: #C4A882;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+
+  /* Phone SVG path (shared) */
+  .phone-svg { }
+
+  /* ===== OPTION A: Glassmorphism Pill ===== */
+  .fab-glass {
+    position: absolute;
+    bottom: 20px; right: 20px;
+    display: flex; flex-direction: column;
+    background: rgba(26, 23, 20, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(196, 168, 130, 0.25);
+    border-radius: 28px;
+    padding: 6px; gap: 2px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    animation: breathe 3s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+  }
+  .fab-glass a {
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 22px;
+    transition: background 0.2s;
+    color: #fff; text-decoration: none;
+  }
+  .fab-glass a:hover { background: rgba(255,255,255,0.15); }
+  .fab-glass .divider {
+    width: 28px; height: 1px;
+    background: rgba(255,255,255,0.15);
+    margin: 0 auto;
+  }
+
+  /* ===== OPTION B: Gradient Glow Circles ===== */
+  .fab-glow {
+    position: absolute; bottom: 20px; right: 20px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .fab-glow a {
+    position: relative;
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; text-decoration: none;
+    transition: transform 0.25s ease;
+  }
+  .fab-glow a:hover { transform: scale(1.15); }
+  .fab-glow .phone {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    animation: glow-green 2s ease-in-out infinite;
+  }
+  .fab-glow .zalo {
+    background: linear-gradient(135deg, #38bdf8, #0068FF);
+    animation: glow-blue 2s ease-in-out infinite;
+  }
+  .fab-glow .tiktok {
+    background: linear-gradient(135deg, #25F4EE, #FE2C55);
+    animation: glow-pink 2s ease-in-out infinite;
+  }
+  @keyframes glow-green {
+    0%, 100% { box-shadow: 0 0 12px rgba(22,163,74,0.3), 0 4px 12px rgba(0,0,0,0.1); }
+    50% { box-shadow: 0 0 22px rgba(22,163,74,0.6), 0 4px 16px rgba(0,0,0,0.15); }
+  }
+  @keyframes glow-blue {
+    0%, 100% { box-shadow: 0 0 12px rgba(0,104,255,0.3), 0 4px 12px rgba(0,0,0,0.1); }
+    50% { box-shadow: 0 0 22px rgba(0,104,255,0.6), 0 4px 16px rgba(0,0,0,0.15); }
+  }
+  @keyframes glow-pink {
+    0%, 100% { box-shadow: 0 0 12px rgba(254,44,85,0.3), 0 4px 12px rgba(0,0,0,0.1); }
+    50% { box-shadow: 0 0 22px rgba(254,44,85,0.6), 0 4px 16px rgba(0,0,0,0.15); }
+  }
+  .fab-glow a .label {
+    position: absolute; right: calc(100% + 10px);
+    white-space: nowrap; font-size: 0.75rem; font-weight: 600;
+    padding: 4px 12px; border-radius: 6px; color: #fff;
+    opacity: 0; transform: translateX(8px);
+    transition: all 0.25s ease; pointer-events: none;
+  }
+  .fab-glow a:hover .label { opacity: 1; transform: translateX(0); }
+  .fab-glow .phone .label { background: #16a34a; }
+  .fab-glow .zalo .label { background: #0068FF; }
+  .fab-glow .tiktok .label { background: #FE2C55; }
+
+  /* ===== OPTION C: Sandstone Line-Art Dock ===== */
+  .fab-dock {
+    position: absolute; bottom: 20px; right: 20px;
+    display: flex; flex-direction: column; gap: 4px;
+    background: #F5F0EB;
+    border: 1px solid rgba(196, 168, 130, 0.4);
+    border-radius: 16px; padding: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    animation: slide-up 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes slide-up {
+    from { transform: translateY(80px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .fab-dock a {
+    width: 42px; height: 42px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 10px; color: #8B7D6B;
+    text-decoration: none; transition: all 0.3s ease;
+  }
+  .fab-dock a:hover { background: rgba(196, 168, 130, 0.15); }
+  .fab-dock a.phone:hover { color: #16a34a; }
+  .fab-dock a.zalo:hover { color: #0068FF; }
+  .fab-dock a.tiktok:hover { color: #1A1714; }
+  .fab-dock a svg { stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+  /* ===== OPTION D: Neon Outline ===== */
+  .fab-neon {
+    position: absolute; bottom: 20px; right: 20px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .fab-neon a {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(26, 23, 20, 0.85);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .fab-neon a.phone {
+    border: 2px solid #22c55e;
+    color: #22c55e;
+    box-shadow: 0 0 8px rgba(34,197,94,0.3), inset 0 0 8px rgba(34,197,94,0.1);
+  }
+  .fab-neon a.phone:hover {
+    box-shadow: 0 0 20px rgba(34,197,94,0.7), inset 0 0 12px rgba(34,197,94,0.2);
+    background: rgba(34,197,94,0.15);
+  }
+  .fab-neon a.zalo {
+    border: 2px solid #38bdf8;
+    color: #38bdf8;
+    box-shadow: 0 0 8px rgba(56,189,248,0.3), inset 0 0 8px rgba(56,189,248,0.1);
+  }
+  .fab-neon a.zalo:hover {
+    box-shadow: 0 0 20px rgba(56,189,248,0.7), inset 0 0 12px rgba(56,189,248,0.2);
+    background: rgba(56,189,248,0.15);
+  }
+  .fab-neon a.tiktok {
+    border: 2px solid #FE2C55;
+    color: #FE2C55;
+    box-shadow: 0 0 8px rgba(254,44,85,0.3), inset 0 0 8px rgba(254,44,85,0.1);
+  }
+  .fab-neon a.tiktok:hover {
+    box-shadow: 0 0 20px rgba(254,44,85,0.7), inset 0 0 12px rgba(254,44,85,0.2);
+    background: rgba(254,44,85,0.15);
+  }
+  .fab-neon a:hover { transform: scale(1.1); }
+  .fab-neon a svg { width: 20px; height: 20px; }
+
+  /* ===== OPTION E: Expandable Pills ===== */
+  .fab-pills {
+    position: absolute; bottom: 20px; right: 20px;
+    display: flex; flex-direction: column; gap: 10px;
+    align-items: flex-end;
+  }
+  .fab-pills a {
+    height: 44px; min-width: 44px;
+    border-radius: 22px;
+    display: flex; align-items: center; gap: 0;
+    padding: 0 12px;
+    color: #fff; text-decoration: none;
+    font-size: 0.8rem; font-weight: 600;
+    white-space: nowrap; overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+  }
+  .fab-pills a svg {
+    width: 20px; height: 20px; flex-shrink: 0;
+  }
+  .fab-pills a .pill-label {
+    max-width: 0; opacity: 0; overflow: hidden;
+    margin-left: 0;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .fab-pills a:hover .pill-label {
+    max-width: 120px; opacity: 1; margin-left: 8px;
+  }
+  .fab-pills a.phone { background: #16a34a; }
+  .fab-pills a.phone:hover { background: #15803d; }
+  .fab-pills a.zalo { background: #0068FF; }
+  .fab-pills a.zalo:hover { background: #0055d4; }
+  .fab-pills a.tiktok { background: #1A1714; }
+  .fab-pills a.tiktok:hover { background: #333; }
+
+  /* ===== OPTION F: Side Tabs ===== */
+  .fab-tabs {
+    position: absolute; top: 50%; right: 0;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .fab-tabs a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px 10px 14px;
+    border-radius: 12px 0 0 12px;
+    color: #fff; text-decoration: none;
+    font-size: 0.75rem; font-weight: 600;
+    white-space: nowrap;
+    transform: translateX(calc(100% - 42px));
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s;
+    box-shadow: -2px 2px 8px rgba(0,0,0,0.1);
+  }
+  .fab-tabs a:hover {
+    transform: translateX(0);
+    box-shadow: -4px 2px 16px rgba(0,0,0,0.2);
+  }
+  .fab-tabs a svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .fab-tabs a.phone { background: #16a34a; }
+  .fab-tabs a.zalo { background: #0068FF; }
+  .fab-tabs a.tiktok { background: #1A1714; }
+
+  /* Shared SVG sizes */
+  .fab-glass svg, .fab-glow svg { width: 22px; height: 22px; }
+  .fab-dock svg { width: 20px; height: 20px; }
+
+  /* Section divider */
+  .row-label {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 20px 0 0;
+    color: #C4A882;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border-top: 1px solid #E8E0D6;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<h1>FAB Button Group — Style Preview</h1>
+<p class="sub">Hover over buttons to see interactions. 6 style options to compare.</p>
+
+<div class="options">
+
+  <!-- Option A -->
+  <div class="option-card">
+    <h2>A: Glassmorphism Pill</h2>
+    <p class="desc">Frosted glass vertical pill. Subtle breathe animation. Unified container. Modern & clean.</p>
+    <div class="preview-area">
+      <div class="fake-content"><div style="width:80%;height:20px"></div><div style="width:60%;height:14px"></div><div style="width:100%;height:120px"></div><div style="width:70%;height:14px"></div><div style="width:90%;height:14px"></div><div style="width:100%;height:80px"></div></div>
+      <div class="fab-glass">
+        <a href="#" title="Phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a>
+        <div class="divider"></div>
+        <a href="#" title="Zalo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 4.925 0 11c0 3.186 1.47 6.04 3.804 7.97L3.2 22.6a.6.6 0 00.836.657l4.14-1.795A12.94 12.94 0 0012 22c6.627 0 12-4.925 12-11S18.627 0 12 0zm5.8 8.4l-3.2 4.8h2.8a.4.4 0 01.336.618l-4 6.2a.4.4 0 01-.736-.218V15h-2.6a.4.4 0 01-.336-.618l4-6.2a.4.4 0 01.736.218V13h2.6a.4.4 0 01.4.4z"/></svg></a>
+        <div class="divider"></div>
+        <a href="#" title="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.4a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 0010.86 4.43V13a8.16 8.16 0 005.58 2.18v-3.4a4.85 4.85 0 01-2-.78V6.69h2z"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="option-card">
+    <h2>B: Gradient Glow + Labels</h2>
+    <p class="desc">Colorful gradients with pulsing glow. Hover to see slide-out labels. Vibrant & eye-catching.</p>
+    <div class="preview-area">
+      <div class="fake-content"><div style="width:80%;height:20px"></div><div style="width:60%;height:14px"></div><div style="width:100%;height:120px"></div><div style="width:70%;height:14px"></div><div style="width:90%;height:14px"></div><div style="width:100%;height:80px"></div></div>
+      <div class="fab-glow">
+        <a href="#" class="phone" title="Phone"><span class="label">Goi dien</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a>
+        <a href="#" class="zalo" title="Zalo"><span class="label">Chat Zalo</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 4.925 0 11c0 3.186 1.47 6.04 3.804 7.97L3.2 22.6a.6.6 0 00.836.657l4.14-1.795A12.94 12.94 0 0012 22c6.627 0 12-4.925 12-11S18.627 0 12 0zm5.8 8.4l-3.2 4.8h2.8a.4.4 0 01.336.618l-4 6.2a.4.4 0 01-.736-.218V15h-2.6a.4.4 0 01-.336-.618l4-6.2a.4.4 0 01.736.218V13h2.6a.4.4 0 01.4.4z"/></svg></a>
+        <a href="#" class="tiktok" title="TikTok"><span class="label">TikTok</span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.4a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 0010.86 4.43V13a8.16 8.16 0 005.58 2.18v-3.4a4.85 4.85 0 01-2-.78V6.69h2z"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="option-card">
+    <h2>C: Sandstone Line-Art Dock</h2>
+    <p class="desc">Cream dock with thin stroke icons. Hover to see brand color reveal. Elegant & on-brand.</p>
+    <div class="preview-area">
+      <div class="fake-content"><div style="width:80%;height:20px"></div><div style="width:60%;height:14px"></div><div style="width:100%;height:120px"></div><div style="width:70%;height:14px"></div><div style="width:90%;height:14px"></div><div style="width:100%;height:80px"></div></div>
+      <div class="fab-dock">
+        <a href="#" class="phone" title="Phone"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a>
+        <a href="#" class="zalo" title="Zalo"><svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 4.925 0 11c0 3.186 1.47 6.04 3.804 7.97L3.2 22.6a.6.6 0 00.836.657l4.14-1.795A12.94 12.94 0 0012 22c6.627 0 12-4.925 12-11S18.627 0 12 0zm5.8 8.4l-3.2 4.8h2.8a.4.4 0 01.336.618l-4 6.2a.4.4 0 01-.736-.218V15h-2.6a.4.4 0 01-.336-.618l4-6.2a.4.4 0 01.736.218V13h2.6a.4.4 0 01.4.4z"/></svg></a>
+        <a href="#" class="tiktok" title="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.4a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 0010.86 4.43V13a8.16 8.16 0 005.58 2.18v-3.4a4.85 4.85 0 01-2-.78V6.69h2z"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row-label">More styles</div>
+
+  <!-- Option D -->
+  <div class="option-card">
+    <h2>D: Neon Outline</h2>
+    <p class="desc">Dark circles with glowing neon borders. Hover intensifies the glow. Cyberpunk / tech feel.</p>
+    <div class="preview-area">
+      <div class="fake-content"><div style="width:80%;height:20px"></div><div style="width:60%;height:14px"></div><div style="width:100%;height:120px"></div><div style="width:70%;height:14px"></div><div style="width:90%;height:14px"></div><div style="width:100%;height:80px"></div></div>
+      <div class="fab-neon">
+        <a href="#" class="phone" title="Phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a>
+        <a href="#" class="zalo" title="Zalo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 4.925 0 11c0 3.186 1.47 6.04 3.804 7.97L3.2 22.6a.6.6 0 00.836.657l4.14-1.795A12.94 12.94 0 0012 22c6.627 0 12-4.925 12-11S18.627 0 12 0zm5.8 8.4l-3.2 4.8h2.8a.4.4 0 01.336.618l-4 6.2a.4.4 0 01-.736-.218V15h-2.6a.4.4 0 01-.336-.618l4-6.2a.4.4 0 01.736.218V13h2.6a.4.4 0 01.4.4z"/></svg></a>
+        <a href="#" class="tiktok" title="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.4a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 0010.86 4.43V13a8.16 8.16 0 005.58 2.18v-3.4a4.85 4.85 0 01-2-.78V6.69h2z"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option E -->
+  <div class="option-card">
+    <h2>E: Expandable Pills</h2>
+    <p class="desc">Compact circles that expand into pills with text on hover. Clean & informative.</p>
+    <div class="preview-area">
+      <div class="fake-content"><div style="width:80%;height:20px"></div><div style="width:60%;height:14px"></div><div style="width:100%;height:120px"></div><div style="width:70%;height:14px"></div><div style="width:90%;height:14px"></div><div style="width:100%;height:80px"></div></div>
+      <div class="fab-pills">
+        <a href="#" class="phone" title="Phone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <span class="pill-label">Goi dien</span>
+        </a>
+        <a href="#" class="zalo" title="Zalo">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 4.925 0 11c0 3.186 1.47 6.04 3.804 7.97L3.2 22.6a.6.6 0 00.836.657l4.14-1.795A12.94 12.94 0 0012 22c6.627 0 12-4.925 12-11S18.627 0 12 0zm5.8 8.4l-3.2 4.8h2.8a.4.4 0 01.336.618l-4 6.2a.4.4 0 01-.736-.218V15h-2.6a.4.4 0 01-.336-.618l4-6.2a.4.4 0 01.736.218V13h2.6a.4.4 0 01.4.4z"/></svg>
+          <span class="pill-label">Chat Zalo</span>
+        </a>
+        <a href="#" class="tiktok" title="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.4a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 0010.86 4.43V13a8.16 8.16 0 005.58 2.18v-3.4a4.85 4.85 0 01-2-.78V6.69h2z"/></svg>
+          <span class="pill-label">TikTok</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option F -->
+  <div class="option-card">
+    <h2>F: Side-Attached Tabs</h2>
+    <p class="desc">Tabs peeking from the right edge. Hover to slide out and reveal text. Space-saving & unique.</p>
+    <div class="preview-area">
+      <div class="fake-content"><div style="width:80%;height:20px"></div><div style="width:60%;height:14px"></div><div style="width:100%;height:120px"></div><div style="width:70%;height:14px"></div><div style="width:90%;height:14px"></div><div style="width:100%;height:80px"></div></div>
+      <div class="fab-tabs">
+        <a href="#" class="phone" title="Phone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <span>Goi dien</span>
+        </a>
+        <a href="#" class="zalo" title="Zalo">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 4.925 0 11c0 3.186 1.47 6.04 3.804 7.97L3.2 22.6a.6.6 0 00.836.657l4.14-1.795A12.94 12.94 0 0012 22c6.627 0 12-4.925 12-11S18.627 0 12 0zm5.8 8.4l-3.2 4.8h2.8a.4.4 0 01.336.618l-4 6.2a.4.4 0 01-.736-.218V15h-2.6a.4.4 0 01-.336-.618l4-6.2a.4.4 0 01.736.218V13h2.6a.4.4 0 01.4.4z"/></svg>
+          <span>Chat Zalo</span>
+        </a>
+        <a href="#" class="tiktok" title="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.4a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 0010.86 4.43V13a8.16 8.16 0 005.58 2.18v-3.4a4.85 4.85 0 01-2-.78V6.69h2z"/></svg>
+          <span>TikTok</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p style="margin-top: 40px; color: #A89B8C; font-size: 0.8rem;">Hover over the buttons to see interactions. Resize window for responsive preview.</p>
+
+</body>
+</html>
