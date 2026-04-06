@@ -106,8 +106,11 @@ export default function ContentImage({ settings, blocks }) {
   // For 5 images: use 6-column base grid
   const gridColumns = count === 5 ? 'repeat(6, 1fr)' : `repeat(${cols}, 1fr)`;
 
+  // Square column width: 1 image = original size, 2+ = slightly wider
+  const squareColWidth = count <= 1 ? undefined : '42%';
+
   const squareCol = (
-    <div className="ci-square-col">
+    <div className="ci-square-col" style={squareColWidth ? { flex: `0 0 ${squareColWidth}`, maxWidth: squareColWidth } : undefined}>
       {count > 0 && (
         <div style={{ ...gridStyle, gridTemplateColumns: gridColumns }}>
           {squareImages.slice(0, 6).map((img, i) => (
@@ -261,8 +264,8 @@ export default function ContentImage({ settings, blocks }) {
             flex-direction: row-reverse; /* square-col left, rect-col right */
           }
           .ci-square-col {
-            flex: 0 0 45%;
-            max-width: 45%;
+            flex: 0 0 36%;
+            max-width: 36%;
           }
         }
 
@@ -276,8 +279,8 @@ export default function ContentImage({ settings, blocks }) {
             align-items: flex-start;
           }
           .ci-square-col {
-            flex: 0 0 50%;
-            max-width: 50%;
+            flex: 0 0 38%;
+            max-width: 38%;
           }
         }
       `}</style>
