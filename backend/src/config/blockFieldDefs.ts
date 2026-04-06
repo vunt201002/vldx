@@ -474,6 +474,22 @@ const blockFieldDefs: BlockTypeDef[] = [
       { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#EDF0E4' },
     ],
   },
+  {
+    type: 'why-install',
+    label: 'Why Direct Install',
+    icon: '🏗️',
+    fields: [
+      { key: 'overline', label: 'Overline', type: 'text' },
+      { key: 'title', label: 'Title', type: 'text', required: true },
+      { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'imageUrl', label: 'Image', type: 'image' as any, uploadFolder: 'pages' },
+      { key: 'imageAlt', label: 'Image Alt', type: 'text' },
+      { key: 'card1Label', label: 'Card 1 Label', type: 'text', placeholder: 'Đo đạc chính xác' },
+      { key: 'card2Label', label: 'Card 2 Label', type: 'text', placeholder: 'Sản xuất theo yêu cầu' },
+      { key: 'card3Label', label: 'Card 3 Label', type: 'text', placeholder: 'Thi công chuyên nghiệp' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#ffffff' },
+    ],
+  },
 ];
 
 export default blockFieldDefs;

@@ -121,6 +121,10 @@ const blockJsonMappings: Record<string, BlockJsonMapping> = {
     settingsFields: ['overline', 'title', 'subtitle', 'ctaLabel', 'ctaHref', 'imageUrl', 'imageAlt', 'bgColor'],
     arrayBlocks: [],
   },
+  'why-install': {
+    settingsFields: ['overline', 'title', 'description', 'imageUrl', 'imageAlt', 'card1Label', 'card2Label', 'card3Label', 'bgColor'],
+    arrayBlocks: [],
+  },
 };
 
 export default blockJsonMappings;
