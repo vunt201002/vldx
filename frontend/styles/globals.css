@@ -15,6 +15,15 @@ body {
   overflow-x: hidden;
 }
 
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Full-width breakout for hero images */
 .hero-full-width {
   position: relative;

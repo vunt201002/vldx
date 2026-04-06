@@ -411,6 +411,21 @@ const blockFieldDefs: BlockTypeDef[] = [
       },
     ],
   },
+  {
+    type: 'blog-showcase',
+    label: 'Blog Showcase',
+    icon: '📰',
+    fields: [
+      { key: 'overline', label: 'Overline', type: 'text', placeholder: 'From our blog' },
+      { key: 'title', label: 'Title', type: 'text', required: true },
+      { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'postCount', label: 'Number of Posts', type: 'number', placeholder: '8' },
+      { key: 'tag', label: 'Filter by Tag', type: 'text', placeholder: 'Leave empty for latest' },
+      { key: 'viewAllLabel', label: 'View All Label', type: 'text', placeholder: 'View all articles' },
+      { key: 'viewAllHref', label: 'View All Link', type: 'url', placeholder: '/blog' },
+      { key: 'bgColor', label: 'Background Color', type: 'text', placeholder: '#F5F0EB' },
+    ],
+  },
 ];
 
 export default blockFieldDefs;
