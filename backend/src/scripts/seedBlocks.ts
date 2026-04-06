@@ -207,6 +207,21 @@ const landingBlocks = [
     },
   },
   {
+    type: 'blog-showcase',
+    name: 'Blog Showcase',
+    data: {
+      overline: 'kiến thức xây dựng',
+      title: 'bài viết nổi bật',
+      description: 'chia sẻ kinh nghiệm chọn vật liệu, xu hướng thiết kế và mẹo thi công từ đội ngũ chuyên gia của chúng tôi.',
+      postCount: 8,
+      tag: '',
+      viewAllLabel: 'xem tất cả bài viết',
+      viewAllHref: '/blog',
+      bgColor: '#F5F0EB',
+    },
+    settings: {},
+  },
+  {
     type: 'contact',
     name: 'Contact & Footer',
     data: {
