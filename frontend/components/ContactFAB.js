@@ -28,7 +28,7 @@ const items = [
     key: 'tiktok',
     label: 'TikTok',
     href: contact.tiktok,
-    hoverColor: '#1A1714',
+    hoverColor: '#1A1A17',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 12a4 4 0 104 4V4a5 5 0 005 5" />
@@ -41,8 +41,8 @@ export default function ContactFAB() {
   return (
     <div className="fab-dock fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[9999] flex flex-col gap-1 rounded-2xl p-1.5 sm:p-2 shadow-md"
       style={{
-        backgroundColor: '#F5F0EB',
-        border: '1px solid rgba(196, 168, 130, 0.4)',
+        backgroundColor: '#EDF0E4',
+        border: '1px solid rgba(155, 153, 123, 0.4)',
       }}
     >
       {items.map((item) => (

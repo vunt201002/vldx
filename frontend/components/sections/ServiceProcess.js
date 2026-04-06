@@ -1,6 +1,6 @@
 export default function ServiceProcess({ settings, blocks }) {
   const steps = (blocks || []).filter((b) => b.type === 'process-step');
-  const bgColor = settings.bgColor || '#F5F0EB';
+  const bgColor = settings.bgColor || '#EDF0E4';
 
   return (
     <section className="font-body" style={{ backgroundColor: bgColor, padding: '5rem 0' }}>
@@ -10,7 +10,7 @@ export default function ServiceProcess({ settings, blocks }) {
           {settings.overline && (
             <span style={{
               display: 'block', fontSize: '0.75rem', letterSpacing: '0.2em',
-              textTransform: 'uppercase', color: '#C4A882', marginBottom: '0.75rem',
+              textTransform: 'uppercase', color: '#9B997B', marginBottom: '0.75rem',
             }}>
               {settings.overline}
             </span>
@@ -21,14 +21,14 @@ export default function ServiceProcess({ settings, blocks }) {
             }}>
               {settings.title}
               {settings.titleAccent && (
-                <span style={{ fontStyle: 'italic', color: '#C4A882' }}> {settings.titleAccent}</span>
+                <span style={{ fontStyle: 'italic', color: '#9B997B' }}> {settings.titleAccent}</span>
               )}
             </h2>
           )}
           {settings.description && (
             <p style={{
               marginTop: '1rem', fontSize: '0.9375rem', lineHeight: 1.8,
-              color: '#6B5D4E',
+              color: '#5E5C4D',
             }}>
               {settings.description}
             </p>
@@ -49,7 +49,7 @@ export default function ServiceProcess({ settings, blocks }) {
                 <div key={i} className="sp-card" style={{
                   backgroundColor: 'rgba(255,255,255,0.7)',
                   borderRadius: '6px',
-                  border: '1px solid rgba(196,168,130,0.15)',
+                  border: '1px solid rgba(155,153,123,0.15)',
                   overflow: 'hidden',
                   transition: 'transform 0.2s, box-shadow 0.2s',
                 }}>
@@ -57,7 +57,7 @@ export default function ServiceProcess({ settings, blocks }) {
                   {s.image && (
                     <div style={{
                       width: '100%', aspectRatio: '4/3', overflow: 'hidden',
-                      backgroundColor: '#E8E0D6',
+                      backgroundColor: '#DDE1CE',
                     }}>
                       <img
                         src={s.image}
@@ -75,7 +75,7 @@ export default function ServiceProcess({ settings, blocks }) {
                   <div style={{ padding: '1.5rem 1.25rem', textAlign: 'center' }}>
                     <div style={{
                       width: '40px', height: '40px', borderRadius: '50%',
-                      backgroundColor: '#C4A882', color: '#fff',
+                      backgroundColor: '#9B997B', color: '#fff',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       margin: '0 auto 0.75rem', fontSize: '0.875rem', fontWeight: 600,
                     }}>
@@ -84,14 +84,14 @@ export default function ServiceProcess({ settings, blocks }) {
                     {s.title && (
                       <h3 className="font-display" style={{
                         fontSize: '1.125rem', fontWeight: 500, margin: '0 0 0.5rem',
-                        color: '#1A1714',
+                        color: '#1A1A17',
                       }}>
                         {s.title}
                       </h3>
                     )}
                     {s.description && (
                       <p style={{
-                        fontSize: '0.8125rem', lineHeight: 1.7, color: '#6B5D4E', margin: 0,
+                        fontSize: '0.8125rem', lineHeight: 1.7, color: '#5E5C4D', margin: 0,
                       }}>
                         {s.description}
                       </p>
@@ -129,7 +129,7 @@ export default function ServiceProcess({ settings, blocks }) {
               className="font-display"
               style={{
                 display: 'inline-block', padding: '0.875rem 2.5rem',
-                backgroundColor: '#1A1714', color: '#fff',
+                backgroundColor: '#1A1A17', color: '#fff',
                 textDecoration: 'none', fontSize: '0.875rem',
                 letterSpacing: '0.1em', textTransform: 'uppercase',
                 borderRadius: '2px',

@@ -115,7 +115,7 @@ export default function Navbar({ settings, blocks }) {
               href={link.settings.href}
               onClick={() => setMenuOpen(false)}
               className="block font-body tracking-[0.03em] transition-colors"
-              style={{ fontSize, color: color || '#6B5D4E' }}
+              style={{ fontSize, color: color || '#5E5C4D' }}
             >
               {link.settings.label}
             </a>
@@ -125,7 +125,7 @@ export default function Navbar({ settings, blocks }) {
               href={settings.ctaHref}
               onClick={() => setMenuOpen(false)}
               className="block font-body tracking-[0.03em] transition-colors"
-              style={{ fontSize, color: color || '#6B5D4E' }}
+              style={{ fontSize, color: color || '#5E5C4D' }}
             >
               {settings.ctaLabel}
             </a>

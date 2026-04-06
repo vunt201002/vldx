@@ -71,7 +71,7 @@ export default function WhyChooseUs({ settings, blocks }) {
                   {/* Circular icon */}
                   <div
                     className={`w-28 h-28 lg:w-36 lg:h-36 rounded-full flex items-center justify-center mb-6 relative z-10 transition-transform duration-300 ${s.href ? 'group-hover:scale-105' : ''}`}
-                    style={{ backgroundColor: s.iconBgColor || '#FFD580' }}
+                    style={{ backgroundColor: s.iconBgColor || '#D4CC8C' }}
                   >
                     {s.icon && (
                       <img
