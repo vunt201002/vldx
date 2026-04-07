@@ -106,11 +106,15 @@ export default function ContentImage({ settings, blocks }) {
   // For 5 images: use 6-column base grid
   const gridColumns = count === 5 ? 'repeat(6, 1fr)' : `repeat(${cols}, 1fr)`;
 
-  // Square column width: 1 image = original size, 2+ = slightly wider
+  // Square column width: 1 image = original size, 2+ = slightly wider.
+  // Passed as a CSS var so media queries can override on mobile.
   const squareColWidth = count <= 1 ? undefined : '42%';
 
   const squareCol = (
-    <div className="ci-square-col" style={squareColWidth ? { flex: `0 0 ${squareColWidth}`, maxWidth: squareColWidth } : undefined}>
+    <div
+      className="ci-square-col"
+      style={squareColWidth ? { '--sq-col-width': squareColWidth } : undefined}
+    >
       {count > 0 && (
         <div style={{ ...gridStyle, gridTemplateColumns: gridColumns }}>
           {squareImages.slice(0, 6).map((img, i) => (
@@ -183,7 +187,6 @@ export default function ContentImage({ settings, blocks }) {
           overflow: hidden;
           flex-shrink: 0;
         }
-
         /* Grid styles are inline (style jsx can't scope .map() children) */
 
         /* ─── Rect column ───────────────────────── */
@@ -264,8 +267,8 @@ export default function ContentImage({ settings, blocks }) {
             flex-direction: row-reverse; /* square-col left, rect-col right */
           }
           .ci-square-col {
-            flex: 0 0 36%;
-            max-width: 36%;
+            flex: 0 0 var(--sq-col-width, 36%);
+            max-width: var(--sq-col-width, 36%);
           }
         }
 
@@ -279,8 +282,8 @@ export default function ContentImage({ settings, blocks }) {
             align-items: flex-start;
           }
           .ci-square-col {
-            flex: 0 0 38%;
-            max-width: 38%;
+            flex: 0 0 var(--sq-col-width, 38%);
+            max-width: var(--sq-col-width, 38%);
           }
         }
       `}</style>
