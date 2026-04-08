@@ -123,6 +123,20 @@ DB (Page + Block models)
 - Regenerates all `{slug}.json` files from MongoDB to keep them in sync
 - MongoDB is the source of truth; JSON files are derived artifacts
 
+### Static Data Mode JSON Generation
+`generatePageJson.ts` exports writers for **all data the frontend can consume in `DATA_MODE=static`**:
+
+| Function | Output | Notes |
+|---------|--------|-------|
+| `writePageJson(slug, json)` | `frontend/config/pages/{slug}.json` | Per-page block configs |
+| `writeThemeJson()` | `frontend/config/theme.json` | Header/footer blocks; resolves navbar `menuHandle` → `menuItems` from `Menu` collection; sorts blocks by `order` |
+| `writeBlogJson()` | `blog.json`, `blog-tags.json`, `blog/{id}.json` | List excludes `content/comments/likes`; per-post files include populated comments and `likeCount`/`commentCount` |
+| `writeProductsJson()` | `products.json`, `products/{slug}.json` | Only `isPublished: true` |
+
+`regenerateAllPageJsons()` in `syncPageJsons.ts` calls `writePageJson` for every page, then `writeThemeJson()`, `writeBlogJson()`, `writeProductsJson()`. The shared Docker volume mounts at `/data/config` (parent of `pages/`) so all sibling files are shared with the frontend container at `/app/config`.
+
+**Adding a new entity to static mode:** add a `write*Json()` in `generatePageJson.ts`, call it from `regenerateAllPageJsons()`, and add a matching route case in `frontend/pages/api/[...path].js` `serveFromStatic()`.
+
 ### Adding a new block type
 1. Add field schema to `config/blockFieldDefs.ts`
 2. Add mapping entry to `config/blockJsonMapping.ts`
