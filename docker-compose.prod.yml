@@ -14,7 +14,7 @@ services:
       CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
       CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
     volumes:
-      - shared-config:/data/config/pages
+      - shared-config:/data/config
     expose:
       - "5000"
 
@@ -23,8 +23,10 @@ services:
     restart: unless-stopped
     depends_on:
       - backend
+    environment:
+      DATA_MODE: ${DATA_MODE:-api}
     volumes:
-      - shared-config:/app/config/pages
+      - shared-config:/app/config
     expose:
       - "3000"
 
